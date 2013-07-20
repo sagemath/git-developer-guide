@@ -24,13 +24,24 @@ This work is licensed under a `Creative Commons Attribution-Share Alike
 
 __ http://creativecommons.org/licenses/by-sa/3.0/
 
+.. toctree::
+   :maxdepth: 3
+
+   trac_ssh_keys
+   manual_git
+
+
+
+
+Old Developer Guide (Mercurial-based)
+=====================================
 
 .. toctree::
    :maxdepth: 3
 
-   walk_through
-   writing_code
-   disseminating_code
+   walk_through_old
+   writing_code_old
+   disseminating_code_old
    sagenb/index
 
 Indices and tables

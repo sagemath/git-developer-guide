@@ -25,7 +25,7 @@ tools to aid in that communication:
 
 - Mercurial: this is the source control system that is included
   with Sage. Use this to produce patches for Sage. See the chapter
-  :ref:`chapter-walk-through` and the section
+  :ref:`chapter-walk-through-old` and the section
   :ref:`chapter-mercurial` for tutorials on using Mercurial to produce
   and manage patches.
 

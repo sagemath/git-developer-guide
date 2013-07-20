@@ -22,3 +22,7 @@ Usage
 
 * Use the `publish` script to copy the documentation to the github
   pages (the web page hosted on github).
+
+* Sphinx uses caching to only rebuild pages as necessary. Sometimes,
+  you can get problems with stale caches. It is safe to delete the
+  `/html` directoory and then rebuild all docs with `./build`.
