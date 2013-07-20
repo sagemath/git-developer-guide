@@ -24,15 +24,17 @@ This work is licensed under a `Creative Commons Attribution-Share Alike
 
 __ http://creativecommons.org/licenses/by-sa/3.0/
 
-
-
 .. toctree::
    :maxdepth: 3
 
+   trac_ssh_keys
+   manual_git
 
 
-Old
-===
+
+
+Old Developer Guide (Mercurial-based)
+=====================================
 
 .. toctree::
    :maxdepth: 3
