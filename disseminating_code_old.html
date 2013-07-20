@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Inclusion Procedure for New Packages &mdash; Sage Developer&#39;s Guide v6.0</title>
+    <title>Disseminating Code for Sage &mdash; Sage Developer&#39;s Guide v6.0</title>
     
     <link rel="stylesheet" href="_static/sage.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,9 +27,8 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Sage Developer&#39;s Guide v6.0" href="index.html" />
-    <link rel="up" title="Disseminating Code for Sage" href="disseminating_code_old.html" />
-    <link rel="next" title="Producing Patches with Mercurial" href="producing_patches.html" />
-    <link rel="prev" title="Disseminating Code for Sage" href="disseminating_code_old.html" />
+    <link rel="next" title="Inclusion Procedure for New Packages" href="inclusion.html" />
+    <link rel="prev" title="The Sage Manuals" href="sage_manuals.html" />
     <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
 
   </head>
@@ -41,10 +40,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="producing_patches.html" title="Producing Patches with Mercurial"
+          <a href="inclusion.html" title="Inclusion Procedure for New Packages"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="disseminating_code_old.html" title="Disseminating Code for Sage"
+          <a href="sage_manuals.html" title="The Sage Manuals"
              accesskey="P">previous</a> |</li>
   
     
@@ -53,8 +52,7 @@
   
   
         <li><a href="index.html">Developer&#39;s Guide v6.0</a> &raquo;</li>
-
-          <li><a href="disseminating_code_old.html" accesskey="U">Disseminating Code for Sage</a> &raquo;</li> 
+ 
       </ul>
     </div>  
 
@@ -63,78 +61,78 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="inclusion-procedure-for-new-packages">
-<h1>Inclusion Procedure for New Packages<a class="headerlink" href="#inclusion-procedure-for-new-packages" title="Permalink to this headline">¶</a></h1>
-<p>For a package to become part of Sage&#8217;s standard distribution, it
-must meet the following requirements:</p>
+  <div class="section" id="disseminating-code-for-sage">
+<h1>Disseminating Code for Sage<a class="headerlink" href="#disseminating-code-for-sage" title="Permalink to this headline">¶</a></h1>
+<p>Whether you have developed some new code for Sage or just have a
+simple bug fix, you need to know how to communicate what you have
+done to other Sage users. This part of the guide discusses this
+issue. Here are some of the available avenues of communication and
+tools to aid in that communication:</p>
+<ul class="simple">
+<li>The Google group <tt class="docutils literal"><span class="pre">sage-support</span></tt>, at
+<a class="reference external" href="http://groups.google.com/group/sage-support">http://groups.google.com/group/sage-support</a>. This group gives help
+and support to those who have problems with Sage (installation,
+syntax, etc). The IRC channel <tt class="docutils literal"><span class="pre">#sage-devel</span></tt> on freenode serves the
+same purpose.</li>
+<li>The Google group <tt class="docutils literal"><span class="pre">sage-devel</span></tt>, at
+<a class="reference external" href="http://groups.google.com/group/sage-devel">http://groups.google.com/group/sage-devel</a>. This mailing list is for
+Sage development and is about programming, design and technical
+issues. This is a great place to post questions about whether
+certain  behavior is a bug, or whether a certain feature ought to be
+implemented (or how it ought to be implemented), or similar issues.
+Also implementation issues are discussed here and the general
+direction of the project. Development discussion also takes place on
+the IRC channel <tt class="docutils literal"><span class="pre">#sage-devel</span></tt> on freenode.</li>
+<li>Mercurial: this is the source control system that is included
+with Sage. Use this to produce patches for Sage. See the chapter
+<a class="reference internal" href="walk_through_old.html#chapter-walk-through-old"><em>Walking Through the Development Process</em></a> and the section
+<a class="reference internal" href="producing_patches.html#chapter-mercurial"><em>Producing Patches with Mercurial</em></a> for tutorials on using Mercurial to produce
+and manage patches.</li>
+<li>The Sage trac server, at <a class="reference external" href="http://trac.sagemath.org/sage_trac/">http://trac.sagemath.org/sage_trac/</a>.
+this is where you should post bugs, patches for bugs, additions to
+the Sage library, etc. See <a class="reference internal" href="trac.html#chapter-trac"><em>The Sage Trac Server: Submitting Patches and Packages</em></a> for more information.</li>
+</ul>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
 <ul>
-<li><p class="first"><strong>License</strong>. For external packages, the license must be compatible
-with the GNU General Public License, version 3. More precisely, it
-must be allowed to license the code that you wish to include under
-the GPL version 3.  Sage library code (anything which is not an
-external package) must be licensed under the
-&#8220;GNU General Public License as published by the Free Software Foundation;
-either version 2 of the License, or (at your option) any later version.&#8221;
-The Free Software Foundation maintains a long list of
-<a class="reference external" href="http://www.gnu.org/licenses/license-list.html">licenses and comments about them</a>.</p>
-</li>
-<li><p class="first"><strong>Build Support</strong>. The code <strong>must</strong> build on all the <a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Fully_supported">fully supported platforms</a>.</p>
-<p>A standard package should also work on all the platforms where Sage is
-<a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Expected_to_work">expected to work</a>
-and on which Sage <a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Almost_works">almost works</a>
-but since we don&#8217;t fully support these platforms and often lack the resources to test on them,
-you are not expected to confirm your packages works on those platforms.
-However, if you can, it is better to do so. As noted
-<a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Expected_to_work">here</a>,
-a failure of Sage to work on a
-platform where it is expected to work, will be considered a bug.</p>
-<p>There is no need to worry too much about platforms where Sage will
-<a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Probably_will_not_work">probably not work</a>
-though if it&#8217;s clear that there is
-significant effort taking place to port Sage to a platform, then you should
-aim to ensure your package does not cause unnecessary headaches to those
-working on the port.</p>
-<p>If it&#8217;s clear that a port is stagnent, with nobody working on
-it, then you can safely ignore it.</p>
-<p>Remarks:</p>
-<ul class="simple">
-<li>Some Sage developers are willing to help you port to OS X, Solaris
-and Windows. But this is no guarantee and you or your project are
-expected to do the heavy lifting and also support those ports
-upstream if there is no Sage developer who is willing to share the
-burden.</li>
-<li>One of the best ways to ensure your code works on multiple platforms
-is to only use commands which are defined by <a class="reference external" href="http://www.opengroup.org/onlinepubs/9699919799/">POSIX.1-2008</a> and only use options which are defined
-in the POSIX standard. For example, do not use the -p option to <a class="reference external" href="http://www.opengroup.org/onlinepubs/9699919799/utilities/uname.html">uname</a> as
-the &#8216;-p&#8217; option is not defined by the POSIX standard, so is not portable.
-If you must use a non-POSIX command, or a option which is not defined
-by POSIX, then ensure the code only gets executed on the platform(s)
-where that command and/or option will be acceptable.</li>
+<li class="toctree-l1"><a class="reference internal" href="inclusion.html">Inclusion Procedure for New Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="producing_patches.html">Producing Patches with Mercurial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="producing_patches.html#quick-mercurial-tutorial-for-sage">Quick Mercurial tutorial for Sage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="producing_patches.html#using-mercurial-with-other-sage-repositories">Using Mercurial with other Sage repositories</a></li>
 </ul>
 </li>
-<li><p class="first"><strong>Quality</strong>. The code should be &#8220;better&#8221; than any other available
-code (that passes the two above criteria), and the authors need to
-justify this. The comparison should be made to both Python and other
-software. Criteria in passing the quality test include:</p>
-<ul class="simple">
-<li>Speed</li>
-<li>Documentation</li>
-<li>Usability</li>
-<li>Memory leaks</li>
-<li>Maintainable</li>
-<li>Portability</li>
-<li>Reasonable build time, size, dependencies</li>
+<li class="toctree-l1"><a class="reference internal" href="producing_spkgs.html">Producing New Sage Packages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="producing_spkgs.html#creating-a-new-spkg">Creating a new spkg</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="producing_spkgs.html#naming-your-spkg">Naming your spkg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="producing_spkgs.html#directory-structure">Directory structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="producing_spkgs.html#the-file-spkg-install">The file spkg-install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="producing_spkgs.html#the-file-spkg-txt">The file SPKG.txt</a></li>
 </ul>
 </li>
-<li><p class="first"><strong>Previously an optional package</strong>. Usually a new standard package must
-have spent some time as an optional package. However, sometimes this is
-not possible, if for example a new library is needed to permit an
-updated version of a standard package to function.</p>
+<li class="toctree-l2"><a class="reference internal" href="producing_spkgs.html#avoiding-troubles">Avoiding troubles</a></li>
+</ul>
 </li>
-<li><p class="first"><strong>Refereeing</strong>. The code must be refereed, as discussed in
-<a class="reference internal" href="trac.html#chapter-trac"><em>The Sage Trac Server: Submitting Patches and Packages</em></a>.</p>
+<li class="toctree-l1"><a class="reference internal" href="patching_spkgs.html">Patching a Sage Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="patching_spkgs.html#overview-of-patching-spkg-s">Overview of patching spkg&#8217;s</a></li>
+<li class="toctree-l2"><a class="reference internal" href="patching_spkgs.html#use-patch-for-patching">Use patch for patching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="patching_spkgs.html#bumping-up-an-spkg-s-version">Bumping up an spkg&#8217;s version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="patching_spkgs.html#license-information">License information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="trac.html">The Sage Trac Server: Submitting Patches and Packages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#reporting-bugs">Reporting bugs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#guidelines-for-opening-tickets">Guidelines for opening tickets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#stopgaps">Stopgaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#patching-bugs-working-on-tickets">Patching bugs/working on tickets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#reviewing-patches">Reviewing patches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#closing-tickets">Closing tickets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#reasons-to-invalidate-tickets">Reasons to invalidate tickets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#milestones-vs-releases">Milestones vs. releases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#assigning-tickets">Assigning tickets</a></li>
+</ul>
 </li>
 </ul>
+</div>
 </div>
 
 
@@ -144,14 +142,14 @@ updated version of a standard package to function.</p>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
             <h4>Previous topic</h4>
-            <p class="topless"><a href="disseminating_code_old.html"
-                                  title="previous chapter">Disseminating Code for Sage</a></p>
+            <p class="topless"><a href="sage_manuals.html"
+                                  title="previous chapter">The Sage Manuals</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="producing_patches.html"
-                                  title="next chapter">Producing Patches with Mercurial</a></p>
+            <p class="topless"><a href="inclusion.html"
+                                  title="next chapter">Inclusion Procedure for New Packages</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="_sources/inclusion.txt"
+              <li><a href="_sources/disseminating_code_old.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
@@ -182,10 +180,10 @@ updated version of a standard package to function.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="producing_patches.html" title="Producing Patches with Mercurial"
+          <a href="inclusion.html" title="Inclusion Procedure for New Packages"
              >next</a> |</li>
         <li class="right" >
-          <a href="disseminating_code_old.html" title="Disseminating Code for Sage"
+          <a href="sage_manuals.html" title="The Sage Manuals"
              >previous</a> |</li>
   
     
@@ -194,8 +192,7 @@ updated version of a standard package to function.</p>
   
   
         <li><a href="index.html">Developer&#39;s Guide v6.0</a> &raquo;</li>
-
-          <li><a href="disseminating_code_old.html" >Disseminating Code for Sage</a> &raquo;</li> 
+ 
       </ul>
     </div>
     
