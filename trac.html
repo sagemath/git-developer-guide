@@ -1,0 +1,593 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Sage Trac Server: Submitting Patches and Packages &mdash; Sage Developer&#39;s Guide v6.0</title>
+    
+    <link rel="stylesheet" href="_static/sage.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '6.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Sage Developer&#39;s Guide v6.0" href="index.html" />
+    <link rel="up" title="Disseminating Code for Sage" href="disseminating_code.html" />
+    <link rel="next" title="Working with Sage Notebook source code" href="sagenb/index.html" />
+    <link rel="prev" title="Patching a Sage Package" href="patching_spkgs.html" />
+    <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="sagenb/index.html" title="Working with Sage Notebook source code"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="patching_spkgs.html" title="Patching a Sage Package"
+             accesskey="P">previous</a> |</li>
+  
+    
+      <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
+    
+  
+  
+        <li><a href="index.html">Developer&#39;s Guide v6.0</a> &raquo;</li>
+
+          <li><a href="disseminating_code.html" accesskey="U">Disseminating Code for Sage</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-sage-trac-server-submitting-patches-and-packages">
+<span id="chapter-trac"></span><h1>The Sage Trac Server: Submitting Patches and Packages<a class="headerlink" href="#the-sage-trac-server-submitting-patches-and-packages" title="Permalink to this headline">¶</a></h1>
+<p>What should you do with your Mercurial patches for Sage? You should
+post them on the Sage trac server.</p>
+<p>The Sage trac server, located at
+<a class="reference external" href="http://trac.sagemath.org/sage_trac/">http://trac.sagemath.org/sage_trac/</a>, is where Sage bugs are listed
+and patched, new code is posted and reviewed, and ideas for
+extending and improving Sage are discussed. Thus if you find a bug
+in Sage, or if you have new code to submit, or if you have
+corrections for the documentation, you should post on the trac
+server.</p>
+<p>Items on the server are called &#8220;tickets&#8221;, and anyone may browse the
+tickets: just visit <a class="reference external" href="http://trac.sagemath.org/sage_trac/report">http://trac.sagemath.org/sage_trac/report</a>. You
+need to open an account, though, if you want to comment on a
+ticket, submit a patch, or create a new ticket. See the
+<a class="reference external" href="http://trac.sagemath.org/sage_trac">trac server</a>
+for more information about obtaining an account. This chapter contains
+various guidelines on using the trac server.</p>
+<div class="section" id="reporting-bugs">
+<h2>Reporting bugs<a class="headerlink" href="#reporting-bugs" title="Permalink to this headline">¶</a></h2>
+<p>&#8220;The first step is admitting you have a problem.&#8221;</p>
+<p>If you think you have found a bug in Sage, you should first search
+through the following Google groups for postings related to your
+possible bug:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">sage-devel</span></tt>: <a class="reference external" href="http://groups.google.com/group/sage-devel">http://groups.google.com/group/sage-devel</a></li>
+<li><tt class="docutils literal"><span class="pre">sage-support</span></tt>: <a class="reference external" href="http://groups.google.com/group/sage-support">http://groups.google.com/group/sage-support</a></li>
+</ul>
+<p>Maybe the problem you have encountered has already been discussed. You
+should also search the trac server to see if anyone else has opened a
+ticket about your bug.</p>
+<p>If you do not find anything, and you are not sure that you have found
+a bug, ask about it on <tt class="docutils literal"><span class="pre">sage-devel</span></tt>. You might be asked to open a
+new ticket on the trac server. As mentioned above, you need an account
+to do this. To report a bug, login and click on the &#8220;New ticket&#8221;
+button. Type a meaningful one-liner in the &#8220;Short summary&#8221; box, with
+more information in the larger box below. You should include at least
+one explicit, reproducible example illustrating your bug (and/or the
+steps required to reproduce the buggy behavior). You should also
+include the version of Sage (and any relevant packages) you are using,
+and operating system information, being precise as possible (32-bit,
+64-bit, ...).</p>
+<p>Between the &#8220;Summary&#8221; and &#8220;Full description&#8221; boxes, there is a
+place to choose the &#8220;Type&#8221; of the ticket: &#8220;Defect&#8221;, &#8220;Enhancement&#8221;,
+or &#8220;Task&#8221;. Use your best judgment here; a bug should probably be
+reported as a &#8220;Defect&#8221;.</p>
+<p>Choose a priority for your bug, keeping in mind that the &#8220;blocker&#8221;
+label should be used very sparingly. Also pick a component for your
+bug; this is sometimes straightforward. If your bug deals with
+Sage&#8217;s calculus implementation, choose &#8220;calculus&#8221;. If it is not
+obvious, do your best. Choose a milestone; if you are not sure what
+to choose, just choose the numbered version of Sage from the menu
+(&#8220;sage-4.3.3&#8221;, for example). Type in some helpful keywords. In the
+box labeled &#8220;Assign to&#8221;, type &#8220;somebody&#8221; if you are not sure what
+else to do.</p>
+<p>Hit the &#8220;Preview&#8221; button to make sure everything looks okay, and
+then hit &#8220;Submit ticket&#8221;.</p>
+<p>If you do not have an account on the trac system to report directly,
+you are still encouraged to report any possible bug to the
+<tt class="docutils literal"><span class="pre">sage-devel</span></tt> mailing list at <tt class="docutils literal"><span class="pre">sage-devel&#64;googlegroups.com</span></tt>.
+The list is moderated for new users and requires subscription.
+In your bug report to <tt class="docutils literal"><span class="pre">sage-devel</span></tt>, make sure to include the
+following information:</p>
+<ul class="simple">
+<li><strong>operating system</strong>: as precise as possible and architecture
+(32-bit, 64-bit, ...)</li>
+<li>affected version: the exact <strong>version number</strong> and the downloaded
+package (source, precompiled, virtual machine image, or an upgrade
+from a previous version (which one?))</li>
+<li>provide a <strong>reproducible example</strong> and/or define the steps to
+reproduce the erroneous behaviour.</li>
+</ul>
+<p>Thank you in advance for reporting bugs to improve Sage in the future!</p>
+</div>
+<div class="section" id="guidelines-for-opening-tickets">
+<h2>Guidelines for opening tickets<a class="headerlink" href="#guidelines-for-opening-tickets" title="Permalink to this headline">¶</a></h2>
+<p>In addition to bug reports, you should also open a ticket if you
+have some new code which extends Sage&#8217;s capabilities. If you have a
+feature request, start a discussion on <tt class="docutils literal"><span class="pre">sage-devel</span></tt> first,
+and then if there seems to be general agreement that you have a
+good idea, open a ticket describing the idea.</p>
+<p>When you consider opening a new ticket, please bear the following
+points in mind.</p>
+<ul class="simple">
+<li>Before opening a ticket, make sure that nobody else has opened a
+ticket about the same or closely related issue.</li>
+<li>It is much better to open several specific tickets than one that
+is very broad. Indeed, a single ticket which deals with lots of
+different issues can be quite problematic, and should be avoided.</li>
+<li>Be precise: If foo does not work on OS X but is fine on Linux,
+mention that in the title. Use the keyword option so that
+searches will pick up the issue.</li>
+<li>The problem described in the ticket must be solvable. For
+example, it would be silly to open a ticket whose purpose was
+&#8220;Make Sage the best mathematical software in the world&#8221;. There is
+no metric to measure this properly and it is highly subjective.</li>
+<li>If appropriate, provide URLs to background information or email
+threads relevant to the problem you are reporting.</li>
+</ul>
+</div>
+<div class="section" id="stopgaps">
+<h2>Stopgaps<a class="headerlink" href="#stopgaps" title="Permalink to this headline">¶</a></h2>
+<p>If a component of Sage produces a mathematical error, you should open
+two tickets: a main ticket with all available details, and also a
+&#8220;stopgap&#8221; ticket. This second ticket should have a patch which will be
+merged into Sage if no one fixes the main issue; this patch should print a
+warning when anyone uses the relevant code. To produce the warning
+message, use code like the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sage.misc.stopgap</span> <span class="kn">import</span> <span class="n">stopgap</span>
+<span class="n">stopgap</span><span class="p">(</span><span class="s">&quot;This code contains bugs and may be mathematically unreliable.&quot;</span><span class="p">,</span>
+    <span class="n">TICKET_NUM</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Replace <tt class="docutils literal"><span class="pre">TICKET_NUM</span></tt> by the ticket number for the main ticket.  See
+<a class="reference external" href="http://trac.sagemath.org/12699">trac ticket #12699</a>, for example.  On the main trac ticket, you should also
+enter the ticket number for the stopgap ticket in the &#8220;Stopgaps&#8221;
+field.  Stopgap tickets should be marked as blockers.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If mathematically valid code causes Sage to raise an error or
+crash, for example, there is no need for a stopgap.  Rather,
+stopgaps are to warn users that they may be using buggy code; if
+Sage crashes, this is not an issue.</p>
+</div>
+</div>
+<div class="section" id="patching-bugs-working-on-tickets">
+<h2>Patching bugs/working on tickets<a class="headerlink" href="#patching-bugs-working-on-tickets" title="Permalink to this headline">¶</a></h2>
+<p>If you have code which fixes a bug or deals with some issue in
+Sage, here is what to do. First, use Mercurial to create a patch
+file. See <a class="reference internal" href="walk_through.html#chapter-walk-through"><em>Walking Through the Development Process</em></a> for more information on using
+Mercurial to produce/manage patches. If the issue has been reported as
+a ticket on the trac server, attach your patch file to that ticket: go
+to the ticket, click on the &#8220;Attach File&#8221; button, and follow the
+directions. On the ticket page, you should add a comment explaining
+your patch. Some relevant information include:</p>
+<ul class="simple">
+<li>The version of Sage you used to create the patch. If the patch is
+based on Sage x.y.z, ensure you include such information.</li>
+<li>If the ticket has more than one patch, explicitly specify which ones
+are to be used. Are all of the patches to be applied? Or only a
+subset of the patches on the ticket?</li>
+<li>If more than one patch is to be applied, state the order in which
+those patches are to be applied.</li>
+<li>Does the ticket depend on another ticket? Sometimes, a ticket
+requires that the patches on another ticket be applied first. Be
+sure to include such information if relevant.</li>
+<li>It is best to supply information about ticket dependencies and patch
+order in a way that the Patch Buildbot can understand. This bot
+automatically applies patches from trac and tests them.
+See its wiki: <a class="reference external" href="http://wiki.sagemath.org/buildbot">http://wiki.sagemath.org/buildbot</a></li>
+</ul>
+<p>If there is no trac ticket associated to this issue, create one (as
+explained in the previous sections) describing the issue and your
+solution, and attach your patch.</p>
+<p>The following are some other relevant issues:</p>
+<ul class="simple">
+<li>Every bug fixed should result in a doctest.</li>
+<li>Cooperative debugging via IRC is faster by at least an order of
+magnitude. If you have not learned how to use IRC, please do so.
+If you have problems using IRC because of firewalls, but you do
+have an account on the machine <tt class="docutils literal"><span class="pre">sage.math</span></tt>, you can use irssi via
+ssh there. If you have a flaky connection, you can use it together
+with the program screen.</li>
+<li>This is not an issue with defects, but there are many enhancements
+possible for Sage and too few developers to implement all the
+good ideas. The trac server is useful for keeping ideas
+in a central place because in the Google groups they tend to get
+lost once they drop off the first page.</li>
+<li>If you are a developer, be nice and try to solve a stale/old
+ticket every once in a while.</li>
+<li>Some people regularly do triage. Triage in this context means
+that we look at new bugs and classify them according to our
+perceived priority. It is very likely that different people will
+see priorities of bugs very differently from us, so please let
+us know if you see a problem with specific tickets.</li>
+<li><strong>Patches Preferred</strong>: Patches are easier to review, edit and
+can be merged without affecting the history. So we greatly prefer
+patches over Mercurial bundles. If you do have a large number of
+patches, a bundle can still be better than patches. One
+alternative to bundles is to use Mercurial queues to flatten the
+history. That might or might not be desirable. See
+<a class="reference internal" href="walk_through.html#chapter-walk-through"><em>Walking Through the Development Process</em></a> for further information on using
+Mercurial queues to produce/manage patches.</li>
+</ul>
+</div>
+<div class="section" id="reviewing-patches">
+<span id="section-review-patches"></span><h2>Reviewing patches<a class="headerlink" href="#reviewing-patches" title="Permalink to this headline">¶</a></h2>
+<p>All code that goes into Sage is peer-reviewed, to ensure that the
+conventions discussed in this manual are followed, to make sure that
+there are sufficient examples and doctests in the documentation, and
+to try to make sure that the code does, mathematically, what it is
+supposed to.</p>
+<p>If someone (other than you) has posted a patch for a ticket on the trac
+server, you can review it! Look at the patch (by clicking on the file name
+in the list of attachments) to see if it makes sense.  Download it (from
+the window displaying the patch, see the &#8220;Download&#8221; option at the bottom of
+the page). Apply it (using <tt class="docutils literal"><span class="pre">hg_sage.patch('filename')</span></tt>, for example) to
+your copy of Sage, and build Sage with the new code by typing <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-b</span></tt>.
+See the walkthrough section <a class="reference internal" href="walk_through.html#section-review-patch-walkthrough"><em>Reviewing a patch</em></a> for
+more details on downloading and applying patches.</p>
+<p>Now ask yourself questions such as the following:</p>
+<ul class="simple">
+<li>Does the new source code make sense?</li>
+<li>When you run it in Sage, does it fix the problem reported on the
+ticket?</li>
+<li>Does it introduce any new problems?</li>
+<li>Is it documented sufficiently, including both explanation and
+doctests? This is <strong>very</strong> important: all code in Sage must have
+doctests, so even if the patch is for code which did not have a
+doctest before, the new version must include one. In particular,
+all new code must be <strong>100% doctested</strong>. Use the command
+<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-coverage</span> <span class="pre">&lt;files&gt;</span></tt> to see the coverage percentage of
+<tt class="docutils literal"><span class="pre">&lt;files&gt;</span></tt>.</li>
+<li>In particular, is there a doctest illustrating that the bug has been
+fixed? If a function used to give the wrong answer and this patch fixes
+that, then it should include a doctest illustrating its new success.
+That doctest should be marked with the ticket number as an in-line
+comment.</li>
+<li>Is the ticket number noted in the comment line near the top of the patch?
+Is the patch author noted in all the files which were edited?</li>
+<li>If the patch claims to speed up some computation, does the ticket
+contain code examples to illustrate the claim? The ticket should
+explain the speed efficiency before applying the patch. It should
+also explain the speed efficiency gained after applying the patch.
+In both the &#8220;before&#8221; and &#8220;after&#8221; explanation, there should be
+code samples to illustrate the claims. It is not sufficient to
+just mention that the patch results in a speed-up of up to x
+percent or y factor.</li>
+<li>Does the reference manual build without errors? You can test the
+reference manual using the command <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-docbuild</span> <span class="pre">reference</span> <span class="pre">html</span></tt>
+to build the HTML version. The PDF version of the reference manual
+must also build without errors. Use the command
+<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-docbuild</span> <span class="pre">reference</span> <span class="pre">pdf</span></tt> to test it out. The latter command
+requires that you have LaTeX installed on your system.</li>
+<li>Do all doctests pass without errors? This too is <strong>very</strong> important.  It
+is extremely difficult to predict which components of Sage will be
+affected by a given patch (especially if you don&#8217;t have working knowledge
+of the <strong>entire</strong> Sage library), so you should run tests on the whole
+library&#8211;including those flagged as <tt class="docutils literal"><span class="pre">#long</span></tt>&#8211;before giving a positive
+review.  (For that matter, the patch writer should run these tests before
+uploading the patch.)  You can test the Sage library with <tt class="docutils literal"><span class="pre">make</span>
+<span class="pre">testlong</span></tt> or <tt class="docutils literal"><span class="pre">make</span> <span class="pre">ptestlong</span></tt> (edit the number of threads in
+<tt class="docutils literal"><span class="pre">$SAGE_ROOT/Makefile</span></tt> before using <tt class="docutils literal"><span class="pre">ptestlong</span></tt>). See
+<a class="reference internal" href="doctesting.html#chapter-doctesting"><em>Doctesting the Sage Library</em></a> for more information.</li>
+<li>Do the code and documentation follow conventions documented in the
+following sections?<ul>
+<li><a class="reference internal" href="conventions.html#chapter-conventions"><em>Conventions for Coding in Sage</em></a></li>
+<li><a class="reference internal" href="coding_in_python.html#chapter-python"><em>Coding in Python for Sage</em></a></li>
+<li><a class="reference internal" href="coding_in_cython.html#chapter-cython"><em>Coding in Cython</em></a></li>
+</ul>
+</li>
+</ul>
+<p>If the answers to these and other such reasonable questions are yes, then
+you might want to give the patch a positive review. On the main ticket
+page, write a comment in the box explaining your review. If you don&#8217;t feel
+experienced enough for this, make a comment explaining what you checked,
+and end by asking if someone more experienced will take a look.  If you
+think there are issues with the patch, explain them in the comment box and
+change the status to &#8220;needs work&#8221;. Browse the tickets on the trac server to
+see how things are done.</p>
+</div>
+<div class="section" id="closing-tickets">
+<h2>Closing tickets<a class="headerlink" href="#closing-tickets" title="Permalink to this headline">¶</a></h2>
+<p>Closing tickets is not possible unless you have &#8220;TICKET_ADMIN&#8221; rights in
+Trac. This is because only the current Sage release manager should ever
+close tickets. If you feel strongly that a ticket should be closed or
+deleted, then change the status of the ticket to <tt class="docutils literal"><span class="pre">needs</span> <span class="pre">review</span></tt> and
+change the milestone to <tt class="docutils literal"><span class="pre">sage-duplictate/invalid/wontfix</span></tt>.
+You should also comment on the ticket, explaining why it
+should be closed. A related issue is re-opening tickets. You should
+refrain from re-opening a ticket that is already closed. Instead
+ask the release manager what to do.</p>
+</div>
+<div class="section" id="reasons-to-invalidate-tickets">
+<h2>Reasons to invalidate tickets<a class="headerlink" href="#reasons-to-invalidate-tickets" title="Permalink to this headline">¶</a></h2>
+<p><strong>One Issue Per Ticket</strong>: A ticket must cover only one issue
+and should not be a laundry list of unrelated issues. If a ticket
+covers more than one issue, we cannot close it and while some of
+the patches have been applied to a given release, the ticket would
+remain in limbo.</p>
+<p><strong>No Patch Bombs</strong>: Code that goes into Sage is peer-reviewed. If
+you show up with an 80,000 lines of code bundle that completely
+rips out a subsystem and replaces it with something else, you can
+imagine that the review process will be a little tedious. These
+huge patch bombs are problematic for several reasons and we prefer
+small, gradual changes that are easy to review and apply. This is
+not always possible (e.g. coercion rewrite), but it is still highly
+recommended that you avoid this style of development unless there
+is no way around it.</p>
+<p><strong>Sage Specific</strong>: Sage&#8217;s philosophy is that we ship everything
+(or close to it) in one source tarball to make debugging possible.
+You can imagine the combinatorial explosion we would have to deal
+with if you replaced only ten components of Sage with external
+packages. Once you start replacing some of the more essential
+components of Sage that are commonly packaged (e.g. Pari, GAP,
+lisp, gmp), it is no longer a problem that belongs in our tracker.
+If your distribution&#8217;s Pari package is buggy for example, file a
+bug report with them. We are usually willing and able to solve
+the problem, but there are no guarantees that we will help you
+out. Looking at the open number of tickets that are Sage specific,
+you hopefully will understand why.</p>
+<p><strong>No Support Discussions</strong>: The trac installation is not meant to
+be a system to track down problems when using Sage. Tickets should
+be clearly a bug and not &#8220;I tried to do X and I couldn&#8217;t get it to
+work. How do I do this?&#8221; That is usually not a bug in Sage and it
+is likely that <tt class="docutils literal"><span class="pre">sage-support</span></tt> can answer that question for you. If
+it turns out that you did hit a bug, somebody will open a concise
+and to-the-point ticket.</p>
+<p><strong>Solution Must Be Achievable</strong>: Tickets must be achievable. Many
+times, tickets that fall into this category usually ran afoul to
+some of the other rules listed above. An example would be to
+&#8220;Make Sage the best CAS in the world&#8221;. There is no metric to
+measure this properly and it is highly subjective.</p>
+</div>
+<div class="section" id="milestones-vs-releases">
+<h2>Milestones vs. releases<a class="headerlink" href="#milestones-vs-releases" title="Permalink to this headline">¶</a></h2>
+<p>Milestones are usually goals to be met while working toward a
+release. In Sage&#8217;s trac, we use milestones instead of releases, but
+unless somebody volunteers to clean up all the old milestones, we
+will stick with the current model. It does not make a whole lot of
+difference if we use milestone instead of release.</p>
+<p>Finely grained releases are good. Release early and often is the way
+to go, especially as more and more patches are coming in.</p>
+<p>It is a good idea to make a big release and schedule at least one
+more bug fix release after that to sort out the inevitable
+&#8220;doctest X is broken on distribution Y and compiler Z&#8221; problem.
+Given the number of compilers and operating systems out there, one
+has to be realistic to expect problems. A compile farm would
+certainly help to catch issues early.</p>
+</div>
+<div class="section" id="assigning-tickets">
+<h2>Assigning tickets<a class="headerlink" href="#assigning-tickets" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Each ticket must have a milestone assigned. If you are unsure,
+assign it to the current milestone.</li>
+<li>If a ticket has a patch or spkg that is ready to be reviewed,
+assign it against the current milestone.</li>
+<li>Defect vs. enhancement vs. task: this can be tricky, but a defect
+should be something that leads to an exception or a mathematically
+wrong result.</li>
+<li>If you are unsure to whom to assign the ticket, assign it to
+&#8220;somebody&#8221; or &#8220;tba&#8221;, which stands for &#8220;to be assigned&#8221;.</li>
+<li>Certain categories have default people who get assigned all
+issues. For example, Jane Smith might be the default person who gets
+assigned all tickets relating to calculus. This means that Jane
+looks after tickets in that category, but not necessarily the person
+who is to fix all open tickets relating to calculus.</li>
+<li>If you have been assigned a ticket, you should either accept it
+or assign it back to &#8220;somebody&#8221; or &#8220;tba&#8221;. Many people do not accept
+pending tickets at the moment. You have accepted a ticket if your
+name has a star next to it.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">The Sage Trac Server: Submitting Patches and Packages</a><ul>
+<li><a class="reference internal" href="#reporting-bugs">Reporting bugs</a></li>
+<li><a class="reference internal" href="#guidelines-for-opening-tickets">Guidelines for opening tickets</a></li>
+<li><a class="reference internal" href="#stopgaps">Stopgaps</a></li>
+<li><a class="reference internal" href="#patching-bugs-working-on-tickets">Patching bugs/working on tickets</a></li>
+<li><a class="reference internal" href="#reviewing-patches">Reviewing patches</a></li>
+<li><a class="reference internal" href="#closing-tickets">Closing tickets</a></li>
+<li><a class="reference internal" href="#reasons-to-invalidate-tickets">Reasons to invalidate tickets</a></li>
+<li><a class="reference internal" href="#milestones-vs-releases">Milestones vs. releases</a></li>
+<li><a class="reference internal" href="#assigning-tickets">Assigning tickets</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="patching_spkgs.html"
+                                  title="previous chapter">Patching a Sage Package</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="sagenb/index.html"
+                                  title="next chapter">Working with <em>Sage Notebook</em> source code</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/trac.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <!-- The shading of the "Go" button should be consistent -->
+                <!-- with the colour of the header and footer. See the file -->
+                <!-- doc/common/themes/sage/theme.conf for colours used by -->
+                <!-- the Sage theme. -->
+                <input type="submit" style="background-color: #B8B9F6" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="sagenb/index.html" title="Working with Sage Notebook source code"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="patching_spkgs.html" title="Patching a Sage Package"
+             >previous</a> |</li>
+  
+    
+      <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
+    
+  
+  
+        <li><a href="index.html">Developer&#39;s Guide v6.0</a> &raquo;</li>
+
+          <li><a href="disseminating_code.html" >Disseminating Code for Sage</a> &raquo;</li> 
+      </ul>
+    </div>
+    
+    <div class="footer">
+        &copy; Copyright 2005--2011, The Sage Development Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+    <script type="text/javascript">
+/*global jQuery, window */
+/* Sphinx sidebar toggle.  Putting this code at the end of the body
+ * enables the toggle for the live, static, and offline docs.  Note:
+ * sage.misc.html.math_parse() eats jQuery's dollar-sign shortcut. */
+var jq = jQuery;  
+jq(document).ready(function () {
+    var bar, bod, bg, fg, key, tog, wid_old, wid_new, resize, get_state, set_state;
+    bod = jq('div.bodywrapper');
+    bar = jq('div.sphinxsidebar');
+    tog = jq('<div class="sphinxsidebartoggle"></div>');
+    
+    /* Delayed resize helper.  Not perfect but good enough. */
+    resize = function () {
+        setTimeout(function () {
+            tog.height(bod.height());
+        }, 100);
+    };
+    jq(window).resize(function () {
+        resize();
+    });
+    
+    /* Setup and add the toggle. See Sphinx v0.5.1 default.css. */
+    fg = jq('div.sphinxsidebar p a').css('color') || 'rgb(152, 219, 204)';
+    bg = jq('div.document').css('background-color') || 'rgb(28, 78, 99)';
+    wid_old = '230px';
+    wid_new = '5px';
+    tog.css('background-color', bg)
+        .css('border-width', '0px')
+        .css('border-right', wid_new + ' ridge ' + bg)
+        .css('cursor', 'pointer')
+        .css('position', 'absolute')
+        .css('left', '-' + wid_new)
+        .css('top', '0px')
+        .css('width', wid_new);
+    bod.css('position', 'relative');
+    bod.prepend(tog);
+    resize();
+    
+    /* Cookie helpers. */
+    key = 'sphinxsidebar=';
+    set_state = function (s) {
+        var date = new Date();
+        /* Expiry in 7 days. */
+        date.setTime(date.getTime() + (7 * 24 * 3600 * 1000));
+        document.cookie = key + encodeURIComponent(s) + '; expires=' +
+            date.toUTCString() + '; path=/';
+    };
+    get_state = function () {
+        var i, c, crumbs = document.cookie.split(';');
+        for (i = 0; i < crumbs.length; i += 1) {
+            c = crumbs[i].replace(/^\s+/, '');
+            if (c.indexOf(key) === 0) {
+                return decodeURIComponent(c.substring(key.length, c.length));
+            }
+        }
+        return null;
+    };
+    
+    /* Event handlers. */
+    tog.mouseover(function (ev) {
+        tog.css('border-right-color', fg);
+    }).mouseout(function (ev) {
+        tog.css('border-right-color', bg);
+    }).click(function (ev) {
+        if (bod.hasClass('wide')) {
+            bod.removeClass('wide');
+            bod.css('margin-left', wid_old);
+            bar.css('width', wid_old);
+            bar.show();
+            set_state('visible');
+        } else {
+            set_state('hidden');
+            bar.hide();
+            bar.css('width', '0px');
+            bod.css('margin-left', wid_new);
+            bod.addClass('wide');
+        }
+        resize();
+    });
+    
+    /* Hide the normally visible sidebar? */
+    if (get_state() === 'hidden') {
+        tog.trigger('click');
+    } else {
+        set_state('visible');
+    }
+});
+    </script>
+  </body>
+</html>

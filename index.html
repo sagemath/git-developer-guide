@@ -1,1 +1,377 @@
-My GitHub Page
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to the Sage Developer’s Guide! &mdash; Sage Developer&#39;s Guide v6.0</title>
+    
+    <link rel="stylesheet" href="_static/sage.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '6.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Sage Developer&#39;s Guide v6.0" href="#" />
+    <link rel="next" title="Walking Through the Development Process" href="walk_through.html" />
+    <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="walk_through.html" title="Walking Through the Development Process"
+             accesskey="N">next</a> |</li>
+  
+    
+      <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
+    
+  
+  
+        <li><a href="#">Developer&#39;s Guide v6.0</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-the-sage-developer-s-guide">
+<h1>Welcome to the Sage Developer&#8217;s Guide!<a class="headerlink" href="#welcome-to-the-sage-developer-s-guide" title="Permalink to this headline">¶</a></h1>
+<p>Sage is a free mathematics software system. It is implemented using
+Python, Cython, and C++, together with various packages such as GAP,
+GSL, Matplotlib, Maxima, MWRANK, NetworkX, NTL, Numpy, PARI, Singular
+and many specialized systems and libraries. Sage is free and open
+source, and is available under the terms of the GNU Public
+License. Some parts are available under compatible licenses.</p>
+<p>Everybody who uses Sage is encouraged to contribute something back to
+Sage at some point. Implement a new function, add examples to the
+documentation, find bugs and typos, fix a bug, create a new class,
+create a fast new C library, etc. This book is a guide on how to
+contribute to Sage.</p>
+<p>This document describes how to write programs using Sage, how to
+modify and extend the core Sage libraries, and how to modify Sage&#8217;s
+documentation. It also discusses how to share your new and modified
+code with other Sage users.</p>
+<p>This work is licensed under a <a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
+3.0 License</a>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="walk_through.html">Walking Through the Development Process</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#modifying-sage-source-code">Modifying Sage source code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#creating-a-sandbox">Creating a sandbox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#reviewing-a-patch">Reviewing a patch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#creating-a-change">Creating a change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#submitting-a-change">Submitting a change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#updating-a-change">Updating a change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#being-more-efficient-mercurial-queues">Being more efficient: Mercurial queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#starting-with-mercurial-queues">Starting with Mercurial queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#reviewing-patches-with-queues">Reviewing patches with queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#creating-your-own-patch-with-queues">Creating your own patch with queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#upgrading-sage-with-queues-present">Upgrading Sage with queues present</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#the-big-picture-for-mercurial-queues">The Big Picture for Mercurial queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#more-on-queues">More on queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#cherry-picking">Cherry picking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walk_through.html#more-about-mercurial">More about Mercurial</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="writing_code.html">Writing Code for Sage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conventions.html">Conventions for Coding in Sage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="conventions.html#python-coding-conventions">Python coding conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conventions.html#file-and-directory-names">File and directory names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conventions.html#an-example-is-worth-a-thousand-words">An example is worth a thousand words</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conventions.html#headings-of-sage-library-code-files">Headings of Sage library code files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conventions.html#documentation-strings">Documentation strings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conventions.html#automated-testing">Automated testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conventions.html#the-pickle-jar">The pickle jar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conventions.html#randomized-testing">Randomized testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conventions.html#globaloptions">GlobalOptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_python.html">Coding in Python for Sage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#design">Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#special-sage-functions">Special Sage functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#sage-preparsing">Sage preparsing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#the-sage-coercion-model">The Sage coercion model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#mutability">Mutability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#the-hash-special-method">The  __hash__ special method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#exceptions">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#importing">Importing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#deprecation">Deprecation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#editing-existing-files">Editing existing files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#creating-a-new-directory">Creating a new directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#using-optional-packages">Using optional packages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_cython.html">Coding in Cython</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#writing-cython-code-in-sage">Writing Cython code in Sage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#special-pragmas">Special pragmas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#attaching-or-loading-spyx-files">Attaching or loading .spyx files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#interrupt-and-signal-handling">Interrupt and signal handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#unpickling-cython-code">Unpickling cython code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_other.html">Coding using external libraries and interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_other.html#the-pari-c-library-interface">The PARI C library interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_other.html#gap">GAP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_other.html#singular">Singular</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_other.html#singular-another-approach">Singular: Another approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_other.html#creating-a-new-pseudo-tty-interface">Creating a new pseudo-tty interface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="doctesting.html">Doctesting the Sage Library</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#testing-a-module">Testing a module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#parallel-testing-many-modules">Parallel testing many modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#parallel-testing-the-whole-sage-library">Parallel testing the whole Sage library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#beyond-the-sage-library">Beyond the Sage library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#doctesting-from-within-sage">Doctesting from within Sage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#optional-arguments">Optional Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html">The Sage Manuals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#editing-the-manuals">Editing the manuals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#linking-to-modules-classes-methods-trac-tickets-and-wikipedia">Linking to modules, classes, methods, ..., trac tickets and Wikipedia</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#adding-a-new-file">Adding a new file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#building-the-manuals">Building the manuals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#syntax-highlighting-cython-code">Syntax highlighting Cython code</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="disseminating_code.html">Disseminating Code for Sage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inclusion.html">Inclusion Procedure for New Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="producing_patches.html">Producing Patches with Mercurial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="producing_patches.html#quick-mercurial-tutorial-for-sage">Quick Mercurial tutorial for Sage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="producing_patches.html#using-mercurial-with-other-sage-repositories">Using Mercurial with other Sage repositories</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="producing_spkgs.html">Producing New Sage Packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="producing_spkgs.html#creating-a-new-spkg">Creating a new spkg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="producing_spkgs.html#avoiding-troubles">Avoiding troubles</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="patching_spkgs.html">Patching a Sage Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="patching_spkgs.html#overview-of-patching-spkg-s">Overview of patching spkg&#8217;s</a></li>
+<li class="toctree-l3"><a class="reference internal" href="patching_spkgs.html#use-patch-for-patching">Use patch for patching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="patching_spkgs.html#bumping-up-an-spkg-s-version">Bumping up an spkg&#8217;s version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="patching_spkgs.html#license-information">License information</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html">The Sage Trac Server: Submitting Patches and Packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="trac.html#reporting-bugs">Reporting bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac.html#guidelines-for-opening-tickets">Guidelines for opening tickets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac.html#stopgaps">Stopgaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac.html#patching-bugs-working-on-tickets">Patching bugs/working on tickets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac.html#reviewing-patches">Reviewing patches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac.html#closing-tickets">Closing tickets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac.html#reasons-to-invalidate-tickets">Reasons to invalidate tickets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac.html#milestones-vs-releases">Milestones vs. releases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac.html#assigning-tickets">Assigning tickets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sagenb/index.html">Working with <em>Sage Notebook</em> source code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sagenb/index.html#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/git_intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/git_install.html">Install git</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/following_latest.html">Following the latest source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/patching.html">Making a patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/git_development.html">Git for development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/git_resources.html">git resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="#">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Welcome to the Sage Developer&#8217;s Guide!</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+            <h4>Next topic</h4>
+            <p class="topless"><a href="walk_through.html"
+                                  title="next chapter">Walking Through the Development Process</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/index.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <!-- The shading of the "Go" button should be consistent -->
+                <!-- with the colour of the header and footer. See the file -->
+                <!-- doc/common/themes/sage/theme.conf for colours used by -->
+                <!-- the Sage theme. -->
+                <input type="submit" style="background-color: #B8B9F6" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="walk_through.html" title="Walking Through the Development Process"
+             >next</a> |</li>
+  
+    
+      <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
+    
+  
+  
+        <li><a href="#">Developer&#39;s Guide v6.0</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    
+    <div class="footer">
+        &copy; Copyright 2005--2011, The Sage Development Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+    <script type="text/javascript">
+/*global jQuery, window */
+/* Sphinx sidebar toggle.  Putting this code at the end of the body
+ * enables the toggle for the live, static, and offline docs.  Note:
+ * sage.misc.html.math_parse() eats jQuery's dollar-sign shortcut. */
+var jq = jQuery;  
+jq(document).ready(function () {
+    var bar, bod, bg, fg, key, tog, wid_old, wid_new, resize, get_state, set_state;
+    bod = jq('div.bodywrapper');
+    bar = jq('div.sphinxsidebar');
+    tog = jq('<div class="sphinxsidebartoggle"></div>');
+    
+    /* Delayed resize helper.  Not perfect but good enough. */
+    resize = function () {
+        setTimeout(function () {
+            tog.height(bod.height());
+        }, 100);
+    };
+    jq(window).resize(function () {
+        resize();
+    });
+    
+    /* Setup and add the toggle. See Sphinx v0.5.1 default.css. */
+    fg = jq('div.sphinxsidebar p a').css('color') || 'rgb(152, 219, 204)';
+    bg = jq('div.document').css('background-color') || 'rgb(28, 78, 99)';
+    wid_old = '230px';
+    wid_new = '5px';
+    tog.css('background-color', bg)
+        .css('border-width', '0px')
+        .css('border-right', wid_new + ' ridge ' + bg)
+        .css('cursor', 'pointer')
+        .css('position', 'absolute')
+        .css('left', '-' + wid_new)
+        .css('top', '0px')
+        .css('width', wid_new);
+    bod.css('position', 'relative');
+    bod.prepend(tog);
+    resize();
+    
+    /* Cookie helpers. */
+    key = 'sphinxsidebar=';
+    set_state = function (s) {
+        var date = new Date();
+        /* Expiry in 7 days. */
+        date.setTime(date.getTime() + (7 * 24 * 3600 * 1000));
+        document.cookie = key + encodeURIComponent(s) + '; expires=' +
+            date.toUTCString() + '; path=/';
+    };
+    get_state = function () {
+        var i, c, crumbs = document.cookie.split(';');
+        for (i = 0; i < crumbs.length; i += 1) {
+            c = crumbs[i].replace(/^\s+/, '');
+            if (c.indexOf(key) === 0) {
+                return decodeURIComponent(c.substring(key.length, c.length));
+            }
+        }
+        return null;
+    };
+    
+    /* Event handlers. */
+    tog.mouseover(function (ev) {
+        tog.css('border-right-color', fg);
+    }).mouseout(function (ev) {
+        tog.css('border-right-color', bg);
+    }).click(function (ev) {
+        if (bod.hasClass('wide')) {
+            bod.removeClass('wide');
+            bod.css('margin-left', wid_old);
+            bar.css('width', wid_old);
+            bar.show();
+            set_state('visible');
+        } else {
+            set_state('hidden');
+            bar.hide();
+            bar.css('width', '0px');
+            bod.css('margin-left', wid_new);
+            bod.addClass('wide');
+        }
+        resize();
+    });
+    
+    /* Hide the normally visible sidebar? */
+    if (get_state() === 'hidden') {
+        tog.trigger('click');
+    } else {
+        set_state('visible');
+    }
+});
+    </script>
+  </body>
+</html>

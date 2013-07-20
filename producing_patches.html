@@ -1,0 +1,365 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Producing Patches with Mercurial &mdash; Sage Developer&#39;s Guide v6.0</title>
+    
+    <link rel="stylesheet" href="_static/sage.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '6.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Sage Developer&#39;s Guide v6.0" href="index.html" />
+    <link rel="up" title="Disseminating Code for Sage" href="disseminating_code.html" />
+    <link rel="next" title="Producing New Sage Packages" href="producing_spkgs.html" />
+    <link rel="prev" title="Inclusion Procedure for New Packages" href="inclusion.html" />
+    <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="producing_spkgs.html" title="Producing New Sage Packages"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="inclusion.html" title="Inclusion Procedure for New Packages"
+             accesskey="P">previous</a> |</li>
+  
+    
+      <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
+    
+  
+  
+        <li><a href="index.html">Developer&#39;s Guide v6.0</a> &raquo;</li>
+
+          <li><a href="disseminating_code.html" accesskey="U">Disseminating Code for Sage</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="producing-patches-with-mercurial">
+<span id="chapter-mercurial"></span><h1>Producing Patches with Mercurial<a class="headerlink" href="#producing-patches-with-mercurial" title="Permalink to this headline">¶</a></h1>
+<p>If you are editing or adding to Sage&#8217;s core library, you will probably
+want to share your changes with other users. Mercurial is the tool to
+do this. Mercurial is the source control system that is included with
+Sage. This chapter provides an overview of how to use Mercurial with
+Sage; see <a class="reference external" href="http://www.selenic.com/mercurial/">http://www.selenic.com/mercurial/</a> for full documentation on
+Mercurial.</p>
+<p>All of the Mercurial repositories related to Sage are included with
+Sage. Thus the complete change history and setup for doing development
+is available in your copy of Sage.</p>
+<p>Before using Mercurial, make sure to define your username so the
+patches you make are identified as yours. Make a file <tt class="docutils literal"><span class="pre">~/.hgrc</span></tt>
+in your home directory like this one:</p>
+<div class="highlight-python"><pre>[ui]
+username = Euclid of Alexandria &lt;euclid@alexandria.edu&gt;</pre>
+</div>
+<div class="section" id="quick-mercurial-tutorial-for-sage">
+<h2>Quick Mercurial tutorial for Sage<a class="headerlink" href="#quick-mercurial-tutorial-for-sage" title="Permalink to this headline">¶</a></h2>
+<p>To submit your changes to the Sage development team for refereeing
+(and inclusion into Sage if the referee&#8217;s report is positive), you
+should produce patch files using Mercurial. The simplest way is to run
+Mercurial from within Sage following the examples below (note: <tt class="docutils literal"><span class="pre">Hg</span></tt>
+is the chemical symbol for mercury).</p>
+<ul>
+<li><p class="first">Type <tt class="docutils literal"><span class="pre">hg_sage.status()</span></tt> and <tt class="docutils literal"><span class="pre">hg_sage.diff()</span></tt> to see exactly what
+you have done. Use the command <tt class="docutils literal"><span class="pre">q</span></tt> to quit the diff.</p>
+</li>
+<li><p class="first">If you have added new files, not just edited existing ones, type
+<tt class="docutils literal"><span class="pre">hg_sage.add([filenames])</span></tt> to add those new files to your
+repository.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">As noted in <a class="reference internal" href="coding_in_cython.html#chapter-cython"><em>Coding in Cython</em></a>, if you have added a Cython
+file, you also need to edit
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/module_list.py</span></tt>. If you have added a
+new directory, you need to edit
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/setup.py</span></tt>.  If you have added something
+other than Python or Cython files, then you might need to add
+entries to the file <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/MANIFEST.in</span></tt>: this
+records all of the files to include in distributions of the Sage
+library.  Look at the file itself for examples, and see the
+Python documentation
+<a class="reference external" href="http://docs.python.org/distutils/sourcedist.html#specifying-the-files-to-distribute">http://docs.python.org/distutils/sourcedist.html#specifying-the-files-to-distribute</a>
+for all of the details.</p>
+</div>
+</li>
+<li><p class="first">Commit your changes by typing <tt class="docutils literal"><span class="pre">hg_sage.commit()</span></tt> to commit the
+changes in files to the repository.  If you want to commit only
+specific files, each file must be listed individually with full path
+names, e.g. <tt class="docutils literal"><span class="pre">hg_sage.commit('sage/misc/misc.py</span>&nbsp; <span class="pre">sage/all.py')</span></tt>. If
+no file names are given, all changed files are committed. First, the
+output of <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">diff</span></tt> is displayed: look at it or just enter
+<tt class="docutils literal"><span class="pre">q</span></tt>. Then you are dumped into an editor to type a brief comment on
+the changes. The default editor is vi, so type <tt class="docutils literal"><span class="pre">i</span></tt> to insert,
+write a one line commit message of the form
+<tt class="docutils literal"><span class="pre">trac</span> <span class="pre">xxxx:</span> <span class="pre">&lt;your-commit-message-here&gt;</span></tt> where <tt class="docutils literal"><span class="pre">xxxx</span></tt> is the Sage
+development tracking system  ticket number (see
+<a class="reference external" href="http://trac.sagemath.org">http://trac.sagemath.org</a>). To quit the vi editor and save your
+commit message, hit <tt class="docutils literal"><span class="pre">Escape</span></tt> and type <tt class="docutils literal"><span class="pre">:wq</span></tt>. (In bash, to make
+emacs the default editor, type <tt class="docutils literal"><span class="pre">export</span> <span class="pre">EDITOR=emacs</span></tt>.)</p>
+</li>
+<li><p class="first">Now create a patch file using <tt class="docutils literal"><span class="pre">hg_sage.export(...)</span></tt>. This command
+needs a revision number (or list of revision numbers) as an
+argument; use <tt class="docutils literal"><span class="pre">hg_sage.export('tip')</span></tt> to use the most recent
+revision number or use <tt class="docutils literal"><span class="pre">hg_sage.log()</span></tt> to see all these
+numbers. An optional second argument to <tt class="docutils literal"><span class="pre">hg_sage.export(...)</span></tt> is a
+file name for the patch. The default is
+<tt class="docutils literal"><span class="pre">(changeset_revision_number).patch</span></tt>, which is written in what Sage
+considers the current directory (this can be found with the command
+<tt class="docutils literal"><span class="pre">os.path.abspath('.')</span></tt>).</p>
+</li>
+<li><p class="first">Then post your patch on the Sage Trac server: see
+<a class="reference internal" href="trac.html#chapter-trac"><em>The Sage Trac Server: Submitting Patches and Packages</em></a>.</p>
+</li>
+</ul>
+<p>You can also run Mercurial directly from the command line using the
+command <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-hg</span></tt>. Or you can start a very nice web server that
+allows you to navigate your repository with a web browser, or pull
+patches from it remotely, by typing <tt class="docutils literal"><span class="pre">hg_sage.serve()</span></tt>. Then open
+your web browser and point it to <a class="reference external" href="http://localhost:8000">http://localhost:8000</a>, which is the
+default listening address for Mercurial.</p>
+<p>Finally, if you want to apply a patch file (perhaps you have
+downloaded a patch from the Trac server for review), use the command
+<tt class="docutils literal"><span class="pre">hg_sage.patch('filename')</span></tt> (or <tt class="docutils literal"><span class="pre">hg_sage.apply('filename')</span></tt> for hg
+bundle files).</p>
+<p>Before you modify Sage library files, you might want to create a copy
+of the Sage library in which to work. Do this by typing
+<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-clone</span> <span class="pre">myver</span></tt>, for example. Then Sage will use Mercurial to
+clone the current repository and call the result <tt class="docutils literal"><span class="pre">myver</span></tt>. The new
+repository is stored in <tt class="docutils literal"><span class="pre">&lt;SAGE_ROOT&gt;/devel/sage-myver</span></tt>, and when you
+clone, the symbolic link <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">--&gt;</span> <span class="pre">sage-myver</span></tt> is made.</p>
+<p>(You can also do, e.g. <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-clone</span> <span class="pre">-r</span> <span class="pre">1250</span> <span class="pre">oldver</span></tt>, to get a clone
+of Sage as it was at revision 1250. Of course, dependency issues could
+make old versions not work (e.g. maybe an old Sage library would not
+compile with the latest Singular library, which is what is installed
+elsewhere in <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt>). From within Sage, type <tt class="docutils literal"><span class="pre">hg_sage.log()</span></tt>
+to see the revision history. Note that if you clone an old version,
+all of the Cython code is rebuilt, since there is no easy way to know
+which files do and do not need rebuilding.)</p>
+<p>Once you have copied the library to a new branch <tt class="docutils literal"><span class="pre">myver</span></tt> and edited
+some files there, you should build the Sage library to incorporate
+those changes. Type <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-b</span> <span class="pre">myver</span></tt>, or just <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-b</span></tt> if the
+branch <tt class="docutils literal"><span class="pre">myver</span></tt> is already the current branch, i.e. if
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage</span></tt> links to <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage-myver</span></tt>. You
+can also type <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-br</span> <span class="pre">myver</span></tt> to build the library and then to
+immediately run Sage.</p>
+</div>
+<div class="section" id="using-mercurial-with-other-sage-repositories">
+<h2>Using Mercurial with other Sage repositories<a class="headerlink" href="#using-mercurial-with-other-sage-repositories" title="Permalink to this headline">¶</a></h2>
+<p>Sage includes these Mercurial repositories:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage-*</span></tt>: the Sage library source code.</li>
+<li><tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/ext</span></tt>: external system code, i.e. code included
+with Sage that is written for the systems with which Sage
+interfaces, e.g. GAP, PARI, etc.</li>
+<li><tt class="docutils literal"><span class="pre">SAGE_ROOT/local/bin</span></tt>: Sage shell scripts.</li>
+<li><tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt>: Sage root &#8211; text files in the main Sage directory
+and in <tt class="docutils literal"><span class="pre">SAGE_ROOT/spkg</span></tt>.</li>
+</ul>
+<p>The previous section discussed using Mercurial with the Sage library,
+via the command <tt class="docutils literal"><span class="pre">hg_sage</span></tt>. There are corresponding commands for each
+of the repositories:</p>
+<ul class="simple">
+<li>use <tt class="docutils literal"><span class="pre">hg_sage</span></tt> for the Sage library</li>
+<li>use <tt class="docutils literal"><span class="pre">hg_extcode</span></tt> for the external system code</li>
+<li>use <tt class="docutils literal"><span class="pre">hg_scripts</span></tt> for the Sage shell scripts.</li>
+<li>use <tt class="docutils literal"><span class="pre">hg_root</span></tt> for the Sage root.</li>
+</ul>
+<p>Since version 3.4, both the Sage library and documentation
+repositories are managed by the command <tt class="docutils literal"><span class="pre">hg_sage</span></tt>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Producing Patches with Mercurial</a><ul>
+<li><a class="reference internal" href="#quick-mercurial-tutorial-for-sage">Quick Mercurial tutorial for Sage</a></li>
+<li><a class="reference internal" href="#using-mercurial-with-other-sage-repositories">Using Mercurial with other Sage repositories</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="inclusion.html"
+                                  title="previous chapter">Inclusion Procedure for New Packages</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="producing_spkgs.html"
+                                  title="next chapter">Producing New Sage Packages</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/producing_patches.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <!-- The shading of the "Go" button should be consistent -->
+                <!-- with the colour of the header and footer. See the file -->
+                <!-- doc/common/themes/sage/theme.conf for colours used by -->
+                <!-- the Sage theme. -->
+                <input type="submit" style="background-color: #B8B9F6" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="producing_spkgs.html" title="Producing New Sage Packages"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="inclusion.html" title="Inclusion Procedure for New Packages"
+             >previous</a> |</li>
+  
+    
+      <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
+    
+  
+  
+        <li><a href="index.html">Developer&#39;s Guide v6.0</a> &raquo;</li>
+
+          <li><a href="disseminating_code.html" >Disseminating Code for Sage</a> &raquo;</li> 
+      </ul>
+    </div>
+    
+    <div class="footer">
+        &copy; Copyright 2005--2011, The Sage Development Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+    <script type="text/javascript">
+/*global jQuery, window */
+/* Sphinx sidebar toggle.  Putting this code at the end of the body
+ * enables the toggle for the live, static, and offline docs.  Note:
+ * sage.misc.html.math_parse() eats jQuery's dollar-sign shortcut. */
+var jq = jQuery;  
+jq(document).ready(function () {
+    var bar, bod, bg, fg, key, tog, wid_old, wid_new, resize, get_state, set_state;
+    bod = jq('div.bodywrapper');
+    bar = jq('div.sphinxsidebar');
+    tog = jq('<div class="sphinxsidebartoggle"></div>');
+    
+    /* Delayed resize helper.  Not perfect but good enough. */
+    resize = function () {
+        setTimeout(function () {
+            tog.height(bod.height());
+        }, 100);
+    };
+    jq(window).resize(function () {
+        resize();
+    });
+    
+    /* Setup and add the toggle. See Sphinx v0.5.1 default.css. */
+    fg = jq('div.sphinxsidebar p a').css('color') || 'rgb(152, 219, 204)';
+    bg = jq('div.document').css('background-color') || 'rgb(28, 78, 99)';
+    wid_old = '230px';
+    wid_new = '5px';
+    tog.css('background-color', bg)
+        .css('border-width', '0px')
+        .css('border-right', wid_new + ' ridge ' + bg)
+        .css('cursor', 'pointer')
+        .css('position', 'absolute')
+        .css('left', '-' + wid_new)
+        .css('top', '0px')
+        .css('width', wid_new);
+    bod.css('position', 'relative');
+    bod.prepend(tog);
+    resize();
+    
+    /* Cookie helpers. */
+    key = 'sphinxsidebar=';
+    set_state = function (s) {
+        var date = new Date();
+        /* Expiry in 7 days. */
+        date.setTime(date.getTime() + (7 * 24 * 3600 * 1000));
+        document.cookie = key + encodeURIComponent(s) + '; expires=' +
+            date.toUTCString() + '; path=/';
+    };
+    get_state = function () {
+        var i, c, crumbs = document.cookie.split(';');
+        for (i = 0; i < crumbs.length; i += 1) {
+            c = crumbs[i].replace(/^\s+/, '');
+            if (c.indexOf(key) === 0) {
+                return decodeURIComponent(c.substring(key.length, c.length));
+            }
+        }
+        return null;
+    };
+    
+    /* Event handlers. */
+    tog.mouseover(function (ev) {
+        tog.css('border-right-color', fg);
+    }).mouseout(function (ev) {
+        tog.css('border-right-color', bg);
+    }).click(function (ev) {
+        if (bod.hasClass('wide')) {
+            bod.removeClass('wide');
+            bod.css('margin-left', wid_old);
+            bar.css('width', wid_old);
+            bar.show();
+            set_state('visible');
+        } else {
+            set_state('hidden');
+            bar.hide();
+            bar.css('width', '0px');
+            bod.css('margin-left', wid_new);
+            bod.addClass('wide');
+        }
+        resize();
+    });
+    
+    /* Hide the normally visible sidebar? */
+    if (get_state() === 'hidden') {
+        tog.trigger('click');
+    } else {
+        set_state('visible');
+    }
+});
+    </script>
+  </body>
+</html>

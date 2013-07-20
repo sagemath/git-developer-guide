@@ -1,0 +1,296 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Inclusion Procedure for New Packages &mdash; Sage Developer&#39;s Guide v6.0</title>
+    
+    <link rel="stylesheet" href="_static/sage.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '6.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Sage Developer&#39;s Guide v6.0" href="index.html" />
+    <link rel="up" title="Disseminating Code for Sage" href="disseminating_code.html" />
+    <link rel="next" title="Producing Patches with Mercurial" href="producing_patches.html" />
+    <link rel="prev" title="Disseminating Code for Sage" href="disseminating_code.html" />
+    <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="producing_patches.html" title="Producing Patches with Mercurial"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="disseminating_code.html" title="Disseminating Code for Sage"
+             accesskey="P">previous</a> |</li>
+  
+    
+      <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
+    
+  
+  
+        <li><a href="index.html">Developer&#39;s Guide v6.0</a> &raquo;</li>
+
+          <li><a href="disseminating_code.html" accesskey="U">Disseminating Code for Sage</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="inclusion-procedure-for-new-packages">
+<h1>Inclusion Procedure for New Packages<a class="headerlink" href="#inclusion-procedure-for-new-packages" title="Permalink to this headline">¶</a></h1>
+<p>For a package to become part of Sage&#8217;s standard distribution, it
+must meet the following requirements:</p>
+<ul>
+<li><p class="first"><strong>License</strong>. For external packages, the license must be compatible
+with the GNU General Public License, version 3. More precisely, it
+must be allowed to license the code that you wish to include under
+the GPL version 3.  Sage library code (anything which is not an
+external package) must be licensed under the
+&#8220;GNU General Public License as published by the Free Software Foundation;
+either version 2 of the License, or (at your option) any later version.&#8221;
+The Free Software Foundation maintains a long list of
+<a class="reference external" href="http://www.gnu.org/licenses/license-list.html">licenses and comments about them</a>.</p>
+</li>
+<li><p class="first"><strong>Build Support</strong>. The code <strong>must</strong> build on all the <a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Fully_supported">fully supported platforms</a>.</p>
+<p>A standard package should also work on all the platforms where Sage is
+<a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Expected_to_work">expected to work</a>
+and on which Sage <a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Almost_works">almost works</a>
+but since we don&#8217;t fully support these platforms and often lack the resources to test on them,
+you are not expected to confirm your packages works on those platforms.
+However, if you can, it is better to do so. As noted
+<a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Expected_to_work">here</a>,
+a failure of Sage to work on a
+platform where it is expected to work, will be considered a bug.</p>
+<p>There is no need to worry too much about platforms where Sage will
+<a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Probably_will_not_work">probably not work</a>
+though if it&#8217;s clear that there is
+significant effort taking place to port Sage to a platform, then you should
+aim to ensure your package does not cause unnecessary headaches to those
+working on the port.</p>
+<p>If it&#8217;s clear that a port is stagnent, with nobody working on
+it, then you can safely ignore it.</p>
+<p>Remarks:</p>
+<ul class="simple">
+<li>Some Sage developers are willing to help you port to OS X, Solaris
+and Windows. But this is no guarantee and you or your project are
+expected to do the heavy lifting and also support those ports
+upstream if there is no Sage developer who is willing to share the
+burden.</li>
+<li>One of the best ways to ensure your code works on multiple platforms
+is to only use commands which are defined by <a class="reference external" href="http://www.opengroup.org/onlinepubs/9699919799/">POSIX.1-2008</a> and only use options which are defined
+in the POSIX standard. For example, do not use the -p option to <a class="reference external" href="http://www.opengroup.org/onlinepubs/9699919799/utilities/uname.html">uname</a> as
+the &#8216;-p&#8217; option is not defined by the POSIX standard, so is not portable.
+If you must use a non-POSIX command, or a option which is not defined
+by POSIX, then ensure the code only gets executed on the platform(s)
+where that command and/or option will be acceptable.</li>
+</ul>
+</li>
+<li><p class="first"><strong>Quality</strong>. The code should be &#8220;better&#8221; than any other available
+code (that passes the two above criteria), and the authors need to
+justify this. The comparison should be made to both Python and other
+software. Criteria in passing the quality test include:</p>
+<ul class="simple">
+<li>Speed</li>
+<li>Documentation</li>
+<li>Usability</li>
+<li>Memory leaks</li>
+<li>Maintainable</li>
+<li>Portability</li>
+<li>Reasonable build time, size, dependencies</li>
+</ul>
+</li>
+<li><p class="first"><strong>Previously an optional package</strong>. Usually a new standard package must
+have spent some time as an optional package. However, sometimes this is
+not possible, if for example a new library is needed to permit an
+updated version of a standard package to function.</p>
+</li>
+<li><p class="first"><strong>Refereeing</strong>. The code must be refereed, as discussed in
+<a class="reference internal" href="trac.html#chapter-trac"><em>The Sage Trac Server: Submitting Patches and Packages</em></a>.</p>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="disseminating_code.html"
+                                  title="previous chapter">Disseminating Code for Sage</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="producing_patches.html"
+                                  title="next chapter">Producing Patches with Mercurial</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/inclusion.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <!-- The shading of the "Go" button should be consistent -->
+                <!-- with the colour of the header and footer. See the file -->
+                <!-- doc/common/themes/sage/theme.conf for colours used by -->
+                <!-- the Sage theme. -->
+                <input type="submit" style="background-color: #B8B9F6" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="producing_patches.html" title="Producing Patches with Mercurial"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="disseminating_code.html" title="Disseminating Code for Sage"
+             >previous</a> |</li>
+  
+    
+      <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
+    
+  
+  
+        <li><a href="index.html">Developer&#39;s Guide v6.0</a> &raquo;</li>
+
+          <li><a href="disseminating_code.html" >Disseminating Code for Sage</a> &raquo;</li> 
+      </ul>
+    </div>
+    
+    <div class="footer">
+        &copy; Copyright 2005--2011, The Sage Development Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+    <script type="text/javascript">
+/*global jQuery, window */
+/* Sphinx sidebar toggle.  Putting this code at the end of the body
+ * enables the toggle for the live, static, and offline docs.  Note:
+ * sage.misc.html.math_parse() eats jQuery's dollar-sign shortcut. */
+var jq = jQuery;  
+jq(document).ready(function () {
+    var bar, bod, bg, fg, key, tog, wid_old, wid_new, resize, get_state, set_state;
+    bod = jq('div.bodywrapper');
+    bar = jq('div.sphinxsidebar');
+    tog = jq('<div class="sphinxsidebartoggle"></div>');
+    
+    /* Delayed resize helper.  Not perfect but good enough. */
+    resize = function () {
+        setTimeout(function () {
+            tog.height(bod.height());
+        }, 100);
+    };
+    jq(window).resize(function () {
+        resize();
+    });
+    
+    /* Setup and add the toggle. See Sphinx v0.5.1 default.css. */
+    fg = jq('div.sphinxsidebar p a').css('color') || 'rgb(152, 219, 204)';
+    bg = jq('div.document').css('background-color') || 'rgb(28, 78, 99)';
+    wid_old = '230px';
+    wid_new = '5px';
+    tog.css('background-color', bg)
+        .css('border-width', '0px')
+        .css('border-right', wid_new + ' ridge ' + bg)
+        .css('cursor', 'pointer')
+        .css('position', 'absolute')
+        .css('left', '-' + wid_new)
+        .css('top', '0px')
+        .css('width', wid_new);
+    bod.css('position', 'relative');
+    bod.prepend(tog);
+    resize();
+    
+    /* Cookie helpers. */
+    key = 'sphinxsidebar=';
+    set_state = function (s) {
+        var date = new Date();
+        /* Expiry in 7 days. */
+        date.setTime(date.getTime() + (7 * 24 * 3600 * 1000));
+        document.cookie = key + encodeURIComponent(s) + '; expires=' +
+            date.toUTCString() + '; path=/';
+    };
+    get_state = function () {
+        var i, c, crumbs = document.cookie.split(';');
+        for (i = 0; i < crumbs.length; i += 1) {
+            c = crumbs[i].replace(/^\s+/, '');
+            if (c.indexOf(key) === 0) {
+                return decodeURIComponent(c.substring(key.length, c.length));
+            }
+        }
+        return null;
+    };
+    
+    /* Event handlers. */
+    tog.mouseover(function (ev) {
+        tog.css('border-right-color', fg);
+    }).mouseout(function (ev) {
+        tog.css('border-right-color', bg);
+    }).click(function (ev) {
+        if (bod.hasClass('wide')) {
+            bod.removeClass('wide');
+            bod.css('margin-left', wid_old);
+            bar.css('width', wid_old);
+            bar.show();
+            set_state('visible');
+        } else {
+            set_state('hidden');
+            bar.hide();
+            bar.css('width', '0px');
+            bod.css('margin-left', wid_new);
+            bod.addClass('wide');
+        }
+        resize();
+    });
+    
+    /* Hide the normally visible sidebar? */
+    if (get_state() === 'hidden') {
+        tog.trigger('click');
+    } else {
+        set_state('visible');
+    }
+});
+    </script>
+  </body>
+</html>

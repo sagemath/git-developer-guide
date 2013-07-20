@@ -1,0 +1,435 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Patching a Sage Package &mdash; Sage Developer&#39;s Guide v6.0</title>
+    
+    <link rel="stylesheet" href="_static/sage.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '6.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Sage Developer&#39;s Guide v6.0" href="index.html" />
+    <link rel="up" title="Disseminating Code for Sage" href="disseminating_code.html" />
+    <link rel="next" title="The Sage Trac Server: Submitting Patches and Packages" href="trac.html" />
+    <link rel="prev" title="Producing New Sage Packages" href="producing_spkgs.html" />
+    <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="trac.html" title="The Sage Trac Server: Submitting Patches and Packages"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="producing_spkgs.html" title="Producing New Sage Packages"
+             accesskey="P">previous</a> |</li>
+  
+    
+      <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
+    
+  
+  
+        <li><a href="index.html">Developer&#39;s Guide v6.0</a> &raquo;</li>
+
+          <li><a href="disseminating_code.html" accesskey="U">Disseminating Code for Sage</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="patching-a-sage-package">
+<span id="chapter-patching-spkgs"></span><h1>Patching a Sage Package<a class="headerlink" href="#patching-a-sage-package" title="Permalink to this headline">¶</a></h1>
+<p>This chapter provides guidelines on patching an existing spkg. Also
+covered are steps for upgrading an upstream project&#8217;s source
+distribution, as contained under the subdirectory <tt class="docutils literal"><span class="pre">src/</span></tt>, to the
+latest upstream release. For information on creating a new spkg, see
+the chapter <a class="reference internal" href="producing_spkgs.html#chapter-spkg"><em>Producing New Sage Packages</em></a>.</p>
+<div class="section" id="overview-of-patching-spkg-s">
+<span id="section-spkg-patching-overview"></span><h2>Overview of patching spkg&#8217;s<a class="headerlink" href="#overview-of-patching-spkg-s" title="Permalink to this headline">¶</a></h2>
+<p>Make sure you are familiar with the structure and conventions relating
+to spkg&#8217;s; see the chapter <a class="reference internal" href="producing_spkgs.html#chapter-spkg"><em>Producing New Sage Packages</em></a> for details. Patching
+an spkg involves patching the installation script of the spkg and/or
+patching the upstream source code contained in the spkg. Say you want
+to patch the Matplotlib package <tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p0</span></tt>. Note that &#8220;p0&#8221; denotes
+the patch level of the spkg, while &#8220;1.0.1&#8221; refers to the upstream
+version of Matplotlib as contained under <tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p0/src/</span></tt>. The
+installation script of that spkg is</p>
+<div class="highlight-python"><pre>matplotlib-1.0.1.p0/spkg-install</pre>
+</div>
+<p>In general, a script with the name <tt class="docutils literal"><span class="pre">spkg-install</span></tt>  is an
+installation script for an spkg. To patch the installation script, use
+a text editor to edit that script. Then in the log file <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt>,
+provide a high-level description of your changes. Once you are
+satisfied with your changes in the installation script and the log
+file <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt>, use Mercurial to check in your changes and make
+sure to provide a meaningful commit message. See the section
+<a class="reference internal" href="walk_through.html#section-submitting-change"><em>Submitting a change</em></a> for guidelines relating to commit
+messages.</p>
+<p>The directory <tt class="docutils literal"><span class="pre">src/</span></tt> contains the source code provided by the
+upstream project. For example, the source code of Matplotlib 1.0.1 is
+contained under</p>
+<div class="highlight-python"><pre>matplotlib-1.0.1.p0/src/</pre>
+</div>
+<p>To patch the upstream source code, you should edit a copy of the
+relevant file &#8211; files in the <tt class="docutils literal"><span class="pre">src/</span></tt> directory should be untouched,
+&#8220;vanilla&#8221; versions of the source code.  For example, you might copy
+the entire <tt class="docutils literal"><span class="pre">src/</span></tt> directory:</p>
+<div class="highlight-python"><pre>$ pwd
+matplotlib-1.0.1.p0
+$ cp -pR src src-patched</pre>
+</div>
+<p>Then edit files in <tt class="docutils literal"><span class="pre">src-patched/</span></tt>.  Once you are satisfied with your
+changes, generate a unified diff between the original file and the
+edited one, and save it in <tt class="docutils literal"><span class="pre">patches/</span></tt>:</p>
+<div class="highlight-python"><pre>$ diff -u src/configure src-patched/configure &gt; patches/configure.patch</pre>
+</div>
+<p>Save the unified diff to a file with the same name as the source file
+you patched, but using the file extension &#8221;.patch&#8221;. Note that the
+directory <tt class="docutils literal"><span class="pre">src/</span></tt> should not be under revision control, whereas
+<tt class="docutils literal"><span class="pre">patches/</span></tt> must be under revision control. The Mercurial
+configuration file <tt class="docutils literal"><span class="pre">.hgignore</span></tt> should contain the following line:</p>
+<div class="highlight-python"><pre>src/</pre>
+</div>
+<p>Ensure that the installation script <tt class="docutils literal"><span class="pre">spkg-install</span></tt> contains code to
+apply the patches to the relevant files under <tt class="docutils literal"><span class="pre">src/</span></tt>. For example,
+the file</p>
+<div class="highlight-python"><pre>matplotlib-1.0.1.p0/patches/finance.py.patch</pre>
+</div>
+<p>is a patch for the file</p>
+<div class="highlight-python"><pre>matplotlib-1.0.1.p0/src/lib/matplotlib/finance.py</pre>
+</div>
+<p>The installation script <tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p0/spkg-install</span></tt> contains the
+following code to install the relevant patches:</p>
+<div class="highlight-python"><pre>cd src
+
+# Apply patches.  See SPKG.txt for information about what each patch
+# does.
+for patch in ../patches/*.patch; do
+    patch -p1 &lt;"$patch"
+    if [ $? -ne 0 ]; then
+        echo &gt;&amp;2 "Error applying '$patch'"
+        exit 1
+    fi
+done</pre>
+</div>
+<p>Of course, this could be modified if the order in which the patches
+are applied is important, or if some patches were platform-dependent.
+For example:</p>
+<div class="highlight-python"><pre>if [ "$UNAME" = "Darwin" ]; then
+    for patch in ../patches/darwin/*.patch; do
+        patch -p1 &lt;"$patch"
+        if [ $? -ne 0 ]; then
+            echo &gt;&amp;2 "Error applying '$patch'"
+            exit 1
+        fi
+    done
+fi</pre>
+</div>
+<p>(The environment variable <span class="target" id="index-0"></span><tt class="xref std std-envvar docutils literal"><span class="pre">UNAME</span></tt> is defined by the script
+<tt class="docutils literal"><span class="pre">sage-env</span></tt>, and is available when <tt class="docutils literal"><span class="pre">spkg-install</span></tt> is run.)</p>
+<p>Now provide a high-level explanation of your changes in <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt>.
+Note the format of <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt> &#8211; see the chapter <a class="reference internal" href="producing_spkgs.html#chapter-spkg"><em>Producing New Sage Packages</em></a>
+for details.  Once you are satisfied with your changes, use Mercurial
+to check in your changes with a meaningful commit message.  Then use
+the command <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">tag</span></tt> to tag the tip with the new version number
+(using &#8220;p1&#8221; instead of &#8220;p0&#8221;: we have made changes, so we need to
+update the patch level):</p>
+<div class="highlight-python"><pre>$ hg tag matplotlib-1.0.1.p1</pre>
+</div>
+<p>Next, rename the directory <tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p0</span></tt> to
+<tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p1</span></tt> to match the new patch level.  To produce the
+actual spkg file, change to the parent directory of
+<tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p1</span></tt> and execute</p>
+<div class="highlight-python"><pre>$ /path/to/sage-x.y.z/sage --pkg matplotlib-1.0.1.p1
+Creating Sage package matplotlib-1.0.1.p1
+
+Created package matplotlib-1.0.1.p1.spkg.
+
+    NAME: matplotlib
+ VERSION: 1.0.1.p1
+    SIZE: 11.8M
+ HG REPO: Good
+SPKG.txt: Good</pre>
+</div>
+<p>Spkg files are either bzipped tar files or just plain tar files; the
+command <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">--pkg</span> <span class="pre">...</span></tt> produces the bzipped version.  If your spkg
+contains mostly binary files which will not compress well, you can use
+<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">--pkg_nc</span> <span class="pre">...</span></tt> to produce an uncompressed version, i.e., a
+plain tar file:</p>
+<div class="highlight-python"><pre>$ sage --pkg_nc matplotlib-1.0.1.p0/
+Creating Sage package matplotlib-1.0.1.p0/ with no compression
+
+Created package matplotlib-1.0.1.p0.spkg.
+
+    NAME: matplotlib
+ VERSION: 1.0.1.p0
+    SIZE: 32.8M
+ HG REPO: Good
+SPKG.txt: Good</pre>
+</div>
+<p>Note that this is almost three times the size of the compressed
+version, so we should use the compressed version!</p>
+<p>At this point, you might want to submit your patched spkg for review.
+So provide a URL to your spkg on the relevant trac ticket and/or in an
+email to the relevant mailing list. Usually, you should not upload
+your spkg itself to the relevant trac ticket &#8211; don&#8217;t post large
+binary files to the trac server.</p>
+</div>
+<div class="section" id="use-patch-for-patching">
+<h2>Use patch for patching<a class="headerlink" href="#use-patch-for-patching" title="Permalink to this headline">¶</a></h2>
+<p>The main message of this section is: use the GNU program <tt class="docutils literal"><span class="pre">patch</span></tt> to
+apply patches to files in <tt class="docutils literal"><span class="pre">src/</span></tt>.  GNU patch is distributed with
+Sage, so if you are writing an spkg which is not part of the standard
+Sage distribution, you may use <tt class="docutils literal"><span class="pre">patch</span></tt> in the <tt class="docutils literal"><span class="pre">spkg-install</span></tt>
+script freely.  If you are working on an spkg which is (or will be) a
+standard spkg in Sage, then you should make sure that <tt class="docutils literal"><span class="pre">patch</span></tt> is
+listed as a dependency for your spkg in the makefile
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/spkg/standard/deps</span></tt>.</p>
+<p>See the section <a class="reference internal" href="#section-spkg-patching-overview"><em>Overview of patching spkg&#8217;s</em></a> for information
+about how to produce patch files in the directory <tt class="docutils literal"><span class="pre">patches/</span></tt>, and
+how to apply them in <tt class="docutils literal"><span class="pre">spkg-install</span></tt>.</p>
+</div>
+<div class="section" id="bumping-up-an-spkg-s-version">
+<h2>Bumping up an spkg&#8217;s version<a class="headerlink" href="#bumping-up-an-spkg-s-version" title="Permalink to this headline">¶</a></h2>
+<p>If you want to bump up the version of an spkg, you need to follow some
+naming conventions. Use the name and version number as given by the
+upstream project, e.g. <tt class="docutils literal"><span class="pre">matplotlib-1.0.1</span></tt>. If the upstream package is
+taken from some revision other than a stable version, you need to
+append the date at which the revision is made, e.g. the Singular
+package <tt class="docutils literal"><span class="pre">singular-3-1-0-4-20090818.p3.spkg</span></tt> is made with the
+revision as of 2009-08-18. If you start afresh from an upstream
+release without any patches to its source code, the resulting spkg
+need not have any patch-level labels (appending &#8221;.p0&#8221; is allowed, but
+is optional). For example, <tt class="docutils literal"><span class="pre">sagenb-0.6.spkg</span></tt>
+is taken from the upstream stable version <tt class="docutils literal"><span class="pre">sagenb-0.6</span></tt> without any
+patches applied to its source code. So you do not see any patch-level
+numbering such as <tt class="docutils literal"><span class="pre">.p0</span></tt> or <tt class="docutils literal"><span class="pre">.p1</span></tt>.</p>
+<p>Say you start with <tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p0</span></tt> and you want to replace Matplotlib
+1.0.1 with version 1.0.2. This entails replacing the source code for Matplotlib 1.0.1 under
+<tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p0/src/</span></tt> with the new source code. To start with, follow the
+naming conventions as described in the section
+<a class="reference internal" href="#section-spkg-patching-overview"><em>Overview of patching spkg&#8217;s</em></a>. If necessary, remove any
+obsolete patches and create any new ones, placing them
+in the <tt class="docutils literal"><span class="pre">patches/</span></tt> directory.  Modify the script
+<tt class="docutils literal"><span class="pre">spkg-install</span></tt> to take any changes to the patches into account; you
+might also have to deal with changes to how the new version of the
+source code builds. Then package your replacement spkg using
+the Sage command line options <tt class="docutils literal"><span class="pre">--pkg</span></tt> or <tt class="docutils literal"><span class="pre">--pkg_nc</span></tt> (or tar and
+bzip2).</p>
+<p>To install your replacement spkg, you use</p>
+<div class="highlight-python"><pre>sage -f http://URL/to/package-x.y.z.spkg</pre>
+</div>
+<p>or</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sage</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">package</span><span class="o">-</span><span class="n">x</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">z</span><span class="o">.</span><span class="n">spkg</span>
+</pre></div>
+</div>
+<p>To compile Sage from source with the replacement (standard) spkg,
+untar a Sage source tarball, remove the existing spkg under
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/spkg/standard/</span></tt>. In its place, put your replacement
+spkg. Then execute <tt class="docutils literal"><span class="pre">make</span></tt> from <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt>.</p>
+</div>
+<div class="section" id="license-information">
+<h2>License information<a class="headerlink" href="#license-information" title="Permalink to this headline">¶</a></h2>
+<p>If you are patching a standard Sage spkg, then you should make sure
+that the license information for that package is up-to-date, both in
+its <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt> file and in the file <tt class="docutils literal"><span class="pre">SAGE_ROOT/COPYING.txt</span></tt>.  For
+example, if you are producing an spkg which upgrades the vanilla
+source to a new version, check whether the license changed between
+versions.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Patching a Sage Package</a><ul>
+<li><a class="reference internal" href="#overview-of-patching-spkg-s">Overview of patching spkg&#8217;s</a></li>
+<li><a class="reference internal" href="#use-patch-for-patching">Use patch for patching</a></li>
+<li><a class="reference internal" href="#bumping-up-an-spkg-s-version">Bumping up an spkg&#8217;s version</a></li>
+<li><a class="reference internal" href="#license-information">License information</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="producing_spkgs.html"
+                                  title="previous chapter">Producing New Sage Packages</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="trac.html"
+                                  title="next chapter">The Sage Trac Server: Submitting Patches and Packages</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/patching_spkgs.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <!-- The shading of the "Go" button should be consistent -->
+                <!-- with the colour of the header and footer. See the file -->
+                <!-- doc/common/themes/sage/theme.conf for colours used by -->
+                <!-- the Sage theme. -->
+                <input type="submit" style="background-color: #B8B9F6" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="trac.html" title="The Sage Trac Server: Submitting Patches and Packages"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="producing_spkgs.html" title="Producing New Sage Packages"
+             >previous</a> |</li>
+  
+    
+      <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
+    
+  
+  
+        <li><a href="index.html">Developer&#39;s Guide v6.0</a> &raquo;</li>
+
+          <li><a href="disseminating_code.html" >Disseminating Code for Sage</a> &raquo;</li> 
+      </ul>
+    </div>
+    
+    <div class="footer">
+        &copy; Copyright 2005--2011, The Sage Development Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+    <script type="text/javascript">
+/*global jQuery, window */
+/* Sphinx sidebar toggle.  Putting this code at the end of the body
+ * enables the toggle for the live, static, and offline docs.  Note:
+ * sage.misc.html.math_parse() eats jQuery's dollar-sign shortcut. */
+var jq = jQuery;  
+jq(document).ready(function () {
+    var bar, bod, bg, fg, key, tog, wid_old, wid_new, resize, get_state, set_state;
+    bod = jq('div.bodywrapper');
+    bar = jq('div.sphinxsidebar');
+    tog = jq('<div class="sphinxsidebartoggle"></div>');
+    
+    /* Delayed resize helper.  Not perfect but good enough. */
+    resize = function () {
+        setTimeout(function () {
+            tog.height(bod.height());
+        }, 100);
+    };
+    jq(window).resize(function () {
+        resize();
+    });
+    
+    /* Setup and add the toggle. See Sphinx v0.5.1 default.css. */
+    fg = jq('div.sphinxsidebar p a').css('color') || 'rgb(152, 219, 204)';
+    bg = jq('div.document').css('background-color') || 'rgb(28, 78, 99)';
+    wid_old = '230px';
+    wid_new = '5px';
+    tog.css('background-color', bg)
+        .css('border-width', '0px')
+        .css('border-right', wid_new + ' ridge ' + bg)
+        .css('cursor', 'pointer')
+        .css('position', 'absolute')
+        .css('left', '-' + wid_new)
+        .css('top', '0px')
+        .css('width', wid_new);
+    bod.css('position', 'relative');
+    bod.prepend(tog);
+    resize();
+    
+    /* Cookie helpers. */
+    key = 'sphinxsidebar=';
+    set_state = function (s) {
+        var date = new Date();
+        /* Expiry in 7 days. */
+        date.setTime(date.getTime() + (7 * 24 * 3600 * 1000));
+        document.cookie = key + encodeURIComponent(s) + '; expires=' +
+            date.toUTCString() + '; path=/';
+    };
+    get_state = function () {
+        var i, c, crumbs = document.cookie.split(';');
+        for (i = 0; i < crumbs.length; i += 1) {
+            c = crumbs[i].replace(/^\s+/, '');
+            if (c.indexOf(key) === 0) {
+                return decodeURIComponent(c.substring(key.length, c.length));
+            }
+        }
+        return null;
+    };
+    
+    /* Event handlers. */
+    tog.mouseover(function (ev) {
+        tog.css('border-right-color', fg);
+    }).mouseout(function (ev) {
+        tog.css('border-right-color', bg);
+    }).click(function (ev) {
+        if (bod.hasClass('wide')) {
+            bod.removeClass('wide');
+            bod.css('margin-left', wid_old);
+            bar.css('width', wid_old);
+            bar.show();
+            set_state('visible');
+        } else {
+            set_state('hidden');
+            bar.hide();
+            bar.css('width', '0px');
+            bod.css('margin-left', wid_new);
+            bod.addClass('wide');
+        }
+        resize();
+    });
+    
+    /* Hide the normally visible sidebar? */
+    if (get_state() === 'hidden') {
+        tog.trigger('click');
+    } else {
+        set_state('visible');
+    }
+});
+    </script>
+  </body>
+</html>
