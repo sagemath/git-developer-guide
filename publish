@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+
+import os, shutil, subprocess
+
+HTML_DIR = 'html'
+GH_PAGES_DIR = 'gh-pages'
+
+if not os.path.isdir(GH_PAGES_DIR):
+    print 'Create a submodule in the gh-pages directory that contains the gh-pages branch'
+    print 'For example:'
+    print '    git submodule add -b gh-pages git@github.com:vbraun/sage-developer-git.git gh-pages'
+    os.exit(1)
+
+for src in os.listdir(HTML_DIR):
+    src_file = os.path.join(HTML_DIR, src)
+    dst_file = os.path.join(GH_PAGES_DIR, src)
+    if os.path.isdir(src_file):
+        if os.path.exists(dst_file):
+            shutil.rmtree(dst_file)
+        shutil.copytree(src_file, dst_file)
+    else:
+        shutil.copyfile(src_file, dst_file)
+
+
+os.chdir(GH_PAGES_DIR)
+subprocess.check_output(['git', 'add', '.'])
+subprocess.check_output(['git', 'commit', '-m', '"Updated documentation"'])
+subprocess.check_output(['git', 'push', 'origin', 'gh-pages'])
+
+          

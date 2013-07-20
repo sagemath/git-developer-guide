@@ -1,3 +1,11 @@
+# Emacs
+*~
+.\#*
+\#*\#
+
+html/
+gh-pages/
+
 *.py[cod]
 
 # C extensions
