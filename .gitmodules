@@ -1,0 +1,8 @@
+[submodule "sage-developer-git"]
+	path = sage-developer-git
+	url = git@github.com:vbraun/sage-developer-git.git
+	branch = gh-pages
+[submodule "gh-pages"]
+	path = gh-pages
+	url = git@github.com:vbraun/sage-developer-git.git
+	branch = gh-pages
