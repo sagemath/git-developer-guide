@@ -154,7 +154,7 @@ Patching bugs/working on tickets
 
 If you have code which fixes a bug or deals with some issue in
 Sage, here is what to do. First, use Mercurial to create a patch
-file. See :ref:`chapter-walk-through` for more information on using
+file. See :ref:`chapter-walk-through-old` for more information on using
 Mercurial to produce/manage patches. If the issue has been reported as
 a ticket on the trac server, attach your patch file to that ticket: go
 to the ticket, click on the "Attach File" button, and follow the
@@ -216,7 +216,7 @@ The following are some other relevant issues:
   patches, a bundle can still be better than patches. One
   alternative to bundles is to use Mercurial queues to flatten the
   history. That might or might not be desirable. See
-  :ref:`chapter-walk-through` for further information on using
+  :ref:`chapter-walk-through-old` for further information on using
   Mercurial queues to produce/manage patches.
 
 
