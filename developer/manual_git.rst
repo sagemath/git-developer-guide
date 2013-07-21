@@ -93,7 +93,7 @@ field on the trac ticket.
 Having set up your SSH key as described in
 :ref:`section-trac-ssh-key`, you have push permissions to branches of
 the form ``u/user/*`` where ``user`` is your trac username and ``*``
-is a wildcard, that is, any valid git branch name. By default, do
+is a wildcard, that is, any valid git branch name. By default, you do
 *not* have push permissions to other user's branches or the Sage
 master branch. To push your branch to trac use::
 

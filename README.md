@@ -25,4 +25,4 @@ Usage
 
 * Sphinx uses caching to only rebuild pages as necessary. Sometimes,
   you can get problems with stale caches. It is safe to delete the
-  `/html` directoory and then rebuild all docs with `./build`.
+  `/html` directory and then rebuild all docs with `./build`.
