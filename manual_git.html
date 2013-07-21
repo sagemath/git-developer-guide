@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Using GIT Directly &mdash; Sage Developer&#39;s Guide v1.0</title>
+    <title>GIT The Hard Way &mdash; Sage Developer&#39;s Guide v1.0</title>
     
     <link rel="stylesheet" href="_static/sage.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -61,17 +61,134 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="using-git-directly">
-<span id="chapter-manual-git"></span><h1>Using GIT Directly<a class="headerlink" href="#using-git-directly" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="git-the-hard-way">
+<span id="chapter-manual-git"></span><h1>GIT The Hard Way<a class="headerlink" href="#git-the-hard-way" title="Permalink to this headline">¶</a></h1>
 <p>For beginners to Sage development we recommend using the Sage
-development scripts as explained in <a class="reference internal" href="walk_through.html#chapter-walk-through"><em>The Development Process</em></a>, which
+development scripts as explained in <a class="reference internal" href="walk_through.html#chapter-walk-through"><em>Sage Development Process</em></a>, which
 simplify using git and the trac server. However, you can use git
-directly to work on Sage if you prefer. This chapter will tell you how
-to do so assuming some familiarity with git.</p>
+directly to work on Sage if you want to take off the training
+wheels. This chapter will tell you how to do so assuming some
+basic familiarity with git.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">For now, use the <tt class="docutils literal"><span class="pre">build_system</span></tt> branch instead of master. This
 will be changed soon.</p>
+</div>
+<p>We assume that you have a copy of the Sage git repository, for example
+by running:</p>
+<div class="highlight-python"><pre>[user@localhost ~]$ git clone git://github.com/sagemath/sage.git -b build_system
+[user@localhost ~]$ cd sage
+[user@localhost sage]$ make</pre>
+</div>
+<div class="section" id="branching-out">
+<h2>Branching Out<a class="headerlink" href="#branching-out" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">create branches, switch between branches</p>
+</div>
+</div>
+<div class="section" id="the-trac-server">
+<h2>The Trac Server<a class="headerlink" href="#the-trac-server" title="Permalink to this headline">¶</a></h2>
+<p>The Sage trac server also hold a copy of the Sage repository, it is
+served via ssh but at the non-standard port 2222. To add it as a
+remote repository to your local git repository, use the command:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git remote add trac ssh://git@trac.sagemath.org:2222/sage.git -t master
+[user@localhost sage]$ git remote -v
+origin      git://github.com/sagemath/sage.git (fetch)
+origin      git://github.com/sagemath/sage.git (push)
+trac        ssh://git@trac.sagemath.org:2222/sage.git (fetch)
+trac        ssh://git@trac.sagemath.org:2222/sage.git (push)</pre>
+</div>
+<p>Instead of <tt class="docutils literal"><span class="pre">trac</span></tt> you can use any local name you want, of course. It
+is perfectly fine to have multiple remote repositories for git, think
+of them as bookmarks. You can then use <tt class="docutils literal"><span class="pre">git</span> <span class="pre">pull</span></tt> to get changes and
+<tt class="docutils literal"><span class="pre">git</span> <span class="pre">push</span></tt> to upload your local changes using:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git &lt;push|pull&gt; trac [ARGS]</pre>
+</div>
+<div class="section" id="checking-out-tickets">
+<h3>Checking Out Tickets<a class="headerlink" href="#checking-out-tickets" title="Permalink to this headline">¶</a></h3>
+<p>Trac tickets that are finished or in the process of being worked on
+can have a git branch attached to them. This is the &#8220;Branch:&#8221; field in
+the ticket description. The branch name is generally of the form
+<tt class="docutils literal"><span class="pre">u/user/description</span></tt>, where <tt class="docutils literal"><span class="pre">user</span></tt> is the name of the user who
+made the branch and <tt class="docutils literal"><span class="pre">description</span></tt> is some free-form short
+description (and can include further slashes).</p>
+<p>If you want to work with the changes in that remote branch, you must
+make a local copy. In particular, git has no concept of directly
+working with the remote branch, the remotes are only bookmarks for
+things that you can get from/to the remote server. Your local branch
+can have a different name, for example:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git checkout -b my_branch trac/u/user/description
+Branch my_branch set up to track remote branch u/user/description from trac by rebasing.
+Switched to a new branch 'my_branch'</pre>
+</div>
+<p>creates a new branch in your local git repository named <tt class="docutils literal"><span class="pre">my_branch</span></tt>
+and switches to it. It is based on the remote <tt class="docutils literal"><span class="pre">u/user/description</span></tt>,
+so you start out with the same files as in that ticket. You can then
+edit files and commit changes to your local branch.</p>
+</div>
+<div class="section" id="pushing-your-changes-to-a-ticket">
+<h3>Pushing Your Changes to a Ticket<a class="headerlink" href="#pushing-your-changes-to-a-ticket" title="Permalink to this headline">¶</a></h3>
+<p>To add your local branch to a trac ticket, you first have to upload it
+to the Sage trac repository and then put its name into the &#8220;Branch:&#8221;
+field on the trac ticket.</p>
+<p>Having set up your SSH key as described in
+<a class="reference internal" href="trac.html#section-trac-ssh-key"><em>Linking your Public Key to your Trac Account</em></a>, you have push permissions to branches of
+the form <tt class="docutils literal"><span class="pre">u/user/*</span></tt> where <tt class="docutils literal"><span class="pre">user</span></tt> is your trac username and <tt class="docutils literal"><span class="pre">*</span></tt>
+is a wildcard, that is, any valid git branch name. By default, do
+<em>not</em> have push permissions to other user&#8217;s branches or the Sage
+master branch. To push your branch to trac use:</p>
+<div class="highlight-python"><pre>git push my_branch:u/user/description</pre>
+</div>
+<p>where</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">my_branch</span></tt> is the name of your local branch,</li>
+<li><tt class="docutils literal"><span class="pre">user</span></tt> is your trac username,</li>
+<li><tt class="docutils literal"><span class="pre">description</span></tt> is some (short but self-explanatory) description of
+your branch.</li>
+</ul>
+<p>Then, in order to use this branch as the proposed change on a trac
+ticket, just fill its name <tt class="docutils literal"><span class="pre">u/user/description</span></tt> into the &#8220;Branch:&#8221;
+field of the ticket description.</p>
+<p>The <tt class="docutils literal"><span class="pre">Branch</span></tt> field is color coded: red means there is an issue,
+green means it will merge cleanly into <tt class="docutils literal"><span class="pre">master</span></tt>. If it is red, the
+tooltip will tell you what is wrong.  If it is green, then it will
+link to a diff of the changes against <tt class="docutils literal"><span class="pre">u/ohanar/build_system</span></tt>. (This
+is temporary until [#14480](<a class="reference external" href="http://trac.sagemath.org/14480">http://trac.sagemath.org/14480</a>) is merged
+into the <tt class="docutils literal"><span class="pre">master</span></tt> branch.)</p>
+</div>
+<div class="section" id="merging-and-rebasing">
+<h3>Merging and Rebasing<a class="headerlink" href="#merging-and-rebasing" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="reset-and-recovery">
+<h3>Reset and Recovery<a class="headerlink" href="#reset-and-recovery" title="Permalink to this headline">¶</a></h3>
+<p>Git makes it very hard to truly mess up. Here is a short way to get
+back onto your feet, no matter what. First, if you just want to go
+back to a working Sage installation you can always abandon your
+working branch by switching to your local copy of the <tt class="docutils literal"><span class="pre">build_system</span></tt>
+branch:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git checkout build_system</pre>
+</div>
+<p>As long as you didn&#8217;t make any changes to the <tt class="docutils literal"><span class="pre">build_system</span></tt> branch
+directly, this will give you back a working Sage.</p>
+<p>If you want to keep your branch but go back to a previous commit you
+can use the reset command. For this, look up the commit in the log
+which is some 40-digit hexadecimal number. Then use <tt class="docutils literal"><span class="pre">git</span> <span class="pre">reset</span>
+<span class="pre">--hard</span></tt> to revert your files back to the previous state:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git log
+...
+commit eafaedad5b0ae2013f8ae1091d2f1df58b72bae3
+Author: First Last &lt;user@email.com&gt;
+Date:   Sat Jul 20 21:57:33 2013 -0400
+
+    Commit message
+...
+[user@localhost sage]$ git reset --hard eafae</pre>
+</div>
+<p>You only need to type the first couple of hex digits, git will
+complain if this does not uniquely specify a commit. Also, there is
+the useful abbreviation <tt class="docutils literal"><span class="pre">HEAD~</span></tt> for the previous commit.</p>
+</div>
 </div>
 </div>
 
@@ -81,6 +198,21 @@ will be changed soon.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">GIT The Hard Way</a><ul>
+<li><a class="reference internal" href="#branching-out">Branching Out</a></li>
+<li><a class="reference internal" href="#the-trac-server">The Trac Server</a><ul>
+<li><a class="reference internal" href="#checking-out-tickets">Checking Out Tickets</a></li>
+<li><a class="reference internal" href="#pushing-your-changes-to-a-ticket">Pushing Your Changes to a Ticket</a></li>
+<li><a class="reference internal" href="#merging-and-rebasing">Merging and Rebasing</a></li>
+<li><a class="reference internal" href="#reset-and-recovery">Reset and Recovery</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
             <h4>Previous topic</h4>
             <p class="topless"><a href="trac.html"
                                   title="previous chapter">The Sage Trac Server</a></p>

@@ -112,6 +112,8 @@ the file is only read/writeable by yourself. Voila, the next time you
 ssh into that machine you don't have to provide your password. 
 
 
+.. _section-trac-ssh-key:
+
 Linking your Public Key to your Trac Account
 --------------------------------------------
 
@@ -151,10 +153,6 @@ issuing some basic gitolite commands, for example::
     	perms
     	writable
     
-
-
-
-
 
 
 
