@@ -1,162 +1,27 @@
-.. _chapter-trac:
+.. _chapter-trac-old:
 
-====================
-The Sage Trac Server
-====================
+=====================================================
+The Sage Trac Server: Submitting Patches and Packages
+=====================================================
 
-All changes to Sage source code have to go through the `Sage trac
-development server <http://trac.sagemath.org>`_. The purpose
-of the Sage trac server is to
+What should you do with your Mercurial patches for Sage? You should
+post them on the Sage trac server.
 
-1. Provide a place for discussion on issues and store a permanent
-   record.
+The Sage trac server, located at
+http://trac.sagemath.org/sage_trac/, is where Sage bugs are listed
+and patched, new code is posted and reviewed, and ideas for
+extending and improving Sage are discussed. Thus if you find a bug
+in Sage, or if you have new code to submit, or if you have
+corrections for the documentation, you should post on the trac
+server.
 
-2. A repository of source code and all proposed changes.
-
-3. Link these two together.
-
-4. There is also a `wiki <http://trac.sagemath.org/wiki>`_ for more
-   general organizational web pages, like Sage development workshops.
-
-Thus if you find a bug in Sage, if you have new code to submit, want
-to review new code already written but not yet included in Sage, or if
-you have corrections for the documentation, you should post on the
-trac server. Items on the server are called *tickets*, and anyone may
-search or browse the tickets. For a list of recent changes, just visit
-the `Sage trac timeline <http://trac.sagemath.org/timeline>`_.
-
-
-Authentication
-==============
-
-There are two avenues to prove to the trac server that you are who you
-claim to be. First, to change the ticket web pages you need to log in
-to trac using a username/password. Second, there is public key
-cryptography used by git when copying new source files to the
-repository. This section will show you how to setup both.
-
-
-Obtaining an Account
---------------------
-
-You first need to open an account if you want to *change* anything on
-the Sage trac server, even if you just want to comment on a
-ticket. Part of the process is to prove that you are a human to keep
-spam at a minimum. To get an account read the developer manual (this
-document) and then send an email to
-``sage-trac-account@googlegroups.com`` that contains all of the
-following:
-
-* your full name,
-* preferred username,
-* contact email,
-* and reason for needing a trac account.
-
-Your trac account also grants you access to ​the sage wiki. Make sure
-you understand the review process, and the procedures for opening and
-closing tickets before making changes. The remainder of this chapter
-contains various guidelines on using the trac server.
-
-
-Generating your SSH Keys
-------------------------
-
-Git will use SSH public key cryptography to decide if and where you
-are allowed to upload code to. This is not required if you just want
-to report a bug or comment on a ticket, but as soon as you want to
-contribute code yourself you need to provide trac with the public half
-of your own personal key. If you don't have a private key yet, you can
-create it with the ``ssh-keygen`` tool::
-
-    [user@localhost ~]$ ssh-keygen 
-    Generating public/private rsa key pair.
-    Enter file in which to save the key (/home/user/.ssh/id_rsa): 
-    Enter passphrase (empty for no passphrase): 
-    Enter same passphrase again: 
-    Your identification has been saved in /home/user/.ssh/id_rsa.
-    Your public key has been saved in /home/user/.ssh/id_rsa.pub.
-    The key fingerprint is:
-    ce:32:b3:de:38:56:80:c9:11:f0:b3:88:f2:1c:89:0a user@localhost
-    The key's randomart image is:
-    +--[ RSA 2048]----+
-    |  ....           |
-    |   ..            |
-    |   .o+           |
-    | o o+o.          |
-    |E + .  .S        |
-    |+o .   o.        |
-    |. o   +.o        |
-    |      oB         |
-    |     o+..        |
-    +-----------------+
-     
-This will generate a new random private RSA key
-in the ``.ssh`` folder in your home directory. By default, they are
-
-``~/.ssh/id_rsa``
-  Your private key. Keep safe. **Never** hand it out to anybody.
-
-``~/.ssh/id_rsa.pub`` 
-  The corresponding public key. This and only this file can be safely
-  disclosed to third parties.
-
-The ``ssh-keygen`` tool will let you generate a key with a different
-file name, or protect it with a passphrase. Depending on how much you
-trust your own computer or system administrator, you can leave the
-passphrase empty to be able to login without any human intervention.
-
-If you have accounts on multiple computers you can use the SSH keys to
-log in. Just copy the **public** key file (ending in ``.pub``) to
-``~/.ssh/authorized_keys`` on the remote computer and make sure that
-the file is only read/writeable by yourself. Voila, the next time you
-ssh into that machine you don't have to provide your password. 
-
-
-Linking your Public Key to your Trac Account
---------------------------------------------
-
-The Sage trac server needs to know one of your public keys. You can
-upload it in the preferences, that is
-
-1. Go to http://trac.sagemath.org
-
-2. Log in with your trac username/password
-
-3. Click on "Preferences"
-
-4. Go to the "SSH Keys" tab
-
-5. Paste the content of your public key file
-   (e.g. ``~/.ssh/id_rsa.pub``)
-
-6. Click on "Save changes"
-
-Note that this does **not** allow you to ssh into any account on trac,
-it is only used to authenticate you to the gitolite installation on
-trac. You can test that you are being authenticated correctly by
-issuing some basic gitolite commands, for example::
-
-    [user@localhost ~]$ ssh -p 2222 git@trac.sagemath.org info
-    hello user, this is git@trac running gitolite3 (unknown) on git 1.7.9.5
-    
-     R W	sage
-    [user@localhost ~]$ ssh -p 2222 git@trac.sagemath.org help
-    hello user, this is gitolite3 (unknown) on git 1.7.9.5
-    
-    list of remote commands available:
-    
-    	desc
-    	help
-    	info
-    	perms
-    	writable
-    
-
-
-
-
-
-
+Items on the server are called "tickets", and anyone may browse the
+tickets: just visit http://trac.sagemath.org/sage_trac/report. You
+need to open an account, though, if you want to comment on a
+ticket, submit a patch, or create a new ticket. See the
+`trac server <http://trac.sagemath.org/sage_trac>`_
+for more information about obtaining an account. This chapter contains
+various guidelines on using the trac server.
 
 
 Reporting bugs
@@ -355,7 +220,7 @@ The following are some other relevant issues:
   Mercurial queues to produce/manage patches.
 
 
-.. _section-review-patches:
+.. _section-review-patches-old:
 
 Reviewing patches
 =================
