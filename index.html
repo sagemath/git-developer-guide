@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to the Sage Developer’s Guide! &mdash; Sage Developer&#39;s Guide v6.0</title>
+    <title>Welcome to the Sage Developer’s Guide! &mdash; Sage Developer&#39;s Guide v1.0</title>
     
     <link rel="stylesheet" href="_static/sage.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '6.0',
+        VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
-    <link rel="top" title="Sage Developer&#39;s Guide v6.0" href="#" />
-    <link rel="next" title="Trac and SSH Keys" href="trac_ssh_keys.html" />
+    <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="#" />
+    <link rel="next" title="The Development Process" href="walk_through.html" />
     <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
 
   </head>
@@ -39,7 +39,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="trac_ssh_keys.html" title="Trac and SSH Keys"
+          <a href="walk_through.html" title="The Development Process"
              accesskey="N">next</a> |</li>
   
     
@@ -47,7 +47,7 @@
     
   
   
-        <li><a href="#">Developer&#39;s Guide v6.0</a> &raquo;</li>
+        <li><a href="#">Developer&#39;s Guide v1.0</a> &raquo;</li>
  
       </ul>
     </div>  
@@ -59,26 +59,36 @@
             
   <div class="section" id="welcome-to-the-sage-developer-s-guide">
 <h1>Welcome to the Sage Developer&#8217;s Guide!<a class="headerlink" href="#welcome-to-the-sage-developer-s-guide" title="Permalink to this headline">¶</a></h1>
-<p>Sage is a free mathematics software system. It is implemented using
-Python, Cython, and C++, together with various packages such as GAP,
-GSL, Matplotlib, Maxima, MWRANK, NetworkX, NTL, Numpy, PARI, Singular
-and many specialized systems and libraries. Sage is free and open
-source, and is available under the terms of the GNU Public
-License. Some parts are available under compatible licenses.</p>
 <p>Everybody who uses Sage is encouraged to contribute something back to
 Sage at some point. Implement a new function, add examples to the
 documentation, find bugs and typos, fix a bug, create a new class,
-create a fast new C library, etc. This book is a guide on how to
-contribute to Sage.</p>
-<p>This document describes how to write programs using Sage, how to
-modify and extend the core Sage libraries, and how to modify Sage&#8217;s
-documentation. It also discusses how to share your new and modified
-code with other Sage users.</p>
+create a fast new C library, etc. This document describes how to write
+programs using Sage, how to modify and extend the core Sage libraries,
+and how to modify Sage&#8217;s documentation. It also discusses how to share
+your new and modified code with other Sage users.</p>
 <p>This work is licensed under a <a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
 3.0 License</a>.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="trac_ssh_keys.html">Trac and SSH Keys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="walk_through.html">The Development Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trac.html">The Sage Trac Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#authentication">Authentication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="trac.html#obtaining-an-account">Obtaining an Account</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac.html#generating-your-ssh-keys">Generating your SSH Keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac.html#linking-your-public-key-to-your-trac-account">Linking your Public Key to your Trac Account</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#reporting-bugs">Reporting bugs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#guidelines-for-opening-tickets">Guidelines for opening tickets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#stopgaps">Stopgaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#patching-bugs-working-on-tickets">Patching bugs/working on tickets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#reviewing-patches">Reviewing patches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#closing-tickets">Closing tickets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#reasons-to-invalidate-tickets">Reasons to invalidate tickets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#milestones-vs-releases">Milestones vs. releases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#assigning-tickets">Assigning tickets</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="manual_git.html">Using GIT Directly</a></li>
 </ul>
 </div>
@@ -188,16 +198,16 @@ code with other Sage users.</p>
 <li class="toctree-l3"><a class="reference internal" href="patching_spkgs.html#license-information">License information</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="trac.html">The Sage Trac Server: Submitting Patches and Packages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="trac.html#reporting-bugs">Reporting bugs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac.html#guidelines-for-opening-tickets">Guidelines for opening tickets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac.html#stopgaps">Stopgaps</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac.html#patching-bugs-working-on-tickets">Patching bugs/working on tickets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac.html#reviewing-patches">Reviewing patches</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac.html#closing-tickets">Closing tickets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac.html#reasons-to-invalidate-tickets">Reasons to invalidate tickets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac.html#milestones-vs-releases">Milestones vs. releases</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac.html#assigning-tickets">Assigning tickets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac_old.html">The Sage Trac Server: Submitting Patches and Packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="trac_old.html#reporting-bugs">Reporting bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac_old.html#guidelines-for-opening-tickets">Guidelines for opening tickets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac_old.html#stopgaps">Stopgaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac_old.html#patching-bugs-working-on-tickets">Patching bugs/working on tickets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac_old.html#reviewing-patches">Reviewing patches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac_old.html#closing-tickets">Closing tickets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac_old.html#reasons-to-invalidate-tickets">Reasons to invalidate tickets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac_old.html#milestones-vs-releases">Milestones vs. releases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trac_old.html#assigning-tickets">Assigning tickets</a></li>
 </ul>
 </li>
 </ul>
@@ -244,8 +254,8 @@ code with other Sage users.</p>
 </ul>
 
             <h4>Next topic</h4>
-            <p class="topless"><a href="trac_ssh_keys.html"
-                                  title="next chapter">Trac and SSH Keys</a></p>
+            <p class="topless"><a href="walk_through.html"
+                                  title="next chapter">The Development Process</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/index.txt"
@@ -279,7 +289,7 @@ code with other Sage users.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="trac_ssh_keys.html" title="Trac and SSH Keys"
+          <a href="walk_through.html" title="The Development Process"
              >next</a> |</li>
   
     
@@ -287,13 +297,13 @@ code with other Sage users.</p>
     
   
   
-        <li><a href="#">Developer&#39;s Guide v6.0</a> &raquo;</li>
+        <li><a href="#">Developer&#39;s Guide v1.0</a> &raquo;</li>
  
       </ul>
     </div>
     
     <div class="footer">
-        &copy; Copyright 2005--2011, The Sage Development Team.
+        &copy; Copyright 2013, The Sage Development Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
     <script type="text/javascript">

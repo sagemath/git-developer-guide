@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Walking Through the Development Process &mdash; Sage Developer&#39;s Guide v6.0</title>
+    <title>The Development Process &mdash; Sage Developer&#39;s Guide v1.0</title>
     
     <link rel="stylesheet" href="_static/sage.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '6.0',
+        VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
-    <link rel="top" title="Sage Developer&#39;s Guide v6.0" href="index.html" />
-    <link rel="next" title="Writing Code for Sage" href="writing_code.html" />
+    <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="index.html" />
+    <link rel="next" title="The Sage Trac Server" href="trac.html" />
     <link rel="prev" title="Welcome to the Sage Developer’s Guide!" href="index.html" />
     <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
 
@@ -40,7 +40,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="writing_code.html" title="Writing Code for Sage"
+          <a href="trac.html" title="The Sage Trac Server"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Welcome to the Sage Developer’s Guide!"
@@ -51,7 +51,7 @@
     
   
   
-        <li><a href="index.html">Developer&#39;s Guide v6.0</a> &raquo;</li>
+        <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
  
       </ul>
     </div>  
@@ -61,684 +61,14 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="walking-through-the-development-process">
-<span id="chapter-walk-through"></span><h1>Walking Through the Development Process<a class="headerlink" href="#walking-through-the-development-process" title="Permalink to this headline">¶</a></h1>
-<p>This section presents a general process for working on Sage. We will
-walk through each step of the process, explaining specific steps and
-commands to help you get started on developing Sage. Along the way,
-other sources of information will be presented where you could find
-more detailed information on some particular issue. If you are a
-beginner to Sage development, this introductory guide is here to help
-you become familiar with the Sage development process.</p>
-<div class="section" id="modifying-sage-source-code">
-<span id="section-modify-source"></span><h2>Modifying Sage source code<a class="headerlink" href="#modifying-sage-source-code" title="Permalink to this headline">¶</a></h2>
-<p>The name <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt> refers to the directory where Sage is
-installed on your system, e.g. <tt class="docutils literal"><span class="pre">/sage/sage-4.1.2/</span></tt>. Some people
-install Sage under their home directory, in which case <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt>
-would be something like <tt class="docutils literal"><span class="pre">/home/username/sage-4.3.1</span></tt>. Software
-packages that are shipped with Sage would then be located under
-<tt class="docutils literal"><span class="pre">/home/username/sage-4.3.1</span></tt>. In other words, <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt> is the
-top-level directory of your Sage installation.</p>
-<p>The majority of Sage code for development work is under
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel</span></tt>, where the symbolic link <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage</span></tt>
-points to the current branch that you are using. The default branch is
-the branch named <tt class="docutils literal"><span class="pre">sage-main</span></tt> and is also referred to as the main
-branch. By default, the symbolic link <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage</span></tt> points
-to <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage-main</span></tt>. Under each branch is a directory named
-<tt class="docutils literal"><span class="pre">sage</span></tt>, which contains code for interfacing with third-party
-packages and code that comprises the Sage library. You can think of
-the directory <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage-main/sage</span></tt> (or
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage</span></tt>) as where the Sage library resides.</p>
-<p>Suppose you have modified some part of the Sage library, e.g. add new
-code or delete some code. How do you get Sage to know about your
-changes? You need to rebuild the Sage library so that it is updated
-with your changes. Navigate to <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt> and rebuild the library
-as follows:</p>
-<div class="highlight-python"><pre>./sage -b main</pre>
-</div>
-<p>If <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage</span></tt> points to the main branch, you could use
-the above command or more simply the following command:</p>
-<div class="highlight-python"><pre>./sage -b</pre>
-</div>
-<p>The switch <tt class="docutils literal"><span class="pre">-b</span></tt> is for (re)building the Sage library and the argument
-<tt class="docutils literal"><span class="pre">main</span></tt> is the branch you want to rebuild. In this case, you want to
-rebuild the Sage library as contained in the main branch, i.e under
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage-main</span></tt>. In fact, the command <tt class="docutils literal"><span class="pre">./sage</span> <span class="pre">-b</span></tt>
-rebuilds whatever branch that the symbolic link
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage</span></tt> points to. Any of the above two commands does
-not rebuild everything in the Sage library, but only those files in the
-library that your changes affect. During the rebuild process, the
-affected source files are copied elsewhere and compiled, Cython files
-get converted to C code and compiled, and so on.</p>
-<p>This build process will copy the necessary files to
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/build</span></tt> and
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/local/lib/python/site-packages</span></tt>.
-It is very important that you <strong>do not change files</strong> in these
-directories directly!
-If you do that, then those files would get overwritten the next
-time you run <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-b</span></tt>.</p>
-<p>You may want to create a totally distinct installation of Sage
-compiled from source, where you will work so as to not impact a
-version of Sage that you actually use. This could be true even if you
-make clones (or sandboxes) as described in the next section.</p>
-</div>
-<div class="section" id="creating-a-sandbox">
-<span id="section-create-sandbox"></span><h2>Creating a sandbox<a class="headerlink" href="#creating-a-sandbox" title="Permalink to this headline">¶</a></h2>
-<p>With <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt> as the default directory, you can create a new
-branch (or clone) named <tt class="docutils literal"><span class="pre">test</span></tt> with the command:</p>
-<div class="highlight-python"><pre>./sage -clone test</pre>
-</div>
-<p>Note that a general way to create a clone is the syntax
-<tt class="docutils literal"><span class="pre">./sage</span> <span class="pre">-clone</span> <span class="pre">&lt;branch-name&gt;</span></tt>, where you should replace
-<tt class="docutils literal"><span class="pre">&lt;branch-name&gt;</span></tt> with the name you want to name your new
-clone. Creating a clone may take a couple of minutes to conclude. The
-result is a whole new subdirectory <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage-test</span></tt> where
-the name <tt class="docutils literal"><span class="pre">sage-</span></tt> is automatically prepended to <tt class="docutils literal"><span class="pre">test</span></tt>, and the
-symbolic link <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage</span></tt> will now point to this new
-subdirectory. Running Sage, or rebuilding, will use this version of
-the source.</p>
-<p>Now you can safely experiment with Sage code as much as you would
-like. A cloned version of the Sage library can be found under</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">SAGE_ROOT</span><span class="o">/</span><span class="n">devel</span><span class="o">/</span><span class="n">sage</span><span class="o">-</span><span class="n">test</span><span class="o">/</span><span class="n">sage</span>
-</pre></div>
-</div>
-<p>The Sage library consists of Python files (with the file extension
-<tt class="docutils literal"><span class="pre">.py</span></tt>) or Cython files (with extension <tt class="docutils literal"><span class="pre">.pyx</span></tt>), organized into
-subdirectories that mirror the module hierarchy reflected in the help
-files, Python types, etc.  (With the <tt class="docutils literal"><span class="pre">sage</span></tt> symbolic link, you will
-now see why sometimes you see directories that look like
-<tt class="docutils literal"><span class="pre">`.../sage/sage/...</span></tt>.)</p>
-<p>Apart from the directory that holds the Sage library, another special
-directory is</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">SAGE_ROOT</span><span class="o">/</span><span class="n">devel</span><span class="o">/</span><span class="n">sage</span><span class="o">-</span><span class="n">test</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">reference</span>
-</pre></div>
-</div>
-<p>You can think of that directory as containing &#8220;table of contents&#8221;
-files for documentation, each such file having the extension <tt class="docutils literal"><span class="pre">.rst</span></tt>
-to indicate that they follow the ReST format for documenting source
-code.  Most documentation comes from the docstrings in the source
-files. When you build the HTML or PDF versions of the reference
-manual, the generated output lands in subdirectories of
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage-test/doc/output</span></tt>.</p>
-<p>To make another clone of the main branch, you need to first switch
-back to the untouched code in the main branch.  From <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt>,
-type</p>
-<div class="highlight-python"><pre>./sage -b main</pre>
-</div>
-<p>to switch back to the original version, i.e. the main branch.  Now
-make a new clone as shown above.</p>
-<p>If a clone, say <tt class="docutils literal"><span class="pre">test</span></tt>, is a mess and has nothing of value to you,
-switch back to the main branch, then delete the directory
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage-test</span></tt> and everything below it. To know which
-branch (or clone) you are using, issue the command</p>
-<div class="highlight-python"><pre>./sage -branch</pre>
-</div>
-<p>This will report the current branch that the symbolic link
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage</span></tt> points to. Such information is also reported
-by the command <tt class="docutils literal"><span class="pre">./sage</span></tt> when the current branch is not the main
-branch.</p>
-<p>There are many more arguments you can pass to Sage. For a list of
-basic arguments, execute</p>
-<div class="highlight-python"><pre>./sage -help</pre>
-</div>
-<p>The command</p>
-<div class="highlight-python"><pre>./sage -advanced</pre>
-</div>
-<p>will report a list of advanced arguments in addition to the list of
-basic arguments as output by <tt class="docutils literal"><span class="pre">./sage</span> <span class="pre">-help</span></tt>.</p>
-</div>
-<div class="section" id="reviewing-a-patch">
-<span id="section-review-patch-walkthrough"></span><h2>Reviewing a patch<a class="headerlink" href="#reviewing-a-patch" title="Permalink to this headline">¶</a></h2>
-<p>An essential part of improving Sage is reviewing the patches that other
-developers have written; before any patch is accepted into Sage, it needs the
-green light from another developer. This process catches many small bugs and
-omissions that could otherwise easily sneak into such a large project, even if
-it does slow down the development process.</p>
-<p>This section goes through the process of downloading and applying
-patches. For detailed information on the review process, see the section
-<a class="reference internal" href="trac.html#section-review-patches"><em>Reviewing patches</em></a>. William Stein also wrote this
-<a class="reference external" href="http://sagemath.blogspot.com/2010/10/how-to-referee-sage-trac-tickets.html">blog entry</a>
-on his patch reviewing workflow.</p>
-<p>When viewing a Trac ticket, you will see available
-patches listed near the top in the Attachments section.  Clicking on the
-file name will show you a <a class="reference external" href="http://en.wikipedia.org/wiki/Diff">diff</a>
-comparison view that is useful for previewing changes; red shading is
-deletions, green shading is additions.  Once you&#8217;ve decided to review the
-patch, download the patch file from the Trac server using the little
-download icon next to the file name.</p>
-<p>To apply a patch to the code in your sandbox (see
-<a class="reference internal" href="#section-create-sandbox"><em>Creating a sandbox</em></a> for information on creating a sandbox),
-follow these steps:</p>
-<ol class="arabic">
-<li><p class="first">Run Sage: from <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt>, type <tt class="docutils literal"><span class="pre">./sage</span></tt>.</p>
-</li>
-<li><p class="first">Apply the patch: at the Sage command line, type:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">hg_sage</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="s">&quot;&lt;full-path-and-filename.patch&gt;&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p class="first">Quit Sage: use the command <tt class="docutils literal"><span class="pre">exit</span></tt>.</p>
-</li>
-<li><p class="first">Rebuild Sage: use the command <tt class="docutils literal"><span class="pre">./sage</span> <span class="pre">-b</span></tt> to rebuild the affected
-files in the Sage library.</p>
-</li>
-</ol>
-<p>In step 2, you are using Sage&#8217;s simplified interface to the <a class="reference external" href="http://mercurial.selenic.com">Mercurial</a> revision control system.  This command
-will add the patch as a new &#8220;changeset&#8221; and &#8220;commit&#8221; the changes.  At the
-Sage command line, you can run <tt class="docutils literal"><span class="pre">hg_sage.log()</span></tt> to see before/after
-changes to the Sage library. In step 4, you should only see a few files
-copied, modified, etc.  Unaffected files should not be part of this step.
-Look for compilation errors in this output and modify your changes as
-appropriate. Avoid producing patches that result in compilation errors or
-errors in building the documentation. (You want a working Sage
-installation, right?)  See also the section
-<a class="reference internal" href="#section-review-patches-queues-walkthrough"><em>Reviewing patches with queues</em></a> for another way to apply
-patches with Mercurial.</p>
-<p>To actually test out a patch, do the following.  Even if you&#8217;re new to Sage
-development and tentative about reviewing, reporting the success or failure
-of these steps on the ticket Trac page will be quite helpful:</p>
-<ol class="arabic simple">
-<li>Experiment with the functionality proposed by the patch. Verify
-results are correct by hand computations, test bad input, outrageous
-situations, etc.</li>
-<li>Run tests on the affected files. From <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt>, issue the command
-<tt class="docutils literal"><span class="pre">./sage</span> <span class="pre">-t</span> <span class="pre">devel/sage-test/path-to-directory-or-file</span></tt> to run doctests
-on the affected file(s). Failures should be reported on the ticket and
-are reason to move the ticket to &#8220;needs work&#8221;.  (See
-<a class="reference internal" href="doctesting.html#chapter-doctesting"><em>Doctesting the Sage Library</em></a> for more information.)</li>
-<li>Test the entire Sage library, including <tt class="docutils literal"><span class="pre">#long</span></tt> doctests.  From
-<tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt>, issue the command <tt class="docutils literal"><span class="pre">./sage</span> <span class="pre">--testall</span> <span class="pre">--long</span></tt>.  (See
-<a class="reference internal" href="doctesting.html#section-parallel-test-whole-library"><em>Parallel testing the whole Sage library</em></a> for information about testing
-in parallel.)  This will take a while to complete. No, it is not
-optional.  It is entirely possible that changes to one part of Sage
-break something in an entirely different part of Sage; patches which
-introduce new doctest failures cannot be included in new releases.</li>
-<li>Ensure that the documentation builds. From <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt>, run
-<tt class="docutils literal"><span class="pre">./sage</span> <span class="pre">-docbuild</span> <span class="pre">reference</span> <span class="pre">html</span></tt>, which will build the HTML
-version of the documentation.  Check the &#8220;look&#8221; of affected files
-in the output directory for the documentation (see above).</li>
-<li>Check for full doctest coverage. From <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt>, run
-<tt class="docutils literal"><span class="pre">./sage</span> <span class="pre">-coverage</span> <span class="pre">&lt;file&gt;</span></tt>  which will provide a complete report.
-Less than 100% coverage is another reason to return a patch to
-&#8220;needs work&#8221; status.</li>
-<li>Look at <a class="reference internal" href="trac.html#section-review-patches"><em>Reviewing patches</em></a> for more guidelines on reviewing.</li>
-</ol>
-<p>Once you&#8217;ve tested the patch, either by hand or with doctests (or both!),
-report any failures on the Trac page for the ticket.  Make suggestions
-about simplifying the code or fixing typos you noticed.  Mark it as &#8220;needs
-work&#8221; if there is anything to do.  Otherwise, mark it as &#8220;positive review&#8221;,
-and mention in a comment all the things you checked.  If you don&#8217;t feel
-experienced enough for that, add a comment on the Trac page explaining what
-you have checked, what the results were, and that you think someone more
-experienced should take a look.</p>
-<p>Tickets relating to doctests or the Sage documentation may be a good place
-to get started reviewing.  A list of such tickets with patches ready for review
-can be found using the following Trac <a class="reference external" href="http://trac.sagemath.org/sage_trac/query?status=needs_review&amp;component=doctest&amp;component=documentation&amp;order=priority&amp;col=id&amp;col=summary&amp;col=status&amp;col=type&amp;col=priority&amp;col=milestone&amp;col=component">custom query</a>.
-Alternatively, you can search for tickets needing review in a component
-whose mathematics you know well, or for tickets needing review which have
-priority &#8220;minor&#8221; or &#8220;trivial&#8221;.</p>
-</div>
-<div class="section" id="creating-a-change">
-<h2>Creating a change<a class="headerlink" href="#creating-a-change" title="Permalink to this headline">¶</a></h2>
-<p>To make a change to Sage (fix a bug, add new functionality), proceed
-as follows:</p>
-<ol class="arabic simple">
-<li>Make a fresh clone, as discussed in <a class="reference internal" href="#section-create-sandbox"><em>Creating a sandbox</em></a>.</li>
-<li>Apply any precursor patches not in your current version, as
-demonstrated in <a class="reference internal" href="#section-review-patch-walkthrough"><em>Reviewing a patch</em></a>.</li>
-<li>Edit source files (see <a class="reference internal" href="#section-modify-source"><em>Modifying Sage source code</em></a> for location),
-test building Sage, test functionality, and so on.</li>
-<li>Once you have something you like, do everything suggested for
-reviewing a patch.  It is a waste of time for a reviewer to start
-on reviewing a patch and find that tests fail, documentation was
-not tested, etc.  It would save any reviewer a lot of time if your
-patches have been fully tested before you submit them for review.
-Everybody makes mistakes, everybody has bugs they did not
-anticipate, and everybody writes code that can be improved&#8212;that is
-why there are code reviews.  But do not cut corners.</li>
-</ol>
-</div>
-<div class="section" id="submitting-a-change">
-<span id="section-submitting-change"></span><h2>Submitting a change<a class="headerlink" href="#submitting-a-change" title="Permalink to this headline">¶</a></h2>
-<p>Here is how to prepare a patch with your changes:</p>
-<ol class="arabic">
-<li><p class="first">Register for a Trac account at the URL
-<tt class="docutils literal"><span class="pre">http://trac.sagemath.org/sage_trac/register</span></tt>. If you have
-problems with the registration process, please refer to the page
-<tt class="docutils literal"><span class="pre">http://www.sagemath.org/contact.html</span></tt> for the relevant person to
-contact about your registration issues. Most people use some
-variant of their real name, especially if they already have a
-reputation within mathematics.  Edit the main Trac page where there
-is a list of developers and add yourself with a link to your web
-page. Make sure to sort your Trac username alphabetically.</p>
-</li>
-<li><p class="first">If it does not already exist, make a Trac ticket for your changes.
-Provide a one-line summary and then a description of the problem.
-Include a link to a sage-devel discussion if appropriate.  Choose a
-component, if this is a defect or enhancement, set your real name in
-the author field.  It works well if you have your Trac settings such
-that you get an email every time the ticket changes.  Make a note of
-the ticket number.</p>
-</li>
-<li><p class="first">Create a <tt class="docutils literal"><span class="pre">.hgrc</span></tt>  Mercurial configuration file in your home
-directory.  Specify your name and email address here, so it will
-identify you as the author of a patch, in the form `` Bill Smith
-&lt;<a class="reference external" href="mailto:bsmith&#37;&#52;&#48;bigu&#46;edu">bsmith<span>&#64;</span>bigu<span>&#46;</span>edu</a>&gt;``. Here is a template for your <tt class="docutils literal"><span class="pre">.hgrc</span></tt> file:</p>
-<div class="highlight-python"><pre>[ui]
-username = Carl Friedrich Gauss &lt;cfgauss@uni-goettingen.de&gt;
-
-[extensions]
-# Enable the Mercurial queue extension.
-hgext.mq =</pre>
-</div>
-<p>The Mercurial project website <tt class="docutils literal"><span class="pre">http://mercurial.selenic.com</span></tt>
-contains many tutorials on using Mercurial.</p>
-</li>
-<li><p class="first">If necessary, first switch to the branch holding your changes. From
-the Sage command line interface, run <tt class="docutils literal"><span class="pre">hg_sage.status()</span></tt>.  The
-output will be a list of modified files, preceded by a capital <tt class="docutils literal"><span class="pre">M</span></tt>.
-Check that this is what you expect.  For explanation of other
-letters, see the Mercurial documentation on the <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">status</span></tt>
-command.</p>
-</li>
-<li><p class="first">From the Sage command line, run <tt class="docutils literal"><span class="pre">hg_sage.diff()</span></tt>. This will show
-you the changes you have made. A plus sign is new code being added,
-a minus sign is code being deleted.  This should look like the
-changes you have made.</p>
-</li>
-<li><p class="first">Now run <tt class="docutils literal"><span class="pre">hg_sage.commit()</span></tt> from the Sage command line.  This will
-package your changes as a single Mercurial &#8220;changeset&#8221;, allowing
-others (reviewers, release manager) to add your changes to their
-versions of Sage.  An editor window will pop up (set your favorite
-editor in the <tt class="docutils literal"><span class="pre">.hgrc</span></tt> file mentioned above) where you should
-enter a <em>one-line</em> message describing the patch. This message is
-known as the commit message for your patch.  You are encouraged to
-write commit messages of the form
-<tt class="docutils literal"><span class="pre">Trac</span> <span class="pre">XXXX:</span> <span class="pre">&lt;description-goes-here&gt;</span></tt> using the Trac ticket number
-and then have a concise description, e.g. &#8220;fix echelon form error&#8221;
-or &#8220;add echelon form over finite fields.&#8221; Some people also write
-commit messages in the form <tt class="docutils literal"><span class="pre">#xxxx:</span> <span class="pre">&lt;description-goes-here&gt;</span></tt>,
-which is also acceptable. A key information to provide in a commit
-message is the ticket number.</p>
-</li>
-<li><p class="first">Run the command <tt class="docutils literal"><span class="pre">hg_sage.log()</span></tt> from the Sage command line.  The
-first entry should be your changeset.  Note the changeset number,
-which is probably 5 decimal digits.</p>
-</li>
-<li><p class="first">Next, issue the command</p>
-<div class="highlight-python"><pre>hg_sage.export(&lt;changeset-number&gt;, "/path-to-somewhere/trac_XXXX_short_descriptor.patch")</pre>
-</div>
-<p>where <tt class="docutils literal"><span class="pre">short_descriptor</span></tt> is really short, like
-<tt class="docutils literal"><span class="pre">echelon_form_fix</span></tt> or at most <tt class="docutils literal"><span class="pre">finite_field_echelon_form</span></tt>.</p>
-</li>
-<li><p class="first">You can preview your patch using a &#8220;diff viewer&#8221;. Some people use
-kompare on Linux, others use kdiff3.</p>
-</li>
-<li><p class="first">Upload your patch to the Trac server.</p>
-</li>
-<li><p class="first">Feel free to CC another developer (use their Trac username from the
-list on the main page) if you think they might be able to review your
-change.  If somebody else originated, or commented on the Trac ticket,
-they will be notified of your change if they have set Trac to email
-them of any changes.</p>
-</li>
-</ol>
-</div>
-<div class="section" id="updating-a-change">
-<h2>Updating a change<a class="headerlink" href="#updating-a-change" title="Permalink to this headline">¶</a></h2>
-<p>Your first patch would likely have a review that suggests
-changes. Here is one way to update your patch.  (There is probably a
-better way, but the following steps should be easy to follow.)</p>
-<ol class="arabic">
-<li><p class="first">Make a new fresh clone.  Read <a class="reference internal" href="#section-create-sandbox"><em>Creating a sandbox</em></a> to be
-sure you clone the right stuff (i.e. do not clone the branch you
-changed).  We will call this clone <tt class="docutils literal"><span class="pre">test2</span></tt> here.</p>
-</li>
-<li><p class="first">Apply your patch, but not with <tt class="docutils literal"><span class="pre">hg_sage.apply()</span></tt>.  You want to
-make the changes without doing a commit.  (There is a switch that
-will prevent a commit, but by doing this, you will see how to do
-this at the system level.)  First make
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage-test2/</span></tt> your working directory.  Then at
-the system command line, run:</p>
-<div class="highlight-python"><pre>patch -p1 &lt;/path-to-somewhere/trac_XXXX_short_descriptor.patch</pre>
-</div>
-<p>which will be like you just edited the source files with all the
-changes from your original patch.  Now you can edit to reflect a
-reviewer&#8217;s suggestions and prepare a new patch.</p>
-</li>
-<li><p class="first">When you upload to Trac, you can replace the file with one of the
-same name. The comments will include an indication of when the
-upload happened, so nobody will be confused about when the
-replacement happened.</p>
-</li>
-</ol>
-</div>
-<div class="section" id="being-more-efficient-mercurial-queues">
-<h2>Being more efficient: Mercurial queues<a class="headerlink" href="#being-more-efficient-mercurial-queues" title="Permalink to this headline">¶</a></h2>
-<p>If you are new to Sage development, the material above is
-sufficient to allow you to participate and contribute.  So on a
-first exposure, right here is a good place to stop reading and
-start developing.  However, soon you will have a submitted patch
-that needs repeated revisions, or you will find yourself in the
-middle of creating a patch and also desiring to review a patch,
-or you are creating a new patch and uncover a separate bug that
-you want to isolate and fix independently.  When you reach this
-point come back here and read the remainder about Mercurial
-queues.</p>
-<p>Making a new clone for every review and for each revision to a
-patch is a method that is easy to understand.  But it soon feels
-rather inefficient.  Mercurial queues use Sage&#8217;s Mercurial
-repository for tracking, collecting and organizing changes to
-Sage but are much more flexible and fit better with the way a
-typical Sage developer needs to work.  You will find them much
-more natural and useful than repeatedly making clones and
-adjusting patches in response to reviews.  And you don&#8217;t need to
-learn anything about Mercurial itself before you can begin.</p>
-<p>In a nutshell, Mercurial queues are two stacks of patches (a
-&#8220;patch&#8221; here means &#8220;a named collection of changes&#8221;).  One stack
-is a sequence of patches applied in the order in the stack. The
-other stack is a set of patches that are &#8220;out of the way&#8221;, but
-still arranged in some order.  Simple commands then allow you to
-move a patch off the top of one stack to the top of the other (in
-either direction).</p>
-<p>We will describe first how to get started, then three typical
-activities will show how to use the basic commands. We then finish
-with a &#8220;big picture&#8221; view, which you can read first if your mind works
-that way.</p>
-</div>
-<div class="section" id="starting-with-mercurial-queues">
-<h2>Starting with Mercurial queues<a class="headerlink" href="#starting-with-mercurial-queues" title="Permalink to this headline">¶</a></h2>
-<p>You might find it most convenient to install a fresh copy of Sage
-as your &#8220;development&#8221; version.  Instead of a version number for
-the <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt> directory you might name it something like
-<tt class="docutils literal"><span class="pre">dev</span></tt>.  Since you will likely keep it constantly upgraded, a
-version number will not make much sense.  Mine lives at
-<tt class="docutils literal"><span class="pre">/sage/dev</span></tt> with other copies right alongside in places like
-<tt class="docutils literal"><span class="pre">/sage/sage-4.3.1/</span></tt>.</p>
-<p>You also need to install a copy of Mercurial on your system,
-since now you will not be using Sage&#8217;s simplified interface.  So
-use a package manager, or whatever, to install a recent
-version. Alternatively, you could also use the version of Mercurial
-that is shipped with Sage. To do so, from within your terminal window,
-create an alias similar to the following:</p>
-<div class="highlight-python"><pre>alias 'hg'='/path/to/SAGE_ROOT/sage -hg'</pre>
-</div>
-<p>Afterwards, any time you execute the command <tt class="docutils literal"><span class="pre">hg</span></tt> in your terminal,
-this would invoke the version of Mercurial that is installed with your
-local Sage installation. However, once you quit or close your
-terminal, the alias <tt class="docutils literal"><span class="pre">hg</span></tt> would be lost and would no longer point to
-the Mercurial installation that comes with Sage.</p>
-<p>You first need to &#8220;turn on&#8221; support for queues.  It is all
-built-in by default but not visible.  Edit your <tt class="docutils literal"><span class="pre">~/.hgrc</span></tt> file
-(in your home directory, where your user info is) and add the
-following stanza if it is not present:</p>
-<div class="highlight-python"><pre>[extensions]
-# Enable the Mercurial queue extension.
-hgext.mq =</pre>
-</div>
-<p>The main Mercurial repository for the Sage library lives in
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage</span></tt> so you will interact with the repository
-using this as the working directory.  This means to actually run
-Sage, or rebuild it, you will use commands such as <tt class="docutils literal"><span class="pre">../../sage</span>
-<span class="pre">-b</span></tt>.  (The next step, initialization, has been deprecated as
-of version 1.5.)  One time only, for each repository, you need
-to initialize it for use with queues, so do the following:</p>
-<div class="highlight-python"><pre>cd SAGE_ROOT/devel/sage
-hg qinit</pre>
-</div>
-<p>HG is the symbol for the chemical element mercury, so <tt class="docutils literal"><span class="pre">hg</span></tt> is
-the executable.  All the commands specific to queues begin with
-the letter &#8220;q&#8221;.  That&#8217;s all the setup, you are ready to go.  The
-command <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">help</span> <span class="pre">mq</span></tt> will give a summary of queue commands. A
-command like <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">help</span> <span class="pre">qpop</span></tt> will give documentation for using the
-<tt class="docutils literal"><span class="pre">qpop</span></tt> command.</p>
-</div>
-<div class="section" id="reviewing-patches-with-queues">
-<span id="section-review-patches-queues-walkthrough"></span><h2>Reviewing patches with queues<a class="headerlink" href="#reviewing-patches-with-queues" title="Permalink to this headline">¶</a></h2>
-<p>The two stacks used by queues are called &#8220;applied&#8221; and
-&#8220;unapplied&#8221;.  The names do a good job of describing the status
-of the patches in each.  Download a patch from Trac as described
-above (<a class="reference internal" href="#section-review-patch-walkthrough"><em>Reviewing a patch</em></a>) in the usual way.
-Then execute</p>
-<div class="highlight-python"><pre>hg qimport &lt;path-and-filename.patch&gt;</pre>
-</div>
-<p>This will add the patch to the top of your unapplied stack.  Use
-<tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qunapplied</span></tt> to verify that the patch is in this stack.
-Presumably you want to have the changes in this patch applied to
-your Sage library, so use the simple command <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpush</span></tt> to
-accomplish this.  Now issue the command <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qapplied</span></tt> to see
-the patch now present in the applied stack.  You can now rebuild
-Sage, run the modified version, run tests, build documentation
-and so on, as described above.</p>
-<p>Let&#8217;s suppose the patch you were reviewing was so bad Sage
-wouldn&#8217;t even build due to compiler errors.  So you have the time
-to review something else.  Let&#8217;s move the first patch out of the
-way.  The command <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpop</span></tt> will move the top patch in the
-applied queue over to the top of the unapplied queue, so you
-would be able to apply and review other patches.  Use <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qapplied</span></tt>
-and <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qunapplied</span></tt> to verify this movement.  Now download a new
-patch, <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qimport</span></tt> it, and <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpush</span></tt> to apply it.</p>
-<p>Suppose this second patch turned out to be too far beyond your
-expertise in a certain area of mathematics or programming.  Pop
-it off the applied stack with <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpop</span></tt> so it is now at the top
-of the unapplied stack, sitting on top of the the un-compilable
-patch (you haven&#8217;t forgotten that one, have you?).  Use</p>
-<div class="highlight-python"><pre>hg qdelete &lt;patch-name&gt;</pre>
-</div>
-<p>to totally get rid of it.  Bye-bye. In the meantime, the author
-of the first patch found the single little error that prevented
-the patch from compiling and has posted a very small patch to
-make the correction.  First, apply the original patch again with
-<tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpush</span></tt>, then download the small patch with the fix, use
-<tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qimport</span></tt> to get it onto the unapplied stack, then finally
-<tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpush</span></tt> to apply it on top of the buggy patch.  Now you
-should be able to compile, experiment and test as usual with both
-patches applied.</p>
-<p>So we see you can use <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qimport</span></tt> and <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qdelete</span></tt> to move
-patches in and out, <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpop</span></tt> and <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpush</span></tt> to move patches
-between applied and unapplied states (stacks).  Keep track of
-where you are with liberal use of <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qapplied</span></tt> and <tt class="docutils literal"><span class="pre">hg</span>
-<span class="pre">qunapplied</span></tt>.</p>
-<p>You may be wondering what to do if your patches in the stacks end
-up &#8220;out of order.&#8221;  We&#8217;ll cover that in a bit.</p>
-</div>
-<div class="section" id="creating-your-own-patch-with-queues">
-<h2>Creating your own patch with queues<a class="headerlink" href="#creating-your-own-patch-with-queues" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s suppose you are ready to make some changes to the Sage
-library of your own.  Put anything in the applied stack that you
-need to build on, get everything else out of the way on the
-unapplied stack (see
-<a class="reference internal" href="#section-review-patches-queues-walkthrough"><em>Reviewing patches with queues</em></a> for techniques).
-Issue</p>
-<div class="highlight-python"><pre>hg qnew &lt;descriptive-name&gt;</pre>
-</div>
-<p>I am always in such a rush, I often forget this step. If you are
-like me, then</p>
-<div class="highlight-python"><pre>hg qnew -f &lt;descriptive-name&gt;</pre>
-</div>
-<p>will capture your changes made so far and give you a patch to
-work with.  (In newer versions of Mercurial, the -f flag has been
-deprecated.)  The &#8220;descriptive-name&#8221; can be anything you like,
-nobody else ever has to see it.  Use a Trac ticket number or
-whatever you please. Edit, build, test, create documentation,
-knock yourself out.  At any time, run <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qdiff</span></tt> to see your
-changes.</p>
-<p>Once satisfied with your work, use <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qrefresh</span></tt> to save your
-changes into the patch.  Even better is to use the <tt class="docutils literal"><span class="pre">-e</span></tt> or
-<tt class="docutils literal"><span class="pre">-m</span></tt> switches to allow you to edit (or specify) a summary line
-for the patch.  This was described above as the commit message.
-The use of <tt class="docutils literal"><span class="pre">-m</span></tt> is illustrated below.  To create a patch file
-in the proper format for submission to Trac, you need a generic
-Mercurial command.  Your patch is at the &#8220;tip&#8221; of the Mercurial
-repository and you want to export it, with redirection to a file.</p>
-<div class="highlight-python"><pre>hg qrefresh -m "Trac 1234: modified matrix memory management mostly"
-hg export tip &gt; ~/sage-patches/trac_1234_matrix_memory.patch</pre>
-</div>
-<p>Now upload this to the ticket in the usual way.  Note the message
-in the <tt class="docutils literal"><span class="pre">-m</span></tt> switch is what others will see as a description of
-your patch, not the name you used in <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qnew</span></tt> initially.
-<em>Do not use</em> <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qfinish</span></tt> when you think a patch is done, despite
-the pleasing sounding name.  It will finalize your patch, add it
-into the main repository, remove it from your queues, and
-generally make it much harder to get back to with subsequent
-edits based on reviewer comments.  Your work is not gone, but it
-will take a few steps to get it out as a patch and back into the
-queues.  You might want to read up on the command <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qimport</span> <span class="pre">-r</span></tt> as
-a possible way to undo an accidental commit.</p>
-<p>Of course, the minute you upload, you get a better idea about a
-key step in your algorithm.  Simple&#8212;edit some more, then
-<tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qrefresh</span></tt> (the message stays put, so you don&#8217;t have to redo it),
-and <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">export</span> <span class="pre">tip</span> <span class="pre">&gt;</span> <span class="pre">&lt;filename&gt;</span></tt>.  You can use a new filename,
-or recycle the previous one.  Trac will let you add a new file,
-or replace the existing one with a file having the same name.</p>
-<p>Suppose a reviewer suggests some changes.  You can just keep
-editing the same patch, or you could <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qnew</span></tt> a second patch
-on top of the old one.  It would depend on circumstances, there
-are situations where either approach would make sense.</p>
-<p>Suppose it takes a while for a reviewer to look at your patch.
-Move it off into the unapplied stack with <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpop</span></tt> and then
-begin a new project with <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qnew</span> <span class="pre">&lt;another-name&gt;</span></tt>.  Or leave
-your patch in the applied queue and start something new that
-relies on your first set of changes (again using <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qnew</span></tt>).</p>
-<p>So the sequence <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qnew</span></tt>, <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qrefresh</span></tt>, <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">export</span> <span class="pre">tip</span> <span class="pre">&gt;</span></tt>
-will create a new patch and allow you to easily amend or extend
-it, or totally move it &#8220;out of the way&#8221; to do other things.</p>
-</div>
-<div class="section" id="upgrading-sage-with-queues-present">
-<h2>Upgrading Sage with queues present<a class="headerlink" href="#upgrading-sage-with-queues-present" title="Permalink to this headline">¶</a></h2>
-<p>When it is time to upgrade Sage to the latest release, you need
-to return your development version back to a virgin state.  Use
-<tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qrefresh</span></tt> on whatever patch you are currently creating (if
-any).  Then pop everything off the applied stack with <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpop</span>
-<span class="pre">-a</span></tt>, where the switch <tt class="docutils literal"><span class="pre">-a</span></tt> means &#8220;all.&#8221;  There you are, back to a
-known good state.  Now use the standard commands to upgrade
-Sage:</p>
-<div class="highlight-python"><pre>cd SAGE_ROOT
-./sage -upgrade</pre>
-</div>
-<p>Sometimes for intermediate releases you will need a URL as an
-argument to the <tt class="docutils literal"><span class="pre">-upgrade</span></tt> switch.  Check the Sage discussion
-groups, where these locations are typically announced.  Now you
-can <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpush</span></tt> to put all your patches back onto the applied
-stack in the same order.  Realize, however, that the upgrade may
-have changed some of the source code where your patches have
-changes.  Certainly, if you have patches you reviewed positively,
-those exact changes may already be present (so at least <tt class="docutils literal"><span class="pre">hg</span>
-<span class="pre">qdelete</span></tt> those patches before pushing everything back on).</p>
-<p>It is also possible to use the Mercurial extension &#8220;rebase&#8221; to
-manage patches through an upgrade process. First you must enable
-the extension by editing your <tt class="docutils literal"><span class="pre">.hgrc</span></tt> file to include the
-following:</p>
-<div class="highlight-python"><pre>[extensions]
-rebase=</pre>
-</div>
-<p>Now, instead of using <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpush</span></tt> to forcibly reapply the old
-patches to the new Sage version, you can do the following.</p>
-<ol class="arabic simple">
-<li>Do <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">update</span> <span class="pre">-C</span> <span class="pre">-r</span> <span class="pre">old.version.number</span></tt>, where
-<tt class="docutils literal"><span class="pre">old.version.number</span></tt> is the old Sage version number you upgraded
-from, in order to get your working directory back to the good state
-of the old Sage version;</li>
-<li><tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpush</span> <span class="pre">-a</span></tt> to reapply all your patches to the old Sage files;</li>
-<li><tt class="docutils literal"><span class="pre">hg</span> <span class="pre">heads</span></tt> to find out the exact revision number you want to
-rebase your patch on;</li>
-<li><tt class="docutils literal"><span class="pre">hg</span> <span class="pre">rebase</span> <span class="pre">-d</span> <span class="pre">other.head.rev.number</span></tt>, where <tt class="docutils literal"><span class="pre">other.head.rev.number</span></tt>
-is the number you just looked up.</li>
-</ol>
-<p>Now your patches should be properly rebased on the new version of
-Sage. It will sometimes happen that the &#8220;rebase&#8221; extension can&#8217;t
-quite figure out how to rebase some changes. In that case,
-Mercurial will automatically open a 3-way merge editor to enlist
-your help in resolving the problem. You can configure which
-program this will be by editing your <tt class="docutils literal"><span class="pre">.hgrc</span></tt> file.</p>
-</div>
-<div class="section" id="the-big-picture-for-mercurial-queues">
-<h2>The Big Picture for Mercurial queues<a class="headerlink" href="#the-big-picture-for-mercurial-queues" title="Permalink to this headline">¶</a></h2>
-<p>At some time when you have a few patches applied, and a few
-unapplied, run</p>
-<div class="highlight-python"><pre>cd SAGE_ROOT/devel/sage
-hg qapplied
-hg qunapplied
-cat .hg/patches/series</pre>
-</div>
-<p>The output of the two <tt class="docutils literal"><span class="pre">hg</span></tt> commands should together look just
-like the output of the <tt class="docutils literal"><span class="pre">cat</span></tt> command.  The
-<tt class="docutils literal"><span class="pre">.hg/patches/series</span></tt> file has all of the names of your patches
-in some order, and you can imagine a separator that splits the
-list into the applied portion at the start of the file and the
-unapplied portion at the end of the file.  (You can also use the
-command <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qseries</span></tt> to see a list of all your patches.) The top of
-each stack is on either side of the separator.  (So the order of each
-stack runs in opposite directions in this file.)</p>
-<p>The command <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpush</span></tt> moves the separator toward the end of the
-file, while <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpop</span></tt> moves the separator toward the start of the
-file.  Furthermore, <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qnew</span></tt> inserts a new patch on the side of the
-separator toward the start of the file, while <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qimport</span></tt> adds
-an existing patch on the side of the separator toward the end of
-the file. Finally, <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qdelete</span></tt> totally removes a name from the
-series file.</p>
-<p>So what if you want to rearrange the order of your patches (in
-either stack)?  Make sure to <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpop</span></tt> until all the affected
-patches are in the unapplied stack.  Open <tt class="docutils literal"><span class="pre">.hg/patches/series</span></tt> with
-a text editor and rearrange the lines below the imaginary separator.
-Save the series file and confirm the new ordering with
-<tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qapplied</span></tt> and <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qunapplied</span></tt>.  Then <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpush</span></tt> repeatedly to
-get to where you want to be.</p>
-</div>
-<div class="section" id="more-on-queues">
-<h2>More on queues<a class="headerlink" href="#more-on-queues" title="Permalink to this headline">¶</a></h2>
-<p>So with careful management of your queues and regular upgrades,
-you can contribute to Sage easily, review others&#8217; patches, work
-on several projects simultaneously, and so on, all with just a single
-copy of Sage devoted to development.</p>
-<p>If you know how &#8220;regular&#8221; Mercurial functions (and even if you
-don&#8217;t) you can look at the main Mercurial repository (with
-<tt class="docutils literal"><span class="pre">hg</span> <span class="pre">log</span> <span class="pre">|</span> <span class="pre">more</span></tt>) and see how queues &#8220;insert&#8221; your applied patches
-near the tip of the repository, all &#8220;behind the scenes.&#8221;</p>
-<p>There are lots more you can do with queues, but you should
-understand enough now to experiment safely. The following URLs
-contain introductory tutorials on using Mercurial queues:</p>
-<ul class="simple">
-<li><a class="reference external" href="http://mercurial.selenic.com/wiki/MqExtension">http://mercurial.selenic.com/wiki/MqExtension</a></li>
-<li><a class="reference external" href="http://wiki.sagemath.org/MercurialQueues">http://wiki.sagemath.org/MercurialQueues</a></li>
-<li><a class="reference external" href="https://developer.mozilla.org/en/Mercurial_Queues">https://developer.mozilla.org/en/Mercurial_Queues</a></li>
-</ul>
-</div>
-<div class="section" id="cherry-picking">
-<h2>Cherry picking<a class="headerlink" href="#cherry-picking" title="Permalink to this headline">¶</a></h2>
-<p>The &#8220;record&#8221; extensions allow you to selectively pick (record)
-portions of a patch to group together.  (Also known as &#8220;cherry
-picking.&#8221;) So you can round up related bits and pieces of a patch
-if that makes sense in the context of your work.  To enable this
-feature, just edit your <tt class="docutils literal"><span class="pre">.hgrc</span></tt> file to include</p>
-<div class="highlight-python"><pre>[extensions]
-hgext.record=</pre>
-</div>
-<p>Use the command <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">record</span></tt> with &#8220;regular&#8221; Mercurial and <tt class="docutils literal"><span class="pre">hg</span>
-<span class="pre">qrecord</span></tt> if you are working with Mercurial queues.  The use of
-the two is slightly different.  We will illustrate the use of
-<tt class="docutils literal"><span class="pre">qrecord</span></tt>.  The command</p>
-<div class="highlight-python"><pre>hg qrecord another-patch</pre>
-</div>
-<p>creates a new, empty patch at the top of the applied stack.  It
-then begins to interactively examine your changes at the
-granularity of a patch &#8220;hunk.&#8221;  You can then choose to include
-each &#8220;hunk&#8221; of changes into this new patch or not.  Then you can
-work with this patch as before with <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qrefresh</span></tt>, <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">qpop</span></tt>,
-etc.</p>
-<p>For more on record, qrecord and crecord, see</p>
-<ul class="simple">
-<li><a class="reference external" href="http://mercurial.selenic.com/wiki/RecordExtension">http://mercurial.selenic.com/wiki/RecordExtension</a></li>
-</ul>
-</div>
-<div class="section" id="more-about-mercurial">
-<h2>More about Mercurial<a class="headerlink" href="#more-about-mercurial" title="Permalink to this headline">¶</a></h2>
-<p>The online book
-<a class="reference external" href="http://hgbook.red-bean.com">Mercurial: The Definitive Guide</a>
-by Bryan O&#8217;Sullivan contains numerous examples on using
-Mercurial. See especially Chapters 12 and 13 for explanation
-on how to effectively use Mercurial queues.</p>
-</div>
+  <div class="section" id="the-development-process">
+<span id="chapter-walk-through"></span><h1>The Development Process<a class="headerlink" href="#the-development-process" title="Permalink to this headline">¶</a></h1>
+<p>This section will present a concise overview of the Sage development
+process. In it, we will see how to obtain the Sage source code
+repository, make changes, and communicate these changes back to the
+Sage project. If you are a beginner to Sage development, this
+introductory guide is here to help you become familiar with the Sage
+development process.</p>
 </div>
 
 
@@ -747,34 +77,12 @@ on how to effectively use Mercurial queues.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference internal" href="#">Walking Through the Development Process</a><ul>
-<li><a class="reference internal" href="#modifying-sage-source-code">Modifying Sage source code</a></li>
-<li><a class="reference internal" href="#creating-a-sandbox">Creating a sandbox</a></li>
-<li><a class="reference internal" href="#reviewing-a-patch">Reviewing a patch</a></li>
-<li><a class="reference internal" href="#creating-a-change">Creating a change</a></li>
-<li><a class="reference internal" href="#submitting-a-change">Submitting a change</a></li>
-<li><a class="reference internal" href="#updating-a-change">Updating a change</a></li>
-<li><a class="reference internal" href="#being-more-efficient-mercurial-queues">Being more efficient: Mercurial queues</a></li>
-<li><a class="reference internal" href="#starting-with-mercurial-queues">Starting with Mercurial queues</a></li>
-<li><a class="reference internal" href="#reviewing-patches-with-queues">Reviewing patches with queues</a></li>
-<li><a class="reference internal" href="#creating-your-own-patch-with-queues">Creating your own patch with queues</a></li>
-<li><a class="reference internal" href="#upgrading-sage-with-queues-present">Upgrading Sage with queues present</a></li>
-<li><a class="reference internal" href="#the-big-picture-for-mercurial-queues">The Big Picture for Mercurial queues</a></li>
-<li><a class="reference internal" href="#more-on-queues">More on queues</a></li>
-<li><a class="reference internal" href="#cherry-picking">Cherry picking</a></li>
-<li><a class="reference internal" href="#more-about-mercurial">More about Mercurial</a></li>
-</ul>
-</li>
-</ul>
-
             <h4>Previous topic</h4>
             <p class="topless"><a href="index.html"
                                   title="previous chapter">Welcome to the Sage Developer&#8217;s Guide!</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="writing_code.html"
-                                  title="next chapter">Writing Code for Sage</a></p>
+            <p class="topless"><a href="trac.html"
+                                  title="next chapter">The Sage Trac Server</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/walk_through.txt"
@@ -808,7 +116,7 @@ on how to effectively use Mercurial queues.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="writing_code.html" title="Writing Code for Sage"
+          <a href="trac.html" title="The Sage Trac Server"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Welcome to the Sage Developer’s Guide!"
@@ -819,13 +127,13 @@ on how to effectively use Mercurial queues.</p>
     
   
   
-        <li><a href="index.html">Developer&#39;s Guide v6.0</a> &raquo;</li>
+        <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
  
       </ul>
     </div>
     
     <div class="footer">
-        &copy; Copyright 2005--2011, The Sage Development Team.
+        &copy; Copyright 2013, The Sage Development Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
     <script type="text/javascript">

@@ -31,7 +31,7 @@ tools to aid in that communication:
 
 - The Sage trac server, at http://trac.sagemath.org/sage_trac/.
   this is where you should post bugs, patches for bugs, additions to
-  the Sage library, etc. See :ref:`chapter-trac` for more information.
+  the Sage library, etc. See :ref:`chapter-trac-old` for more information.
 
 Contents:
 
@@ -41,4 +41,4 @@ Contents:
    producing_patches
    producing_spkgs
    patching_spkgs
-   trac
+   trac_old

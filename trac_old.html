@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Sage Trac Server &mdash; Sage Developer&#39;s Guide v1.0</title>
+    <title>The Sage Trac Server: Submitting Patches and Packages &mdash; Sage Developer&#39;s Guide v1.0</title>
     
     <link rel="stylesheet" href="_static/sage.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,8 +27,9 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="index.html" />
-    <link rel="next" title="Using GIT Directly" href="manual_git.html" />
-    <link rel="prev" title="The Development Process" href="walk_through.html" />
+    <link rel="up" title="Disseminating Code for Sage" href="disseminating_code_old.html" />
+    <link rel="next" title="Working with Sage Notebook source code" href="sagenb/index.html" />
+    <link rel="prev" title="Patching a Sage Package" href="patching_spkgs.html" />
     <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
 
   </head>
@@ -40,10 +41,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="manual_git.html" title="Using GIT Directly"
+          <a href="sagenb/index.html" title="Working with Sage Notebook source code"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="walk_through.html" title="The Development Process"
+          <a href="patching_spkgs.html" title="Patching a Sage Package"
              accesskey="P">previous</a> |</li>
   
     
@@ -52,7 +53,8 @@
   
   
         <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
- 
+
+          <li><a href="disseminating_code_old.html" accesskey="U">Disseminating Code for Sage</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -61,135 +63,24 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="the-sage-trac-server">
-<span id="chapter-trac"></span><h1>The Sage Trac Server<a class="headerlink" href="#the-sage-trac-server" title="Permalink to this headline">¶</a></h1>
-<p>All changes to Sage source code have to go through the <a class="reference external" href="http://trac.sagemath.org">Sage trac
-development server</a>. The purpose
-of the Sage trac server is to</p>
-<ol class="arabic simple">
-<li>Provide a place for discussion on issues and store a permanent
-record.</li>
-<li>A repository of source code and all proposed changes.</li>
-<li>Link these two together.</li>
-<li>There is also a <a class="reference external" href="http://trac.sagemath.org/wiki">wiki</a> for more
-general organizational web pages, like Sage development workshops.</li>
-</ol>
-<p>Thus if you find a bug in Sage, if you have new code to submit, want
-to review new code already written but not yet included in Sage, or if
-you have corrections for the documentation, you should post on the
-trac server. Items on the server are called <em>tickets</em>, and anyone may
-search or browse the tickets. For a list of recent changes, just visit
-the <a class="reference external" href="http://trac.sagemath.org/timeline">Sage trac timeline</a>.</p>
-<div class="section" id="authentication">
-<h2>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h2>
-<p>There are two avenues to prove to the trac server that you are who you
-claim to be. First, to change the ticket web pages you need to log in
-to trac using a username/password. Second, there is public key
-cryptography used by git when copying new source files to the
-repository. This section will show you how to setup both.</p>
-<div class="section" id="obtaining-an-account">
-<h3>Obtaining an Account<a class="headerlink" href="#obtaining-an-account" title="Permalink to this headline">¶</a></h3>
-<p>You first need to open an account if you want to <em>change</em> anything on
-the Sage trac server, even if you just want to comment on a
-ticket. Part of the process is to prove that you are a human to keep
-spam at a minimum. To get an account read the developer manual (this
-document) and then send an email to
-<tt class="docutils literal"><span class="pre">sage-trac-account&#64;googlegroups.com</span></tt> that contains all of the
-following:</p>
-<ul class="simple">
-<li>your full name,</li>
-<li>preferred username,</li>
-<li>contact email,</li>
-<li>and reason for needing a trac account.</li>
-</ul>
-<p>Your trac account also grants you access to ​the sage wiki. Make sure
-you understand the review process, and the procedures for opening and
-closing tickets before making changes. The remainder of this chapter
-contains various guidelines on using the trac server.</p>
-</div>
-<div class="section" id="generating-your-ssh-keys">
-<h3>Generating your SSH Keys<a class="headerlink" href="#generating-your-ssh-keys" title="Permalink to this headline">¶</a></h3>
-<p>Git will use SSH public key cryptography to decide if and where you
-are allowed to upload code to. This is not required if you just want
-to report a bug or comment on a ticket, but as soon as you want to
-contribute code yourself you need to provide trac with the public half
-of your own personal key. If you don&#8217;t have a private key yet, you can
-create it with the <tt class="docutils literal"><span class="pre">ssh-keygen</span></tt> tool:</p>
-<div class="highlight-python"><pre>[user@localhost ~]$ ssh-keygen
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/user/.ssh/id_rsa):
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /home/user/.ssh/id_rsa.
-Your public key has been saved in /home/user/.ssh/id_rsa.pub.
-The key fingerprint is:
-ce:32:b3:de:38:56:80:c9:11:f0:b3:88:f2:1c:89:0a user@localhost
-The key's randomart image is:
-+--[ RSA 2048]----+
-|  ....           |
-|   ..            |
-|   .o+           |
-| o o+o.          |
-|E + .  .S        |
-|+o .   o.        |
-|. o   +.o        |
-|      oB         |
-|     o+..        |
-+-----------------+</pre>
-</div>
-<p>This will generate a new random private RSA key
-in the <tt class="docutils literal"><span class="pre">.ssh</span></tt> folder in your home directory. By default, they are</p>
-<dl class="docutils">
-<dt><tt class="docutils literal"><span class="pre">~/.ssh/id_rsa</span></tt></dt>
-<dd>Your private key. Keep safe. <strong>Never</strong> hand it out to anybody.</dd>
-<dt><tt class="docutils literal"><span class="pre">~/.ssh/id_rsa.pub</span></tt></dt>
-<dd>The corresponding public key. This and only this file can be safely
-disclosed to third parties.</dd>
-</dl>
-<p>The <tt class="docutils literal"><span class="pre">ssh-keygen</span></tt> tool will let you generate a key with a different
-file name, or protect it with a passphrase. Depending on how much you
-trust your own computer or system administrator, you can leave the
-passphrase empty to be able to login without any human intervention.</p>
-<p>If you have accounts on multiple computers you can use the SSH keys to
-log in. Just copy the <strong>public</strong> key file (ending in <tt class="docutils literal"><span class="pre">.pub</span></tt>) to
-<tt class="docutils literal"><span class="pre">~/.ssh/authorized_keys</span></tt> on the remote computer and make sure that
-the file is only read/writeable by yourself. Voila, the next time you
-ssh into that machine you don&#8217;t have to provide your password.</p>
-</div>
-<div class="section" id="linking-your-public-key-to-your-trac-account">
-<h3>Linking your Public Key to your Trac Account<a class="headerlink" href="#linking-your-public-key-to-your-trac-account" title="Permalink to this headline">¶</a></h3>
-<p>The Sage trac server needs to know one of your public keys. You can
-upload it in the preferences, that is</p>
-<ol class="arabic simple">
-<li>Go to <a class="reference external" href="http://trac.sagemath.org">http://trac.sagemath.org</a></li>
-<li>Log in with your trac username/password</li>
-<li>Click on &#8220;Preferences&#8221;</li>
-<li>Go to the &#8220;SSH Keys&#8221; tab</li>
-<li>Paste the content of your public key file
-(e.g. <tt class="docutils literal"><span class="pre">~/.ssh/id_rsa.pub</span></tt>)</li>
-<li>Click on &#8220;Save changes&#8221;</li>
-</ol>
-<p>Note that this does <strong>not</strong> allow you to ssh into any account on trac,
-it is only used to authenticate you to the gitolite installation on
-trac. You can test that you are being authenticated correctly by
-issuing some basic gitolite commands, for example:</p>
-<div class="highlight-python"><pre>[user@localhost ~]$ ssh -p 2222 git@trac.sagemath.org info
-hello user, this is git@trac running gitolite3 (unknown) on git 1.7.9.5
-
- R W        sage
-[user@localhost ~]$ ssh -p 2222 git@trac.sagemath.org help
-hello user, this is gitolite3 (unknown) on git 1.7.9.5
-
-list of remote commands available:
-
-    desc
-    help
-    info
-    perms
-    writable</pre>
-</div>
-</div>
-</div>
+  <div class="section" id="the-sage-trac-server-submitting-patches-and-packages">
+<span id="chapter-trac-old"></span><h1>The Sage Trac Server: Submitting Patches and Packages<a class="headerlink" href="#the-sage-trac-server-submitting-patches-and-packages" title="Permalink to this headline">¶</a></h1>
+<p>What should you do with your Mercurial patches for Sage? You should
+post them on the Sage trac server.</p>
+<p>The Sage trac server, located at
+<a class="reference external" href="http://trac.sagemath.org/sage_trac/">http://trac.sagemath.org/sage_trac/</a>, is where Sage bugs are listed
+and patched, new code is posted and reviewed, and ideas for
+extending and improving Sage are discussed. Thus if you find a bug
+in Sage, or if you have new code to submit, or if you have
+corrections for the documentation, you should post on the trac
+server.</p>
+<p>Items on the server are called &#8220;tickets&#8221;, and anyone may browse the
+tickets: just visit <a class="reference external" href="http://trac.sagemath.org/sage_trac/report">http://trac.sagemath.org/sage_trac/report</a>. You
+need to open an account, though, if you want to comment on a
+ticket, submit a patch, or create a new ticket. See the
+<a class="reference external" href="http://trac.sagemath.org/sage_trac">trac server</a>
+for more information about obtaining an account. This chapter contains
+various guidelines on using the trac server.</p>
 <div class="section" id="reporting-bugs">
 <h2>Reporting bugs<a class="headerlink" href="#reporting-bugs" title="Permalink to this headline">¶</a></h2>
 <p>&#8220;The first step is admitting you have a problem.&#8221;</p>
@@ -358,7 +249,7 @@ Mercurial queues to produce/manage patches.</li>
 </ul>
 </div>
 <div class="section" id="reviewing-patches">
-<span id="section-review-patches"></span><h2>Reviewing patches<a class="headerlink" href="#reviewing-patches" title="Permalink to this headline">¶</a></h2>
+<span id="section-review-patches-old"></span><h2>Reviewing patches<a class="headerlink" href="#reviewing-patches" title="Permalink to this headline">¶</a></h2>
 <p>All code that goes into Sage is peer-reviewed, to ensure that the
 conventions discussed in this manual are followed, to make sure that
 there are sufficient examples and doctests in the documentation, and
@@ -535,13 +426,7 @@ name has a star next to it.</li>
         <div class="sphinxsidebarwrapper">
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference internal" href="#">The Sage Trac Server</a><ul>
-<li><a class="reference internal" href="#authentication">Authentication</a><ul>
-<li><a class="reference internal" href="#obtaining-an-account">Obtaining an Account</a></li>
-<li><a class="reference internal" href="#generating-your-ssh-keys">Generating your SSH Keys</a></li>
-<li><a class="reference internal" href="#linking-your-public-key-to-your-trac-account">Linking your Public Key to your Trac Account</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#">The Sage Trac Server: Submitting Patches and Packages</a><ul>
 <li><a class="reference internal" href="#reporting-bugs">Reporting bugs</a></li>
 <li><a class="reference internal" href="#guidelines-for-opening-tickets">Guidelines for opening tickets</a></li>
 <li><a class="reference internal" href="#stopgaps">Stopgaps</a></li>
@@ -556,14 +441,14 @@ name has a star next to it.</li>
 </ul>
 
             <h4>Previous topic</h4>
-            <p class="topless"><a href="walk_through.html"
-                                  title="previous chapter">The Development Process</a></p>
+            <p class="topless"><a href="patching_spkgs.html"
+                                  title="previous chapter">Patching a Sage Package</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="manual_git.html"
-                                  title="next chapter">Using GIT Directly</a></p>
+            <p class="topless"><a href="sagenb/index.html"
+                                  title="next chapter">Working with <em>Sage Notebook</em> source code</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="_sources/trac.txt"
+              <li><a href="_sources/trac_old.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
@@ -594,10 +479,10 @@ name has a star next to it.</li>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="manual_git.html" title="Using GIT Directly"
+          <a href="sagenb/index.html" title="Working with Sage Notebook source code"
              >next</a> |</li>
         <li class="right" >
-          <a href="walk_through.html" title="The Development Process"
+          <a href="patching_spkgs.html" title="Patching a Sage Package"
              >previous</a> |</li>
   
     
@@ -606,7 +491,8 @@ name has a star next to it.</li>
   
   
         <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
- 
+
+          <li><a href="disseminating_code_old.html" >Disseminating Code for Sage</a> &raquo;</li> 
       </ul>
     </div>
     
