@@ -135,17 +135,23 @@ field on the trac ticket.</p>
 <p>Having set up your SSH key as described in
 <a class="reference internal" href="trac.html#section-trac-ssh-key"><em>Linking your Public Key to your Trac Account</em></a>, you have push permissions to branches of
 the form <tt class="docutils literal"><span class="pre">u/user/*</span></tt> where <tt class="docutils literal"><span class="pre">user</span></tt> is your trac username and <tt class="docutils literal"><span class="pre">*</span></tt>
-is a wildcard, that is, any valid git branch name. By default, do
+is a wildcard, that is, any valid git branch name. By default, you do
 <em>not</em> have push permissions to other user&#8217;s branches or the Sage
-master branch. To push your branch to trac use:</p>
-<div class="highlight-python"><pre>git push my_branch:u/user/description</pre>
+master branch. To push your branch to trac use either:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git push --set-upstream trac my_branch:u/user/description</pre>
 </div>
-<p>where</p>
+<p>if you started the branch yourself and do not follow any other branch,
+or use:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git push my_branch:u/user/description</pre>
+</div>
+<p>if your branch already has an upstream branch. The remaining arguments
+are</p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">my_branch</span></tt> is the name of your local branch,</li>
 <li><tt class="docutils literal"><span class="pre">user</span></tt> is your trac username,</li>
 <li><tt class="docutils literal"><span class="pre">description</span></tt> is some (short but self-explanatory) description of
 your branch.</li>
+<li>You can leave out the <tt class="docutils literal"><span class="pre">--set-upstream</span> <span class="pre">trac</span></tt> if</li>
 </ul>
 <p>Then, in order to use this branch as the proposed change on a trac
 ticket, just fill its name <tt class="docutils literal"><span class="pre">u/user/description</span></tt> into the &#8220;Branch:&#8221;
@@ -156,6 +162,15 @@ tooltip will tell you what is wrong.  If it is green, then it will
 link to a diff of the changes against <tt class="docutils literal"><span class="pre">u/ohanar/build_system</span></tt>. (This
 is temporary until [#14480](<a class="reference external" href="http://trac.sagemath.org/14480">http://trac.sagemath.org/14480</a>) is merged
 into the <tt class="docutils literal"><span class="pre">master</span></tt> branch.)</p>
+<p>The above git commands create a new remote branch. If you make any
+further local edits, then you need a slight variation of the command
+to push your changes (but not create a new remote branch). So assume
+that you made some further changes to your local branch and committed
+them. Then you just have to push a certain commit, either specified by
+its hex number or by the abbreviation <tt class="docutils literal"><span class="pre">HEAD</span></tt> for the most recent
+one:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git push trac HEAD:u/user/description</pre>
+</div>
 </div>
 <div class="section" id="merging-and-rebasing">
 <h3>Merging and Rebasing<a class="headerlink" href="#merging-and-rebasing" title="Permalink to this headline">¶</a></h3>

@@ -93,18 +93,25 @@ field on the trac ticket.
 Having set up your SSH key as described in
 :ref:`section-trac-ssh-key`, you have push permissions to branches of
 the form ``u/user/*`` where ``user`` is your trac username and ``*``
-is a wildcard, that is, any valid git branch name. By default, do
+is a wildcard, that is, any valid git branch name. By default, you do
 *not* have push permissions to other user's branches or the Sage
-master branch. To push your branch to trac use::
+master branch. To push your branch to trac use either::
 
-    git push my_branch:u/user/description
+    [user@localhost sage]$ git push --set-upstream trac my_branch:u/user/description
 
-where
+if you started the branch yourself and do not follow any other branch,
+or use::
+
+    [user@localhost sage]$ git push my_branch:u/user/description
+
+if your branch already has an upstream branch. The remaining arguments
+are 
 
 * ``my_branch`` is the name of your local branch,
 * ``user`` is your trac username,
 * ``description`` is some (short but self-explanatory) description of
   your branch.
+* You can leave out the ``--set-upstream trac`` if 
 
 Then, in order to use this branch as the proposed change on a trac
 ticket, just fill its name ``u/user/description`` into the "Branch:"
@@ -116,6 +123,17 @@ tooltip will tell you what is wrong.  If it is green, then it will
 link to a diff of the changes against ``u/ohanar/build_system``. (This
 is temporary until [#14480](http://trac.sagemath.org/14480) is merged
 into the ``master`` branch.)
+
+The above git commands create a new remote branch. If you make any
+further local edits, then you need a slight variation of the command
+to push your changes (but not create a new remote branch). So assume
+that you made some further changes to your local branch and committed
+them. Then you just have to push a certain commit, either specified by
+its hex number or by the abbreviation ``HEAD`` for the most recent
+one::
+
+    [user@localhost sage]$ git push trac HEAD:u/user/description
+
 
 
 
