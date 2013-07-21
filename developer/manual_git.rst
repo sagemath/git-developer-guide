@@ -111,7 +111,6 @@ are
 * ``user`` is your trac username,
 * ``description`` is some (short but self-explanatory) description of
   your branch.
-* You can leave out the ``--set-upstream trac`` if 
 
 Then, in order to use this branch as the proposed change on a trac
 ticket, just fill its name ``u/user/description`` into the "Branch:"
