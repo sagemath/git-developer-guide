@@ -10,9 +10,7 @@ and how to modify Sage's documentation. It also discusses how to share
 your new and modified code with other Sage users.
 
 This work is licensed under a `Creative Commons Attribution-Share Alike
-3.0 License`__.
-
-__ http://creativecommons.org/licenses/by-sa/3.0/
+3.0 License <http://creativecommons.org/licenses/by-sa/3.0/>`_.
 
 .. toctree::
    :maxdepth: 3

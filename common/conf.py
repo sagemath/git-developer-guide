@@ -13,6 +13,7 @@ copyright = u'2013, The Sage Development Team'
 release = '1.0'
 default_role = 'math'
 pygments_style = 'sphinx'
+todo_include_todos = True
 
 pythonversion = sys.version.split(' ')[0]
 # Python and Sage trac ticket shortcuts. For example, :trac:`7549` .

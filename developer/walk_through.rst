@@ -1,8 +1,8 @@
 .. _chapter-walk-through:
 
-=======================
-The Development Process
-=======================
+========================
+Sage Development Process
+========================
 
 This section will present a concise overview of the Sage development
 process. In it, we will see how to obtain the Sage source code
