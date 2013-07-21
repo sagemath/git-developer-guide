@@ -9,8 +9,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 # General information about the project.
 project = u""
-copyright = u'2005--2011, The Sage Development Team'
-release = '6.0'
+copyright = u'2013, The Sage Development Team'
+release = '1.0'
 default_role = 'math'
 pygments_style = 'sphinx'
 
