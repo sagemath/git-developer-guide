@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+
+import os, shutil, sys, re
+import sphinx.cmdline
+
+os.environ['SAGE_DOC'] = os.getcwd()
+
+sphinx.cmdline.main(['build.py', 'developer', 'html'])
+
+

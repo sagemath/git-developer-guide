@@ -8,7 +8,7 @@ GH_PAGES_DIR = 'gh-pages'
 if not os.path.isdir(GH_PAGES_DIR):
     print 'Create a submodule in the gh-pages directory that contains the gh-pages branch'
     print 'For example:'
-    print '    git submodule add -b gh-pages git@github.com:vbraun/sage-developer-git.git gh-pages'
+    print '    git submodule add -b gh-pages git@github.com:sagemath/git-developer-guide.git gh-pages'
     os.exit(1)
 
 for src in os.listdir(HTML_DIR):

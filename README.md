@@ -1,7 +1,7 @@
 Git Version of the Sage Developer Manual
 ========================================
 
-See the current documentation at http://vbraun.github.io/sage-developer-git/
+See the current documentation at http://sagemath.github.io/git-developer-guide/
 
 
 Prerequisites
