@@ -66,11 +66,14 @@ create a fast new C library, etc. This document describes how to write
 programs using Sage, how to modify and extend the core Sage libraries,
 and how to modify Sage&#8217;s documentation. It also discusses how to share
 your new and modified code with other Sage users.</p>
-<p>This work is licensed under a <a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
-3.0 License</a>.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="walk_through.html">Sage Development Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_setup.html">Setting Up Git</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git_setup.html#installing-git">Installing Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_setup.html#your-name-and-email">Your Name and Email</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="trac.html">The Sage Trac Server</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="trac.html#authentication">Authentication</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="trac.html#obtaining-an-account">Obtaining an Account</a></li>
@@ -81,7 +84,7 @@ your new and modified code with other Sage users.</p>
 <li class="toctree-l2"><a class="reference internal" href="trac.html#reporting-bugs">Reporting bugs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="trac.html#guidelines-for-opening-tickets">Guidelines for opening tickets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="trac.html#stopgaps">Stopgaps</a></li>
-<li class="toctree-l2"><a class="reference internal" href="trac.html#patching-bugs-working-on-tickets">Patching bugs/working on tickets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trac.html#working-on-tickets">Working on tickets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="trac.html#reviewing-patches">Reviewing patches</a></li>
 <li class="toctree-l2"><a class="reference internal" href="trac.html#closing-tickets">Closing tickets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="trac.html#reasons-to-invalidate-tickets">Reasons to invalidate tickets</a></li>
@@ -89,7 +92,33 @@ your new and modified code with other Sage users.</p>
 <li class="toctree-l2"><a class="reference internal" href="trac.html#assigning-tickets">Assigning tickets</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="manual_git.html">GIT The Hard Way</a><ul>
+</ul>
+</div>
+<div class="section" id="writing-code-for-sage">
+<h2>Writing Code for Sage<a class="headerlink" href="#writing-code-for-sage" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Check paths in the &#8220;Writing Code for Sage&#8221; section</p>
+</div>
+</div>
+<div class="section" id="git-and-sage-development">
+<h2>Git and Sage Development<a class="headerlink" href="#git-and-sage-development" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="git_background.html">Git Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git_background.html#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="git_background.html#aliases">Aliases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="git_background.html#editor">Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="git_background.html#merging">Merging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="git_background.html#fancy-log-output">Fancy Log Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="git_background.html#tutorials-and-summaries">Tutorials and summaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_background.html#advanced-git-workflow">Advanced git workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git_background.html#manual-pages-online">Manual pages online</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="manual_git.html">Git the Hard Way</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="manual_git.html#branching-out">Branching Out</a></li>
 <li class="toctree-l2"><a class="reference internal" href="manual_git.html#the-trac-server">The Trac Server</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="manual_git.html#checking-out-tickets">Checking Out Tickets</a></li>
@@ -103,8 +132,37 @@ your new and modified code with other Sage users.</p>
 </ul>
 </div>
 </div>
-<div class="section" id="old-developer-guide-mercurial-based">
-<h1>Old Developer Guide (Mercurial-based)<a class="headerlink" href="#old-developer-guide-mercurial-based" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sage-notebook-developer-guide">
+<h2>Sage Notebook Developer Guide<a class="headerlink" href="#sage-notebook-developer-guide" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sagenb/index.html">Sage Notebook Developer Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sagenb/following_latest.html">Following the latest source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/following_latest.html#get-the-local-copy-of-the-code">Get the local copy of the code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/following_latest.html#updating-the-code">Updating the code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sagenb/patching.html">Making a patch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/patching.html#making-patches">Making patches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/patching.html#moving-from-patching-to-development">Moving from patching to development</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sagenb/github_development.html">Git for development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/forking_hell.html">Making your own copy (fork) of Sage Notebook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/set_up_fork.html">Set up your fork</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/configure_git.html">Configure git</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/development_workflow.html">Development workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sagenb/maintainer_workflow.html">Maintainer workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="to-be-deleted">
+<h2>To be deleted<a class="headerlink" href="#to-be-deleted" title="Permalink to this headline">¶</a></h2>
+<p>Old Developer Guide (Mercurial-based)</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="walk_through_old.html">Walking Through the Development Process</a><ul>
@@ -222,28 +280,19 @@ your new and modified code with other Sage users.</p>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sagenb/index.html">Working with <em>Sage Notebook</em> source code</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sagenb/index.html#getting-started">Getting Started</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sagenb/git_intro.html">Introduction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sagenb/git_install.html">Install git</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sagenb/following_latest.html">Following the latest source</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sagenb/patching.html">Making a patch</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sagenb/git_development.html">Git for development</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sagenb/git_resources.html">git resources</a></li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
 <li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
 <li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
 </ul>
+<p>This work is licensed under a <a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
+3.0 License</a>.</p>
+</div>
 </div>
 
 
@@ -255,12 +304,19 @@ your new and modified code with other Sage users.</p>
             <h3><a href="#">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference internal" href="#">Welcome to the Sage Developer&#8217;s Guide!</a><ul>
+<li><a class="reference internal" href="#writing-code-for-sage">Writing Code for Sage</a></li>
+<li><a class="reference internal" href="#git-and-sage-development">Git and Sage Development</a><ul>
 </ul>
 </li>
-<li><a class="reference internal" href="#old-developer-guide-mercurial-based">Old Developer Guide (Mercurial-based)</a><ul>
+<li><a class="reference internal" href="#sage-notebook-developer-guide">Sage Notebook Developer Guide</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#to-be-deleted">To be deleted</a><ul>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
 </ul>
 
             <h4>Next topic</h4>

@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Inclusion Procedure for New Packages &mdash; Sage Developer&#39;s Guide v1.0</title>
+    <title>Setting Up Git &mdash; Sage Developer&#39;s Guide v1.0</title>
     
     <link rel="stylesheet" href="_static/sage.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,9 +27,8 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="index.html" />
-    <link rel="up" title="Disseminating Code for Sage" href="disseminating_code_old.html" />
-    <link rel="next" title="Producing Patches with Mercurial" href="producing_patches.html" />
-    <link rel="prev" title="Disseminating Code for Sage" href="disseminating_code_old.html" />
+    <link rel="next" title="The Sage Trac Server" href="trac.html" />
+    <link rel="prev" title="Sage Development Process" href="walk_through.html" />
     <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
 
   </head>
@@ -41,10 +40,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="producing_patches.html" title="Producing Patches with Mercurial"
+          <a href="trac.html" title="The Sage Trac Server"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="disseminating_code_old.html" title="Disseminating Code for Sage"
+          <a href="walk_through.html" title="Sage Development Process"
              accesskey="P">previous</a> |</li>
   
     
@@ -53,8 +52,7 @@
   
   
         <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
-
-          <li><a href="disseminating_code_old.html" accesskey="U">Disseminating Code for Sage</a> &raquo;</li> 
+ 
       </ul>
     </div>  
 
@@ -63,78 +61,59 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="inclusion-procedure-for-new-packages">
-<h1>Inclusion Procedure for New Packages<a class="headerlink" href="#inclusion-procedure-for-new-packages" title="Permalink to this headline">¶</a></h1>
-<p>For a package to become part of Sage&#8217;s standard distribution, it
-must meet the following requirements:</p>
-<ul>
-<li><p class="first"><strong>License</strong>. For external packages, the license must be compatible
-with the GNU General Public License, version 3. More precisely, it
-must be allowed to license the code that you wish to include under
-the GPL version 3.  Sage library code (anything which is not an
-external package) must be licensed under the
-&#8220;GNU General Public License as published by the Free Software Foundation;
-either version 2 of the License, or (at your option) any later version.&#8221;
-The Free Software Foundation maintains a long list of
-<a class="reference external" href="http://www.gnu.org/licenses/license-list.html">licenses and comments about them</a>.</p>
-</li>
-<li><p class="first"><strong>Build Support</strong>. The code <strong>must</strong> build on all the <a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Fully_supported">fully supported platforms</a>.</p>
-<p>A standard package should also work on all the platforms where Sage is
-<a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Expected_to_work">expected to work</a>
-and on which Sage <a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Almost_works">almost works</a>
-but since we don&#8217;t fully support these platforms and often lack the resources to test on them,
-you are not expected to confirm your packages works on those platforms.
-However, if you can, it is better to do so. As noted
-<a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Expected_to_work">here</a>,
-a failure of Sage to work on a
-platform where it is expected to work, will be considered a bug.</p>
-<p>There is no need to worry too much about platforms where Sage will
-<a class="reference external" href="http://wiki.sagemath.org/SupportedPlatforms#Probably_will_not_work">probably not work</a>
-though if it&#8217;s clear that there is
-significant effort taking place to port Sage to a platform, then you should
-aim to ensure your package does not cause unnecessary headaches to those
-working on the port.</p>
-<p>If it&#8217;s clear that a port is stagnent, with nobody working on
-it, then you can safely ignore it.</p>
-<p>Remarks:</p>
+  <div class="section" id="setting-up-git">
+<span id="chapter-git-setup"></span><h1>Setting Up Git<a class="headerlink" href="#setting-up-git" title="Permalink to this headline">¶</a></h1>
+<p>To work on the Sage source code, you need</p>
 <ul class="simple">
-<li>Some Sage developers are willing to help you port to OS X, Solaris
-and Windows. But this is no guarantee and you or your project are
-expected to do the heavy lifting and also support those ports
-upstream if there is no Sage developer who is willing to share the
-burden.</li>
-<li>One of the best ways to ensure your code works on multiple platforms
-is to only use commands which are defined by <a class="reference external" href="http://www.opengroup.org/onlinepubs/9699919799/">POSIX.1-2008</a> and only use options which are defined
-in the POSIX standard. For example, do not use the -p option to <a class="reference external" href="http://www.opengroup.org/onlinepubs/9699919799/utilities/uname.html">uname</a> as
-the &#8216;-p&#8217; option is not defined by the POSIX standard, so is not portable.
-If you must use a non-POSIX command, or a option which is not defined
-by POSIX, then ensure the code only gets executed on the platform(s)
-where that command and/or option will be acceptable.</li>
+<li>a working git installation, see <a class="reference internal" href="#section-git-install"><em>Installing Git</em></a></li>
+<li>configure git to use your name and email address for commits, see
+<a class="reference internal" href="#section-git-setup-name"><em>Your Name and Email</em></a></li>
 </ul>
-</li>
-<li><p class="first"><strong>Quality</strong>. The code should be &#8220;better&#8221; than any other available
-code (that passes the two above criteria), and the authors need to
-justify this. The comparison should be made to both Python and other
-software. Criteria in passing the quality test include:</p>
+<p>You need to perform these two steps to participate in the Sage
+development. The <a class="reference internal" href="git_background.html#chapter-git-background"><em>Git Background</em></a> chapter contains
+further information about git that might be useful to some but are not
+required.</p>
+<div class="section" id="installing-git">
+<span id="section-git-install"></span><h2>Installing Git<a class="headerlink" href="#installing-git" title="Permalink to this headline">¶</a></h2>
+<p>First, try <tt class="docutils literal"><span class="pre">git</span></tt> on the command line. Most distributions will have
+it installed by default if other development tools are installed. If
+that fails, use the following to install git:</p>
+<dl class="docutils">
+<dt>Debian / Ubuntu</dt>
+<dd><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">git-core</span></tt></dd>
+<dt>Fedora</dt>
+<dd><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">yum</span> <span class="pre">install</span> <span class="pre">git-core</span></tt></dd>
+<dt>Windows</dt>
+<dd>Download and install <a class="reference external" href="http://code.google.com/p/msysgit/downloads/list">msysGit</a></dd>
+<dt>OS X</dt>
+<dd>Use the <a class="reference external" href="http://code.google.com/p/git-osx-installer/downloads/list">git OSX installer</a></dd>
+</dl>
+<p>Some further ressources for installation help are:</p>
 <ul class="simple">
-<li>Speed</li>
-<li>Documentation</li>
-<li>Usability</li>
-<li>Memory leaks</li>
-<li>Maintainable</li>
-<li>Portability</li>
-<li>Reasonable build time, size, dependencies</li>
+<li><a class="reference external" href="http://book.git-scm.com/2_installing_git.html">Chapter 2 of the git book</a></li>
+<li>The <a class="reference external" href="http://git-scm.com">git homepage</a> for the most recent
+information.</li>
+<li><a class="reference external" href="http://help.github.com">Github install help pages</a></li>
 </ul>
-</li>
-<li><p class="first"><strong>Previously an optional package</strong>. Usually a new standard package
-must have spent some time as an optional package. However, sometimes
-this is not possible, if for example a new library is needed to
-permit an updated version of a standard package to function.</p>
-</li>
-<li><p class="first"><strong>Refereeing</strong>. The code must be refereed, as discussed in
-<a class="reference internal" href="trac.html#chapter-sage-trac"><em>The Sage Trac Server</em></a>.</p>
-</li>
-</ul>
+</div>
+<div class="section" id="your-name-and-email">
+<span id="section-git-setup-name"></span><h2>Your Name and Email<a class="headerlink" href="#your-name-and-email" title="Permalink to this headline">¶</a></h2>
+<p>The commit message of any change contains your name and email address
+to acknowledge your contribution and to have a point of contact if
+there are questions in the future; Filling it in is required if you
+want to share your changes. The simplest way to do this is from the
+command line:</p>
+<div class="highlight-python"><pre>[user@localhost ~] git config --global user.name "Your Name"
+[user@localhost ~] git config --global user.email you@yourdomain.example.com</pre>
+</div>
+<p>This will write the settings into your <a class="reference internal" href="git_background.html#section-git-configuration"><em>git configuration file</em></a> with your name and email:</p>
+<div class="highlight-python"><pre>[user]
+    name = Your Name
+    email = you@yourdomain.example.com</pre>
+</div>
+<p>Of course you&#8217;ll need to replace <tt class="docutils literal"><span class="pre">Your</span> <span class="pre">Name</span></tt> and <tt class="docutils literal"><span class="pre">you&#64;yourdomain.example.com</span></tt>
+with your actual name and email address.</p>
+</div>
 </div>
 
 
@@ -143,15 +122,24 @@ permit an updated version of a standard package to function.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Setting Up Git</a><ul>
+<li><a class="reference internal" href="#installing-git">Installing Git</a></li>
+<li><a class="reference internal" href="#your-name-and-email">Your Name and Email</a></li>
+</ul>
+</li>
+</ul>
+
             <h4>Previous topic</h4>
-            <p class="topless"><a href="disseminating_code_old.html"
-                                  title="previous chapter">Disseminating Code for Sage</a></p>
+            <p class="topless"><a href="walk_through.html"
+                                  title="previous chapter">Sage Development Process</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="producing_patches.html"
-                                  title="next chapter">Producing Patches with Mercurial</a></p>
+            <p class="topless"><a href="trac.html"
+                                  title="next chapter">The Sage Trac Server</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="_sources/inclusion.txt"
+              <li><a href="_sources/git_setup.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
@@ -182,10 +170,10 @@ permit an updated version of a standard package to function.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="producing_patches.html" title="Producing Patches with Mercurial"
+          <a href="trac.html" title="The Sage Trac Server"
              >next</a> |</li>
         <li class="right" >
-          <a href="disseminating_code_old.html" title="Disseminating Code for Sage"
+          <a href="walk_through.html" title="Sage Development Process"
              >previous</a> |</li>
   
     
@@ -194,8 +182,7 @@ permit an updated version of a standard package to function.</p>
   
   
         <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
-
-          <li><a href="disseminating_code_old.html" >Disseminating Code for Sage</a> &raquo;</li> 
+ 
       </ul>
     </div>
     

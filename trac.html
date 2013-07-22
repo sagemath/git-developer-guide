@@ -27,8 +27,8 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="index.html" />
-    <link rel="next" title="GIT The Hard Way" href="manual_git.html" />
-    <link rel="prev" title="Sage Development Process" href="walk_through.html" />
+    <link rel="next" title="Git Background" href="git_background.html" />
+    <link rel="prev" title="Setting Up Git" href="git_setup.html" />
     <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
 
   </head>
@@ -40,10 +40,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="manual_git.html" title="GIT The Hard Way"
+          <a href="git_background.html" title="Git Background"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="walk_through.html" title="Sage Development Process"
+          <a href="git_setup.html" title="Setting Up Git"
              accesskey="P">previous</a> |</li>
   
     
@@ -62,7 +62,7 @@
           <div class="body">
             
   <div class="section" id="the-sage-trac-server">
-<span id="chapter-trac"></span><h1>The Sage Trac Server<a class="headerlink" href="#the-sage-trac-server" title="Permalink to this headline">¶</a></h1>
+<span id="chapter-sage-trac"></span><h1>The Sage Trac Server<a class="headerlink" href="#the-sage-trac-server" title="Permalink to this headline">¶</a></h1>
 <p>All changes to Sage source code have to go through the <a class="reference external" href="http://trac.sagemath.org">Sage trac
 development server</a>. The purpose
 of the Sage trac server is to</p>
@@ -288,7 +288,7 @@ message, use code like the following:</p>
 <p>Replace <tt class="docutils literal"><span class="pre">TICKET_NUM</span></tt> by the ticket number for the main ticket.  See
 <a class="reference external" href="http://trac.sagemath.org/12699">trac ticket #12699</a>, for example.  On the main trac ticket, you should also
 enter the ticket number for the stopgap ticket in the &#8220;Stopgaps&#8221;
-field.  Stopgap tickets should be marked as blockers.</p>
+field. Stopgap tickets should be marked as blockers.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If mathematically valid code causes Sage to raise an error or
@@ -297,64 +297,36 @@ stopgaps are to warn users that they may be using buggy code; if
 Sage crashes, this is not an issue.</p>
 </div>
 </div>
-<div class="section" id="patching-bugs-working-on-tickets">
-<h2>Patching bugs/working on tickets<a class="headerlink" href="#patching-bugs-working-on-tickets" title="Permalink to this headline">¶</a></h2>
-<p>If you have code which fixes a bug or deals with some issue in
-Sage, here is what to do. First, use Mercurial to create a patch
-file. See <a class="reference internal" href="walk_through_old.html#chapter-walk-through-old"><em>Walking Through the Development Process</em></a> for more information on using
-Mercurial to produce/manage patches. If the issue has been reported as
-a ticket on the trac server, attach your patch file to that ticket: go
-to the ticket, click on the &#8220;Attach File&#8221; button, and follow the
-directions. On the ticket page, you should add a comment explaining
-your patch. Some relevant information include:</p>
+<div class="section" id="working-on-tickets">
+<h2>Working on tickets<a class="headerlink" href="#working-on-tickets" title="Permalink to this headline">¶</a></h2>
+<p>If you manage to fix a bug or enhance Sage you are our hero. See
+<a class="reference internal" href="walk_through.html#chapter-walk-through"><em>Sage Development Process</em></a> for making changes to the Sage source
+code, uploading them to the Sage trac server, and finally putting your
+new branch on the trac ticket.</p>
 <ul class="simple">
-<li>The version of Sage you used to create the patch. If the patch is
-based on Sage x.y.z, ensure you include such information.</li>
-<li>If the ticket has more than one patch, explicitly specify which ones
-are to be used. Are all of the patches to be applied? Or only a
-subset of the patches on the ticket?</li>
-<li>If more than one patch is to be applied, state the order in which
-those patches are to be applied.</li>
 <li>Does the ticket depend on another ticket? Sometimes, a ticket
-requires that the patches on another ticket be applied first. Be
-sure to include such information if relevant.</li>
-<li>It is best to supply information about ticket dependencies and patch
-order in a way that the Patch Buildbot can understand. This bot
-automatically applies patches from trac and tests them.
-See its wiki: <a class="reference external" href="http://wiki.sagemath.org/buildbot">http://wiki.sagemath.org/buildbot</a></li>
+requires that another ticket be applied first. If this is the case,
+put the dependencies as a comma-separated list (<tt class="docutils literal"><span class="pre">#1234,</span> <span class="pre">#5678</span></tt>)
+into the &#8220;Dependencies:&#8221; field.</li>
+<li>The Patch buildbot wil automatically test your ticket. See <a class="reference external" href="http://wiki.sagemath.org/buildbot">its wiki</a> for more information about its
+features and limitations. Make sure that you lood at the log,
+especially if the patch buildbot did not give you the green blob.</li>
 </ul>
-<p>If there is no trac ticket associated to this issue, create one (as
-explained in the previous sections) describing the issue and your
-solution, and attach your patch.</p>
 <p>The following are some other relevant issues:</p>
 <ul class="simple">
 <li>Every bug fixed should result in a doctest.</li>
-<li>Cooperative debugging via IRC is faster by at least an order of
-magnitude. If you have not learned how to use IRC, please do so.
-If you have problems using IRC because of firewalls, but you do
-have an account on the machine <tt class="docutils literal"><span class="pre">sage.math</span></tt>, you can use irssi via
-ssh there. If you have a flaky connection, you can use it together
-with the program screen.</li>
 <li>This is not an issue with defects, but there are many enhancements
-possible for Sage and too few developers to implement all the
-good ideas. The trac server is useful for keeping ideas
-in a central place because in the Google groups they tend to get
-lost once they drop off the first page.</li>
-<li>If you are a developer, be nice and try to solve a stale/old
-ticket every once in a while.</li>
-<li>Some people regularly do triage. Triage in this context means
-that we look at new bugs and classify them according to our
-perceived priority. It is very likely that different people will
-see priorities of bugs very differently from us, so please let
-us know if you see a problem with specific tickets.</li>
-<li><strong>Patches Preferred</strong>: Patches are easier to review, edit and
-can be merged without affecting the history. So we greatly prefer
-patches over Mercurial bundles. If you do have a large number of
-patches, a bundle can still be better than patches. One
-alternative to bundles is to use Mercurial queues to flatten the
-history. That might or might not be desirable. See
-<a class="reference internal" href="walk_through_old.html#chapter-walk-through-old"><em>Walking Through the Development Process</em></a> for further information on using
-Mercurial queues to produce/manage patches.</li>
+possible for Sage and too few developers to implement all the good
+ideas. The trac server is useful for keeping ideas in a central
+place because in the Google groups they tend to get lost once they
+drop off the first page.</li>
+<li>If you are a developer, be nice and try to solve a stale/old ticket
+every once in a while.</li>
+<li>Some people regularly do triage. In this context, this means that we
+look at new bugs and classify them according to our perceived
+priority. It is very likely that different people will see
+priorities of bugs very differently from us, so please let us know
+if you see a problem with specific tickets.</li>
 </ul>
 </div>
 <div class="section" id="reviewing-patches">
@@ -435,15 +407,16 @@ see how things are done.</p>
 </div>
 <div class="section" id="closing-tickets">
 <h2>Closing tickets<a class="headerlink" href="#closing-tickets" title="Permalink to this headline">¶</a></h2>
-<p>Closing tickets is not possible unless you have &#8220;TICKET_ADMIN&#8221; rights in
-Trac. This is because only the current Sage release manager should ever
-close tickets. If you feel strongly that a ticket should be closed or
-deleted, then change the status of the ticket to <tt class="docutils literal"><span class="pre">needs</span> <span class="pre">review</span></tt> and
-change the milestone to <tt class="docutils literal"><span class="pre">sage-duplictate/invalid/wontfix</span></tt>.
-You should also comment on the ticket, explaining why it
-should be closed. A related issue is re-opening tickets. You should
-refrain from re-opening a ticket that is already closed. Instead
-ask the release manager what to do.</p>
+<p>Only the Sage release manager will close tickets. Most likely, this is
+not you nor will your trac account have the necessary permissions. If
+you feel strongly that a ticket should be closed or deleted, then
+change the status of the ticket to <em>needs review</em> and change the
+milestone to <em>sage-duplictate/invalid/wontfix</em>. You should also
+comment on the ticket, explaining why it should be closed. If another
+developer agrees, he sets the ticket to <em>positive review</em>.</p>
+<p>A related issue is re-opening tickets. You should refrain from
+re-opening a ticket that is already closed. Instead, open a new ticket
+and provide a link in the description to the old ticket.</p>
 </div>
 <div class="section" id="reasons-to-invalidate-tickets">
 <h2>Reasons to invalidate tickets<a class="headerlink" href="#reasons-to-invalidate-tickets" title="Permalink to this headline">¶</a></h2>
@@ -545,7 +518,7 @@ name has a star next to it.</li>
 <li><a class="reference internal" href="#reporting-bugs">Reporting bugs</a></li>
 <li><a class="reference internal" href="#guidelines-for-opening-tickets">Guidelines for opening tickets</a></li>
 <li><a class="reference internal" href="#stopgaps">Stopgaps</a></li>
-<li><a class="reference internal" href="#patching-bugs-working-on-tickets">Patching bugs/working on tickets</a></li>
+<li><a class="reference internal" href="#working-on-tickets">Working on tickets</a></li>
 <li><a class="reference internal" href="#reviewing-patches">Reviewing patches</a></li>
 <li><a class="reference internal" href="#closing-tickets">Closing tickets</a></li>
 <li><a class="reference internal" href="#reasons-to-invalidate-tickets">Reasons to invalidate tickets</a></li>
@@ -556,11 +529,11 @@ name has a star next to it.</li>
 </ul>
 
             <h4>Previous topic</h4>
-            <p class="topless"><a href="walk_through.html"
-                                  title="previous chapter">Sage Development Process</a></p>
+            <p class="topless"><a href="git_setup.html"
+                                  title="previous chapter">Setting Up Git</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="manual_git.html"
-                                  title="next chapter">GIT The Hard Way</a></p>
+            <p class="topless"><a href="git_background.html"
+                                  title="next chapter">Git Background</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/trac.txt"
@@ -594,10 +567,10 @@ name has a star next to it.</li>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="manual_git.html" title="GIT The Hard Way"
+          <a href="git_background.html" title="Git Background"
              >next</a> |</li>
         <li class="right" >
-          <a href="walk_through.html" title="Sage Development Process"
+          <a href="git_setup.html" title="Setting Up Git"
              >previous</a> |</li>
   
     

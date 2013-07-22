@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Working with Sage Notebook source code &mdash; Sage Developer&#39;s Guide v1.0</title>
+    <title>Sage Notebook Developer Guide &mdash; Sage Developer&#39;s Guide v1.0</title>
     
     <link rel="stylesheet" href="../_static/sage.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -27,8 +27,8 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="../index.html" />
-    <link rel="next" title="Introduction" href="git_intro.html" />
-    <link rel="prev" title="The Sage Trac Server: Submitting Patches and Packages" href="../trac_old.html" />
+    <link rel="next" title="Following the latest source" href="following_latest.html" />
+    <link rel="prev" title="Git the Hard Way" href="../manual_git.html" />
     <link rel="icon" href="../_static/sageicon.png" type="image/x-icon" />
 
   </head>
@@ -40,10 +40,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="git_intro.html" title="Introduction"
+          <a href="following_latest.html" title="Following the latest source"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../trac_old.html" title="The Sage Trac Server: Submitting Patches and Packages"
+          <a href="../manual_git.html" title="Git the Hard Way"
              accesskey="P">previous</a> |</li>
   
     
@@ -61,18 +61,12 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="working-with-sage-notebook-source-code">
-<span id="using-git"></span><h1>Working with <em>Sage Notebook</em> source code<a class="headerlink" href="#working-with-sage-notebook-source-code" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="sage-notebook-developer-guide">
+<span id="sagenb"></span><h1>Sage Notebook Developer Guide<a class="headerlink" href="#sage-notebook-developer-guide" title="Permalink to this headline">¶</a></h1>
 <p>Development of the Sage notebook currently occurs on Github using the
-Git revision control system.  However, since Sage ships with
-Mercurial, a Mercurial repository is provided in the spkg which
-mirrors the Git repository.  You can use Mercurial to investigate the
-history and to create small patches.</p>
-<p>Howver, in order to do development in the Sage notebook, including
-submitting change requests to upstream, we highly recommend
-installing Git (see below).</p>
+Git revision control system. The development model for the <a class="reference external" href="http://nb.sagemath.org">Sage
+Notebook</a> project is a <a class="reference external" href="http://git-scm.com">git</a> and <a class="reference external" href="http://github.com">github</a>
+workflow.</p>
 <p>To update to the latest development source, run the commands below,
 where <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt> is the root directory of the Sage installation,
 and where <tt class="docutils literal"><span class="pre">hackdir</span></tt> is a directory you create for working on code
@@ -106,16 +100,9 @@ slightly adapted to help develop the notebook using Git and Github.</p>
 <p>The most important section involves how to update your new sagenb
 source repository and create a &#8220;fork&#8221; of the master copy, so that you
 will be able to request your changes to be merged in the Sage notebook,
-called a &#8220;pull request&#8221;; see <a class="reference internal" href="git_development.html#git-development"><em>Git for development</em></a>.  There are also
-a number of helpful guides to Git and Github at <a class="reference internal" href="git_resources.html#git-resources"><em>git resources</em></a>.</p>
+called a &#8220;pull request&#8221;; see <a class="reference internal" href="github_development.html#github-development"><em>Git for development</em></a>.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="git_intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="git_install.html">Install git</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="git_install.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="git_install.html#in-detail">In detail</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="following_latest.html">Following the latest source</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="following_latest.html#get-the-local-copy-of-the-code">Get the local copy of the code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="following_latest.html#updating-the-code">Updating the code</a></li>
@@ -126,7 +113,7 @@ a number of helpful guides to Git and Github at <a class="reference internal" hr
 <li class="toctree-l2"><a class="reference internal" href="patching.html#moving-from-patching-to-development">Moving from patching to development</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="git_development.html">Git for development</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="github_development.html">Git for development</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="forking_hell.html">Making your own copy (fork) of Sage Notebook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="set_up_fork.html">Set up your fork</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configure_git.html">Configure git</a></li>
@@ -134,14 +121,7 @@ a number of helpful guides to Git and Github at <a class="reference internal" hr
 <li class="toctree-l2"><a class="reference internal" href="maintainer_workflow.html">Maintainer workflow</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="git_resources.html">git resources</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="git_resources.html#tutorials-and-summaries">Tutorials and summaries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="git_resources.html#advanced-git-workflow">Advanced git workflow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="git_resources.html#manual-pages-online">Manual pages online</a></li>
 </ul>
-</li>
-</ul>
-</div>
 </div>
 </div>
 
@@ -151,22 +131,12 @@ a number of helpful guides to Git and Github at <a class="reference internal" hr
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="../index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference internal" href="#">Working with <em>Sage Notebook</em> source code</a><ul>
-<li><a class="reference internal" href="#getting-started">Getting Started</a><ul>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
             <h4>Previous topic</h4>
-            <p class="topless"><a href="../trac_old.html"
-                                  title="previous chapter">The Sage Trac Server: Submitting Patches and Packages</a></p>
+            <p class="topless"><a href="../manual_git.html"
+                                  title="previous chapter">Git the Hard Way</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="git_intro.html"
-                                  title="next chapter">Introduction</a></p>
+            <p class="topless"><a href="following_latest.html"
+                                  title="next chapter">Following the latest source</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="../_sources/sagenb/index.txt"
@@ -200,10 +170,10 @@ a number of helpful guides to Git and Github at <a class="reference internal" hr
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="git_intro.html" title="Introduction"
+          <a href="following_latest.html" title="Following the latest source"
              >next</a> |</li>
         <li class="right" >
-          <a href="../trac_old.html" title="The Sage Trac Server: Submitting Patches and Packages"
+          <a href="../manual_git.html" title="Git the Hard Way"
              >previous</a> |</li>
   
     

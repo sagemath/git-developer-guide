@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction &mdash; Sage Developer&#39;s Guide v1.0</title>
+    <title>Git for development &mdash; Sage Developer&#39;s Guide v1.0</title>
     
     <link rel="stylesheet" href="../_static/sage.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -27,9 +27,9 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="../index.html" />
-    <link rel="up" title="Working with Sage Notebook source code" href="index.html" />
-    <link rel="next" title="Install git" href="git_install.html" />
-    <link rel="prev" title="Working with Sage Notebook source code" href="index.html" />
+    <link rel="up" title="Sage Notebook Developer Guide" href="index.html" />
+    <link rel="next" title="Making your own copy (fork) of Sage Notebook" href="forking_hell.html" />
+    <link rel="prev" title="Making a patch" href="patching.html" />
     <link rel="icon" href="../_static/sageicon.png" type="image/x-icon" />
 
   </head>
@@ -41,10 +41,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="git_install.html" title="Install git"
+          <a href="forking_hell.html" title="Making your own copy (fork) of Sage Notebook"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Working with Sage Notebook source code"
+          <a href="patching.html" title="Making a patch"
              accesskey="P">previous</a> |</li>
   
     
@@ -54,7 +54,7 @@
   
         <li><a href="../index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
 
-          <li><a href="index.html" accesskey="U">Working with <em>Sage Notebook</em> source code</a> &raquo;</li> 
+          <li><a href="index.html" accesskey="U">Sage Notebook Developer Guide</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -63,17 +63,42 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>These pages describe a <a class="reference external" href="http://git-scm.com/">git</a> and <a class="reference external" href="http://github.com">github</a> workflow for the <a class="reference external" href="http://nb.sagemath.org">Sage Notebook</a>
-project.</p>
-<p>There are several different workflows here, for different ways of
-working with <em>Sage Notebook</em>.</p>
-<p>This is not a comprehensive git reference, it&#8217;s just a workflow for our
-own project.  It&#8217;s tailored to the github hosting service. You may well
-find better or quicker ways of getting stuff done with git, but these
-should get you started.</p>
-<p>For general resources for learning git, see <a class="reference internal" href="git_resources.html#git-resources"><em>git resources</em></a>.</p>
+  <div class="section" id="git-for-development">
+<span id="github-development"></span><h1>Git for development<a class="headerlink" href="#git-for-development" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="forking_hell.html">Making your own copy (fork) of Sage Notebook</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="forking_hell.html#set-up-and-configure-a-github-account">Set up and configure a github account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="forking_hell.html#create-your-own-forked-copy-of-sage-notebook">Create your own forked copy of Sage Notebook</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="set_up_fork.html">Set up your fork</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="set_up_fork.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="set_up_fork.html#in-detail">In detail</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configure_git.html">Configure git</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configure_git.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure_git.html#in-detail">In detail</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="development_workflow.html">Development workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="development_workflow.html#workflow-summary">Workflow summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development_workflow.html#consider-deleting-your-master-branch">Consider deleting your master branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development_workflow.html#update-the-mirror-of-trunk">Update the mirror of trunk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development_workflow.html#make-a-new-feature-branch">Make a new feature branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development_workflow.html#the-editing-workflow">The editing workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development_workflow.html#ask-for-your-changes-to-be-reviewed-or-merged">Ask for your changes to be reviewed or merged</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development_workflow.html#some-other-things-you-might-want-to-do">Some other things you might want to do</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maintainer_workflow.html">Maintainer workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maintainer_workflow.html#integrating-changes">Integrating changes</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 
 
@@ -83,14 +108,14 @@ should get you started.</p>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
             <h4>Previous topic</h4>
-            <p class="topless"><a href="index.html"
-                                  title="previous chapter">Working with <em>Sage Notebook</em> source code</a></p>
+            <p class="topless"><a href="patching.html"
+                                  title="previous chapter">Making a patch</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="git_install.html"
-                                  title="next chapter">Install git</a></p>
+            <p class="topless"><a href="forking_hell.html"
+                                  title="next chapter">Making your own copy (fork) of Sage Notebook</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="../_sources/sagenb/git_intro.txt"
+              <li><a href="../_sources/sagenb/github_development.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
@@ -121,10 +146,10 @@ should get you started.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="git_install.html" title="Install git"
+          <a href="forking_hell.html" title="Making your own copy (fork) of Sage Notebook"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Working with Sage Notebook source code"
+          <a href="patching.html" title="Making a patch"
              >previous</a> |</li>
   
     
@@ -134,7 +159,7 @@ should get you started.</p>
   
         <li><a href="../index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
 
-          <li><a href="index.html" >Working with <em>Sage Notebook</em> source code</a> &raquo;</li> 
+          <li><a href="index.html" >Sage Notebook Developer Guide</a> &raquo;</li> 
       </ul>
     </div>
     

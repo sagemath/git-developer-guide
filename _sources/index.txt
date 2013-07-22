@@ -1,3 +1,5 @@
+
+======================================
 Welcome to the Sage Developer's Guide!
 ======================================
 
@@ -9,20 +11,45 @@ programs using Sage, how to modify and extend the core Sage libraries,
 and how to modify Sage's documentation. It also discusses how to share
 your new and modified code with other Sage users.
 
-This work is licensed under a `Creative Commons Attribution-Share Alike
-3.0 License <http://creativecommons.org/licenses/by-sa/3.0/>`_.
-
 .. toctree::
    :maxdepth: 3
 
    walk_through
+   git_setup
    trac
+
+
+Writing Code for Sage
+=====================
+
+.. todo::
+
+    Check paths in the "Writing Code for Sage" section
+
+
+Git and Sage Development
+========================
+
+.. toctree::
+   :maxdepth: 3
+
+   git_background
    manual_git
 
 
+Sage Notebook Developer Guide
+=============================
+
+.. toctree::
+   :maxdepth: 3
+
+   sagenb/index
+
+
+To be deleted
+=============
 
 Old Developer Guide (Mercurial-based)
-=====================================
 
 .. toctree::
    :maxdepth: 3
@@ -30,7 +57,6 @@ Old Developer Guide (Mercurial-based)
    walk_through_old
    writing_code_old
    disseminating_code_old
-   sagenb/index
 
 Indices and tables
 ==================
@@ -38,3 +64,8 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+This work is licensed under a `Creative Commons Attribution-Share Alike
+3.0 License <http://creativecommons.org/licenses/by-sa/3.0/>`_.
+
+

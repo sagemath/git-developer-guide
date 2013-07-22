@@ -55,9 +55,9 @@ In detail
 user.name and user.email
 ------------------------
 
-It is good practice to tell git_ who you are, for labeling any changes
-you make to the code.  The simplest way to do this is from the command
-line::
+It is good practice to tell `git <http://git-scm.com>` who you are,
+for labeling any changes you make to the code.  The simplest way to do
+this is from the command line::
 
   git config --global user.name "Your Name"
   git config --global user.email you@yourdomain.example.com
@@ -120,7 +120,7 @@ Or from the command line::
 
   git config --global merge.log true
 
-.. _fancy-log:
+.. _fancy-log-old:
 
 Fancy log output
 ----------------

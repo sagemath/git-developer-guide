@@ -1,7 +1,7 @@
 .. _chapter-manual-git:
 
 ================
-GIT The Hard Way
+Git the Hard Way
 ================
 
 For beginners to Sage development we recommend using the Sage
@@ -111,7 +111,6 @@ are
 * ``user`` is your trac username,
 * ``description`` is some (short but self-explanatory) description of
   your branch.
-* You can leave out the ``--set-upstream trac`` if 
 
 Then, in order to use this branch as the proposed change on a trac
 ticket, just fill its name ``u/user/description`` into the "Branch:"
@@ -176,3 +175,5 @@ which is some 40-digit hexadecimal number. Then use ``git reset
 You only need to type the first couple of hex digits, git will
 complain if this does not uniquely specify a commit. Also, there is
 the useful abbreviation ``HEAD~`` for the previous commit.
+
+
