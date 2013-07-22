@@ -8,8 +8,8 @@ Sage at some point. Implement a new function, add examples to the
 documentation, find bugs and typos, fix a bug, create a new class,
 create a fast new C library, etc. This document describes how to write
 programs using Sage, how to modify and extend the core Sage libraries,
-and how to modify Sage's documentation. It also discusses how to share
-your new and modified code with other Sage users.
+and how to modify Sage's documentation. We also discuss how to share
+your new and modified code with other Sage users around the globe.
 
 .. toctree::
    :maxdepth: 3

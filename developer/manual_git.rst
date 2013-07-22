@@ -58,7 +58,7 @@ of them as bookmarks. You can then use ``git pull`` to get changes and
 
 
 Checking Out Tickets
---------------------
+====================
 
 Trac tickets that are finished or in the process of being worked on
 can have a git branch attached to them. This is the "Branch:" field in
@@ -84,7 +84,7 @@ edit files and commit changes to your local branch.
 
 
 Pushing Your Changes to a Ticket
---------------------------------
+================================
 
 To add your local branch to a trac ticket, you first have to upload it
 to the Sage trac repository and then put its name into the "Branch:"
@@ -137,14 +137,15 @@ one::
 
 
 Merging and Rebasing
---------------------
+====================
 
 
 
 
+.. _section-git-recovery:
 
 Reset and Recovery
-------------------
+==================
 
 Git makes it very hard to truly mess up. Here is a short way to get
 back onto your feet, no matter what. First, if you just want to go
@@ -154,11 +155,11 @@ branch::
 
     [user@localhost sage]$ git checkout build_system
 
-As long as you didn't make any changes to the ``build_system`` branch
+As long as you did not make any changes to the ``build_system`` branch
 directly, this will give you back a working Sage.
 
 If you want to keep your branch but go back to a previous commit you
-can use the reset command. For this, look up the commit in the log
+can use the *reset* command. For this, look up the commit in the log
 which is some 40-digit hexadecimal number. Then use ``git reset
 --hard`` to revert your files back to the previous state::
 
@@ -174,6 +175,32 @@ which is some 40-digit hexadecimal number. Then use ``git reset
 
 You only need to type the first couple of hex digits, git will
 complain if this does not uniquely specify a commit. Also, there is
-the useful abbreviation ``HEAD~`` for the previous commit.
+the useful abbreviation ``HEAD~`` for the previous commit and
+``HEAD~n``, with some integer ``n``, for the n-th previous commit.
 
+Finally, perhaps the ultimate human error recovery tool is the
+reflog. This is a chronological history of git operations that you can
+undo if needed. For example, let us assume we messed up the *git
+reset* command and went back too far (say, 5 commits back). And, on
+top of that, deleted a file and committed that::
 
+    [user@localhost sage]$ git reset --hard HEAD~5
+    [user@localhost sage]$ git rm sage
+    [user@localhost sage]$ git commit -m "I shot myself into my foot"
+
+Now we cannot just checkout the repository from before the reset,
+because it is no longer in the history. However, here is the reflog::
+
+    [user@localhost sage]$ git reflog
+    2eca2a2 HEAD@{0}: commit: I shot myself into my foot
+    b4d86b9 HEAD@{1}: reset: moving to HEAD~5
+    af353bb HEAD@{2}: checkout: moving from some_branch to master
+    1142feb HEAD@{3}: checkout: moving from other_branch to some_branch
+    ...
+
+The ``HEAD@{n}`` revisions are shortcuts for the history of git
+operations. Since we want to rewind to before the erroneous *git
+reset* command, we just have to reset back into the future::
+
+    [user@localhost sage]$ git reset --hard HEAD@{2}
+    
