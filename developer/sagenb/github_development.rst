@@ -1,4 +1,4 @@
-.. _git-development:
+.. _github-development:
 
 =====================
  Git for development

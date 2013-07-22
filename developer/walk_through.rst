@@ -15,3 +15,7 @@ development process.
 .. TODO::
 
    Explain the devlopment process using the Sage dev scripts.
+
+
+
+.. image:: static/flowchart.svg

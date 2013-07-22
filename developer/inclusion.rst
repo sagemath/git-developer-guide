@@ -72,10 +72,10 @@ must meet the following requirements:
   - Reasonable build time, size, dependencies
 
 
-- **Previously an optional package**. Usually a new standard package must
-  have spent some time as an optional package. However, sometimes this is
-  not possible, if for example a new library is needed to permit an
-  updated version of a standard package to function.
+- **Previously an optional package**. Usually a new standard package
+  must have spent some time as an optional package. However, sometimes
+  this is not possible, if for example a new library is needed to
+  permit an updated version of a standard package to function.
 
--  **Refereeing**. The code must be refereed, as discussed in
-   :ref:`chapter-trac`.
+- **Refereeing**. The code must be refereed, as discussed in
+  :ref:`chapter-sage-trac`.

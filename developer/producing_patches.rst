@@ -82,7 +82,7 @@ is the chemical symbol for mercury).
   ``os.path.abspath('.')``).
 
 - Then post your patch on the Sage Trac server: see
-  :ref:`chapter-trac`.
+  :ref:`chapter-trac-old`.
 
 You can also run Mercurial directly from the command line using the
 command ``sage -hg``. Or you can start a very nice web server that

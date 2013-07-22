@@ -1,7 +1,7 @@
 .. _chapter-manual-git:
 
 ================
-GIT The Hard Way
+Git the Hard Way
 ================
 
 For beginners to Sage development we recommend using the Sage
@@ -175,3 +175,5 @@ which is some 40-digit hexadecimal number. Then use ``git reset
 You only need to type the first couple of hex digits, git will
 complain if this does not uniquely specify a commit. Also, there is
 the useful abbreviation ``HEAD~`` for the previous commit.
+
+
