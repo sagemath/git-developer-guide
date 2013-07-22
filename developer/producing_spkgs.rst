@@ -352,7 +352,7 @@ creates an uncompressed tar file.
 
 When your spkg is ready, you should post about it on ``sage-devel``.
 If people there think it is a good idea, then post a link to the spkg
-on the Sage trac server (see :ref:`chapter-trac`) so it can be
+on the Sage trac server (see :ref:`chapter-trac-old`) so it can be
 refereed.  Do not post the spkg itself to the trac server: you only
 need to provide a link to your spkg.  If your spkg gets a positive
 review, it might be included into the core Sage library, or it might

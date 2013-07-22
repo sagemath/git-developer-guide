@@ -1,4 +1,4 @@
-.. _chapter-trac:
+.. _chapter-sage-trac:
 
 ====================
 The Sage Trac Server
@@ -272,7 +272,7 @@ message, use code like the following::
 Replace ``TICKET_NUM`` by the ticket number for the main ticket.  See
 :trac:`12699`, for example.  On the main trac ticket, you should also
 enter the ticket number for the stopgap ticket in the "Stopgaps"
-field.  Stopgap tickets should be marked as blockers.
+field. Stopgap tickets should be marked as blockers.
 
 .. note::
 
@@ -282,75 +282,42 @@ field.  Stopgap tickets should be marked as blockers.
     Sage crashes, this is not an issue.
 
 
-Patching bugs/working on tickets
-================================
+Working on tickets
+==================
 
-If you have code which fixes a bug or deals with some issue in
-Sage, here is what to do. First, use Mercurial to create a patch
-file. See :ref:`chapter-walk-through-old` for more information on using
-Mercurial to produce/manage patches. If the issue has been reported as
-a ticket on the trac server, attach your patch file to that ticket: go
-to the ticket, click on the "Attach File" button, and follow the
-directions. On the ticket page, you should add a comment explaining
-your patch. Some relevant information include:
-
-* The version of Sage you used to create the patch. If the patch is
-  based on Sage x.y.z, ensure you include such information.
-
-* If the ticket has more than one patch, explicitly specify which ones
-  are to be used. Are all of the patches to be applied? Or only a
-  subset of the patches on the ticket?
-
-* If more than one patch is to be applied, state the order in which
-  those patches are to be applied.
+If you manage to fix a bug or enhance Sage you are our hero. See
+:ref:`chapter-walk-through` for making changes to the Sage source
+code, uploading them to the Sage trac server, and finally putting your
+new branch on the trac ticket.
 
 * Does the ticket depend on another ticket? Sometimes, a ticket
-  requires that the patches on another ticket be applied first. Be
-  sure to include such information if relevant.
+  requires that another ticket be applied first. If this is the case,
+  put the dependencies as a comma-separated list (``#1234, #5678``)
+  into the "Dependencies:" field.
 
-* It is best to supply information about ticket dependencies and patch
-  order in a way that the Patch Buildbot can understand. This bot
-  automatically applies patches from trac and tests them.
-  See its wiki: http://wiki.sagemath.org/buildbot
-
-If there is no trac ticket associated to this issue, create one (as
-explained in the previous sections) describing the issue and your
-solution, and attach your patch.
+* The Patch buildbot wil automatically test your ticket. See `its wiki
+  <http://wiki.sagemath.org/buildbot>`_ for more information about its
+  features and limitations. Make sure that you lood at the log,
+  especially if the patch buildbot did not give you the green blob.
 
 The following are some other relevant issues:
 
-- Every bug fixed should result in a doctest.
-
-- Cooperative debugging via IRC is faster by at least an order of
-  magnitude. If you have not learned how to use IRC, please do so.
-  If you have problems using IRC because of firewalls, but you do
-  have an account on the machine ``sage.math``, you can use irssi via
-  ssh there. If you have a flaky connection, you can use it together
-  with the program screen.
+- Every bug fixed should result in a doctest. 
 
 - This is not an issue with defects, but there are many enhancements
-  possible for Sage and too few developers to implement all the
-  good ideas. The trac server is useful for keeping ideas
-  in a central place because in the Google groups they tend to get
-  lost once they drop off the first page.
+  possible for Sage and too few developers to implement all the good
+  ideas. The trac server is useful for keeping ideas in a central
+  place because in the Google groups they tend to get lost once they
+  drop off the first page.
 
-- If you are a developer, be nice and try to solve a stale/old
-  ticket every once in a while.
+- If you are a developer, be nice and try to solve a stale/old ticket
+  every once in a while.
 
-- Some people regularly do triage. Triage in this context means
-  that we look at new bugs and classify them according to our
-  perceived priority. It is very likely that different people will
-  see priorities of bugs very differently from us, so please let
-  us know if you see a problem with specific tickets.
-
-- **Patches Preferred**: Patches are easier to review, edit and
-  can be merged without affecting the history. So we greatly prefer
-  patches over Mercurial bundles. If you do have a large number of
-  patches, a bundle can still be better than patches. One
-  alternative to bundles is to use Mercurial queues to flatten the
-  history. That might or might not be desirable. See
-  :ref:`chapter-walk-through-old` for further information on using
-  Mercurial queues to produce/manage patches.
+- Some people regularly do triage. In this context, this means that we
+  look at new bugs and classify them according to our perceived
+  priority. It is very likely that different people will see
+  priorities of bugs very differently from us, so please let us know
+  if you see a problem with specific tickets.
 
 
 .. _section-review-patches:
@@ -446,15 +413,17 @@ see how things are done.
 Closing tickets
 ===============
 
-Closing tickets is not possible unless you have "TICKET_ADMIN" rights in
-Trac. This is because only the current Sage release manager should ever
-close tickets. If you feel strongly that a ticket should be closed or
-deleted, then change the status of the ticket to ``needs review`` and
-change the milestone to ``sage-duplictate/invalid/wontfix``.
-You should also comment on the ticket, explaining why it
-should be closed. A related issue is re-opening tickets. You should
-refrain from re-opening a ticket that is already closed. Instead
-ask the release manager what to do.
+Only the Sage release manager will close tickets. Most likely, this is
+not you nor will your trac account have the necessary permissions. If
+you feel strongly that a ticket should be closed or deleted, then
+change the status of the ticket to *needs review* and change the
+milestone to *sage-duplictate/invalid/wontfix*. You should also
+comment on the ticket, explaining why it should be closed. If another
+developer agrees, he sets the ticket to *positive review*.
+
+A related issue is re-opening tickets. You should refrain from
+re-opening a ticket that is already closed. Instead, open a new ticket
+and provide a link in the description to the old ticket.
 
 
 Reasons to invalidate tickets

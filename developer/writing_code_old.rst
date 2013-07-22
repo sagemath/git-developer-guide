@@ -63,3 +63,4 @@ Contents:
    coding_in_other
    doctesting
    sage_manuals
+

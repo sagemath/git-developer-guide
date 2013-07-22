@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="15cm" height="16cm" viewBox="8 56 283 313" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="28.125" y="57" width="98.05" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="28.125" y="57" width="98.05" height="38"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="77.15" y="79.9">
+      <tspan x="77.15" y="79.9">Open Ticket</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="18.05" y="139.264" width="115.9" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="18.05" y="139.264" width="115.9" height="38"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="76" y="162.164">
+      <tspan x="76" y="162.164">Upload Branch</tspan>
+    </text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="76.2505,211.253 140.589,242.217 76.2505,273.182 11.9118,242.217 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="76.2505,211.253 140.589,242.217 76.2505,273.182 11.9118,242.217 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="76.2505" y="246.117">
+      <tspan x="76.2505" y="246.117">Review</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="169.337" y="223.217" width="120.1" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="169.337" y="223.217" width="120.1" height="38"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="229.387" y="246.117">
+      <tspan x="229.387" y="246.117">Change Branch</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="77.15" y1="95" x2="76.2529" y2="129.531"/>
+    <polygon style="fill: #000000" points="76.0581,137.029 71.3195,126.902 76.2529,129.531 81.3161,127.162 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="76.0581,137.029 71.3195,126.902 76.2529,129.531 81.3161,127.162 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="76" y1="177.264" x2="76.1788" y2="201.517"/>
+    <polygon style="fill: #000000" points="76.234,209.017 71.1605,199.054 76.1788,201.517 81.1602,198.98 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="76.234,209.017 71.1605,199.054 76.1788,201.517 81.1602,198.98 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="140.589" y1="242.217" x2="159.601" y2="242.217"/>
+    <polygon style="fill: #000000" points="167.101,242.217 157.101,247.217 159.601,242.217 157.101,237.217 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="167.101,242.217 157.101,247.217 159.601,242.217 157.101,237.217 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="229.387,223.217 229.387,158.264 143.686,158.264 "/>
+    <polygon style="fill: #000000" points="136.186,158.264 146.186,153.264 143.686,158.264 146.186,163.264 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="136.186,158.264 146.186,153.264 143.686,158.264 146.186,163.264 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="9.175" y="313.765" width="133.65" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="9.175" y="313.765" width="133.65" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="76" y="336.665">
+      <tspan x="76" y="336.665">Release manager</tspan>
+      <tspan x="76" y="352.665">merges</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="76.2505" y1="273.182" x2="76.1399" y2="303.029"/>
+    <polygon style="fill: #000000" points="76.1121,310.529 71.1492,300.51 76.1399,303.029 81.1491,300.548 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="76.1121,310.529 71.1492,300.51 76.1399,303.029 81.1491,300.548 "/>
+  </g>
+</svg>

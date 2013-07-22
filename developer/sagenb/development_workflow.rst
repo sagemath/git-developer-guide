@@ -230,8 +230,8 @@ To see a linear list of commits for this branch::
 You can also look at the `network graph visualizer`_ for your github
 repo.
 
-Finally the :ref:`fancy-log` ``lg`` alias will give you a reasonable text-based
-graph of the repository.
+Finally the :ref:`section-fancy-log` ``lg`` alias will give you a
+reasonable text-based graph of the repository.
 
 .. _rebase-on-trunk:
 
