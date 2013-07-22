@@ -199,8 +199,8 @@ because it is no longer in the history. However, here is the reflog::
     ...
 
 The ``HEAD@{n}`` revisions are shortcuts for the history of git
-operations. Since we want go back to before the erroneous *git reset*
-command, we just have to reset back into the future::
+operations. Since we want to rewind to before the erroneous *git
+reset* command, we just have to reset back into the future::
 
     [user@localhost sage]$ git reset --hard HEAD@{2}
     
