@@ -26,14 +26,88 @@ by running::
 
 
 
+.. _section-git-branch:
+
 Branching Out
 =============
 
-.. TODO::
+A branch is any set of changes that deviates from the current official
+Sage tree. Whenever you start developing some new feature or fix a bug
+you should first create a new branch to hold the changes. It is easy
+to create a new branch, just go to the branch from where you want to
+start (that is, ``build_system``) and switch to it::
 
-    create branches, switch between branches
+    [user@localhost sage]$ git checkout build_system
+    [user@localhost sage]$ git branch my_new_branch
+    [user@localhost sage]$ git checkout my_new_branch
+    [user@localhost sage]$ git branch
+      build_system
+    * my_new_branch
+
+Without an argument, the *git branch* command just displays a list of
+all local branches with the current one marked by an asterisk. To
+avoid typing the new branch name twice you can also use the shortcut
+``git checkout -b my_new_branch`` to create and switch to the new
+branch in one command.
 
 
+
+
+Commits (Snapshots)
+===================
+
+Once you have your own branch feel free to make any changes as you
+like. Whenever you have reached your goal, a milestone towards it, or
+just feel like you got some work done you should commit your
+changes. That is, snapshot the state of all files in the
+repository. First, you need to *stage* the changed files, which tells
+git which files you want to be part of the next commit::
+
+    ... edit foobar.txt ...
+
+    [user@localhost sage]$ git status
+    # On branch build_system
+    # Untracked files:
+    #   (use "git add <file>..." to include in what will be committed)
+    #
+    #       foobar.txt
+    nothing added to commit but untracked files present (use "git add" to track)
+
+    [user@localhost sage]$ git add foobar.txt
+    [user@localhost sage]$ git status
+    # On branch build_system
+    # Changes to be committed:
+    #   (use "git reset HEAD <file>..." to unstage)
+    #
+    #	new file:   foobar.txt
+    #
+
+Once you are satisfied with the list of staged files, you create a new
+snapshot with the *commit* command::
+
+    [user@localhost sage]$ git commit
+    ... editor opens ...
+    [build_system 31331f7] Added the very important foobar text file
+     1 file changed, 1 insertion(+)
+      create mode 100644 foobar.txt
+
+This will open an editor for you to write your commit message. The
+commit message should generally have a one-line description, followed
+by an empty line, followed by further explanatory text::
+
+    Added the very important foobar text file
+
+    This is an example commit message. You see there is a one-line
+    summary followed by more detailed description, if necessary.
+
+You can then continue working towards your next milestone, make
+another commit, repeat until finished. As long as you do not
+*checkout* another branch, all commits that you make will be part of
+the branch that you created.
+
+
+
+.. _section-git-trac:
 
 The Trac Server
 ===============
@@ -57,8 +131,11 @@ of them as bookmarks. You can then use ``git pull`` to get changes and
     [user@localhost sage]$ git <push|pull> trac [ARGS]
 
 
+
+.. _section-git-pull:
+
 Checking Out Tickets
-====================
+--------------------
 
 Trac tickets that are finished or in the process of being worked on
 can have a git branch attached to them. This is the "Branch:" field in
@@ -83,8 +160,10 @@ so you start out with the same files as in that ticket. You can then
 edit files and commit changes to your local branch.
 
 
+.. _section-git-push:
+
 Pushing Your Changes to a Ticket
-================================
+--------------------------------
 
 To add your local branch to a trac ticket, you first have to upload it
 to the Sage trac repository and then put its name into the "Branch:"
@@ -136,9 +215,14 @@ one::
 
 
 
+.. _section-git-merge:
+
 Merging and Rebasing
 ====================
 
+.. todo::
+
+    Write something
 
 
 
@@ -160,8 +244,8 @@ directly, this will give you back a working Sage.
 
 If you want to keep your branch but go back to a previous commit you
 can use the *reset* command. For this, look up the commit in the log
-which is some 40-digit hexadecimal number. Then use ``git reset
---hard`` to revert your files back to the previous state::
+which is some 40-digit hexadecimal number (the SHA1 hash). Then use
+``git reset --hard`` to revert your files back to the previous state::
 
     [user@localhost sage]$ git log
     ...
