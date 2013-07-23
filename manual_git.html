@@ -81,14 +81,75 @@ by running:</p>
 [user@localhost sage]$ make</pre>
 </div>
 <div class="section" id="branching-out">
-<h2>Branching Out<a class="headerlink" href="#branching-out" title="Permalink to this headline">¶</a></h2>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">create branches, switch between branches</p>
+<span id="section-git-branch"></span><h2>Branching Out<a class="headerlink" href="#branching-out" title="Permalink to this headline">¶</a></h2>
+<p>A branch is any set of changes that deviates from the current official
+Sage tree. Whenever you start developing some new feature or fix a bug
+you should first create a new branch to hold the changes. It is easy
+to create a new branch, just go to the branch from where you want to
+start (that is, <tt class="docutils literal"><span class="pre">build_system</span></tt>) and switch to it:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git checkout build_system
+[user@localhost sage]$ git branch my_new_branch
+[user@localhost sage]$ git checkout my_new_branch
+[user@localhost sage]$ git branch
+  build_system
+* my_new_branch</pre>
 </div>
+<p>Without an argument, the <em>git branch</em> command just displays a list of
+all local branches with the current one marked by an asterisk. To
+avoid typing the new branch name twice you can also use the shortcut
+<tt class="docutils literal"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">my_new_branch</span></tt> to create and switch to the new
+branch in one command.</p>
+</div>
+<div class="section" id="commits-snapshots">
+<h2>Commits (Snapshots)<a class="headerlink" href="#commits-snapshots" title="Permalink to this headline">¶</a></h2>
+<p>Once you have your own branch feel free to make any changes as you
+like. Whenever you have reached your goal, a milestone towards it, or
+just feel like you got some work done you should commit your
+changes. That is, snapshot the state of all files in the
+repository. First, you need to <em>stage</em> the changed files, which tells
+git which files you want to be part of the next commit:</p>
+<div class="highlight-python"><pre>... edit foobar.txt ...
+
+[user@localhost sage]$ git status
+# On branch build_system
+# Untracked files:
+#   (use "git add &lt;file&gt;..." to include in what will be committed)
+#
+#       foobar.txt
+nothing added to commit but untracked files present (use "git add" to track)
+
+[user@localhost sage]$ git add foobar.txt
+[user@localhost sage]$ git status
+# On branch build_system
+# Changes to be committed:
+#   (use "git reset HEAD &lt;file&gt;..." to unstage)
+#
+#   new file:   foobar.txt
+#</pre>
+</div>
+<p>Once you are satisfied with the list of staged files, you create a new
+snapshot with the <em>commit</em> command:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git commit
+... editor opens ...
+[build_system 31331f7] Added the very important foobar text file
+ 1 file changed, 1 insertion(+)
+  create mode 100644 foobar.txt</pre>
+</div>
+<p>This will open an editor for you to write your commit message. The
+commit message should generally have a one-line description, followed
+by an empty line, followed by further explanatory text:</p>
+<div class="highlight-python"><pre>Added the very important foobar text file
+
+This is an example commit message. You see there is a one-line
+summary followed by more detailed description, if necessary.</pre>
+</div>
+<p>You can then continue working towards your next milestone, make
+another commit, repeat until finished. As long as you do not
+<em>checkout</em> another branch, all commits that you make will be part of
+the branch that you created.</p>
 </div>
 <div class="section" id="the-trac-server">
-<h2>The Trac Server<a class="headerlink" href="#the-trac-server" title="Permalink to this headline">¶</a></h2>
+<span id="section-git-trac"></span><h2>The Trac Server<a class="headerlink" href="#the-trac-server" title="Permalink to this headline">¶</a></h2>
 <p>The Sage trac server also hold a copy of the Sage repository, it is
 served via ssh but at the non-standard port 2222. To add it as a
 remote repository to your local git repository, use the command:</p>
@@ -105,9 +166,8 @@ of them as bookmarks. You can then use <tt class="docutils literal"><span class=
 <tt class="docutils literal"><span class="pre">git</span> <span class="pre">push</span></tt> to upload your local changes using:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git &lt;push|pull&gt; trac [ARGS]</pre>
 </div>
-</div>
 <div class="section" id="checking-out-tickets">
-<h2>Checking Out Tickets<a class="headerlink" href="#checking-out-tickets" title="Permalink to this headline">¶</a></h2>
+<span id="section-git-pull"></span><h3>Checking Out Tickets<a class="headerlink" href="#checking-out-tickets" title="Permalink to this headline">¶</a></h3>
 <p>Trac tickets that are finished or in the process of being worked on
 can have a git branch attached to them. This is the &#8220;Branch:&#8221; field in
 the ticket description. The branch name is generally of the form
@@ -129,7 +189,7 @@ so you start out with the same files as in that ticket. You can then
 edit files and commit changes to your local branch.</p>
 </div>
 <div class="section" id="pushing-your-changes-to-a-ticket">
-<h2>Pushing Your Changes to a Ticket<a class="headerlink" href="#pushing-your-changes-to-a-ticket" title="Permalink to this headline">¶</a></h2>
+<span id="section-git-push"></span><h3>Pushing Your Changes to a Ticket<a class="headerlink" href="#pushing-your-changes-to-a-ticket" title="Permalink to this headline">¶</a></h3>
 <p>To add your local branch to a trac ticket, you first have to upload it
 to the Sage trac repository and then put its name into the &#8220;Branch:&#8221;
 field on the trac ticket.</p>
@@ -172,8 +232,13 @@ one:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git push trac HEAD:u/user/description</pre>
 </div>
 </div>
+</div>
 <div class="section" id="merging-and-rebasing">
-<h2>Merging and Rebasing<a class="headerlink" href="#merging-and-rebasing" title="Permalink to this headline">¶</a></h2>
+<span id="section-git-merge"></span><h2>Merging and Rebasing<a class="headerlink" href="#merging-and-rebasing" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Write something</p>
+</div>
 </div>
 <div class="section" id="reset-and-recovery">
 <span id="section-git-recovery"></span><h2>Reset and Recovery<a class="headerlink" href="#reset-and-recovery" title="Permalink to this headline">¶</a></h2>
@@ -188,8 +253,8 @@ branch:</p>
 directly, this will give you back a working Sage.</p>
 <p>If you want to keep your branch but go back to a previous commit you
 can use the <em>reset</em> command. For this, look up the commit in the log
-which is some 40-digit hexadecimal number. Then use <tt class="docutils literal"><span class="pre">git</span> <span class="pre">reset</span>
-<span class="pre">--hard</span></tt> to revert your files back to the previous state:</p>
+which is some 40-digit hexadecimal number (the SHA1 hash). Then use
+<tt class="docutils literal"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--hard</span></tt> to revert your files back to the previous state:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git log
 ...
 commit eafaedad5b0ae2013f8ae1091d2f1df58b72bae3
@@ -240,9 +305,12 @@ reset</em> command, we just have to reset back into the future:</p>
             <ul>
 <li><a class="reference internal" href="#">Git the Hard Way</a><ul>
 <li><a class="reference internal" href="#branching-out">Branching Out</a></li>
-<li><a class="reference internal" href="#the-trac-server">The Trac Server</a></li>
+<li><a class="reference internal" href="#commits-snapshots">Commits (Snapshots)</a></li>
+<li><a class="reference internal" href="#the-trac-server">The Trac Server</a><ul>
 <li><a class="reference internal" href="#checking-out-tickets">Checking Out Tickets</a></li>
 <li><a class="reference internal" href="#pushing-your-changes-to-a-ticket">Pushing Your Changes to a Ticket</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#merging-and-rebasing">Merging and Rebasing</a></li>
 <li><a class="reference internal" href="#reset-and-recovery">Reset and Recovery</a></li>
 </ul>
