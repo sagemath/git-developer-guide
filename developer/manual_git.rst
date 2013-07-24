@@ -34,8 +34,9 @@ Branching Out
 A branch is any set of changes that deviates from the current official
 Sage tree. Whenever you start developing some new feature or fix a bug
 you should first create a new branch to hold the changes. It is easy
-to create a new branch, just go to the branch from where you want to
-start (that is, ``build_system``) and switch to it::
+to create a new branch, just check out (switch to) the branch from
+where you want to start (that is, ``build_system``) and use the *git
+branch* command::
 
     [user@localhost sage]$ git checkout build_system
     [user@localhost sage]$ git branch my_new_branch
@@ -45,8 +46,9 @@ start (that is, ``build_system``) and switch to it::
     * my_new_branch
 
 Without an argument, the *git branch* command just displays a list of
-all local branches with the current one marked by an asterisk. To
-avoid typing the new branch name twice you can also use the shortcut
+all local branches with the current one marked by an asterisk. Also
+note that *git branch* creates a new branch, but does not switch to
+it. To avoid typing the new branch name twice you can use the shortcut
 ``git checkout -b my_new_branch`` to create and switch to the new
 branch in one command.
 
