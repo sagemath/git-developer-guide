@@ -34,8 +34,9 @@ Branching Out
 A branch is any set of changes that deviates from the current official
 Sage tree. Whenever you start developing some new feature or fix a bug
 you should first create a new branch to hold the changes. It is easy
-to create a new branch, just go to the branch from where you want to
-start (that is, ``build_system``) and switch to it::
+to create a new branch, just check out (switch to) the branch from
+where you want to start (that is, ``build_system``) and use the *git
+branch* command::
 
     [user@localhost sage]$ git checkout build_system
     [user@localhost sage]$ git branch my_new_branch
@@ -45,8 +46,9 @@ start (that is, ``build_system``) and switch to it::
     * my_new_branch
 
 Without an argument, the *git branch* command just displays a list of
-all local branches with the current one marked by an asterisk. To
-avoid typing the new branch name twice you can also use the shortcut
+all local branches with the current one marked by an asterisk. Also
+note that *git branch* creates a new branch, but does not switch to
+it. To avoid typing the new branch name twice you can use the shortcut
 ``git checkout -b my_new_branch`` to create and switch to the new
 branch in one command.
 
@@ -158,6 +160,24 @@ creates a new branch in your local git repository named ``my_branch``
 and switches to it. It is based on the remote ``u/user/description``,
 so you start out with the same files as in that ticket. You can then
 edit files and commit changes to your local branch.
+
+Your local copy of the repository might not yet know about the remote
+branch, as somebody else might have added it only recently. In that
+case, git will complain that it can't find a matching commit. The
+solution is to fetch updates from the remotes first::
+
+    [user@localhost sage]$ git checkout -b my_branch trac/u/user/description
+    fatal: Cannot update paths and switch to branch 'my_branch' at the same time.
+    Did you intend to checkout 'trac/u/user/description' which can not be resolved as commit?
+    [user@localhost sage]$ git remote fetch
+    Fetching trac
+    remote: Counting objects: 176, done.
+    remote: Compressing objects: 100% (142/142), done.
+    remote: Total 143 (delta 113), reused 0 (delta 0)
+    Receiving objects: 100% (143/143), 23.32 KiB | 0 bytes/s, done.
+    Resolving deltas: 100% (113/113), completed with 19 local objects.
+    From ssh://trac/sage
+     * [new branch]      u/user/description -> trac/u/user/description
 
 
 .. _section-git-push:

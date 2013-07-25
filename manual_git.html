@@ -85,8 +85,9 @@ by running:</p>
 <p>A branch is any set of changes that deviates from the current official
 Sage tree. Whenever you start developing some new feature or fix a bug
 you should first create a new branch to hold the changes. It is easy
-to create a new branch, just go to the branch from where you want to
-start (that is, <tt class="docutils literal"><span class="pre">build_system</span></tt>) and switch to it:</p>
+to create a new branch, just check out (switch to) the branch from
+where you want to start (that is, <tt class="docutils literal"><span class="pre">build_system</span></tt>) and use the <em>git
+branch</em> command:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git checkout build_system
 [user@localhost sage]$ git branch my_new_branch
 [user@localhost sage]$ git checkout my_new_branch
@@ -95,8 +96,9 @@ start (that is, <tt class="docutils literal"><span class="pre">build_system</spa
 * my_new_branch</pre>
 </div>
 <p>Without an argument, the <em>git branch</em> command just displays a list of
-all local branches with the current one marked by an asterisk. To
-avoid typing the new branch name twice you can also use the shortcut
+all local branches with the current one marked by an asterisk. Also
+note that <em>git branch</em> creates a new branch, but does not switch to
+it. To avoid typing the new branch name twice you can use the shortcut
 <tt class="docutils literal"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">my_new_branch</span></tt> to create and switch to the new
 branch in one command.</p>
 </div>
@@ -187,6 +189,23 @@ Switched to a new branch 'my_branch'</pre>
 and switches to it. It is based on the remote <tt class="docutils literal"><span class="pre">u/user/description</span></tt>,
 so you start out with the same files as in that ticket. You can then
 edit files and commit changes to your local branch.</p>
+<p>Your local copy of the repository might not yet know about the remote
+branch, as somebody else might have added it only recently. In that
+case, git will complain that it can&#8217;t find a matching commit. The
+solution is to fetch updates from the remotes first:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git checkout -b my_branch trac/u/user/description
+fatal: Cannot update paths and switch to branch 'my_branch' at the same time.
+Did you intend to checkout 'trac/u/user/description' which can not be resolved as commit?
+[user@localhost sage]$ git remote fetch
+Fetching trac
+remote: Counting objects: 176, done.
+remote: Compressing objects: 100% (142/142), done.
+remote: Total 143 (delta 113), reused 0 (delta 0)
+Receiving objects: 100% (143/143), 23.32 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (113/113), completed with 19 local objects.
+From ssh://trac/sage
+ * [new branch]      u/user/description -&gt; trac/u/user/description</pre>
+</div>
 </div>
 <div class="section" id="pushing-your-changes-to-a-ticket">
 <span id="section-git-push"></span><h3>Pushing Your Changes to a Ticket<a class="headerlink" href="#pushing-your-changes-to-a-ticket" title="Permalink to this headline">¶</a></h3>
