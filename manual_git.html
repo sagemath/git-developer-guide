@@ -27,7 +27,7 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="index.html" />
-    <link rel="next" title="Sage Notebook Developer Guide" href="sagenb/index.html" />
+    <link rel="next" title="Distributed Development" href="workflows.html" />
     <link rel="prev" title="Git Background" href="git_background.html" />
     <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
 
@@ -40,7 +40,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="sagenb/index.html" title="Sage Notebook Developer Guide"
+          <a href="workflows.html" title="Distributed Development"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="git_background.html" title="Git Background"
@@ -103,7 +103,7 @@ it. To avoid typing the new branch name twice you can use the shortcut
 branch in one command.</p>
 </div>
 <div class="section" id="commits-snapshots">
-<h2>Commits (Snapshots)<a class="headerlink" href="#commits-snapshots" title="Permalink to this headline">¶</a></h2>
+<span id="section-git-commit"></span><h2>Commits (Snapshots)<a class="headerlink" href="#commits-snapshots" title="Permalink to this headline">¶</a></h2>
 <p>Once you have your own branch feel free to make any changes as you
 like. Whenever you have reached your goal, a milestone towards it, or
 just feel like you got some work done you should commit your
@@ -169,7 +169,7 @@ of them as bookmarks. You can then use <tt class="docutils literal"><span class=
 <div class="highlight-python"><pre>[user@localhost sage]$ git &lt;push|pull&gt; trac [ARGS]</pre>
 </div>
 <div class="section" id="checking-out-tickets">
-<span id="section-git-pull"></span><h3>Checking Out Tickets<a class="headerlink" href="#checking-out-tickets" title="Permalink to this headline">¶</a></h3>
+<span id="section-git-checkout"></span><h3>Checking Out Tickets<a class="headerlink" href="#checking-out-tickets" title="Permalink to this headline">¶</a></h3>
 <p>Trac tickets that are finished or in the process of being worked on
 can have a git branch attached to them. This is the &#8220;Branch:&#8221; field in
 the ticket description. The branch name is generally of the form
@@ -196,16 +196,14 @@ solution is to fetch updates from the remotes first:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git checkout -b my_branch trac/u/user/description
 fatal: Cannot update paths and switch to branch 'my_branch' at the same time.
 Did you intend to checkout 'trac/u/user/description' which can not be resolved as commit?
-[user@localhost sage]$ git remote fetch
-Fetching trac
-remote: Counting objects: 176, done.
-remote: Compressing objects: 100% (142/142), done.
-remote: Total 143 (delta 113), reused 0 (delta 0)
-Receiving objects: 100% (143/143), 23.32 KiB | 0 bytes/s, done.
-Resolving deltas: 100% (113/113), completed with 19 local objects.
+[user@localhost sage]$ git fetch trac u/user/description
 From ssh://trac/sage
- * [new branch]      u/user/description -&gt; trac/u/user/description</pre>
+* [new branch]      u/user/description -&gt; FETCH_HEAD
+[user@localhost sage]$ git checkout -b my_branch FETCH_HEAD</pre>
 </div>
+<p>Note that the <tt class="docutils literal"><span class="pre">u/user/description</span></tt> branch is temporarily (until you
+fetch something else) available under the alias <tt class="docutils literal"><span class="pre">FETCH_HEAD</span></tt> so you
+do not have to type it twice.</p>
 </div>
 <div class="section" id="pushing-your-changes-to-a-ticket">
 <span id="section-git-push"></span><h3>Pushing Your Changes to a Ticket<a class="headerlink" href="#pushing-your-changes-to-a-ticket" title="Permalink to this headline">¶</a></h3>
@@ -250,6 +248,21 @@ its hex number or by the abbreviation <tt class="docutils literal"><span class="
 one:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git push trac HEAD:u/user/description</pre>
 </div>
+</div>
+<div class="section" id="getting-changes">
+<span id="section-git-pull"></span><h3>Getting Changes<a class="headerlink" href="#getting-changes" title="Permalink to this headline">¶</a></h3>
+<p>A common task during development is to synchronize your local copy of
+the branch with the branch on trac. In particular, assume you
+downloaded somebody else&#8217;s branch made some suggestions for
+improvements on the trac ticket. Now the original author incorporated
+your suggestions into his branch, and you want to get the added
+changesets to complete your review. Assuming that you originally got
+your local branch as in <a class="reference internal" href="#section-git-checkout"><em>Checking Out Tickets</em></a>, you can just
+issue:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git pull</pre>
+</div>
+<p>This will download the changes from the originally-used remote branch
+and merge them with your local branch.</p>
 </div>
 </div>
 <div class="section" id="merging-and-rebasing">
@@ -328,6 +341,7 @@ reset</em> command, we just have to reset back into the future:</p>
 <li><a class="reference internal" href="#the-trac-server">The Trac Server</a><ul>
 <li><a class="reference internal" href="#checking-out-tickets">Checking Out Tickets</a></li>
 <li><a class="reference internal" href="#pushing-your-changes-to-a-ticket">Pushing Your Changes to a Ticket</a></li>
+<li><a class="reference internal" href="#getting-changes">Getting Changes</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#merging-and-rebasing">Merging and Rebasing</a></li>
@@ -340,8 +354,8 @@ reset</em> command, we just have to reset back into the future:</p>
             <p class="topless"><a href="git_background.html"
                                   title="previous chapter">Git Background</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="sagenb/index.html"
-                                  title="next chapter">Sage Notebook Developer Guide</a></p>
+            <p class="topless"><a href="workflows.html"
+                                  title="next chapter">Distributed Development</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/manual_git.txt"
@@ -375,7 +389,7 @@ reset</em> command, we just have to reset back into the future:</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="sagenb/index.html" title="Sage Notebook Developer Guide"
+          <a href="workflows.html" title="Distributed Development"
              >next</a> |</li>
         <li class="right" >
           <a href="git_background.html" title="Git Background"

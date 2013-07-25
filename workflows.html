@@ -1,0 +1,285 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Distributed Development &mdash; Sage Developer&#39;s Guide v1.0</title>
+    
+    <link rel="stylesheet" href="_static/sage.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="index.html" />
+    <link rel="next" title="Sage Notebook Developer Guide" href="sagenb/index.html" />
+    <link rel="prev" title="Git the Hard Way" href="manual_git.html" />
+    <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="sagenb/index.html" title="Sage Notebook Developer Guide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="manual_git.html" title="Git the Hard Way"
+             accesskey="P">previous</a> |</li>
+  
+    
+      <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
+    
+  
+  
+        <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="distributed-development">
+<span id="chapter-workflows"></span><h1>Distributed Development<a class="headerlink" href="#distributed-development" title="Permalink to this headline">¶</a></h1>
+<p>Git is a tool to exchange commits (organized into branches) with other
+developers. As a distributed revision control system, it does not have
+the notion of a central server; The Sage trac server is just one of
+many possible remote repositories from your point of view. This lets
+you use and experiment with different ways to interact with other
+developers. In this chapter, we describe some common ways to develop
+for Sage.</p>
+<p>For simplicity, let us assume two developers (Alice and Bob) are
+collaborating on a ticket. The first step of opening the ticket is
+always the same, and could be performed by either Alice or Bob or a
+third person.</p>
+<div class="section" id="simple-workflow">
+<h2>Simple Workflow<a class="headerlink" href="#simple-workflow" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Alice creates a <a class="reference internal" href="manual_git.html#section-git-branch"><em>new local branch</em></a> and
+<a class="reference internal" href="manual_git.html#section-git-commit"><em>commits</em></a> changes to the Sage sources.</li>
+<li>Alice <a class="reference internal" href="manual_git.html#section-git-push"><em>uploads her branch</em></a> to the trac
+server and fills in the &#8220;Branch:&#8221; field with her remote branch name
+<tt class="docutils literal"><span class="pre">u/alice/description</span></tt>.</li>
+<li>Bob <a class="reference internal" href="manual_git.html#section-git-checkout"><em>downloads Alice&#8217;s branch</em></a>, looks
+through the source, and leaves a comment on the ticket about a
+mistake in Alice&#8217;s code.</li>
+<li>Alice fixes the bug on top of her current branch, and uploads the
+updated branch.</li>
+<li>Bob <a class="reference internal" href="manual_git.html#section-git-pull"><em>retrieves Alice&#8217;s updates</em></a> and reviews
+the changes.</li>
+<li>Once Bob is satisfied, he sets the ticket to positive review. The
+&#8220;Author:&#8221; field is set to Alice&#8217;s full name, and the &#8220;Reviewer:&#8221;
+field is set to Bob&#8217;s full name.</li>
+</ol>
+<p>Alternatively, Bob might want to make some changes himself. Then,
+instead, we would have</p>
+<ol class="arabic simple" start="3">
+<li>Bob <a class="reference internal" href="manual_git.html#section-git-checkout"><em>downloads Alice&#8217;s branch</em></a>, makes
+changes, and <a class="reference internal" href="manual_git.html#section-git-commit"><em>commits</em></a> them to his local
+branch.</li>
+<li>Bob <a class="reference internal" href="manual_git.html#section-git-push"><em>uploads his branch</em></a> to the trac server
+and fills in the &#8220;Branch:&#8221; field with his remote branch name
+<tt class="docutils literal"><span class="pre">u/bob/description</span></tt>.</li>
+<li>Alice <a class="reference internal" href="manual_git.html#section-git-checkout"><em>downloads Bob&#8217;s branch</em></a> and
+reviews his changes.</li>
+<li>Once Alice is satisfied, she sets the ticket to positive review. If
+both contributions are of comparable size, then the &#8220;Author:&#8221; and
+&#8220;Reviewer:&#8221; fields are set to both Alice&#8217;s and Bob&#8217;s full name.</li>
+</ol>
+</div>
+<div class="section" id="public-repository">
+<h2>Public Repository<a class="headerlink" href="#public-repository" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="github">
+<h2>GitHub<a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Distributed Development</a><ul>
+<li><a class="reference internal" href="#simple-workflow">Simple Workflow</a></li>
+<li><a class="reference internal" href="#public-repository">Public Repository</a></li>
+<li><a class="reference internal" href="#github">GitHub</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="manual_git.html"
+                                  title="previous chapter">Git the Hard Way</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="sagenb/index.html"
+                                  title="next chapter">Sage Notebook Developer Guide</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/workflows.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <!-- The shading of the "Go" button should be consistent -->
+                <!-- with the colour of the header and footer. See the file -->
+                <!-- doc/common/themes/sage/theme.conf for colours used by -->
+                <!-- the Sage theme. -->
+                <input type="submit" style="background-color: #B8B9F6" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="sagenb/index.html" title="Sage Notebook Developer Guide"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="manual_git.html" title="Git the Hard Way"
+             >previous</a> |</li>
+  
+    
+      <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
+    
+  
+  
+        <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    
+    <div class="footer">
+        &copy; Copyright 2013, The Sage Development Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+    <script type="text/javascript">
+/*global jQuery, window */
+/* Sphinx sidebar toggle.  Putting this code at the end of the body
+ * enables the toggle for the live, static, and offline docs.  Note:
+ * sage.misc.html.math_parse() eats jQuery's dollar-sign shortcut. */
+var jq = jQuery;  
+jq(document).ready(function () {
+    var bar, bod, bg, fg, key, tog, wid_old, wid_new, resize, get_state, set_state;
+    bod = jq('div.bodywrapper');
+    bar = jq('div.sphinxsidebar');
+    tog = jq('<div class="sphinxsidebartoggle"></div>');
+    
+    /* Delayed resize helper.  Not perfect but good enough. */
+    resize = function () {
+        setTimeout(function () {
+            tog.height(bod.height());
+        }, 100);
+    };
+    jq(window).resize(function () {
+        resize();
+    });
+    
+    /* Setup and add the toggle. See Sphinx v0.5.1 default.css. */
+    fg = jq('div.sphinxsidebar p a').css('color') || 'rgb(152, 219, 204)';
+    bg = jq('div.document').css('background-color') || 'rgb(28, 78, 99)';
+    wid_old = '230px';
+    wid_new = '5px';
+    tog.css('background-color', bg)
+        .css('border-width', '0px')
+        .css('border-right', wid_new + ' ridge ' + bg)
+        .css('cursor', 'pointer')
+        .css('position', 'absolute')
+        .css('left', '-' + wid_new)
+        .css('top', '0px')
+        .css('width', wid_new);
+    bod.css('position', 'relative');
+    bod.prepend(tog);
+    resize();
+    
+    /* Cookie helpers. */
+    key = 'sphinxsidebar=';
+    set_state = function (s) {
+        var date = new Date();
+        /* Expiry in 7 days. */
+        date.setTime(date.getTime() + (7 * 24 * 3600 * 1000));
+        document.cookie = key + encodeURIComponent(s) + '; expires=' +
+            date.toUTCString() + '; path=/';
+    };
+    get_state = function () {
+        var i, c, crumbs = document.cookie.split(';');
+        for (i = 0; i < crumbs.length; i += 1) {
+            c = crumbs[i].replace(/^\s+/, '');
+            if (c.indexOf(key) === 0) {
+                return decodeURIComponent(c.substring(key.length, c.length));
+            }
+        }
+        return null;
+    };
+    
+    /* Event handlers. */
+    tog.mouseover(function (ev) {
+        tog.css('border-right-color', fg);
+    }).mouseout(function (ev) {
+        tog.css('border-right-color', bg);
+    }).click(function (ev) {
+        if (bod.hasClass('wide')) {
+            bod.removeClass('wide');
+            bod.css('margin-left', wid_old);
+            bar.css('width', wid_old);
+            bar.show();
+            set_state('visible');
+        } else {
+            set_state('hidden');
+            bar.hide();
+            bar.css('width', '0px');
+            bod.css('margin-left', wid_new);
+            bod.addClass('wide');
+        }
+        resize();
+    });
+    
+    /* Hide the normally visible sidebar? */
+    if (get_state() === 'hidden') {
+        tog.trigger('click');
+    } else {
+        set_state('visible');
+    }
+});
+    </script>
+  </body>
+</html>

@@ -35,6 +35,7 @@ Git and Sage Development
 
    git_background
    manual_git
+   workflows
 
 
 Sage Notebook Developer Guide
