@@ -53,7 +53,7 @@ it. To avoid typing the new branch name twice you can use the shortcut
 branch in one command.
 
 
-
+.. _section-git-commit:
 
 Commits (Snapshots)
 ===================
@@ -134,7 +134,7 @@ of them as bookmarks. You can then use ``git pull`` to get changes and
 
 
 
-.. _section-git-pull:
+.. _section-git-checkout:
 
 Checking Out Tickets
 --------------------
@@ -169,15 +169,15 @@ solution is to fetch updates from the remotes first::
     [user@localhost sage]$ git checkout -b my_branch trac/u/user/description
     fatal: Cannot update paths and switch to branch 'my_branch' at the same time.
     Did you intend to checkout 'trac/u/user/description' which can not be resolved as commit?
-    [user@localhost sage]$ git remote fetch
-    Fetching trac
-    remote: Counting objects: 176, done.
-    remote: Compressing objects: 100% (142/142), done.
-    remote: Total 143 (delta 113), reused 0 (delta 0)
-    Receiving objects: 100% (143/143), 23.32 KiB | 0 bytes/s, done.
-    Resolving deltas: 100% (113/113), completed with 19 local objects.
+    [user@localhost sage]$ git fetch trac u/user/description
     From ssh://trac/sage
-    * [new branch]      u/user/description -> trac/u/user/description
+    * [new branch]      u/user/description -> FETCH_HEAD
+    [user@localhost sage]$ git checkout -b my_branch FETCH_HEAD
+
+Note that the ``u/user/description`` branch is temporarily (until you
+fetch something else) available under the alias ``FETCH_HEAD`` so you
+do not have to type it twice.
+
 
 
 .. _section-git-push:
@@ -231,6 +231,26 @@ its hex number or by the abbreviation ``HEAD`` for the most recent
 one::
 
     [user@localhost sage]$ git push trac HEAD:u/user/description
+
+
+.. _section-git-pull:
+
+Getting Changes
+---------------
+
+A common task during development is to synchronize your local copy of
+the branch with the branch on trac. In particular, assume you
+downloaded somebody else's branch made some suggestions for
+improvements on the trac ticket. Now the original author incorporated
+your suggestions into his branch, and you want to get the added
+changesets to complete your review. Assuming that you originally got
+your local branch as in :ref:`section-git-checkout`, you can just
+issue::
+
+    [user@localhost sage]$ git pull
+
+This will download the changes from the originally-used remote branch
+and merge them with your local branch.
 
 
 
