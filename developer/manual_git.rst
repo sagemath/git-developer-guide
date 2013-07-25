@@ -161,6 +161,24 @@ and switches to it. It is based on the remote ``u/user/description``,
 so you start out with the same files as in that ticket. You can then
 edit files and commit changes to your local branch.
 
+Your local copy of the repository might not yet know about the remote
+branch, as somebody else might have added it only recently. In that
+case, git will complain that it can't find a matching commit. The
+solution is to fetch updates from the remotes first::
+
+    [user@localhost sage]$ git checkout -b my_branch trac/u/user/description
+    fatal: Cannot update paths and switch to branch 'my_branch' at the same time.
+    Did you intend to checkout 'trac/u/user/description' which can not be resolved as commit?
+    [user@localhost sage]$ git remote fetch
+    Fetching trac
+    remote: Counting objects: 176, done.
+    remote: Compressing objects: 100% (142/142), done.
+    remote: Total 143 (delta 113), reused 0 (delta 0)
+    Receiving objects: 100% (143/143), 23.32 KiB | 0 bytes/s, done.
+    Resolving deltas: 100% (113/113), completed with 19 local objects.
+    From ssh://trac/sage
+    * [new branch]      u/user/description -> trac/u/user/description
+
 
 .. _section-git-push:
 
