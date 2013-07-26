@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Setting Up Git &mdash; Sage Developer&#39;s Guide v1.0</title>
+    <title>The Sage development scripts &mdash; Sage Developer&#39;s Guide v1.0</title>
     
     <link rel="stylesheet" href="_static/sage.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,8 +27,8 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="index.html" />
-    <link rel="next" title="The Sage Trac Server" href="trac.html" />
-    <link rel="prev" title="Sage Development Process" href="walk_through.html" />
+    <link rel="next" title="Git Background" href="git_background.html" />
+    <link rel="prev" title="The Sage Trac Server" href="trac.html" />
     <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
 
   </head>
@@ -40,10 +40,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="trac.html" title="The Sage Trac Server"
+          <a href="git_background.html" title="Git Background"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="walk_through.html" title="Sage Development Process"
+          <a href="trac.html" title="The Sage Trac Server"
              accesskey="P">previous</a> |</li>
   
     
@@ -61,58 +61,113 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="setting-up-git">
-<span id="chapter-git-setup"></span><h1>Setting Up Git<a class="headerlink" href="#setting-up-git" title="Permalink to this headline">¶</a></h1>
-<p>To work on the Sage source code, you need</p>
-<ul class="simple">
-<li>a working git installation, see <a class="reference internal" href="#section-git-install"><em>Installing Git</em></a></li>
-<li>configure git to use your name and email address for commits, see
-<a class="reference internal" href="#section-git-setup-name"><em>Your Name and Email</em></a></li>
-</ul>
-<p>You need to perform these two steps to participate in the Sage
-development. The <a class="reference internal" href="git_background.html#chapter-git-background"><em>Git Background</em></a> chapter contains
-further information about git that might be useful to some but are not
-required.</p>
-<div class="section" id="installing-git">
-<span id="section-git-install"></span><h2>Installing Git<a class="headerlink" href="#installing-git" title="Permalink to this headline">¶</a></h2>
-<p>First, try <tt class="docutils literal"><span class="pre">git</span></tt> on the command line. Most distributions will have
-it installed by default if other development tools are installed. If
-that fails, use the following to install git:</p>
-<dl class="docutils">
-<dt>Debian / Ubuntu</dt>
-<dd><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">git-core</span></tt></dd>
-<dt>Fedora</dt>
-<dd><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">yum</span> <span class="pre">install</span> <span class="pre">git-core</span></tt></dd>
-<dt>Windows</dt>
-<dd>Download and install <a class="reference external" href="http://code.google.com/p/msysgit/downloads/list">msysGit</a></dd>
-<dt>OS X</dt>
-<dd>Use the <a class="reference external" href="http://code.google.com/p/git-osx-installer/downloads/list">git OSX installer</a></dd>
-</dl>
-<p>Some further ressources for installation help are:</p>
-<ul class="simple">
-<li><a class="reference external" href="http://book.git-scm.com/2_installing_git.html">Chapter 2 of the git book</a></li>
-<li>The <a class="reference external" href="http://git-scm.com">git homepage</a> for the most recent
-information.</li>
-<li><a class="reference external" href="http://help.github.com">Github install help pages</a></li>
-</ul>
+  <div class="section" id="the-sage-development-scripts">
+<h1>The Sage development scripts<a class="headerlink" href="#the-sage-development-scripts" title="Permalink to this headline">¶</a></h1>
+<p>Sage comes with a set of developer scripts, which help you with common
+interactions with the bug tracker (see: :ref:chapter-sage-trac) and with
+handling revisions of your code.</p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Suppose you have written an algorithm for calculating the last twin prime, and
+want to add it to Sage. You would first open a ticket for that:</p>
+<div class="highlight-python"><pre>sage -dev create-ticket</pre>
 </div>
-<div class="section" id="your-name-and-email">
-<span id="section-git-setup-name"></span><h2>Your Name and Email<a class="headerlink" href="#your-name-and-email" title="Permalink to this headline">¶</a></h2>
-<p>The commit message of any change contains your name and email address
-to acknowledge your contribution and to have a point of contact if
-there are questions in the future; Filling it in is required if you
-want to share your changes. The simplest way to do this is from the
-command line:</p>
-<div class="highlight-python"><pre>[user@localhost ~] git config --global user.name "Your Name"
-[user@localhost ~] git config --global user.email you@yourdomain.example.com</pre>
+<p>This will give you an editor in which you can give a summary and a description
+of what you want to do. After you close the editor, a new ticket will be opened
+on the trac server. From that point on, everyone can see what you intend to do,
+which is very useful for avoiding double work.</p>
+<p>If you are editing and you realize you want to cancel the creation of a ticket,
+then you can just save an empty file. This will abort the operation.</p>
+<p>After saving your ticket on the trac server, a branch will be created for you
+to contain your revisions to Sage. It is called <tt class="docutils literal"><span class="pre">ticket/&lt;TICKETNUM&gt;</span></tt>.</p>
+<p>At this point, you will start editing the source code, trying it out, running
+doctests, et cetera. At some point, you may wish to share your changes with the
+rest of us: maybe it is ready for review, or maybe you are collaborating with
+someone and want to share your changes &#8220;up until now&#8221;.</p>
+<p>The first step is to record your changes into your branch:</p>
+<div class="highlight-python"><pre>sage -dev commit</pre>
 </div>
-<p>This will write the settings into your <a class="reference internal" href="git_background.html#section-git-configuration"><em>git configuration file</em></a> with your name and email:</p>
-<div class="highlight-python"><pre>[user]
-    name = Your Name
-    email = you@yourdomain.example.com</pre>
+<p>You will be asked to write a message describing your changes. It is common to
+write a one line summary, then a blank line, and then a 1 - 2 paragraph
+explanation of your changes. (Of course, if your changes are minor, then just
+the one-line summary can be enough.)</p>
+<p>The next step is to upload your changes to Trac:</p>
+<div class="highlight-python"><pre>sage -dev upload</pre>
 </div>
-<p>Of course you&#8217;ll need to replace <tt class="docutils literal"><span class="pre">Your</span> <span class="pre">Name</span></tt> and <tt class="docutils literal"><span class="pre">you&#64;yourdomain.example.com</span></tt>
-with your actual name and email address.</p>
+<p>On track, you branch will be called <tt class="docutils literal"><span class="pre">u/&lt;USERNAME&gt;/ticket/&lt;TICKETNUM&gt;</span></tt>.
+Additionally, this will set the Branch field on the ticket to point to this
+branch. This way, other people know where to find your work.</p>
+<p>It is common to go through some iterations of <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-dev</span> <span class="pre">commit</span></tt> before you
+upload, and you will probably also have uploaded a few times before your
+changes are ready for review.</p>
+</div>
+<div class="section" id="reviewing">
+<h2>Reviewing<a class="headerlink" href="#reviewing" title="Permalink to this headline">¶</a></h2>
+<p>Now suppose you want to review the existing work on an existing ticket, such as
+the one you created in the last section.  For definiteness, suppose you want to
+review #12270. You would do that as follows:</p>
+<div class="highlight-python"><pre>sage -dev switch-ticket 12270</pre>
+</div>
+<p>This command will download the branch on Trac in case you do not have any local
+work on ticket 12270. (If you do, you may have to merge your changes; see
+below). You can now test the ticket; you&#8217;ll probably want to call <tt class="docutils literal"><span class="pre">make</span></tt> or
+<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-b</span></tt>.</p>
+<p>Your will want to add a comment to the ticket as part of your review:</p>
+<div class="highlight-python"><pre>sage -dev add-comment</pre>
+</div>
+<p>This will open a text editor in which you can type, and upload the result to Trac.</p>
+<p>It is also possible that you make some changes to the code as part of your review. After
+you&#8217;ve done that, you can upload your changes back to trac:</p>
+<div class="highlight-python"><pre>sage -dev commit
+sage -dev upload</pre>
+</div>
+<p>This will update the ticket to now point to your branch, including your changes. Your branch
+is based on the original author&#8217;s branch, so s/he can easily incorporate your changes into his/her
+own branch (see below).</p>
+</div>
+<div class="section" id="collaboration">
+<h2>Collaboration<a class="headerlink" href="#collaboration" title="Permalink to this headline">¶</a></h2>
+<p>It is very easy to collaborate by just going through the above steps any number of times:</p>
+<div class="highlight-python"><pre># developer 1
+&lt;EDIT EDIT&gt;
+sage -dev commit
+sage -dev upload
+# developer 2
+sage -dev download
+&lt;EDIT EDIT&gt;
+sage -dev commit
+sage -dev upload
+# developer 1
+sage -dev download
+&lt;EDIT EDIT&gt;
+sage -dev commit
+sage -dev upload
+(etc)</pre>
+</div>
+<p>The obvious problem is when you both work on the same ticket simultaneously:</p>
+<div class="highlight-python"><pre># developer 1
+&lt;EDIT EDIT&gt;
+sage -dev commit
+sage -dev upload
+# developer 2
+&lt;EDIT EDIT&gt;
+sage -dev commit
+sage -dev upload
+Changes not compatible with remote branch u/&lt;developer1&gt;/ticket/12270; consider downloading first. Are you sure you want to continue?</pre>
+</div>
+<p>Developer 2 should probably select <tt class="docutils literal"><span class="pre">No</span></tt>, and do as suggested:</p>
+<div class="highlight-python"><pre>sage -dev download</pre>
+</div>
+<p>This will try to merge the changes developer 1 made into the ones that developer 2 made. The latter should check whether
+all seems okay, and if so, upload the changes:</p>
+<div class="highlight-python"><pre>sage -dev upload   # works now</pre>
+</div>
+<p>It is possible that the changes cannot be automatically merged. In that case, developer 2 will have to do some manual fixup after
+downloading and before uploading:</p>
+<div class="highlight-python"><pre>&lt;EDIT EDIT FOR FIXUP&gt;
+sage -dev commit
+sage -dev upload</pre>
+</div>
 </div>
 </div>
 
@@ -124,22 +179,23 @@ with your actual name and email address.</p>
         <div class="sphinxsidebarwrapper">
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference internal" href="#">Setting Up Git</a><ul>
-<li><a class="reference internal" href="#installing-git">Installing Git</a></li>
-<li><a class="reference internal" href="#your-name-and-email">Your Name and Email</a></li>
+<li><a class="reference internal" href="#">The Sage development scripts</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#reviewing">Reviewing</a></li>
+<li><a class="reference internal" href="#collaboration">Collaboration</a></li>
 </ul>
 </li>
 </ul>
 
             <h4>Previous topic</h4>
-            <p class="topless"><a href="walk_through.html"
-                                  title="previous chapter">Sage Development Process</a></p>
-            <h4>Next topic</h4>
             <p class="topless"><a href="trac.html"
-                                  title="next chapter">The Sage Trac Server</a></p>
+                                  title="previous chapter">The Sage Trac Server</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="git_background.html"
+                                  title="next chapter">Git Background</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="_sources/git_setup.txt"
+              <li><a href="_sources/developer_scripts.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
@@ -170,10 +226,10 @@ with your actual name and email address.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="trac.html" title="The Sage Trac Server"
+          <a href="git_background.html" title="Git Background"
              >next</a> |</li>
         <li class="right" >
-          <a href="walk_through.html" title="Sage Development Process"
+          <a href="trac.html" title="The Sage Trac Server"
              >previous</a> |</li>
   
     

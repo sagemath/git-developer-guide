@@ -123,26 +123,26 @@ docstrings for more information and more options.</p>
 <div class="section" id="headings-of-sage-library-code-files">
 <h2>Headings of Sage library code files<a class="headerlink" href="#headings-of-sage-library-code-files" title="Permalink to this headline">¶</a></h2>
 <p>The top of each Sage code file should follow this format:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="sd">r&quot;&quot;&quot;</span>
-<span class="sd">&lt;Very short 1-line summary&gt;</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">r&quot;&quot;&quot;</span>
+<span class="s">&lt;Very short 1-line summary&gt;</span>
 
-<span class="sd">&lt;Paragraph description&gt;</span>
-<span class="sd">...</span>
+<span class="s">&lt;Paragraph description&gt;</span>
+<span class="s">...</span>
 
-<span class="sd">AUTHORS:</span>
+<span class="s">AUTHORS:</span>
 
-<span class="sd">- YOUR NAME (2005-01-03): initial version</span>
+<span class="s">- YOUR NAME (2005-01-03): initial version</span>
 
-<span class="sd">- person (date in ISO year-month-day format): short desc</span>
+<span class="s">- person (date in ISO year-month-day format): short desc</span>
 
-<span class="sd">...</span>
+<span class="s">...</span>
 
-<span class="sd">- person (date in ISO year-month-day format): short desc</span>
+<span class="s">- person (date in ISO year-month-day format): short desc</span>
 
-<span class="sd">...</span>
+<span class="s">...</span>
 
-<span class="sd">Lots and lots of examples.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="s">Lots and lots of examples.</span>
+<span class="s">&quot;&quot;&quot;</span>
 
 <span class="c">#*****************************************************************************</span>
 <span class="c">#       Copyright (C) 2010 YOUR NAME &lt;your email&gt;</span>
@@ -157,113 +157,113 @@ docstrings for more information and more options.</p>
 <p>The following is the top of the file
 <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/rings/integer.pyx</span></tt>, which
 contains the implementation for <span class="math">\(\ZZ\)</span>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="sd">r&quot;&quot;&quot;</span>
-<span class="sd">Elements of the ring `\ZZ` of integers</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">r&quot;&quot;&quot;</span>
+<span class="s">Elements of the ring `\ZZ` of integers</span>
 
-<span class="sd">AUTHORS:</span>
+<span class="s">AUTHORS:</span>
 
-<span class="sd">- William Stein (2005): initial version</span>
+<span class="s">- William Stein (2005): initial version</span>
 
-<span class="sd">- Gonzalo Tornaria (2006-03-02): vastly improved python/GMP</span>
-<span class="sd">  conversion; hashing</span>
+<span class="s">- Gonzalo Tornaria (2006-03-02): vastly improved python/GMP</span>
+<span class="s">  conversion; hashing</span>
 
-<span class="sd">- Didier Deshommes (2006-03-06): numerous examples</span>
-<span class="sd">  and docstrings</span>
+<span class="s">- Didier Deshommes (2006-03-06): numerous examples</span>
+<span class="s">  and docstrings</span>
 
-<span class="sd">- William Stein (2006-03-31): changes to reflect GMP bug fixes</span>
+<span class="s">- William Stein (2006-03-31): changes to reflect GMP bug fixes</span>
 
-<span class="sd">- William Stein (2006-04-14): added GMP factorial method (since it&#39;s</span>
-<span class="sd">  now very fast).</span>
+<span class="s">- William Stein (2006-04-14): added GMP factorial method (since it&#39;s</span>
+<span class="s">  now very fast).</span>
 
-<span class="sd">- David Harvey (2006-09-15): added nth_root, exact_log</span>
+<span class="s">- David Harvey (2006-09-15): added nth_root, exact_log</span>
 
-<span class="sd">- David Harvey (2006-09-16): attempt to optimise Integer constructor</span>
+<span class="s">- David Harvey (2006-09-16): attempt to optimise Integer constructor</span>
 
-<span class="sd">- Rishikesh (2007-02-25): changed quo_rem so that the rem is positive</span>
+<span class="s">- Rishikesh (2007-02-25): changed quo_rem so that the rem is positive</span>
 
-<span class="sd">- David Harvey, Martin Albrecht, Robert Bradshaw (2007-03-01):</span>
-<span class="sd">  optimized Integer constructor and pool</span>
+<span class="s">- David Harvey, Martin Albrecht, Robert Bradshaw (2007-03-01):</span>
+<span class="s">  optimized Integer constructor and pool</span>
 
-<span class="sd">- Pablo De Napoli (2007-04-01): multiplicative_order should return</span>
-<span class="sd">  +infinity for non zero numbers</span>
+<span class="s">- Pablo De Napoli (2007-04-01): multiplicative_order should return</span>
+<span class="s">  +infinity for non zero numbers</span>
 
-<span class="sd">- Robert Bradshaw (2007-04-12): is_perfect_power, Jacobi symbol (with</span>
-<span class="sd">  Kronecker extension).  Convert some methods to use GMP directly</span>
-<span class="sd">  rather than pari, Integer(), PY_NEW(Integer)</span>
+<span class="s">- Robert Bradshaw (2007-04-12): is_perfect_power, Jacobi symbol (with</span>
+<span class="s">  Kronecker extension).  Convert some methods to use GMP directly</span>
+<span class="s">  rather than pari, Integer(), PY_NEW(Integer)</span>
 
-<span class="sd">- David Roe (2007-03-21): sped up valuation and is_square, added</span>
-<span class="sd">  val_unit, is_power, is_power_of and divide_knowing_divisible_by</span>
+<span class="s">- David Roe (2007-03-21): sped up valuation and is_square, added</span>
+<span class="s">  val_unit, is_power, is_power_of and divide_knowing_divisible_by</span>
 
-<span class="sd">- Robert Bradshaw (2008-03-26): gamma function, multifactorials</span>
+<span class="s">- Robert Bradshaw (2008-03-26): gamma function, multifactorials</span>
 
-<span class="sd">- Robert Bradshaw (2008-10-02): bounded squarefree part</span>
+<span class="s">- Robert Bradshaw (2008-10-02): bounded squarefree part</span>
 
-<span class="sd">EXAMPLES:</span>
+<span class="s">EXAMPLES:</span>
 
-<span class="sd">Add 2 integers::</span>
+<span class="s">Add 2 integers::</span>
 
-<span class="sd">    sage: a = Integer(3) ; b = Integer(4)</span>
-<span class="sd">    sage: a + b == 7</span>
-<span class="sd">    True</span>
+<span class="s">    sage: a = Integer(3) ; b = Integer(4)</span>
+<span class="s">    sage: a + b == 7</span>
+<span class="s">    True</span>
 
-<span class="sd">Add an integer and a real number::</span>
+<span class="s">Add an integer and a real number::</span>
 
-<span class="sd">    sage: a + 4.0</span>
-<span class="sd">    7.00000000000000</span>
+<span class="s">    sage: a + 4.0</span>
+<span class="s">    7.00000000000000</span>
 
-<span class="sd">Add an integer and a rational number::</span>
+<span class="s">Add an integer and a rational number::</span>
 
-<span class="sd">    sage: a + Rational(2)/5</span>
-<span class="sd">    17/5</span>
+<span class="s">    sage: a + Rational(2)/5</span>
+<span class="s">    17/5</span>
 
-<span class="sd">Add an integer and a complex number::</span>
+<span class="s">Add an integer and a complex number::</span>
 
-<span class="sd">    sage: b = ComplexField().0 + 1.5</span>
-<span class="sd">    sage: loads((a+b).dumps()) == a+b</span>
-<span class="sd">    True</span>
+<span class="s">    sage: b = ComplexField().0 + 1.5</span>
+<span class="s">    sage: loads((a+b).dumps()) == a+b</span>
+<span class="s">    True</span>
 
-<span class="sd">    sage: z = 32</span>
-<span class="sd">    sage: -z</span>
-<span class="sd">    -32</span>
-<span class="sd">    sage: z = 0; -z</span>
-<span class="sd">    0</span>
-<span class="sd">    sage: z = -0; -z</span>
-<span class="sd">    0</span>
-<span class="sd">    sage: z = -1; -z</span>
-<span class="sd">    1</span>
+<span class="s">    sage: z = 32</span>
+<span class="s">    sage: -z</span>
+<span class="s">    -32</span>
+<span class="s">    sage: z = 0; -z</span>
+<span class="s">    0</span>
+<span class="s">    sage: z = -0; -z</span>
+<span class="s">    0</span>
+<span class="s">    sage: z = -1; -z</span>
+<span class="s">    1</span>
 
-<span class="sd">Multiplication::</span>
+<span class="s">Multiplication::</span>
 
-<span class="sd">    sage: a = Integer(3) ; b = Integer(4)</span>
-<span class="sd">    sage: a * b == 12</span>
-<span class="sd">    True</span>
-<span class="sd">    sage: loads((a * 4.0).dumps()) == a*b</span>
-<span class="sd">    True</span>
-<span class="sd">    sage: a * Rational(2)/5</span>
-<span class="sd">    6/5</span>
+<span class="s">    sage: a = Integer(3) ; b = Integer(4)</span>
+<span class="s">    sage: a * b == 12</span>
+<span class="s">    True</span>
+<span class="s">    sage: loads((a * 4.0).dumps()) == a*b</span>
+<span class="s">    True</span>
+<span class="s">    sage: a * Rational(2)/5</span>
+<span class="s">    6/5</span>
 
-<span class="sd">::</span>
+<span class="s">::</span>
 
-<span class="sd">    sage: list([2,3]) * 4</span>
-<span class="sd">    [2, 3, 2, 3, 2, 3, 2, 3]</span>
+<span class="s">    sage: list([2,3]) * 4</span>
+<span class="s">    [2, 3, 2, 3, 2, 3, 2, 3]</span>
 
-<span class="sd">::</span>
+<span class="s">::</span>
 
-<span class="sd">    sage: &#39;sage&#39;*Integer(3)</span>
-<span class="sd">    &#39;sagesagesage&#39;</span>
+<span class="s">    sage: &#39;sage&#39;*Integer(3)</span>
+<span class="s">    &#39;sagesagesage&#39;</span>
 
-<span class="sd">COERCIONS:</span>
+<span class="s">COERCIONS:</span>
 
-<span class="sd">Return a version of this integer in the multi-precision floating</span>
-<span class="sd">real field R::</span>
+<span class="s">Return a version of this integer in the multi-precision floating</span>
+<span class="s">real field R::</span>
 
-<span class="sd">    sage: n = 9390823</span>
-<span class="sd">    sage: RR = RealField(200)</span>
-<span class="sd">    sage: RR(n)</span>
-<span class="sd">    9.3908230000000000000000000000000000000000000000000000000000e6</span>
+<span class="s">    sage: n = 9390823</span>
+<span class="s">    sage: RR = RealField(200)</span>
+<span class="s">    sage: RR(n)</span>
+<span class="s">    9.3908230000000000000000000000000000000000000000000000000000e6</span>
 
 
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="s">&quot;&quot;&quot;</span>
 <span class="c">#*****************************************************************************</span>
 <span class="c">#       Copyright (C) 2004,2006 William Stein &lt;wstein@gmail.com&gt;</span>
 <span class="c">#       Copyright (C) 2006 Gonzalo Tornaria &lt;tornaria@math.utexas.edu&gt;</span>
@@ -576,9 +576,9 @@ first triple opening quote. For example,</p>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <span class="k">def</span> <span class="nf">sin</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="sd">r&quot;&quot;&quot;</span>
-<span class="sd">    Return `\sin(x)`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="s">r&quot;&quot;&quot;</span>
+<span class="s">    Return `\sin(x)`.</span>
+<span class="s">    &quot;&quot;&quot;</span>
 </pre></div>
 </div>
 <p>You can also use the MATH block to format complicated mathematical
@@ -734,9 +734,10 @@ its functions are available when you start Sage using the <tt class="docutils li
 command. For example, the function <tt class="docutils literal"><span class="pre">AA()</span></tt> in the file
 <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/algebras/steenrod/steenrod_algebra.py</span></tt>
 includes an EXAMPLES block containing the following:</p>
-<div class="highlight-python"><pre>sage: from sage.algebras.steenrod.steenrod_algebra import AA as A
-sage: A()
-mod 2 Steenrod algebra, milnor basis</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">sage.algebras.steenrod.steenrod_algebra</span> <span class="kn">import</span> <span class="n">AA</span> <span class="k">as</span> <span class="n">A</span>
+<span class="gp">sage: </span><span class="n">A</span><span class="p">()</span>
+<span class="go">mod 2 Steenrod algebra, milnor basis</span>
+</pre></div>
 </div>
 <p>Sage does not know about the function <tt class="docutils literal"><span class="pre">AA()</span></tt> by default, so
 it needs to be imported before it is tested. Hence the first line in
@@ -759,7 +760,8 @@ Use <tt class="xref py py-func docutils literal"><span class="pre">tmp_filename(
 or <tt class="xref py py-func docutils literal"><span class="pre">tmp_dir()</span></tt> to get a temporary directory.
 For example (taken from the file
 <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/plot/graphics.py</span></tt>):</p>
-<div class="highlight-python"><pre>sage: plot(x^2 - 5, (x, 0, 5), ymin=0).save(tmp_filename(ext='.png'))</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">tmp_filename</span><span class="p">(</span><span class="n">ext</span><span class="o">=</span><span class="s">&#39;.png&#39;</span><span class="p">))</span>
+</pre></div>
 </div>
 </li>
 <li><p class="first">If a test line contains the text <tt class="docutils literal"><span class="pre">random</span></tt>, it is executed by
@@ -769,10 +771,11 @@ example, the docstring for the <tt class="docutils literal"><span class="pre">__
 <tt class="docutils literal"><span class="pre">CombinatorialObject</span></tt> in
 <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/combinat/combinat.py</span></tt> includes
 the lines</p>
-<div class="highlight-python"><pre>sage: hash(c) #random
-1335416675971793195
-sage: c._hash #random
-1335416675971793195</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="nb">hash</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="c">#random</span>
+<span class="go">1335416675971793195</span>
+<span class="gp">sage: </span><span class="n">c</span><span class="o">.</span><span class="n">_hash</span> <span class="c">#random</span>
+<span class="go">1335416675971793195</span>
+</pre></div>
 </div>
 <p>However, most functions generating pseudorandom output do not need
 this tag since the doctesting framework guarantees the state of the
@@ -789,9 +792,10 @@ example should take more than about 30 seconds.</p>
 <p>For instance, here is part of the docstring from the <tt class="docutils literal"><span class="pre">regulator</span></tt>
 method for rational elliptic curves, from the file
 <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/schemes/elliptic_curves/ell_rational.py</span></tt>:</p>
-<div class="highlight-python"><pre>sage: E = EllipticCurve([0, 0, 1, -1, 0])
-sage: E.regulator()              # long time (1 second)
-0.0511114082399688</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">E</span> <span class="o">=</span> <span class="n">EllipticCurve</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">sage: </span><span class="n">E</span><span class="o">.</span><span class="n">regulator</span><span class="p">()</span>              <span class="c"># long time (1 second)</span>
+<span class="go">0.0511114082399688</span>
+</pre></div>
 </div>
 </li>
 <li><p class="first">If a line contains <tt class="docutils literal"><span class="pre">tol</span></tt> or <tt class="docutils literal"><span class="pre">tolerance</span></tt>, numerical results are only
@@ -799,10 +803,11 @@ verified to the given tolerance. This may be prefixed by <tt class="docutils lit
 or <tt class="docutils literal"><span class="pre">rel[ative]</span></tt> to specify whether to measure absolute or relative
 error; this defaults to relative error except when the expected value
 is exactly zero:</p>
-<div class="highlight-python"><pre>sage: RDF(pi)                               # abs tol 1e-5
-3.14159
-sage: [10^n for n in [0.0 .. 4]]            # rel tol 2e-4
-[0.9999, 10.001, 100.01, 999.9, 10001]</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">RDF</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>                               <span class="c"># abs tol 1e-5</span>
+<span class="go">3.14159</span>
+<span class="gp">sage: </span><span class="p">[</span><span class="mi">10</span><span class="o">^</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.0</span> <span class="o">..</span> <span class="mi">4</span><span class="p">]]</span>            <span class="c"># rel tol 2e-4</span>
+<span class="go">[0.9999, 10.001, 100.01, 999.9, 10001]</span>
+</pre></div>
 </div>
 <p>This can be useful when the exact output is subject to rounding error
 and/or processor floating point arithmetic variation.  Here are some
@@ -812,16 +817,18 @@ matrices.  Over the reals, this means the inverse of the matrix is
 equal to its transpose.  We test this result by applying the norm to
 a matrix difference.  The result will usually be a &#8220;small&#8221; number,
 distinct from zero.</p>
-<div class="highlight-python"><pre>sage: A = matrix(RDF, 8, range(64))
-sage: U, S, V = A.SVD()
-sage: (U.transpose()*U-identity_matrix(8)).norm(p=2)    # abs tol 1e-10
-0.0</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">A</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">(</span><span class="n">RDF</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
+<span class="gp">sage: </span><span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">SVD</span><span class="p">()</span>
+<span class="gp">sage: </span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">*</span><span class="n">U</span><span class="o">-</span><span class="n">identity_matrix</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>    <span class="c"># abs tol 1e-10</span>
+<span class="go">0.0</span>
+</pre></div>
 </div>
 <p>The 8-th cyclotomic field is generated by the complex number
 <span class="math">\(e^\frac{i\pi}{4}\)</span>.  Here we compute a numerical approximation:</p>
-<div class="highlight-python"><pre>sage: K.&lt;zeta8&gt; = CyclotomicField(8)
-sage: N(zeta8)                             # absolute tolerance 1e-10
-0.7071067812 + 0.7071067812*I</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">K</span><span class="o">.&lt;</span><span class="n">zeta8</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">CyclotomicField</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="gp">sage: </span><span class="n">N</span><span class="p">(</span><span class="n">zeta8</span><span class="p">)</span>                             <span class="c"># absolute tolerance 1e-10</span>
+<span class="go">0.7071067812 + 0.7071067812*I</span>
+</pre></div>
 </div>
 <p>A relative tolerance on a root of a polynomial.  Notice that the
 root should normally print as <tt class="docutils literal"><span class="pre">1e+16</span></tt>, or something similar.
@@ -830,17 +837,19 @@ the output in a <em>computation</em>, so other valid text representations
 of the predicted value may be used.  However, they must fit the
 pattern defined by the regular expression <tt class="docutils literal"><span class="pre">float_regex</span></tt> in
 <tt class="xref py py-mod docutils literal"><span class="pre">sage.doctest.parsing</span></tt>.</p>
-<div class="highlight-python"><pre>sage: y = polygen(RDF, 'y')
-sage: p = (y - 10^16)*(y-10^(-13))*(y-2); p
-y^3 - 1e+16*y^2 + 2e+16*y - 2000.0
-sage: p.roots(multiplicities=False)[2]     # relative tol 1e-10
-10000000000000000</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">y</span> <span class="o">=</span> <span class="n">polygen</span><span class="p">(</span><span class="n">RDF</span><span class="p">,</span> <span class="s">&#39;y&#39;</span><span class="p">)</span>
+<span class="gp">sage: </span><span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="mi">10</span><span class="o">^</span><span class="mi">16</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="mi">10</span><span class="o">^</span><span class="p">(</span><span class="o">-</span><span class="mi">13</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span> <span class="n">p</span>
+<span class="go">y^3 - 1e+16*y^2 + 2e+16*y - 2000.0</span>
+<span class="gp">sage: </span><span class="n">p</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">multiplicities</span><span class="o">=</span><span class="bp">False</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>     <span class="c"># relative tol 1e-10</span>
+<span class="go">10000000000000000</span>
+</pre></div>
 </div>
 </li>
 <li><p class="first">If a line contains <tt class="docutils literal"><span class="pre">not</span> <span class="pre">implemented</span></tt> or <tt class="docutils literal"><span class="pre">not</span> <span class="pre">tested</span></tt>, it is
 never tested. It is good to include lines like this to make clear
 what we want Sage to eventually implement:</p>
-<div class="highlight-python"><pre>sage: factor(x*y - x*z)    # todo: not implemented</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">factor</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="o">*</span><span class="n">z</span><span class="p">)</span>    <span class="c"># todo: not implemented</span>
+</pre></div>
 </div>
 <p>It is also immediately clear to the user that the indicated example
 does not currently work.</p>
@@ -865,10 +874,12 @@ normal tests (because of <tt class="docutils literal"><span class="pre">--option
 as well as those marked as <tt class="docutils literal"><span class="pre">#</span> <span class="pre">optional</span> <span class="pre">-</span> <span class="pre">sloane_database</span></tt>.
 For example, the file
 <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/databases/sloane.py</span></tt> contains the lines</p>
-<div class="highlight-python"><pre>sage: sloane_sequence(60843)       # optional - internet</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">sloane_sequence</span><span class="p">(</span><span class="mi">60843</span><span class="p">)</span>       <span class="c"># optional - internet</span>
+</pre></div>
 </div>
 <p>and</p>
-<div class="highlight-python"><pre>sage: SloaneEncyclopedia[60843]    # optional - sloane_database</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">SloaneEncyclopedia</span><span class="p">[</span><span class="mi">60843</span><span class="p">]</span>    <span class="c"># optional - sloane_database</span>
+</pre></div>
 </div>
 <p>The first of these just needs internet access, while the second
 requires that the &#8220;sloane_database&#8221; package be installed.  Calling
@@ -914,20 +925,21 @@ direct further development on Sage.</p>
 either <tt class="docutils literal"><span class="pre">#</span> <span class="pre">32-bit</span></tt> or <tt class="docutils literal"><span class="pre">#</span> <span class="pre">64-bit</span></tt> and the testing framework will
 remove any lines that don&#8217;t match the current architecture.  For
 example:</p>
-<div class="highlight-python"><pre>sage: z = 32
-sage: z.powermodm_ui(2^32-1, 14)
-Traceback (most recent call last):                              # 32-bit
-...                                                             # 32-bit
-OverflowError: exp (=4294967295) must be &lt;= 4294967294          # 32-bit
-8              # 64-bit</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">z</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="gp">sage: </span><span class="n">z</span><span class="o">.</span><span class="n">powermodm_ui</span><span class="p">(</span><span class="mi">2</span><span class="o">^</span><span class="mi">32</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<span class="gp">... </span>                                                            <span class="c"># 32-bit</span>
+<span class="go">OverflowError: exp (=4294967295) must be &lt;= 4294967294          # 32-bit</span>
+<span class="go">8              # 64-bit</span>
+</pre></div>
 </div>
 </li>
 <li><p class="first">You may write tests that span multiple lines.  The best way to do so
 is to use the line continuation marker <tt class="docutils literal"><span class="pre">....:</span></tt>.</p>
-<div class="highlight-python"><pre>sage: for n in srange(1,10):
-....:     if n.is_prime():
-....:         print n,
-2 3 5 7</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">srange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
+<span class="go">....:     if n.is_prime():</span>
+<span class="go">....:         print n,</span>
+<span class="go">2 3 5 7</span>
+</pre></div>
 </div>
 <p>If you have a long line of code, you may want to consider adding a
 backslash to the end of the line, which tells the doctesting
@@ -935,10 +947,11 @@ framework to join that current line with the next.  This syntax is
 non-standard so may be removed in a future version of Sage, but in
 the mean time it can be useful for breaking up large integers across
 multiple lines:</p>
-<div class="highlight-python"><pre>sage: n = 123456789123456789123456789\
-....:     123456789123456789123456789
-sage: n.is_prime()
-False</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">n</span> <span class="o">=</span> <span class="mi">123456789123456789123456789</span>\
+<span class="go">....:     123456789123456789123456789</span>
+<span class="gp">sage: </span><span class="n">n</span><span class="o">.</span><span class="n">is_prime</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
 </div>
 </li>
 </ul>
@@ -1164,7 +1177,7 @@ regular basis.</p>
     
     <div class="footer">
         &copy; Copyright 2013, The Sage Development Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
     </div>
     <script type="text/javascript">
 /*global jQuery, window */
