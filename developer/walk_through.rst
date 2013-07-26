@@ -11,12 +11,18 @@ beginner to Sage development, this introductory guide is here to help
 you become familiar with the Sage development process.
 
 Sage comes with a set of developer scripts, which help you with common
-interactions with the bug tracker (see: :ref:`chapter-sage-trac`) and
-with handling revisions of your code.
+interactions with the bug tracker (see :ref:`chapter-sage-trac`) and
+with handling revisions of your code. The developer scripts use the
+git distributed revison control system under the hood which you'll
+have to install (see :ref:`chapter-git-setup`), but you do not need to
+know anything about it (see :ref:`chapter-manual-git` only if you want
+to).
 
 
-Example
--------
+.. section-walkthrough-add_
+
+Adding to the Sage Sources
+==========================
 
 Suppose you have written an algorithm for calculating the last twin prime, and
 want to add it to Sage. You would first open a ticket for that::
@@ -60,8 +66,11 @@ It is common to go through some iterations of ``sage -dev commit`` before you
 upload, and you will probably also have uploaded a few times before your
 changes are ready for review.
 
+
+.. section-walkthrough-review_
+
 Reviewing
----------
+=========
 
 Now suppose you want to review the existing work on an existing ticket, such as
 the one you created in the last section.  For definiteness, suppose you want to
@@ -90,8 +99,11 @@ This will update the ticket to now point to your branch, including your changes.
 is based on the original author's branch, so s/he can easily incorporate your changes into his/her
 own branch (see below).
 
+
+.. section-walkthrough-collaborate_
+
 Collaboration
--------------
+=============
 
 It is very easy to collaborate by just going through the above steps any number of times::
 
@@ -132,7 +144,8 @@ all seems okay, and if so, upload the changes::
 
     sage -dev upload   # works now
 
-It is possible that the changes cannot be automatically merged. In that case, developer 2 will have to do some manual fixup after
+It is possible that the changes cannot be automatically merged. In
+that case, developer 2 will have to do some manual fixup after
 downloading and before uploading::
 
     <EDIT EDIT FOR FIXUP>
