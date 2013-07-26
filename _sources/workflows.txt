@@ -19,8 +19,12 @@ third person.
 
 
 
+
+
 Simple Workflow
 ===============
+
+.. image:: static/flowchart.svg
 
 1. Alice creates a :ref:`new local branch <section-git-branch>` and
    :ref:`commits <section-git-commit>` changes to the Sage sources.

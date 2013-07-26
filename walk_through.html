@@ -63,17 +63,123 @@
             
   <div class="section" id="sage-development-process">
 <span id="chapter-walk-through"></span><h1>Sage Development Process<a class="headerlink" href="#sage-development-process" title="Permalink to this headline">¶</a></h1>
-<p>This section will present a concise overview of the Sage development
-process. In it, we will see how to obtain the Sage source code
-repository, make changes, and communicate these changes back to the
-Sage project. If you are a beginner to Sage development, this
-introductory guide is here to help you become familiar with the Sage
-development process.</p>
-<div class="admonition-todo admonition " id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">Explain the devlopment process using the Sage dev scripts.</p>
+<p>This section is a concise overview of the Sage development process. In
+it, we will see how to make changes to the Sage source code and
+communicate these changes back to the Sage project. If you are a
+beginner to Sage development, this introductory guide is here to help
+you become familiar with the Sage development process.</p>
+<p>Sage comes with a set of developer scripts, which help you with common
+interactions with the bug tracker (see <a class="reference internal" href="trac.html#chapter-sage-trac"><em>The Sage Trac Server</em></a>) and
+with handling revisions of your code. The developer scripts use the
+git distributed revison control system under the hood which you&#8217;ll
+have to install (see <a class="reference internal" href="git_setup.html#chapter-git-setup"><em>Setting Up Git</em></a>), but you do not need to
+know anything about it (see <a class="reference internal" href="manual_git.html#chapter-manual-git"><em>Git the Hard Way</em></a> only if you want
+to).</p>
+<div class="section" id="adding-to-the-sage-sources">
+<h2>Adding to the Sage Sources<a class="headerlink" href="#adding-to-the-sage-sources" title="Permalink to this headline">¶</a></h2>
+<p>Suppose you have written an algorithm for calculating the last twin prime, and
+want to add it to Sage. You would first open a ticket for that:</p>
+<div class="highlight-python"><pre>sage -dev create-ticket</pre>
 </div>
-<img src="_images/flowchart.svg" /></div>
+<p>This will give you an editor in which you can give a summary and a description
+of what you want to do. After you close the editor, a new ticket will be opened
+on the trac server. From that point on, everyone can see what you intend to do,
+which is very useful for avoiding double work.</p>
+<p>If you are editing and you realize you want to cancel the creation of a ticket,
+then you can just save an empty file. This will abort the operation.</p>
+<p>After saving your ticket on the trac server, a branch will be created for you
+to contain your revisions to Sage. It is called <tt class="docutils literal"><span class="pre">ticket/&lt;TICKETNUM&gt;</span></tt>.</p>
+<p>At this point, you will start editing the source code, trying it out, running
+doctests, et cetera. At some point, you may wish to share your changes with the
+rest of us: maybe it is ready for review, or maybe you are collaborating with
+someone and want to share your changes &#8220;up until now&#8221;.</p>
+<p>The first step is to record your changes into your branch:</p>
+<div class="highlight-python"><pre>sage -dev commit</pre>
+</div>
+<p>You will be asked to write a message describing your changes. It is common to
+write a one line summary, then a blank line, and then a 1 - 2 paragraph
+explanation of your changes. (Of course, if your changes are minor, then just
+the one-line summary can be enough.)</p>
+<p>The next step is to upload your changes to Trac:</p>
+<div class="highlight-python"><pre>sage -dev upload</pre>
+</div>
+<p>On track, you branch will be called <tt class="docutils literal"><span class="pre">u/&lt;USERNAME&gt;/ticket/&lt;TICKETNUM&gt;</span></tt>.
+Additionally, this will set the Branch field on the ticket to point to this
+branch. This way, other people know where to find your work.</p>
+<p>It is common to go through some iterations of <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-dev</span> <span class="pre">commit</span></tt> before you
+upload, and you will probably also have uploaded a few times before your
+changes are ready for review.</p>
+</div>
+<div class="section" id="reviewing">
+<h2>Reviewing<a class="headerlink" href="#reviewing" title="Permalink to this headline">¶</a></h2>
+<p>Now suppose you want to review the existing work on an existing ticket, such as
+the one you created in the last section.  For definiteness, suppose you want to
+review #12270. You would do that as follows:</p>
+<div class="highlight-python"><pre>sage -dev switch-ticket 12270</pre>
+</div>
+<p>This command will download the branch on Trac in case you do not have any local
+work on ticket 12270. (If you do, you may have to merge your changes; see
+below). You can now test the ticket; you&#8217;ll probably want to call <tt class="docutils literal"><span class="pre">make</span></tt> or
+<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-b</span></tt>.</p>
+<p>Your will want to add a comment to the ticket as part of your review:</p>
+<div class="highlight-python"><pre>sage -dev add-comment</pre>
+</div>
+<p>This will open a text editor in which you can type, and upload the result to Trac.</p>
+<p>It is also possible that you make some changes to the code as part of your review. After
+you&#8217;ve done that, you can upload your changes back to trac:</p>
+<div class="highlight-python"><pre>sage -dev commit
+sage -dev upload</pre>
+</div>
+<p>This will update the ticket to now point to your branch, including your changes. Your branch
+is based on the original author&#8217;s branch, so s/he can easily incorporate your changes into his/her
+own branch (see below).</p>
+</div>
+<div class="section" id="collaboration">
+<h2>Collaboration<a class="headerlink" href="#collaboration" title="Permalink to this headline">¶</a></h2>
+<p>It is very easy to collaborate by just going through the above steps any number of times:</p>
+<div class="highlight-python"><pre># developer 1
+&lt;EDIT EDIT&gt;
+sage -dev commit
+sage -dev upload
+# developer 2
+sage -dev download
+&lt;EDIT EDIT&gt;
+sage -dev commit
+sage -dev upload
+# developer 1
+sage -dev download
+&lt;EDIT EDIT&gt;
+sage -dev commit
+sage -dev upload
+(etc)</pre>
+</div>
+<p>The obvious problem is when you both work on the same ticket simultaneously:</p>
+<div class="highlight-python"><pre># developer 1
+&lt;EDIT EDIT&gt;
+sage -dev commit
+sage -dev upload
+# developer 2
+&lt;EDIT EDIT&gt;
+sage -dev commit
+sage -dev upload
+Changes not compatible with remote branch u/&lt;developer1&gt;/ticket/12270; consider downloading first. Are you sure you want to continue?</pre>
+</div>
+<p>Developer 2 should probably select <tt class="docutils literal"><span class="pre">No</span></tt>, and do as suggested:</p>
+<div class="highlight-python"><pre>sage -dev download</pre>
+</div>
+<p>This will try to merge the changes developer 1 made into the ones that developer 2 made. The latter should check whether
+all seems okay, and if so, upload the changes:</p>
+<div class="highlight-python"><pre>sage -dev upload   # works now</pre>
+</div>
+<p>It is possible that the changes cannot be automatically merged. In
+that case, developer 2 will have to do some manual fixup after
+downloading and before uploading:</p>
+<div class="highlight-python"><pre>&lt;EDIT EDIT FOR FIXUP&gt;
+sage -dev commit
+sage -dev upload</pre>
+</div>
+</div>
+</div>
 
 
           </div>
@@ -81,6 +187,16 @@ development process.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Sage Development Process</a><ul>
+<li><a class="reference internal" href="#adding-to-the-sage-sources">Adding to the Sage Sources</a></li>
+<li><a class="reference internal" href="#reviewing">Reviewing</a></li>
+<li><a class="reference internal" href="#collaboration">Collaboration</a></li>
+</ul>
+</li>
+</ul>
+
             <h4>Previous topic</h4>
             <p class="topless"><a href="index.html"
                                   title="previous chapter">Welcome to the Sage Developer&#8217;s Guide!</a></p>
@@ -138,7 +254,7 @@ development process.</p>
     
     <div class="footer">
         &copy; Copyright 2013, The Sage Development Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
     <script type="text/javascript">
 /*global jQuery, window */
