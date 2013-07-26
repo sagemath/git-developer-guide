@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, shutil, subprocess
+import os, shutil, subprocess, sys
 
 HTML_DIR = 'html'
 GH_PAGES_DIR = 'gh-pages'
@@ -9,7 +9,7 @@ if not os.path.isdir(GH_PAGES_DIR):
     print 'Create a submodule in the gh-pages directory that contains the gh-pages branch'
     print 'For example:'
     print '    git submodule add -b gh-pages git@github.com:sagemath/git-developer-guide.git gh-pages'
-    os.exit(1)
+    sys.exit(1)
 
 for src in os.listdir(HTML_DIR):
     src_file = os.path.join(HTML_DIR, src)
