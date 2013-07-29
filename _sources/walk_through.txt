@@ -19,7 +19,7 @@ know anything about it (see :ref:`chapter-manual-git` only if you want
 to).
 
 
-.. section-walkthrough-add_
+.. _section-walkthrough-add:
 
 Adding to the Sage Sources
 ==========================
@@ -67,7 +67,7 @@ upload, and you will probably also have uploaded a few times before your
 changes are ready for review.
 
 
-.. section-walkthrough-review_
+.. _section-walkthrough-review:
 
 Reviewing
 =========
@@ -100,7 +100,7 @@ is based on the original author's branch, so s/he can easily incorporate your ch
 own branch (see below).
 
 
-.. section-walkthrough-collaborate_
+.. _section-walkthrough-collaborate:
 
 Collaboration
 =============
