@@ -58,7 +58,7 @@ The next step is to upload your changes to Trac::
 
     sage -dev upload
 
-On track, you branch will be called ``u/<USERNAME>/ticket/<TICKETNUM>``.
+On trac, your branch will be called ``u/<USERNAME>/ticket/<TICKETNUM>``.
 Additionally, this will set the Branch field on the ticket to point to this
 branch. This way, other people know where to find your work.
 

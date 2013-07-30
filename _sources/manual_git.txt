@@ -114,7 +114,7 @@ the branch that you created.
 The Trac Server
 ===============
 
-The Sage trac server also hold a copy of the Sage repository, it is
+The Sage trac server also holds a copy of the Sage repository, it is
 served via ssh but at the non-standard port 2222. To add it as a
 remote repository to your local git repository, use the command::
 
@@ -219,7 +219,7 @@ The ``Branch`` field is color coded: red means there is an issue,
 green means it will merge cleanly into ``master``. If it is red, the
 tooltip will tell you what is wrong.  If it is green, then it will
 link to a diff of the changes against ``u/ohanar/build_system``. (This
-is temporary until [#14480](http://trac.sagemath.org/14480) is merged
+is temporary until `#14480 <http://trac.sagemath.org/14480>`_ is merged
 into the ``master`` branch.)
 
 The above git commands create a new remote branch. If you make any

@@ -152,7 +152,7 @@ the branch that you created.</p>
 </div>
 <div class="section" id="the-trac-server">
 <span id="section-git-trac"></span><h2>The Trac Server<a class="headerlink" href="#the-trac-server" title="Permalink to this headline">¶</a></h2>
-<p>The Sage trac server also hold a copy of the Sage repository, it is
+<p>The Sage trac server also holds a copy of the Sage repository, it is
 served via ssh but at the non-standard port 2222. To add it as a
 remote repository to your local git repository, use the command:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git remote add trac ssh://git@trac.sagemath.org:2222/sage.git -t master
@@ -237,7 +237,7 @@ field of the ticket description.</p>
 green means it will merge cleanly into <tt class="docutils literal"><span class="pre">master</span></tt>. If it is red, the
 tooltip will tell you what is wrong.  If it is green, then it will
 link to a diff of the changes against <tt class="docutils literal"><span class="pre">u/ohanar/build_system</span></tt>. (This
-is temporary until [#14480](<a class="reference external" href="http://trac.sagemath.org/14480">http://trac.sagemath.org/14480</a>) is merged
+is temporary until <a class="reference external" href="http://trac.sagemath.org/14480">#14480</a> is merged
 into the <tt class="docutils literal"><span class="pre">master</span></tt> branch.)</p>
 <p>The above git commands create a new remote branch. If you make any
 further local edits, then you need a slight variation of the command
