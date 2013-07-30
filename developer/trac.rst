@@ -425,8 +425,8 @@ code. Now ask yourself questions such as the following:
 
 - Do all doctests pass without errors? It is difficult to predict
   which components of Sage will be affected by a given patch and you
-  should run tests on the whole library--including those flagged as
-  ``#long``--before giving a positive review. You can test the Sage
+  should run tests on the whole library---including those flagged as
+  ``#long``---before giving a positive review. You can test the Sage
   library with ``make ptestlong``. See :ref:`chapter-doctesting` for
   more information.
 

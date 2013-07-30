@@ -6,7 +6,7 @@ Development workflow
 
 You already have your own forked copy of the `Sage Notebook`_ repository, by
 following :ref:`forking`. You have :ref:`set-up-fork`. You have configured
-git by following :ref:`configure-git`.  Now you are ready for some real work.
+git by following :ref:`section-git-configuration`.  Now you are ready for some real work.
 
 Workflow summary
 ================
