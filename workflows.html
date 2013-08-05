@@ -111,6 +111,40 @@ both contributions are of comparable size, then the &#8220;Author:&#8221; and
 </div>
 <div class="section" id="public-repository">
 <h2>Public Repository<a class="headerlink" href="#public-repository" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the user branches (<tt class="docutils literal"><span class="pre">u/&lt;user&gt;/&lt;description&gt;</span></tt> on the
+Sage trac server with <tt class="docutils literal"><span class="pre">&lt;user&gt;</span></tt> replaced by your trac user name) that
+only you can write to, you can also create a public branch that
+everybody with a trac account can write to. These start with
+<tt class="docutils literal"><span class="pre">public/</span></tt> plus some description. To avoid branch name collisions it
+is a good idea to include your trac user name in the branch name, so
+it is recommended that you use <tt class="docutils literal"><span class="pre">public/&lt;user&gt;/&lt;description&gt;</span></tt> as the
+branch name. Now all ticket authors push to the same remote branch.</p>
+<ol class="arabic">
+<li><p class="first">Alice creates a <a class="reference internal" href="manual_git.html#section-git-branch"><em>new local branch</em></a> and
+<a class="reference internal" href="manual_git.html#section-git-commit"><em>commits</em></a> some changes to the Sage library.</p>
+</li>
+<li><p class="first">Alice <a class="reference internal" href="manual_git.html#section-git-push"><em>uploads her branch</em></a> as a public
+branch to the trac server and fills in the &#8220;Branch:&#8221; field with her
+remote branch name <tt class="docutils literal"><span class="pre">public/alice/description</span></tt>.</p>
+</li>
+<li><p class="first">Bob <a class="reference internal" href="manual_git.html#section-git-checkout"><em>downloads Alice&#8217;s branch</em></a> and
+makes changes to his local copy.</p>
+</li>
+<li><p class="first">Bob <a class="reference internal" href="manual_git.html#section-git-commit"><em>commits</em></a> changes to his local branch
+of the Sage sources.</p>
+</li>
+<li><p class="first">Bob uploads his changes to the joint remote repository:</p>
+<div class="highlight-python"><pre>[bob@localhost sage]$ git push local_branch:public/alice/description</pre>
+</div>
+</li>
+<li><p class="first">Alice <a class="reference internal" href="manual_git.html#section-git-pull"><em>retrieves Bob&#8217;s updates</em></a>, makes
+more changes, commits, and pushes them to trac.</p>
+</li>
+<li><p class="first">Charly reviews the final version, and then sets the ticket to
+positive review. The &#8220;Author:&#8221; field is set to Alice&#8217;s and Bob&#8217;s
+full name, and the &#8220;Reviewer:&#8221; field is set to Charly&#8217;s full name.</p>
+</li>
+</ol>
 </div>
 <div class="section" id="github">
 <h2>GitHub<a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h2>

@@ -71,8 +71,38 @@ instead, we would have
 Public Repository
 =================
 
+In addition to the user branches (``u/<user>/<description>`` on the
+Sage trac server with ``<user>`` replaced by your trac user name) that
+only you can write to, you can also create a public branch that
+everybody with a trac account can write to. These start with
+``public/`` plus some description. To avoid branch name collisions it
+is a good idea to include your trac user name in the branch name, so
+it is recommended that you use ``public/<user>/<description>`` as the
+branch name. Now all ticket authors push to the same remote branch.
 
+1. Alice creates a :ref:`new local branch <section-git-branch>` and
+   :ref:`commits <section-git-commit>` some changes to the Sage library.
 
+2. Alice :ref:`uploads her branch <section-git-push>` as a public
+   branch to the trac server and fills in the "Branch:" field with her
+   remote branch name ``public/alice/description``.
+
+3. Bob :ref:`downloads Alice's branch <section-git-checkout>` and
+   makes changes to his local copy.
+
+4. Bob :ref:`commits <section-git-commit>` changes to his local branch
+   of the Sage sources.
+
+5. Bob uploads his changes to the joint remote repository::
+
+       [bob@localhost sage]$ git push local_branch:public/alice/description
+
+6. Alice :ref:`retrieves Bob's updates <section-git-pull>`, makes
+   more changes, commits, and pushes them to trac.
+
+7. Charly reviews the final version, and then sets the ticket to
+   positive review. The "Author:" field is set to Alice's and Bob's
+   full name, and the "Reviewer:" field is set to Charly's full name.
 
 
 
