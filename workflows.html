@@ -114,6 +114,69 @@ both contributions are of comparable size, then the &#8220;Author:&#8221; and
 </div>
 <div class="section" id="github">
 <h2>GitHub<a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h2>
+<p>Yet another possible workflow is to use GitHub (or any other
+third-party git repository) to collaboratively edit your new branch,
+and only push the result to trac once you and your ticket co-authors
+are satisfied.</p>
+<div class="section" id="fork">
+<h3>Fork<a class="headerlink" href="#fork" title="Permalink to this headline">¶</a></h3>
+<p>The first step is to create your own fork of the Sage repository;
+simply click &#8220;Fork&#8221; on the <a class="reference external" href="https://github.com/sagemath/sage">Sage GitHub repository</a>. Then add it as one of the
+remotes to your local Sage repository. In the following, we will use
+the label &#8220;github&#8221; for this remote repository, though you are of
+course free to use a different one:</p>
+<div class="highlight-python"><pre>$ git remote add github git@github.com:github_user_name/sage.git
+$ git remote -v
+github      git@github.com:github_user_name/sage.git (fetch)
+github      git@github.com:github_user_name/sage.git (push)
+trac        ssh://git@trac.sagemath.org:2222/sage.git (fetch)
+trac        ssh://git@trac.sagemath.org:2222/sage.git (push)
+$ git fetch github
+remote: Counting objects: 107, done.
+remote: Compressing objects: 100% (63/63), done.
+remote: Total 74 (delta 41), reused 40 (delta 10)
+Unpacking objects: 100% (74/74), done.
+From github.com:github_user_name/sage
+* [new branch]      master     -&gt; github/master</pre>
+</div>
+</div>
+<div class="section" id="develop">
+<h3>Develop<a class="headerlink" href="#develop" title="Permalink to this headline">¶</a></h3>
+<p>You now use the github repository to develop your ticket branch; First
+create a new branch:</p>
+<div class="highlight-python"><pre>$ git checkout -b my_branch --track github/master
+Branch my_branch set up to track remote branch master from github.
+Switched to a new branch 'my_branch'
+$ git push github my_branch
+Total 0 (delta 0), reused 0 (delta 0)
+To git@github.com:github_user_name/sage.git
+ * [new branch]      my_branch -&gt; my_branch</pre>
+</div>
+<p>Because of the <tt class="docutils literal"><span class="pre">--track</span></tt> option, the <tt class="docutils literal"><span class="pre">git</span> <span class="pre">pull</span></tt> command will
+default to downloading your coauthor &#8216;s changes from your github
+branch. Alternatively, you can create a new branch on your fork&#8217;s
+GitHub webpage.</p>
+<p>At this point you can use the GitHub workflow that you prefer. In
+particular, your choices are</p>
+<ul class="simple">
+<li>Give your coauthors write permissions to your github fork. Every
+author edits/commits to their own local copy and they jointly push
+to your github branch.</li>
+<li>Have every coauthor create their own fork and send you (the lead
+author) pull requests to your GitHub fork.</li>
+<li>Use the GitHub web page editing &amp; commiting feature, that way you
+can make changes without ever using your local machine.</li>
+</ul>
+</div>
+<div class="section" id="push-to-trac">
+<h3>Push to Trac<a class="headerlink" href="#push-to-trac" title="Permalink to this headline">¶</a></h3>
+<p>When you are satisfied with your branch, you push it to the Sage trac
+server:</p>
+<div class="highlight-python"><pre>$ git push trac u/user/description</pre>
+</div>
+<p>and then fill in the &#8220;Branch&#8221; field in the trac ticket description as
+explained in <a class="reference internal" href="manual_git.html#section-git-push"><em>Pushing Your Changes to a Ticket</em></a>.</p>
+</div>
 </div>
 </div>
 
@@ -128,7 +191,12 @@ both contributions are of comparable size, then the &#8220;Author:&#8221; and
 <li><a class="reference internal" href="#">Distributed Development</a><ul>
 <li><a class="reference internal" href="#simple-workflow">Simple Workflow</a></li>
 <li><a class="reference internal" href="#public-repository">Public Repository</a></li>
-<li><a class="reference internal" href="#github">GitHub</a></li>
+<li><a class="reference internal" href="#github">GitHub</a><ul>
+<li><a class="reference internal" href="#fork">Fork</a></li>
+<li><a class="reference internal" href="#develop">Develop</a></li>
+<li><a class="reference internal" href="#push-to-trac">Push to Trac</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

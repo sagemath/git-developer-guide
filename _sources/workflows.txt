@@ -80,3 +80,78 @@ Public Repository
 GitHub
 ======
 
+Yet another possible workflow is to use GitHub (or any other
+third-party git repository) to collaboratively edit your new branch,
+and only push the result to trac once you and your ticket co-authors
+are satisfied.
+
+
+Fork
+----
+
+The first step is to create your own fork of the Sage repository;
+simply click "Fork" on the `Sage GitHub repository
+<https://github.com/sagemath/sage>`_. Then add it as one of the
+remotes to your local Sage repository. In the following, we will use
+the label "github" for this remote repository, though you are of
+course free to use a different one::
+
+    $ git remote add github git@github.com:github_user_name/sage.git
+    $ git remote -v
+    github	git@github.com:github_user_name/sage.git (fetch)
+    github	git@github.com:github_user_name/sage.git (push)
+    trac	ssh://git@trac.sagemath.org:2222/sage.git (fetch)
+    trac	ssh://git@trac.sagemath.org:2222/sage.git (push)
+    $ git fetch github
+    remote: Counting objects: 107, done.
+    remote: Compressing objects: 100% (63/63), done.
+    remote: Total 74 (delta 41), reused 40 (delta 10)
+    Unpacking objects: 100% (74/74), done.
+    From github.com:github_user_name/sage
+    * [new branch]      master     -> github/master
+    
+
+Develop
+-------
+
+You now use the github repository to develop your ticket branch; First
+create a new branch::
+
+    $ git checkout -b my_branch --track github/master
+    Branch my_branch set up to track remote branch master from github.
+    Switched to a new branch 'my_branch'
+    $ git push github my_branch
+    Total 0 (delta 0), reused 0 (delta 0)
+    To git@github.com:github_user_name/sage.git
+     * [new branch]      my_branch -> my_branch
+
+Because of the ``--track`` option, the ``git pull`` command will
+default to downloading your coauthor 's changes from your github
+branch. Alternatively, you can create a new branch on your fork's
+GitHub webpage.
+
+At this point you can use the GitHub workflow that you prefer. In
+particular, your choices are
+
+* Give your coauthors write permissions to your github fork. Every
+  author edits/commits to their own local copy and they jointly push
+  to your github branch.
+
+* Have every coauthor create their own fork and send you (the lead
+  author) pull requests to your GitHub fork.
+
+* Use the GitHub web page editing & commiting feature, that way you
+  can make changes without ever using your local machine.
+
+
+Push to Trac
+------------
+
+When you are satisfied with your branch, you push it to the Sage trac
+server::
+
+    $ git push trac u/user/description
+
+and then fill in the "Branch" field in the trac ticket description as
+explained in :ref:`section-git-push`.
+
