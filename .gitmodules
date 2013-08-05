@@ -4,5 +4,5 @@
 	branch = gh-pages
 [submodule "gh-pages"]
 	path = gh-pages
-	url = git@github.com:vbraun/sage-developer-git.git
+	url = git@github.com:sagemath/git-developer-guide.git
 	branch = gh-pages
