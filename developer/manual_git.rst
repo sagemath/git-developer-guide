@@ -118,7 +118,7 @@ The Sage trac server also holds a copy of the Sage repository, it is
 served via ssh but at the non-standard port 2222. To add it as a
 remote repository to your local git repository, use the command::
 
-    [user@localhost sage]$ git remote add trac ssh://git@trac.sagemath.org:2222/sage.git -t master
+    [user@localhost sage]$ git remote add trac ssh://git@trac.sagemath.org:2222/sage.git
     [user@localhost sage]$ git remote -v
     origin	git://github.com/sagemath/sage.git (fetch)
     origin	git://github.com/sagemath/sage.git (push)
