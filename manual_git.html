@@ -155,7 +155,7 @@ the branch that you created.</p>
 <p>The Sage trac server also holds a copy of the Sage repository, it is
 served via ssh but at the non-standard port 2222. To add it as a
 remote repository to your local git repository, use the command:</p>
-<div class="highlight-python"><pre>[user@localhost sage]$ git remote add trac ssh://git@trac.sagemath.org:2222/sage.git
+<div class="highlight-python"><pre>[user@localhost sage]$ git remote add trac ssh://git@trac.sagemath.org:2222/sage.git -t master
 [user@localhost sage]$ git remote -v
 origin      git://github.com/sagemath/sage.git (fetch)
 origin      git://github.com/sagemath/sage.git (push)
@@ -168,6 +168,16 @@ of them as bookmarks. You can then use <tt class="docutils literal"><span class=
 <tt class="docutils literal"><span class="pre">git</span> <span class="pre">push</span></tt> to upload your local changes using:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git &lt;push|pull&gt; trac [ARGS]</pre>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the command above we set up the remote to only track the
+<tt class="docutils literal"><span class="pre">master</span></tt> branch on the trac server (the <tt class="docutils literal"><span class="pre">-t</span> <span class="pre">master</span></tt>
+option). This avoids clutter by not automatically downloading all
+branches ever created. But it also means that you will not fetch
+everything that is on trac by default, and you need to explicitly
+tell git which branch you want to get from trac. See the
+<a class="reference internal" href="#section-git-checkout"><em>Checking Out Tickets</em></a> section for examples.</p>
+</div>
 <div class="section" id="checking-out-tickets">
 <span id="section-git-checkout"></span><h3>Checking Out Tickets<a class="headerlink" href="#checking-out-tickets" title="Permalink to this headline">¶</a></h3>
 <p>Trac tickets that are finished or in the process of being worked on
@@ -179,31 +189,29 @@ description (and can include further slashes).</p>
 <p>If you want to work with the changes in that remote branch, you must
 make a local copy. In particular, git has no concept of directly
 working with the remote branch, the remotes are only bookmarks for
-things that you can get from/to the remote server. Your local branch
-can have a different name, for example:</p>
-<div class="highlight-python"><pre>[user@localhost sage]$ git checkout -b my_branch trac/u/user/description
-Branch my_branch set up to track remote branch u/user/description from trac by rebasing.
+things that you can get from/to the remote server. Hence, the first
+thing you should do is to get everything from the trac server&#8217;s branch
+into your local repository. This is achieved by:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git fetch trac u/user/description
+remote: Counting objects: 62, done.
+remote: Compressing objects: 100% (48/48), done.
+remote: Total 48 (delta 42), reused 0 (delta 0)
+Unpacking objects: 100% (48/48), done.
+From ssh://trac.sagemath.org:2222/sage
+* [new branch]      u/user/description -&gt; FETCH_HEAD</pre>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">u/user/description</span></tt> branch is now temporarily (until you fetch
+something else) stored in your local git database under the alias
+<tt class="docutils literal"><span class="pre">FETCH_HEAD</span></tt>. In the second step, we make it available as a new
+local branch and switch to it. Your local branch can have a different
+name, for example:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git checkout -b my_branch FETCH_HEAD
 Switched to a new branch 'my_branch'</pre>
 </div>
 <p>creates a new branch in your local git repository named <tt class="docutils literal"><span class="pre">my_branch</span></tt>
-and switches to it. It is based on the remote <tt class="docutils literal"><span class="pre">u/user/description</span></tt>,
-so you start out with the same files as in that ticket. You can then
-edit files and commit changes to your local branch.</p>
-<p>Your local copy of the repository might not yet know about the remote
-branch, as somebody else might have added it only recently. In that
-case, git will complain that it can&#8217;t find a matching commit. The
-solution is to fetch updates from the remotes first:</p>
-<div class="highlight-python"><pre>[user@localhost sage]$ git checkout -b my_branch trac/u/user/description
-fatal: Cannot update paths and switch to branch 'my_branch' at the same time.
-Did you intend to checkout 'trac/u/user/description' which can not be resolved as commit?
-[user@localhost sage]$ git fetch trac u/user/description
-From ssh://trac/sage
-* [new branch]      u/user/description -&gt; FETCH_HEAD
-[user@localhost sage]$ git checkout -b my_branch FETCH_HEAD</pre>
-</div>
-<p>Note that the <tt class="docutils literal"><span class="pre">u/user/description</span></tt> branch is temporarily (until you
-fetch something else) available under the alias <tt class="docutils literal"><span class="pre">FETCH_HEAD</span></tt> so you
-do not have to type it twice.</p>
+and modifies your local Sage filesystem tree to the state of the files
+in that ticket. You can now edit files and commit changes to your
+local branch.</p>
 </div>
 <div class="section" id="pushing-your-changes-to-a-ticket">
 <span id="section-git-push"></span><h3>Pushing Your Changes to a Ticket<a class="headerlink" href="#pushing-your-changes-to-a-ticket" title="Permalink to this headline">¶</a></h3>
@@ -259,10 +267,17 @@ your suggestions into his branch, and you want to get the added
 changesets to complete your review. Assuming that you originally got
 your local branch as in <a class="reference internal" href="#section-git-checkout"><em>Checking Out Tickets</em></a>, you can just
 issue:</p>
-<div class="highlight-python"><pre>[user@localhost sage]$ git pull</pre>
+<div class="highlight-python"><pre>[user@localhost sage]$ git pull -r trac u/user/description
+From ssh://trac.sagemath.org:2222/sage
+ * branch            u/user/description -&gt; FETCH_HEAD
+First, rewinding head to replay your work on top of it...
+Fast-forwarded my_branch to 19e832a93094abbf7486b51335e6b0f7dc91478c.</pre>
 </div>
 <p>This will download the changes from the originally-used remote branch
-and merge them with your local branch.</p>
+and rebase (the <tt class="docutils literal"><span class="pre">-r</span></tt> command line option) your local branch onto
+them. Rebasing is appropriate if you haven&#8217;t published any changes to
+the ticket yourself, see the <a class="reference internal" href="#section-git-merge"><em>Merging and Rebasing</em></a> section if that
+is not the case.</p>
 </div>
 </div>
 <div class="section" id="merging-and-rebasing">
