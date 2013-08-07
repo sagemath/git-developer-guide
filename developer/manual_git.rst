@@ -118,7 +118,7 @@ The Sage trac server also holds a copy of the Sage repository, it is
 served via ssh but at the non-standard port 2222. To add it as a
 remote repository to your local git repository, use the command::
 
-    [user@localhost sage]$ git remote add trac ssh://git@trac.sagemath.org:2222/sage.git
+    [user@localhost sage]$ git remote add trac ssh://git@trac.sagemath.org:2222/sage.git -t master
     [user@localhost sage]$ git remote -v
     origin	git://github.com/sagemath/sage.git (fetch)
     origin	git://github.com/sagemath/sage.git (push)
@@ -132,6 +132,15 @@ of them as bookmarks. You can then use ``git pull`` to get changes and
 
     [user@localhost sage]$ git <push|pull> trac [ARGS]
 
+.. note::
+   
+    In the command above we set up the remote to only track the
+    ``master`` branch on the trac server (the ``-t master``
+    option). This avoids clutter by not automatically downloading all
+    branches ever created. But it also means that you will not fetch
+    everything that is on trac by default, and you need to explicitly
+    tell git which branch you want to get from trac. See the
+    :ref:`section-git-checkout` section for examples.
 
 
 .. _section-git-checkout:
@@ -149,35 +158,31 @@ description (and can include further slashes).
 If you want to work with the changes in that remote branch, you must
 make a local copy. In particular, git has no concept of directly
 working with the remote branch, the remotes are only bookmarks for
-things that you can get from/to the remote server. Your local branch
-can have a different name, for example::
+things that you can get from/to the remote server. Hence, the first
+thing you should do is to get everything from the trac server's branch
+into your local repository. This is achieved by::
 
-    [user@localhost sage]$ git checkout -b my_branch trac/u/user/description
-    Branch my_branch set up to track remote branch u/user/description from trac by rebasing.
+    [user@localhost sage]$ git fetch trac u/user/description
+    remote: Counting objects: 62, done.
+    remote: Compressing objects: 100% (48/48), done.
+    remote: Total 48 (delta 42), reused 0 (delta 0)
+    Unpacking objects: 100% (48/48), done.
+    From ssh://trac.sagemath.org:2222/sage
+    * [new branch]      u/user/description -> FETCH_HEAD
+
+The ``u/user/description`` branch is now temporarily (until you fetch
+something else) stored in your local git database under the alias
+``FETCH_HEAD``. In the second step, we make it available as a new
+local branch and switch to it. Your local branch can have a different
+name, for example::
+
+    [user@localhost sage]$ git checkout -b my_branch FETCH_HEAD
     Switched to a new branch 'my_branch'
 
 creates a new branch in your local git repository named ``my_branch``
-and switches to it. It is based on the remote ``u/user/description``,
-so you start out with the same files as in that ticket. You can then
-edit files and commit changes to your local branch.
-
-Your local copy of the repository might not yet know about the remote
-branch, as somebody else might have added it only recently. In that
-case, git will complain that it can't find a matching commit. The
-solution is to fetch updates from the remotes first::
-
-    [user@localhost sage]$ git checkout -b my_branch trac/u/user/description
-    fatal: Cannot update paths and switch to branch 'my_branch' at the same time.
-    Did you intend to checkout 'trac/u/user/description' which can not be resolved as commit?
-    [user@localhost sage]$ git fetch trac u/user/description
-    From ssh://trac/sage
-    * [new branch]      u/user/description -> FETCH_HEAD
-    [user@localhost sage]$ git checkout -b my_branch FETCH_HEAD
-
-Note that the ``u/user/description`` branch is temporarily (until you
-fetch something else) available under the alias ``FETCH_HEAD`` so you
-do not have to type it twice.
-
+and modifies your local Sage filesystem tree to the state of the files
+in that ticket. You can now edit files and commit changes to your
+local branch.
 
 
 .. _section-git-push:
@@ -247,12 +252,17 @@ changesets to complete your review. Assuming that you originally got
 your local branch as in :ref:`section-git-checkout`, you can just
 issue::
 
-    [user@localhost sage]$ git pull
+    [user@localhost sage]$ git pull -r trac u/user/description
+    From ssh://trac.sagemath.org:2222/sage
+     * branch            u/user/description -> FETCH_HEAD
+    First, rewinding head to replay your work on top of it...
+    Fast-forwarded my_branch to 19e832a93094abbf7486b51335e6b0f7dc91478c.
 
 This will download the changes from the originally-used remote branch
-and merge them with your local branch.
-
-
+and rebase (the ``-r`` command line option) your local branch onto
+them. Rebasing is appropriate if you haven't published any changes to
+the ticket yourself, see the :ref:`section-git-merge` section if that
+is not the case.
 
 
 .. _section-git-merge:
