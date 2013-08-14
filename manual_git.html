@@ -180,6 +180,12 @@ tell git which branch you want to get from trac. See the
 </div>
 <div class="section" id="checking-out-tickets">
 <span id="section-git-checkout"></span><h3>Checking Out Tickets<a class="headerlink" href="#checking-out-tickets" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Since we set up git access via <tt class="docutils literal"><span class="pre">ssh://</span></tt>, you need to tell the
+trac server your ssh public key in order to download branches. See
+<a class="reference internal" href="trac.html#section-trac-ssh-key"><em>Linking your Public Key to your Trac Account</em></a> for details.</p>
+</div>
 <p>Trac tickets that are finished or in the process of being worked on
 can have a git branch attached to them. This is the &#8220;Branch:&#8221; field in
 the ticket description. The branch name is generally of the form
@@ -215,15 +221,39 @@ local branch.</p>
 </div>
 <div class="section" id="pushing-your-changes-to-a-ticket">
 <span id="section-git-push"></span><h3>Pushing Your Changes to a Ticket<a class="headerlink" href="#pushing-your-changes-to-a-ticket" title="Permalink to this headline">¶</a></h3>
-<p>To add your local branch to a trac ticket, you first have to upload it
-to the Sage trac repository and then put its name into the &#8220;Branch:&#8221;
+<p>To add your local branch to a trac ticket, you should first decide on
+a name on the Sage trac repository. In order to avoid name clashes,
+you have push permissions to branches of the form <tt class="docutils literal"><span class="pre">u/user/*</span></tt> where
+<tt class="docutils literal"><span class="pre">user</span></tt> is your trac username and <tt class="docutils literal"><span class="pre">*</span></tt> is a wildcard, that is, any
+valid git branch name. By default, you do <em>not</em> have push permissions
+to other user&#8217;s branches or the Sage master branch. In the following,
+we will be using <tt class="docutils literal"><span class="pre">u/user/description</span></tt> as the branch name, where it
+is understood that you replaced</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">user</span></tt> with your trac username, and</li>
+<li><tt class="docutils literal"><span class="pre">description</span></tt> with some (short but self-explanatory) description of
+your branch. May contain further slashes, but spaces are not allowed.</li>
+</ul>
+<p>Your first step should be to put your chosen name into the &#8220;Branch:&#8221;
 field on the trac ticket.</p>
-<p>Having set up your SSH key as described in
-<a class="reference internal" href="trac.html#section-trac-ssh-key"><em>Linking your Public Key to your Trac Account</em></a>, you have push permissions to branches of
-the form <tt class="docutils literal"><span class="pre">u/user/*</span></tt> where <tt class="docutils literal"><span class="pre">user</span></tt> is your trac username and <tt class="docutils literal"><span class="pre">*</span></tt>
-is a wildcard, that is, any valid git branch name. By default, you do
-<em>not</em> have push permissions to other user&#8217;s branches or the Sage
-master branch. To push your branch to trac use either:</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>For now, you also have to fill in the &#8220;Commit:&#8221; field with the
+40-digit SHA1 hash of your last commit. You can find out with, for
+example:</p>
+<div class="highlight-python"><pre>$ git log -1
+commit 2ee18c5b5c7417e0f8939d9db54d753c468964d8
+Author: Firstname Lastname &lt;user@sagemath.org&gt;
+Date:   Wed Aug 7 21:50:00 2013 +0100
+
+    My first commit message!</pre>
+</div>
+<p class="last">In the future, this will be automatically filled out for you when
+you push changes to the trac server but we haven&#8217;t automatized
+that part yet. This is why you shoud fill out the branch name
+<em>first</em>.</p>
+</div>
+<p>To push your branch to trac you now use either:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git push --set-upstream trac my_branch:u/user/description</pre>
 </div>
 <p>if you started the branch yourself and do not follow any other branch,
@@ -235,12 +265,8 @@ are</p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">my_branch</span></tt> is the name of your local branch,</li>
 <li><tt class="docutils literal"><span class="pre">user</span></tt> is your trac username,</li>
-<li><tt class="docutils literal"><span class="pre">description</span></tt> is some (short but self-explanatory) description of
-your branch.</li>
+<li><tt class="docutils literal"><span class="pre">description</span></tt> the description of your branch.</li>
 </ul>
-<p>Then, in order to use this branch as the proposed change on a trac
-ticket, just fill its name <tt class="docutils literal"><span class="pre">u/user/description</span></tt> into the &#8220;Branch:&#8221;
-field of the ticket description.</p>
 <p>The <tt class="docutils literal"><span class="pre">Branch</span></tt> field is color coded: red means there is an issue,
 green means it will merge cleanly into <tt class="docutils literal"><span class="pre">master</span></tt>. If it is red, the
 tooltip will tell you what is wrong.  If it is green, then it will
@@ -255,6 +281,12 @@ them. Then you just have to push a certain commit, either specified by
 its hex number or by the abbreviation <tt class="docutils literal"><span class="pre">HEAD</span></tt> for the most recent
 one:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git push trac HEAD:u/user/description</pre>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If you are pushing further changes to a branch that you started,
+then you still have to update the &#8220;Commit:&#8221; field even if
+&#8220;Branch:&#8221; does not change. This will be automatted at one point.</p>
 </div>
 </div>
 <div class="section" id="getting-changes">

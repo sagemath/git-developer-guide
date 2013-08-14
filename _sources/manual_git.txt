@@ -148,6 +148,12 @@ of them as bookmarks. You can then use ``git pull`` to get changes and
 Checking Out Tickets
 --------------------
 
+.. note::
+
+    Since we set up git access via ``ssh://``, you need to tell the
+    trac server your ssh public key in order to download branches. See
+    :ref:`section-trac-ssh-key` for details.
+
 Trac tickets that are finished or in the process of being worked on
 can have a git branch attached to them. This is the "Branch:" field in
 the ticket description. The branch name is generally of the form
@@ -190,16 +196,41 @@ local branch.
 Pushing Your Changes to a Ticket
 --------------------------------
 
-To add your local branch to a trac ticket, you first have to upload it
-to the Sage trac repository and then put its name into the "Branch:"
+To add your local branch to a trac ticket, you should first decide on
+a name on the Sage trac repository. In order to avoid name clashes,
+you have push permissions to branches of the form ``u/user/*`` where
+``user`` is your trac username and ``*`` is a wildcard, that is, any
+valid git branch name. By default, you do *not* have push permissions
+to other user's branches or the Sage master branch. In the following,
+we will be using ``u/user/description`` as the branch name, where it
+is understood that you replaced
+
+* ``user`` with your trac username, and
+* ``description`` with some (short but self-explanatory) description of
+  your branch. May contain further slashes, but spaces are not allowed.
+
+Your first step should be to put your chosen name into the "Branch:"
 field on the trac ticket.
 
-Having set up your SSH key as described in
-:ref:`section-trac-ssh-key`, you have push permissions to branches of
-the form ``u/user/*`` where ``user`` is your trac username and ``*``
-is a wildcard, that is, any valid git branch name. By default, you do
-*not* have push permissions to other user's branches or the Sage
-master branch. To push your branch to trac use either::
+.. warning::
+
+    For now, you also have to fill in the "Commit:" field with the
+    40-digit SHA1 hash of your last commit. You can find out with, for
+    example::
+   
+        $ git log -1
+        commit 2ee18c5b5c7417e0f8939d9db54d753c468964d8
+        Author: Firstname Lastname <user@sagemath.org>
+        Date:   Wed Aug 7 21:50:00 2013 +0100
+       
+            My first commit message!
+
+    In the future, this will be automatically filled out for you when
+    you push changes to the trac server but we haven't automatized
+    that part yet. This is why you shoud fill out the branch name
+    *first*.
+
+To push your branch to trac you now use either::
 
     [user@localhost sage]$ git push --set-upstream trac my_branch:u/user/description
 
@@ -213,12 +244,7 @@ are
 
 * ``my_branch`` is the name of your local branch,
 * ``user`` is your trac username,
-* ``description`` is some (short but self-explanatory) description of
-  your branch.
-
-Then, in order to use this branch as the proposed change on a trac
-ticket, just fill its name ``u/user/description`` into the "Branch:"
-field of the ticket description.
+* ``description`` the description of your branch.
 
 The ``Branch`` field is color coded: red means there is an issue,
 green means it will merge cleanly into ``master``. If it is red, the
@@ -236,6 +262,12 @@ its hex number or by the abbreviation ``HEAD`` for the most recent
 one::
 
     [user@localhost sage]$ git push trac HEAD:u/user/description
+
+.. warning::
+
+    If you are pushing further changes to a branch that you started,
+    then you still have to update the "Commit:" field even if
+    "Branch:" does not change. This will be automatted at one point.
 
 
 .. _section-git-pull:
