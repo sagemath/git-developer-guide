@@ -178,14 +178,23 @@ everything that is on trac by default, and you need to explicitly
 tell git which branch you want to get from trac. See the
 <a class="reference internal" href="#section-git-checkout"><em>Checking Out Tickets</em></a> section for examples.</p>
 </div>
+<p>The way we set up the remote here is via ssh authentication (the
+<tt class="docutils literal"><span class="pre">ssh://</span></tt> part), this requires you to have a trac account and to set
+up your ssh public key as described in
+<a class="reference internal" href="trac.html#section-trac-ssh-key"><em>Linking your Public Key to your Trac Account</em></a>. Authentication is necessary if you want
+to upload anything to ensure that it really is from you and not from
+an impostor. However, if you just want to download branches from the
+trac server then you can set up the remote to just use plain http
+without authentication:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git remote add trac http://trac.sagemath.org/sage.git -t master</pre>
+</div>
+<p>Setting up the remote repository this way allows you to do perform all
+steps covered this manual (except for <a class="reference internal" href="#section-git-push"><em>Pushing Your Changes to a Ticket</em></a>) without
+having a trac account. To switch between the two setups, just remove
+the current remote repository with <tt class="docutils literal"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">remove</span> <span class="pre">trac</span></tt> and then
+run the respective <tt class="docutils literal"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">add</span> <span class="pre">trac</span> <span class="pre">...</span></tt> command.</p>
 <div class="section" id="checking-out-tickets">
 <span id="section-git-checkout"></span><h3>Checking Out Tickets<a class="headerlink" href="#checking-out-tickets" title="Permalink to this headline">¶</a></h3>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Since we set up git access via <tt class="docutils literal"><span class="pre">ssh://</span></tt>, you need to tell the
-trac server your ssh public key in order to download branches. See
-<a class="reference internal" href="trac.html#section-trac-ssh-key"><em>Linking your Public Key to your Trac Account</em></a> for details.</p>
-</div>
 <p>Trac tickets that are finished or in the process of being worked on
 can have a git branch attached to them. This is the &#8220;Branch:&#8221; field in
 the ticket description. The branch name is generally of the form
