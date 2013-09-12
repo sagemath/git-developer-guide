@@ -142,17 +142,31 @@ of them as bookmarks. You can then use ``git pull`` to get changes and
     tell git which branch you want to get from trac. See the
     :ref:`section-git-checkout` section for examples.
 
+The way we set up the remote here is via ssh authentication (the
+``ssh://`` part), this requires you to have a trac account and to set
+up your ssh public key as described in
+:ref:`section-trac-ssh-key`. Authentication is necessary if you want
+to upload anything to ensure that it really is from you and not from
+an impostor. However, if you just want to download branches from the
+trac server then you can set up the remote to just use plain http
+without authentication::
+
+    [user@localhost sage]$ git remote add trac http://trac.sagemath.org/sage.git -t master
+
+Setting up the remote repository this way allows you to do perform all
+steps covered this manual (except for :ref:`section-git-push`) without
+having a trac account. To switch between the two setups, just remove
+the current remote repository with ``git remote remove trac`` and then
+run the respective ``git remote add trac ...`` command.
+     
+
+
 
 .. _section-git-checkout:
 
 Checking Out Tickets
 --------------------
 
-.. note::
-
-    Since we set up git access via ``ssh://``, you need to tell the
-    trac server your ssh public key in order to download branches. See
-    :ref:`section-trac-ssh-key` for details.
 
 Trac tickets that are finished or in the process of being worked on
 can have a git branch attached to them. This is the "Branch:" field in
