@@ -148,10 +148,10 @@ up your ssh public key as described in
 :ref:`section-trac-ssh-key`. Authentication is necessary if you want
 to upload anything to ensure that it really is from you and not from
 an impostor. However, if you just want to download branches from the
-trac server then you can set up the remote to just use plain http
+trac server then you can set up the remote to use the git protocol
 without authentication::
 
-    [user@localhost sage]$ git remote add trac http://trac.sagemath.org/sage.git -t master
+    [user@localhost sage]$ git remote add trac git://trac.sagemath.org/sage.git -t master
 
 Setting up the remote repository this way allows you to do perform all
 steps covered this manual (except for :ref:`section-git-push`) without
