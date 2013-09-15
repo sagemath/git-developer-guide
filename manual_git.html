@@ -71,8 +71,8 @@ wheels. This chapter will tell you how to do so assuming some
 basic familiarity with git.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">For now, use the <tt class="docutils literal"><span class="pre">build_system</span></tt> branch instead of master. This
-will be changed soon.</p>
+<p class="last">For now, use the <tt class="docutils literal"><span class="pre">public/sage-git/master</span></tt> branch instead of
+master. This will be changed soon.</p>
 </div>
 <p>We assume that you have a copy of the Sage git repository, for example
 by running:</p>
@@ -244,25 +244,8 @@ is understood that you replaced</p>
 your branch. May contain further slashes, but spaces are not allowed.</li>
 </ul>
 <p>Your first step should be to put your chosen name into the &#8220;Branch:&#8221;
-field on the trac ticket.</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p>For now, you also have to fill in the &#8220;Commit:&#8221; field with the
-40-digit SHA1 hash of your last commit. You can find out with, for
-example:</p>
-<div class="highlight-python"><pre>$ git log -1
-commit 2ee18c5b5c7417e0f8939d9db54d753c468964d8
-Author: Firstname Lastname &lt;user@sagemath.org&gt;
-Date:   Wed Aug 7 21:50:00 2013 +0100
-
-    My first commit message!</pre>
-</div>
-<p class="last">In the future, this will be automatically filled out for you when
-you push changes to the trac server but we haven&#8217;t automatized
-that part yet. This is why you shoud fill out the branch name
-<em>first</em>.</p>
-</div>
-<p>To push your branch to trac you now use either:</p>
+field on the trac ticket. To push your branch to trac you now use
+either:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git push --set-upstream trac my_branch:u/user/description</pre>
 </div>
 <p>if you started the branch yourself and do not follow any other branch,
@@ -282,6 +265,24 @@ tooltip will tell you what is wrong.  If it is green, then it will
 link to a diff of the changes against <tt class="docutils literal"><span class="pre">u/ohanar/build_system</span></tt>. (This
 is temporary until <a class="reference external" href="http://trac.sagemath.org/14480">#14480</a> is merged
 into the <tt class="docutils literal"><span class="pre">master</span></tt> branch.)</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You also have to fill in the &#8220;Commit:&#8221; field with the 40-digit
+SHA1 hash of your last commit. If you first fill out the &#8220;Branch:&#8221;
+field on trac and then push to git, then git will automatically
+search for the ticket and fill in the &#8220;Commit:&#8221; field for you.</p>
+<p>If, for some reason, you first push to the trac git repository and
+then change the &#8220;Branch:&#8221; field, then you also have to update the
+&#8220;Commit:&#8221; field yourself. You can find out the SHA1 hash, for
+example, with:</p>
+<div class="last highlight-python"><pre>$ git log -1
+commit 2ee18c5b5c7417e0f8939d9db54d753c468964d8
+Author: Firstname Lastname &lt;user@sagemath.org&gt;
+Date:   Wed Aug 7 21:50:00 2013 +0100
+
+    My first commit message!</pre>
+</div>
+</div>
 <p>The above git commands create a new remote branch. If you make any
 further local edits, then you need a slight variation of the command
 to push your changes (but not create a new remote branch). So assume
@@ -290,12 +291,6 @@ them. Then you just have to push a certain commit, either specified by
 its hex number or by the abbreviation <tt class="docutils literal"><span class="pre">HEAD</span></tt> for the most recent
 one:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git push trac HEAD:u/user/description</pre>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">If you are pushing further changes to a branch that you started,
-then you still have to update the &#8220;Commit:&#8221; field even if
-&#8220;Branch:&#8221; does not change. This will be automatted at one point.</p>
 </div>
 </div>
 <div class="section" id="getting-changes">
@@ -327,6 +322,54 @@ is not the case.</p>
 <p class="first admonition-title">Todo</p>
 <p class="last">Write something</p>
 </div>
+</div>
+<div class="section" id="detached-heads-and-reviewing-tickets">
+<span id="section-git-detached-head"></span><h2>Detached Heads and Reviewing Tickets<a class="headerlink" href="#detached-heads-and-reviewing-tickets" title="Permalink to this headline">¶</a></h2>
+<p>Each commit is a snapshot of the Sage source tree at a certain
+point. So far, we always used commits organized in branches. But
+secretly the branch is just a shortcut for a particular commit, the
+head commit of the branch. But you can just go to a particular commit
+without a branch, this is called &#8220;detached head&#8221;. If you have the
+commit already in your local history, you can directly check it
+out without requiring internet access:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git checkout a63227d0636e29a8212c32eb9ca84e9588bbf80b
+Note: checking out 'a63227d0636e29a8212c32eb9ca84e9588bbf80b'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b new_branch_name
+
+HEAD is now at a63227d... Szekeres Snark Graph constructor</pre>
+</div>
+<p>If it is not stored in your local git repository, you need to download
+it from the trac server first:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git fetch trac a63227d0636e29a8212c32eb9ca84e9588bbf80b
+From ssh://trac/sage
+ * branch            a63227d0636e29a8212c32eb9ca84e9588bbf80b -&gt; FETCH_HEAD
+[user@localhost sage]$ git checkout FETCH_HEAD
+HEAD is now at a63227d... Szekeres Snark Graph constructor</pre>
+</div>
+<p>Either way, you end up with your current HEAD and working directory
+that is not associated to any local branch:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git status
+# HEAD detached at a63227d
+nothing to commit, working directory clean</pre>
+</div>
+<p>This is perfectly fine. You can switch to an existing branch (with the
+usual <tt class="docutils literal"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">my_branch</span></tt>) and back to your detached head.</p>
+<p>Detached heads can be used to your advantage when reviewing
+tickets. Just check out the commit (look at the &#8220;Commit:&#8221; field on the
+trac ticket) that you are reviewing as a detached head. Then you can
+look at the changes and run tests in the detached head. When you are
+finished with the review, you just abandon the detached head. That way
+you never create a new local branch, so you don&#8217;t have to type <tt class="docutils literal"><span class="pre">git</span>
+<span class="pre">branch</span> <span class="pre">-D</span> <span class="pre">my_branch</span></tt> at the end to delete the local branch that you
+created only to review the ticket.</p>
 </div>
 <div class="section" id="reset-and-recovery">
 <span id="section-git-recovery"></span><h2>Reset and Recovery<a class="headerlink" href="#reset-and-recovery" title="Permalink to this headline">¶</a></h2>
@@ -401,6 +444,7 @@ reset</em> command, we just have to reset back into the future:</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#merging-and-rebasing">Merging and Rebasing</a></li>
+<li><a class="reference internal" href="#detached-heads-and-reviewing-tickets">Detached Heads and Reviewing Tickets</a></li>
 <li><a class="reference internal" href="#reset-and-recovery">Reset and Recovery</a></li>
 </ul>
 </li>
