@@ -13,8 +13,8 @@ basic familiarity with git.
 
 .. warning::
 
-    For now, use the ``build_system`` branch instead of master. This
-    will be changed soon.
+    For now, use the ``public/sage-git/master`` branch instead of
+    master. This will be changed soon.
 
 
 We assume that you have a copy of the Sage git repository, for example
@@ -224,27 +224,8 @@ is understood that you replaced
   your branch. May contain further slashes, but spaces are not allowed.
 
 Your first step should be to put your chosen name into the "Branch:"
-field on the trac ticket.
-
-.. warning::
-
-    For now, you also have to fill in the "Commit:" field with the
-    40-digit SHA1 hash of your last commit. You can find out with, for
-    example::
-   
-        $ git log -1
-        commit 2ee18c5b5c7417e0f8939d9db54d753c468964d8
-        Author: Firstname Lastname <user@sagemath.org>
-        Date:   Wed Aug 7 21:50:00 2013 +0100
-       
-            My first commit message!
-
-    In the future, this will be automatically filled out for you when
-    you push changes to the trac server but we haven't automatized
-    that part yet. This is why you shoud fill out the branch name
-    *first*.
-
-To push your branch to trac you now use either::
+field on the trac ticket. To push your branch to trac you now use
+either::
 
     [user@localhost sage]$ git push --set-upstream trac my_branch:u/user/description
 
@@ -267,6 +248,25 @@ link to a diff of the changes against ``u/ohanar/build_system``. (This
 is temporary until `#14480 <http://trac.sagemath.org/14480>`_ is merged
 into the ``master`` branch.)
 
+.. note::
+
+    You also have to fill in the "Commit:" field with the 40-digit
+    SHA1 hash of your last commit. If you first fill out the "Branch:"
+    field on trac and then push to git, then git will automatically
+    search for the ticket and fill in the "Commit:" field for you. 
+
+    If, for some reason, you first push to the trac git repository and
+    then change the "Branch:" field, then you also have to update the
+    "Commit:" field yourself. You can find out the SHA1 hash, for
+    example, with::
+   
+        $ git log -1
+        commit 2ee18c5b5c7417e0f8939d9db54d753c468964d8
+        Author: Firstname Lastname <user@sagemath.org>
+        Date:   Wed Aug 7 21:50:00 2013 +0100
+       
+            My first commit message!
+
 The above git commands create a new remote branch. If you make any
 further local edits, then you need a slight variation of the command
 to push your changes (but not create a new remote branch). So assume
@@ -277,11 +277,6 @@ one::
 
     [user@localhost sage]$ git push trac HEAD:u/user/description
 
-.. warning::
-
-    If you are pushing further changes to a branch that you started,
-    then you still have to update the "Commit:" field even if
-    "Branch:" does not change. This will be automatted at one point.
 
 
 .. _section-git-pull:
@@ -320,6 +315,61 @@ Merging and Rebasing
 
     Write something
 
+
+.. _section-git-detached-head:
+
+Detached Heads and Reviewing Tickets
+====================================
+
+Each commit is a snapshot of the Sage source tree at a certain
+point. So far, we always used commits organized in branches. But
+secretly the branch is just a shortcut for a particular commit, the
+head commit of the branch. But you can just go to a particular commit
+without a branch, this is called "detached head". If you have the
+commit already in your local history, you can directly check it
+out without requiring internet access::
+
+    [user@localhost sage]$ git checkout a63227d0636e29a8212c32eb9ca84e9588bbf80b
+    Note: checking out 'a63227d0636e29a8212c32eb9ca84e9588bbf80b'.
+
+    You are in 'detached HEAD' state. You can look around, make experimental
+    changes and commit them, and you can discard any commits you make in this
+    state without impacting any branches by performing another checkout.
+
+    If you want to create a new branch to retain commits you create, you may
+    do so (now or later) by using -b with the checkout command again. Example:
+
+      git checkout -b new_branch_name
+
+    HEAD is now at a63227d... Szekeres Snark Graph constructor
+
+If it is not stored in your local git repository, you need to download
+it from the trac server first::
+
+    [user@localhost sage]$ git fetch trac a63227d0636e29a8212c32eb9ca84e9588bbf80b
+    From ssh://trac/sage
+     * branch            a63227d0636e29a8212c32eb9ca84e9588bbf80b -> FETCH_HEAD
+    [user@localhost sage]$ git checkout FETCH_HEAD
+    HEAD is now at a63227d... Szekeres Snark Graph constructor
+
+Either way, you end up with your current HEAD and working directory
+that is not associated to any local branch::
+
+    [user@localhost sage]$ git status
+    # HEAD detached at a63227d
+    nothing to commit, working directory clean
+
+This is perfectly fine. You can switch to an existing branch (with the
+usual ``git checkout my_branch``) and back to your detached head.
+
+Detached heads can be used to your advantage when reviewing
+tickets. Just check out the commit (look at the "Commit:" field on the
+trac ticket) that you are reviewing as a detached head. Then you can
+look at the changes and run tests in the detached head. When you are
+finished with the review, you just abandon the detached head. That way
+you never create a new local branch, so you don't have to type ``git
+branch -D my_branch`` at the end to delete the local branch that you
+created only to review the ticket.
 
 
 .. _section-git-recovery:
