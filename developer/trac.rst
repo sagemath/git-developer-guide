@@ -89,14 +89,14 @@ create it with the ``ssh-keygen`` tool::
     |      oB         |
     |     o+..        |
     +-----------------+
-     
+
 This will generate a new random private RSA key
 in the ``.ssh`` folder in your home directory. By default, they are
 
 ``~/.ssh/id_rsa``
   Your private key. Keep safe. **Never** hand it out to anybody.
 
-``~/.ssh/id_rsa.pub`` 
+``~/.ssh/id_rsa.pub``
   The corresponding public key. This and only this file can be safely
   disclosed to third parties.
 
@@ -109,7 +109,7 @@ If you have accounts on multiple computers you can use the SSH keys to
 log in. Just copy the **public** key file (ending in ``.pub``) to
 ``~/.ssh/authorized_keys`` on the remote computer and make sure that
 the file is only read/writeable by yourself. Voila, the next time you
-ssh into that machine you don't have to provide your password. 
+ssh into that machine you don't have to provide your password.
 
 
 .. _section-trac-ssh-key:
@@ -140,21 +140,18 @@ issuing some basic gitolite commands, for example::
 
     [user@localhost ~]$ ssh -p 2222 git@trac.sagemath.org info
     hello user, this is git@trac running gitolite3 (unknown) on git 1.7.9.5
-    
+
      R W	sage
     [user@localhost ~]$ ssh -p 2222 git@trac.sagemath.org help
     hello user, this is gitolite3 (unknown) on git 1.7.9.5
-    
+
     list of remote commands available:
-    
+
     	desc
     	help
     	info
     	perms
     	writable
-    
-
-
 
 
 Reporting bugs
@@ -353,10 +350,10 @@ issues:
 * The Patch buildbot wil automatically test your ticket. See `the
   patchbot wiki <http://wiki.sagemath.org/buildbot>`_ for more
   information about its features and limitations. Make sure that you
-  lood at the log, especially if the patch buildbot did not give you
+  look at the log, especially if the patch buildbot did not give you
   the green blob.
 
-* Every bug fixed should result in a doctest. 
+* Every bug fixed should result in a doctest.
 
 * This is not an issue with defects, but there are many enhancements
   possible for Sage and too few developers to implement all the good
@@ -455,7 +452,7 @@ tickets on the trac server to see how things are done.
     correct. Please refrain from aditional feature requests or
     open-ended discussion about alternative implementations. If you
     want the patch written differently, your suggestion should be a
-    clear and actionable request. 
+    clear and actionable request.
 
 
 
