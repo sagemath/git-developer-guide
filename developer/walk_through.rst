@@ -93,6 +93,25 @@ It is common to go through some iterations of ``sage -dev commit`` before you
 upload, and you will probably also have uploaded a few times before your
 changes are ready for review.
 
+If you are happy with the changes you uploaded, you want somebody else to
+review them, so they can be included into the next version of Sage. If your
+ticket is ready for review, run::
+
+	sage -dev edit-ticket
+
+This will give you an editor in which you can edit the ticket. Change the
+status to::
+
+	Status: needs_review
+
+And add yourself as an author for that ticket by inserting the following as the
+first line::
+
+	Authors: Your Real Name
+
+If you want to add an additional comment for potential reviewers, run::
+
+	sage -dev add-comment
 
 .. _section-walkthrough-review:
 
