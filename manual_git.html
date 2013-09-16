@@ -318,9 +318,54 @@ is not the case.</p>
 </div>
 <div class="section" id="merging-and-rebasing">
 <span id="section-git-merge"></span><h2>Merging and Rebasing<a class="headerlink" href="#merging-and-rebasing" title="Permalink to this headline">¶</a></h2>
+<p>Invariably, Sage development continues while you are working on your
+local branch. For example, let us assume you started <tt class="docutils literal"><span class="pre">my_branch</span></tt> at
+commit <tt class="docutils literal"><span class="pre">B</span></tt>. After a while, your branch has advanced to commit <tt class="docutils literal"><span class="pre">Z</span></tt>
+while the Sage master branch has advanced to <tt class="docutils literal"><span class="pre">D</span></tt></p>
+<div class="highlight-python"><pre>      X---Y---Z my_branch
+     /
+A---B---C---D master</pre>
+</div>
+<p>How should you deal with upstream changes while you are
+still developing your code? In principle, there are two ways of
+dealing with it:</p>
+<ul>
+<li><p class="first">The first solution is to change the commits in your local branch to
+start out at the new master. This is called <strong>rebase</strong>:</p>
+<div class="highlight-python"><pre>git checkout my_branch
+git rebase master</pre>
+</div>
+<p>In terms of the commit graph, this results in:</p>
+<div class="highlight-python"><pre>              X'--Y'--Z' my_branch
+             /
+A---B---C---D master</pre>
+</div>
+<p>Since the SHA1 hash includes the hash of the parent, all commits
+change. This means that you should only ever use rebase if nobody
+else has used one of your <tt class="docutils literal"><span class="pre">X</span></tt>, <tt class="docutils literal"><span class="pre">Y</span></tt>, <tt class="docutils literal"><span class="pre">Z</span></tt> commits to base their
+development on.</p>
+</li>
+<li><p class="first">The other solution is to not change any commits, and instead create
+a new merge commit <tt class="docutils literal"><span class="pre">W</span></tt> which merges in the changes from the newer
+master. This is called <strong>merge</strong>:</p>
+<div class="highlight-python"><pre>git checkout my_branch
+git merge master</pre>
+</div>
+<p>The result is the following commit graph:</p>
+<div class="highlight-python"><pre>      X---Y---Z---W my_branch
+     /           /
+A---B---C-------D master</pre>
+</div>
+<p>The downside is that it introduced an extra merge commit that would
+not be there had you used rebase. But that is also the advantage of
+merging: None of the existing commits is changed, only a new commit
+is made. This additional commit is then easily pushed to the git
+repository and distributed to your collaborators.</p>
+</li>
+</ul>
 <div class="admonition-todo admonition" id="index-0">
 <p class="first admonition-title">Todo</p>
-<p class="last">Write something</p>
+<p class="last">more on merge vs rebase</p>
 </div>
 </div>
 <div class="section" id="detached-heads-and-reviewing-tickets">
