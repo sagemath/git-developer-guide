@@ -36,6 +36,8 @@ cryptography used by git when copying new source files to the
 repository. This section will show you how to setup both.
 
 
+.. _section-trac-account:
+
 Obtaining an Account
 --------------------
 
@@ -52,14 +54,31 @@ following:
 * contact email,
 * and reason for needing a trac account.
 
-Your trac account also grants you access to ​the sage wiki. Make sure
+Your trac account also grants you access to the sage wiki. Make sure
 you understand the review process, and the procedures for opening and
 closing tickets before making changes. The remainder of this chapter
 contains various guidelines on using the trac server.
 
+Generating and Uploading your SSH Keys
+--------------------------------------
 
-Generating your SSH Keys
-------------------------
+Git will use SSH public key cryptography to decide if and where you are allowed
+to upload code to. This is not required if you just want to report a bug or
+comment on a ticket, but as soon as you want to contribute code yourself you
+need to provide trac with the public half of your own personal key. In recent
+versions of Sage, you can use Sage to generate an upload an SSH key::
+
+	sage: dev.upload_ssh_key()
+	I will now upload your ssh key at `/home/user/.ssh/id_dsa.pub` to trac. This will enable access to the git repository there. Is this what you want? [Yes/no] y
+	Trac username: user
+	Trac password:
+	Your key has been uploaded.
+
+You can also manually generate an SSH key and upload it to trac. This is
+described in the following two sections.
+
+Manually Generating your SSH Keys
+---------------------------------
 
 Git will use SSH public key cryptography to decide if and where you
 are allowed to upload code to. This is not required if you just want
@@ -68,11 +87,11 @@ contribute code yourself you need to provide trac with the public half
 of your own personal key. If you don't have a private key yet, you can
 create it with the ``ssh-keygen`` tool::
 
-    [user@localhost ~]$ ssh-keygen 
+    [user@localhost ~]$ ssh-keygen
     Generating public/private rsa key pair.
-    Enter file in which to save the key (/home/user/.ssh/id_rsa): 
-    Enter passphrase (empty for no passphrase): 
-    Enter same passphrase again: 
+    Enter file in which to save the key (/home/user/.ssh/id_rsa):
+    Enter passphrase (empty for no passphrase):
+    Enter same passphrase again:
     Your identification has been saved in /home/user/.ssh/id_rsa.
     Your public key has been saved in /home/user/.ssh/id_rsa.pub.
     The key fingerprint is:
@@ -114,7 +133,7 @@ ssh into that machine you don't have to provide your password.
 
 .. _section-trac-ssh-key:
 
-Linking your Public Key to your Trac Account
+Manually Linking your Public Key to your Trac Account
 --------------------------------------------
 
 The Sage trac server needs to know one of your public keys. You can
