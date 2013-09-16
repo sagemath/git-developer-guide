@@ -11,12 +11,12 @@ of the Sage trac server is to
 1. Provide a place for discussion on issues and store a permanent
    record.
 
-2. A repository of source code and all proposed changes.
+2. Provide a repository of source code and all proposed changes.
 
 3. Link these two together.
 
-4. There is also a `wiki <http://trac.sagemath.org/wiki>`_ for more
-   general organizational web pages, like Sage development workshops.
+There is also a `wiki <http://trac.sagemath.org/wiki>`_ for more general
+organizational web pages, like Sage development workshops.
 
 Thus if you find a bug in Sage, if you have new code to submit, want
 to review new code already written but not yet included in Sage, or if
