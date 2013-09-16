@@ -52,15 +52,20 @@ want to add it to Sage. You would first open a ticket for that::
     sage -dev create-ticket
 
 This will give you an editor in which you can give a summary and a description
-of what you want to do. After you close the editor, a new ticket will be opened
-on the trac server. From that point on, everyone can see what you intend to do,
-which is very useful for avoiding double work.
+of what you want to do. If you are not sure which values to put for the other
+fields, you can leave the defaults or have a look at
+:ref:`section-trac-fields`. After you close the editor, a new ticket will be
+opened on the trac server. From that point on, everyone can see what you intend
+to do, which is very useful for avoiding double work.
 
-If you are editing and you realize you want to cancel the creation of a ticket,
-then you can just save an empty file. This will abort the operation.
+If you want to cancel the creation of a ticket, then you can just save an empty
+file. This will abort the operation.
 
-After saving your ticket on the trac server, a branch will be created for you
-to contain your revisions to Sage. It is called ``ticket/<TICKETNUM>``.  
+After saving your ticket on the trac server, a branch will be created for you.
+A branch is essentially a named container to store your modifications to the
+Sage source code. Your new branch is now called ``ticket/<TICKETNUM>``. Unless
+you upload it (see below), it will only be on your local system and not visible
+to anyone else.
 
 At this point, you will start editing the source code, trying it out, running
 doctests, et cetera. At some point, you may wish to share your changes with the
