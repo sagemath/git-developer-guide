@@ -118,9 +118,9 @@ If you want to add an additional comment for potential reviewers, run::
 Reviewing
 =========
 
-Now suppose you want to review the existing work on an existing ticket, such as
-the one you created in the last section.  For definiteness, suppose you want to
-review #12270. You would do that as follows::
+Now suppose you want to review the existing work on a ticket, such as the one
+you created in the last section.  For definiteness, suppose you want to review
+#12270. You would do that as follows::
 
     sage -dev switch-ticket 12270
 
