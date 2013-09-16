@@ -18,6 +18,28 @@ have to install (see :ref:`chapter-git-setup`), but you do not need to
 know anything about it (see :ref:`chapter-manual-git` only if you want
 to).
 
+Most of the commands in the following section will not work unless you have an
+account on the bug tracker. If you want to contribute to Sage, it is a good
+idea to get an account now (see :ref:`section-trac-account`).
+
+We assume here that the ``sage`` executable of your development installation of
+Sage is in your ``PATH``. If this is not the case, you might have to replace
+``sage`` by ``./sage`` in the following (assuming you are in the sage root
+directory). You can also use the developer scripts from the Sage prompt. All
+commands to ``sage -dev`` are available as methods on the global ``dev``
+object, e.g., the equivalent of ``sage -dev switch-ticket 12345`` would be
+``dev.switch_ticket(12345)``.
+
+.. warning::
+
+	In the transitional period it can happen that you end up on a branch where
+	the developer scripts are not available or outdated. If this is the case,
+	i.e., if ``sage -dev`` does not work properly anymore:
+
+	* Go to http://trac.sagemath.org/14482
+	* Note the branch field on the ticket, e.g., ``u/saraedum/ticket/14482``
+	* Run ``git pull git://trac.sagemath.org/sage.git u/saraedum/ticket/14482``
+	  to add the latest version of the developer scripts to your branch
 
 .. _section-walkthrough-add:
 
