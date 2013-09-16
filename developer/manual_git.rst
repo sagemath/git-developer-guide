@@ -311,9 +311,59 @@ is not the case.
 Merging and Rebasing
 ====================
 
+Invariably, Sage development continues while you are working on your
+local branch. For example, let us assume you started ``my_branch`` at
+commit ``B``. After a while, your branch has advanced to commit ``Z``
+while the Sage master branch has advanced to ``D`` ::
+
+                     X---Y---Z my_branch
+                    /
+               A---B---C---D master
+
+How should you deal with upstream changes while you are
+still developing your code? In principle, there are two ways of
+dealing with it:
+
+* The first solution is to change the commits in your local branch to
+  start out at the new master. This is called **rebase**::
+   
+      git checkout my_branch
+      git rebase master
+
+  In terms of the commit graph, this results in::
+
+                             X'--Y'--Z' my_branch
+                            /
+               A---B---C---D master
+
+  Since the SHA1 hash includes the hash of the parent, all commits
+  change. This means that you should only ever use rebase if nobody
+  else has used one of your ``X``, ``Y``, ``Z`` commits to base their
+  development on. 
+
+* The other solution is to not change any commits, and instead create
+  a new merge commit ``W`` which merges in the changes from the newer
+  master. This is called **merge**::
+
+      git checkout my_branch
+      git merge master
+
+  The result is the following commit graph::
+
+                     X---Y---Z---W my_branch
+                    /           /
+               A---B---C-------D master
+
+  The downside is that it introduced an extra merge commit that would
+  not be there had you used rebase. But that is also the advantage of
+  merging: None of the existing commits is changed, only a new commit
+  is made. This additional commit is then easily pushed to the git
+  repository and distributed to your collaborators.
+
+
 .. todo::
 
-    Write something
+    more on merge vs rebase
 
 
 .. _section-git-detached-head:
