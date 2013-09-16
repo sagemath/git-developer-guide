@@ -191,33 +191,37 @@ about distutils, etc., is to create a file with the extension
 </li>
 <li><p class="first">Start the Sage command line interpreter and load the <tt class="docutils literal"><span class="pre">spyx</span></tt> file
 (this will fail if you do not have a C compiler installed).</p>
-<div class="highlight-python"><pre>sage: load "power2.spyx"
-Compiling power2.spyx...
-sage: is2pow(12)
-False</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">load</span> <span class="s">&quot;power2.spyx&quot;</span>
+<span class="go">Compiling power2.spyx...</span>
+<span class="gp">sage: </span><span class="n">is2pow</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
 </div>
 </li>
 </ol>
 <p>Note that you can change <tt class="docutils literal"><span class="pre">power2.spyx</span></tt>, then load it again and it
 will be recompiled on the fly. You can also attach <tt class="docutils literal"><span class="pre">power2.spyx</span></tt> so
 it is reloaded whenever you make changes:</p>
-<div class="highlight-python"><pre>sage: attach "power2.spyx"</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">attach</span> <span class="s">&quot;power2.spyx&quot;</span>
+</pre></div>
 </div>
 <p>Cython is used for its speed. Here is a timed test on a 2.6 GHz
 Opteron:</p>
-<div class="highlight-python"><pre>sage: %time [n for n in range(10^5) if is2pow(n)]
-[1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536]
-CPU times: user 0.60 s, sys: 0.00 s, total: 0.60 s
-Wall time: 0.60 s</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="o">%</span><span class="n">time</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="o">^</span><span class="mi">5</span><span class="p">)</span> <span class="k">if</span> <span class="n">is2pow</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+<span class="go">[1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536]</span>
+<span class="go">CPU times: user 0.60 s, sys: 0.00 s, total: 0.60 s</span>
+<span class="go">Wall time: 0.60 s</span>
+</pre></div>
 </div>
 <p>Now, the code in the file <tt class="docutils literal"><span class="pre">power2.spyx</span></tt> is valid Python, and if we
 copy this to a file <tt class="docutils literal"><span class="pre">powerslow.py</span></tt> and load that, we get the
 following:</p>
-<div class="highlight-python"><pre>sage: load "powerslow.py"
-sage: %time [n for n in range(10^5) if is2pow(n)]
-[1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536]
-CPU times: user 1.01 s, sys: 0.04 s, total: 1.05 s
-Wall time: 1.05 s</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">load</span> <span class="s">&quot;powerslow.py&quot;</span>
+<span class="gp">sage: </span><span class="o">%</span><span class="n">time</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="o">^</span><span class="mi">5</span><span class="p">)</span> <span class="k">if</span> <span class="n">is2pow</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+<span class="go">[1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536]</span>
+<span class="go">CPU times: user 1.01 s, sys: 0.04 s, total: 1.05 s</span>
+<span class="go">Wall time: 1.05 s</span>
+</pre></div>
 </div>
 <p>By the way, we could gain even a little more speed with the Cython
 version with a type declaration, by changing <tt class="docutils literal"><span class="pre">def</span> <span class="pre">is2pow(n):</span></tt> to
@@ -231,7 +235,8 @@ the code can be interrupted with <tt class="docutils literal"><span class="pre">
 Since Cython optimizes for speed,
 Cython normally does not check for interrupts.
 For example, code like the following cannot be interrupted:</p>
-<div class="highlight-python"><pre>sage: cython('while True: pass')  # DON'T DO THIS</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">cython</span><span class="p">(</span><span class="s">&#39;while True: pass&#39;</span><span class="p">)</span>  <span class="c"># DON&#39;T DO THIS</span>
+</pre></div>
 </div>
 <p>While this is running, pressing <tt class="docutils literal"><span class="pre">CTRL-C</span></tt> has no effect.  The only
 way out is to kill the Sage process.
@@ -376,10 +381,10 @@ this is caught by the interrupt framework and a <tt class="docutils literal"><sp
     <span class="n">sig_off</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">sage</span><span class="p">:</span> <span class="n">abort_example</span><span class="p">()</span>
-<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
-<span class="o">...</span>
-<span class="ne">RuntimeError</span><span class="p">:</span> <span class="n">Aborted</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">abort_example</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="nc">RuntimeError</span>: <span class="n-Identifier">Aborted</span>
 </pre></div>
 </div>
 <p>This exception can then be caught as explained above.
@@ -402,10 +407,10 @@ Example Cython code:</p>
 </pre></div>
 </div>
 <p>Executing this gives:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">sage</span><span class="p">:</span> <span class="n">abort_example_with_sig_str</span><span class="p">()</span>
-<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
-<span class="o">...</span>
-<span class="ne">RuntimeError</span><span class="p">:</span> <span class="n">custom</span> <span class="n">error</span> <span class="n">message</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">abort_example_with_sig_str</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="nc">RuntimeError</span>: <span class="n-Identifier">custom error message</span>
 </pre></div>
 </div>
 <p>With regard to ordinary interrupts (i.e. SIGINT), <tt class="docutils literal"><span class="pre">sig_str(s)</span></tt>
@@ -475,13 +480,14 @@ That function simulates a <tt class="docutils literal"><span class="pre">CTRL-C<
 after <tt class="docutils literal"><span class="pre">ms_delay</span></tt> milliseconds.</p>
 <p>The following is an example of a doctest demonstrating that
 the function <tt class="docutils literal"><span class="pre">factor()</span></tt> can be interrupted:</p>
-<div class="highlight-python"><pre>sage: import sage.tests.interrupt
-sage: try:
-...     sage.tests.interrupt.interrupt_after_delay()
-...     factor(10^1000 + 3)
-... except KeyboardInterrupt:
-...     print "ok!"
-ok!</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="kn">import</span> <span class="nn">sage.tests.interrupt</span>
+<span class="gp">sage: </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">sage</span><span class="o">.</span><span class="n">tests</span><span class="o">.</span><span class="n">interrupt</span><span class="o">.</span><span class="n">interrupt_after_delay</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">factor</span><span class="p">(</span><span class="mi">10</span><span class="o">^</span><span class="mi">1000</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s">&quot;ok!&quot;</span>
+<span class="go">ok!</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -603,7 +609,7 @@ original object. As an example, the following code snippet is the
     
     <div class="footer">
         &copy; Copyright 2013, The Sage Development Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
     </div>
     <script type="text/javascript">
 /*global jQuery, window */

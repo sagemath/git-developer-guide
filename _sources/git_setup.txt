@@ -4,7 +4,7 @@
 Setting Up Git
 ==============
 
-To work on the Sage source code, you need 
+To work on the Sage source code, you need
 
 * a working git installation, see :ref:`section-git-install`
 
@@ -36,7 +36,7 @@ Windows
     Download and install `msysGit
     <http://code.google.com/p/msysgit/downloads/list>`_
 
-OS X 
+OS X
     Use the `git OSX installer
     <http://code.google.com/p/git-osx-installer/downloads/list>`_
 
@@ -45,7 +45,6 @@ Some further ressources for installation help are:
 
 * `Chapter 2 of the git book
   <http://book.git-scm.com/2_installing_git.html>`_
-
 
 * The `git homepage <http://git-scm.com>`_ for the most recent
   information.
@@ -76,6 +75,3 @@ This will write the settings into your :ref:`git configuration file
 
 Of course you'll need to replace ``Your Name`` and ``you@yourdomain.example.com``
 with your actual name and email address.
-
-
-
