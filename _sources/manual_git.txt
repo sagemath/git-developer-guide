@@ -11,20 +11,17 @@ directly to work on Sage if you want to take off the training
 wheels. This chapter will tell you how to do so assuming some
 basic familiarity with git.
 
+We assume that you have a copy of the Sage git repository, for example
+by running::
+
+    [user@localhost ~]$ git clone git://github.com/sagemath/sage.git -b master
+    [user@localhost ~]$ cd sage
+    [user@localhost sage]$ make
+
 .. warning::
 
     For now, use the ``public/sage-git/master`` branch instead of
     master. This will be changed soon.
-
-
-We assume that you have a copy of the Sage git repository, for example
-by running::
-
-    [user@localhost ~]$ git clone git://github.com/sagemath/sage.git -b build_system
-    [user@localhost ~]$ cd sage
-    [user@localhost sage]$ make
-
-
 
 .. _section-git-branch:
 
@@ -146,10 +143,9 @@ The way we set up the remote here is via ssh authentication (the
 ``ssh://`` part), this requires you to have a trac account and to set
 up your ssh public key as described in
 :ref:`section-trac-ssh-key`. Authentication is necessary if you want
-to upload anything to ensure that it really is from you and not from
-an impostor. However, if you just want to download branches from the
-trac server then you can set up the remote to use the git protocol
-without authentication::
+to upload anything to ensure that it really is from you. However, if
+you just want to download branches from the trac server then you can
+set up the remote to use the git protocol without authentication::
 
     [user@localhost sage]$ git remote add trac git://trac.sagemath.org/sage.git -t master
 
@@ -224,20 +220,21 @@ is understood that you replaced
   your branch. May contain further slashes, but spaces are not allowed.
 
 Your first step should be to put your chosen name into the "Branch:"
-field on the trac ticket. To push your branch to trac you now use
+field on the trac ticket. To push your branch to trac you then use
 either::
 
-    [user@localhost sage]$ git push --set-upstream trac my_branch:u/user/description
+    [user@localhost sage]$ git push --set-upstream trac HEAD:u/user/description
 
 if you started the branch yourself and do not follow any other branch,
 or use::
 
-    [user@localhost sage]$ git push my_branch:u/user/description
+    [user@localhost sage]$ git push trac HEAD:u/user/description
 
-if your branch already has an upstream branch. The remaining arguments
-are 
+if your branch already has an upstream branch.  The ``HEAD`` means
+that you are pushing the most recent commit (and, by extension, all of
+its parent commits) of the current local branch to the remote
+branch. The remaining arguments are
 
-* ``my_branch`` is the name of your local branch,
 * ``user`` is your trac username,
 * ``description`` the description of your branch.
 
@@ -266,17 +263,6 @@ into the ``master`` branch.)
         Date:   Wed Aug 7 21:50:00 2013 +0100
        
             My first commit message!
-
-The above git commands create a new remote branch. If you make any
-further local edits, then you need a slight variation of the command
-to push your changes (but not create a new remote branch). So assume
-that you made some further changes to your local branch and committed
-them. Then you just have to push a certain commit, either specified by
-its hex number or by the abbreviation ``HEAD`` for the most recent
-one::
-
-    [user@localhost sage]$ git push trac HEAD:u/user/description
-
 
 
 .. _section-git-pull:
@@ -325,7 +311,8 @@ still developing your code? In principle, there are two ways of
 dealing with it:
 
 * The first solution is to change the commits in your local branch to
-  start out at the new master. This is called **rebase**::
+  start out at the new master. This is called **rebase**, and it
+  rewrites your current branch::
    
       git checkout my_branch
       git rebase master
@@ -343,7 +330,8 @@ dealing with it:
 
 * The other solution is to not change any commits, and instead create
   a new merge commit ``W`` which merges in the changes from the newer
-  master. This is called **merge**::
+  master. This is called **merge**, and it merges your current branch
+  with another branch::
 
       git checkout my_branch
       git merge master
@@ -360,127 +348,15 @@ dealing with it:
   is made. This additional commit is then easily pushed to the git
   repository and distributed to your collaborators.
 
-
-.. todo::
-
-    more on merge vs rebase
-
-
-.. _section-git-detached-head:
-
-Detached Heads and Reviewing Tickets
-====================================
-
-Each commit is a snapshot of the Sage source tree at a certain
-point. So far, we always used commits organized in branches. But
-secretly the branch is just a shortcut for a particular commit, the
-head commit of the branch. But you can just go to a particular commit
-without a branch, this is called "detached head". If you have the
-commit already in your local history, you can directly check it
-out without requiring internet access::
-
-    [user@localhost sage]$ git checkout a63227d0636e29a8212c32eb9ca84e9588bbf80b
-    Note: checking out 'a63227d0636e29a8212c32eb9ca84e9588bbf80b'.
-
-    You are in 'detached HEAD' state. You can look around, make experimental
-    changes and commit them, and you can discard any commits you make in this
-    state without impacting any branches by performing another checkout.
-
-    If you want to create a new branch to retain commits you create, you may
-    do so (now or later) by using -b with the checkout command again. Example:
-
-      git checkout -b new_branch_name
-
-    HEAD is now at a63227d... Szekeres Snark Graph constructor
-
-If it is not stored in your local git repository, you need to download
-it from the trac server first::
-
-    [user@localhost sage]$ git fetch trac a63227d0636e29a8212c32eb9ca84e9588bbf80b
-    From ssh://trac/sage
-     * branch            a63227d0636e29a8212c32eb9ca84e9588bbf80b -> FETCH_HEAD
-    [user@localhost sage]$ git checkout FETCH_HEAD
-    HEAD is now at a63227d... Szekeres Snark Graph constructor
-
-Either way, you end up with your current HEAD and working directory
-that is not associated to any local branch::
-
-    [user@localhost sage]$ git status
-    # HEAD detached at a63227d
-    nothing to commit, working directory clean
-
-This is perfectly fine. You can switch to an existing branch (with the
-usual ``git checkout my_branch``) and back to your detached head.
-
-Detached heads can be used to your advantage when reviewing
-tickets. Just check out the commit (look at the "Commit:" field on the
-trac ticket) that you are reviewing as a detached head. Then you can
-look at the changes and run tests in the detached head. When you are
-finished with the review, you just abandon the detached head. That way
-you never create a new local branch, so you don't have to type ``git
-branch -D my_branch`` at the end to delete the local branch that you
-created only to review the ticket.
-
-
-.. _section-git-recovery:
-
-Reset and Recovery
-==================
-
-Git makes it very hard to truly mess up. Here is a short way to get
-back onto your feet, no matter what. First, if you just want to go
-back to a working Sage installation you can always abandon your
-working branch by switching to your local copy of the ``build_system``
-branch::
-
-    [user@localhost sage]$ git checkout build_system
-
-As long as you did not make any changes to the ``build_system`` branch
-directly, this will give you back a working Sage.
-
-If you want to keep your branch but go back to a previous commit you
-can use the *reset* command. For this, look up the commit in the log
-which is some 40-digit hexadecimal number (the SHA1 hash). Then use
-``git reset --hard`` to revert your files back to the previous state::
-
-    [user@localhost sage]$ git log
-    ...
-    commit eafaedad5b0ae2013f8ae1091d2f1df58b72bae3
-    Author: First Last <user@email.com>
-    Date:   Sat Jul 20 21:57:33 2013 -0400
-
-        Commit message
-    ...
-    [user@localhost sage]$ git reset --hard eafae
-
-You only need to type the first couple of hex digits, git will
-complain if this does not uniquely specify a commit. Also, there is
-the useful abbreviation ``HEAD~`` for the previous commit and
-``HEAD~n``, with some integer ``n``, for the n-th previous commit.
-
-Finally, perhaps the ultimate human error recovery tool is the
-reflog. This is a chronological history of git operations that you can
-undo if needed. For example, let us assume we messed up the *git
-reset* command and went back too far (say, 5 commits back). And, on
-top of that, deleted a file and committed that::
-
-    [user@localhost sage]$ git reset --hard HEAD~5
-    [user@localhost sage]$ git rm sage
-    [user@localhost sage]$ git commit -m "I shot myself into my foot"
-
-Now we cannot just checkout the repository from before the reset,
-because it is no longer in the history. However, here is the reflog::
-
-    [user@localhost sage]$ git reflog
-    2eca2a2 HEAD@{0}: commit: I shot myself into my foot
-    b4d86b9 HEAD@{1}: reset: moving to HEAD~5
-    af353bb HEAD@{2}: checkout: moving from some_branch to master
-    1142feb HEAD@{3}: checkout: moving from other_branch to some_branch
-    ...
-
-The ``HEAD@{n}`` revisions are shortcuts for the history of git
-operations. Since we want to rewind to before the erroneous *git
-reset* command, we just have to reset back into the future::
-
-    [user@localhost sage]$ git reset --hard HEAD@{2}
-    
+As a general rule of thumb, use merge if you are in doubt. The
+downsides of rebasing can be really severe for other developers, while
+the downside of merging is just minor. Finally, and perhaps the most
+important advice, do nothing unless necessary. It is ok for your
+branch to be behind the master branch. Just keep developing your
+feature. Trac will tell you if it doesn't merge cleanly with the
+current master by the color of the "Branch:" field, and the patchbot
+(coloured blob on the trac ticket) will test whether your branch still
+works on the current master. Unless either a) you really need a
+feature that is only available in the current master, or b) there is a
+conflict with the current master, there is no need to do anything on
+your side.

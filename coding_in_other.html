@@ -98,23 +98,23 @@ polynomial or matrix, will have our new method. So you can do
 <tt class="file docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/libs/pari/gen.pyx</span></tt>, and this is where we
 add the method <tt class="docutils literal"><span class="pre">matfrobenius</span></tt>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">matfrobenius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="s">r&quot;&quot;&quot;</span>
-<span class="s">    M.matfrobenius(flag=0): Return the Frobenius form of the square</span>
-<span class="s">    matrix M. If flag is 1, return only the elementary divisors (a list</span>
-<span class="s">    of polynomials). If flag is 2, return a two-components vector [F,B]</span>
-<span class="s">    where F is the Frobenius form and B is the basis change so that</span>
-<span class="s">    `M=B^{-1} F B`.</span>
+    <span class="sd">r&quot;&quot;&quot;</span>
+<span class="sd">    M.matfrobenius(flag=0): Return the Frobenius form of the square</span>
+<span class="sd">    matrix M. If flag is 1, return only the elementary divisors (a list</span>
+<span class="sd">    of polynomials). If flag is 2, return a two-components vector [F,B]</span>
+<span class="sd">    where F is the Frobenius form and B is the basis change so that</span>
+<span class="sd">    `M=B^{-1} F B`.</span>
 
-<span class="s">    EXAMPLES::</span>
+<span class="sd">    EXAMPLES::</span>
 
-<span class="s">        sage: a = pari(&#39;[1,2;3,4]&#39;)</span>
-<span class="s">        sage: a.matfrobenius()</span>
-<span class="s">        [0, 2; 1, 5]</span>
-<span class="s">        sage: a.matfrobenius(flag=1)</span>
-<span class="s">        [x^2 - 5*x - 2]</span>
-<span class="s">        sage: a.matfrobenius(2)</span>
-<span class="s">        [[0, 2; 1, 5], [1, -1/3; 0, 1/3]]</span>
-<span class="s">    &quot;&quot;&quot;</span>
+<span class="sd">        sage: a = pari(&#39;[1,2;3,4]&#39;)</span>
+<span class="sd">        sage: a.matfrobenius()</span>
+<span class="sd">        [0, 2; 1, 5]</span>
+<span class="sd">        sage: a.matfrobenius(flag=1)</span>
+<span class="sd">        [x^2 - 5*x - 2]</span>
+<span class="sd">        sage: a.matfrobenius(2)</span>
+<span class="sd">        [[0, 2; 1, 5], [1, -1/3; 0, 1/3]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">sig_on</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_gen</span><span class="p">(</span><span class="n">matfrobenius</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 </pre></div>
@@ -221,14 +221,13 @@ gap&gt; CartanMatrix( R );</pre>
 <p>(Incidentally, most of the GAP Lie algebra implementation was written
 by Thomas Breuer, Willem de Graaf and Craig Struble.)</p>
 <p>In Sage, one can access these commands by typing</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">L</span> <span class="o">=</span> <span class="n">gap</span><span class="o">.</span><span class="n">SimpleLieAlgebra</span><span class="p">(</span><span class="s">&#39;&quot;G&quot;&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&#39;Rationals&#39;</span><span class="p">);</span> <span class="n">L</span>
-<span class="go">Algebra( Rationals, [ v.1, v.2, v.3, v.4, v.5, v.6, v.7, v.8, v.9, v.10,</span>
-<span class="go">  v.11, v.12, v.13, v.14 ] )</span>
-<span class="gp">sage: </span><span class="n">R</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">RootSystem</span><span class="p">();</span> <span class="n">R</span>
-<span class="go">&lt;root system of rank 2&gt;</span>
-<span class="gp">sage: </span><span class="n">R</span><span class="o">.</span><span class="n">CartanMatrix</span><span class="p">()</span>
-<span class="go">[ [ 2, -1 ], [ -3, 2 ] ]</span>
-</pre></div>
+<div class="highlight-python"><pre>sage: L = gap.SimpleLieAlgebra('"G"', 2, 'Rationals'); L
+Algebra( Rationals, [ v.1, v.2, v.3, v.4, v.5, v.6, v.7, v.8, v.9, v.10,
+  v.11, v.12, v.13, v.14 ] )
+sage: R = L.RootSystem(); R
+&lt;root system of rank 2&gt;
+sage: R.CartanMatrix()
+[ [ 2, -1 ], [ -3, 2 ] ]</pre>
 </div>
 <p>Note the <tt class="docutils literal"><span class="pre">'&quot;G&quot;'</span></tt> which is evaluated in GAP as the string <tt class="docutils literal"><span class="pre">&quot;G&quot;</span></tt>.</p>
 <p>The purpose of this section is to use this example to show how one
@@ -397,55 +396,53 @@ Total number of rational places : 6
 </div>
 <p>Here is another way of doing this same calculation in the Sage
 interface to Singular:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">singular</span><span class="o">.</span><span class="n">LIB</span><span class="p">(</span><span class="s">&quot;brnoeth.lib&quot;</span><span class="p">)</span>
-<span class="gp">sage: </span><span class="n">singular</span><span class="o">.</span><span class="n">ring</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="s">&#39;(x,y)&#39;</span><span class="p">,</span><span class="s">&#39;lp&#39;</span><span class="p">)</span>
-<span class="go">    //   characteristic : 5</span>
-<span class="go">    //   number of vars : 2</span>
-<span class="go">    //        block   1 : ordering lp</span>
-<span class="go">    //                  : names    x y</span>
-<span class="go">    //        block   2 : ordering C</span>
-<span class="gp">sage: </span><span class="n">f</span> <span class="o">=</span> <span class="n">singular</span><span class="p">(</span><span class="s">&#39;y^2-x^9-x&#39;</span><span class="p">)</span>
-<span class="gp">sage: </span><span class="k">print</span> <span class="n">singular</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s">&quot;list X1=Adj_div(</span><span class="si">%s</span><span class="s">);&quot;</span><span class="o">%</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
-<span class="go">Computing affine singular points ...</span>
-<span class="go">Computing all points at infinity ...</span>
-<span class="go">Computing affine singular places ...</span>
-<span class="go">Computing singular places at infinity ...</span>
-<span class="go">Computing non-singular places at infinity ...</span>
-<span class="go">Adjunction divisor computed successfully</span>
-
-<span class="go">The genus of the curve is 4</span>
-<span class="gp">sage: </span><span class="k">print</span> <span class="n">singular</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s">&quot;list X2=NSplaces(1,X1);&quot;</span><span class="p">)</span>
-<span class="go">Computing non-singular affine places of degree 1 ...</span>
-<span class="gp">sage: </span><span class="k">print</span> <span class="n">singular</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s">&quot;list X3=extcurve(1,X2);&quot;</span><span class="p">)</span>
-
-<span class="go">Total number of rational places : 6</span>
-
-<span class="gp">sage: </span><span class="n">singular</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s">&quot;def R=X3[1][5];&quot;</span><span class="p">)</span>
-<span class="go">&#39;def R=X3[1][5];&#39;</span>
-<span class="gp">sage: </span><span class="n">singular</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s">&quot;setring R;&quot;</span><span class="p">)</span>
-<span class="go">&#39;setring R;&#39;</span>
-<span class="gp">sage: </span><span class="n">L</span> <span class="o">=</span> <span class="n">singular</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s">&quot;POINTS;&quot;</span><span class="p">)</span>
-</pre></div>
+<div class="highlight-python"><pre>sage: singular.LIB("brnoeth.lib")
+sage: singular.ring(5,'(x,y)','lp')
+    //   characteristic : 5
+    //   number of vars : 2
+    //        block   1 : ordering lp
+    //                  : names    x y
+    //        block   2 : ordering C
+sage: f = singular('y^2-x^9-x')
+sage: print singular.eval("list X1=Adj_div(%s);"%f.name())
+Computing affine singular points ...
+Computing all points at infinity ...
+Computing affine singular places ...
+Computing singular places at infinity ...
+Computing non-singular places at infinity ...
+Adjunction divisor computed successfully
+&lt;BLANKLINE&gt;
+The genus of the curve is 4
+sage: print singular.eval("list X2=NSplaces(1,X1);")
+Computing non-singular affine places of degree 1 ...
+sage: print singular.eval("list X3=extcurve(1,X2);")
+&lt;BLANKLINE&gt;
+Total number of rational places : 6
+&lt;BLANKLINE&gt;
+sage: singular.eval("def R=X3[1][5];")
+'def R=X3[1][5];'
+sage: singular.eval("setring R;")
+'setring R;'
+sage: L = singular.eval("POINTS;")</pre>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="k">print</span> <span class="n">L</span>
-<span class="go">[1]:</span>
-<span class="go">   [1]:</span>
-<span class="go">      0</span>
-<span class="go">   [2]:</span>
-<span class="go">      1</span>
-<span class="go">   [3]:</span>
-<span class="go">      0</span>
-<span class="go">[2]:</span>
-<span class="go">   [1]:</span>
-<span class="go">      2    # 32-bit</span>
-<span class="go">      -2   # 64-bit</span>
-<span class="go">   [2]:</span>
-<span class="go">      2    # 32-bit</span>
-<span class="go">      1    # 64-bit</span>
-<span class="go">   [3]:</span>
-<span class="go">      1</span>
-<span class="gp">...</span>
-</pre></div>
+<div class="highlight-python"><pre>sage: print L
+[1]:
+   [1]:
+      0
+   [2]:
+      1
+   [3]:
+      0
+[2]:
+   [1]:
+      2    # 32-bit
+      -2   # 64-bit
+   [2]:
+      2    # 32-bit
+      1    # 64-bit
+   [3]:
+      1
+...</pre>
 </div>
 <p>From looking at the output, notice that our wrapper function will need
 to parse the string represented by <span class="math">\(L\)</span> above, so let us write a
@@ -546,13 +543,12 @@ ourselves to points of degree one.</p>
 <p>Note that the ordering returned by this Sage function is exactly the
 same as the ordering in the Singular variable <tt class="docutils literal"><span class="pre">POINTS</span></tt>.</p>
 <p>One more example (in addition to the one in the docstring):</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">F</span> <span class="o">=</span> <span class="n">GF</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">sage: </span><span class="n">R</span> <span class="o">=</span> <span class="n">MPolynomialRing</span><span class="p">(</span><span class="n">F</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="s">&quot;y&quot;</span><span class="p">])</span>
-<span class="gp">sage: </span><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">gens</span><span class="p">()</span>
-<span class="gp">sage: </span><span class="n">f</span> <span class="o">=</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span><span class="o">*</span><span class="n">y</span><span class="o">+</span><span class="n">y</span><span class="o">^</span><span class="mi">3</span><span class="o">+</span><span class="n">x</span>
-<span class="gp">sage: </span><span class="n">places_on_curve</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">F</span><span class="p">)</span>
-<span class="go">((0, 1, 0), (1, 0, 0), (0, 0, 1))</span>
-</pre></div>
+<div class="highlight-python"><pre>sage: F = GF(2)
+sage: R = MPolynomialRing(F,2,names = ["x","y"])
+sage: x,y = R.gens()
+sage: f = x^3*y+y^3+x
+sage: places_on_curve(f,F)
+((0, 1, 0), (1, 0, 0), (0, 0, 1))</pre>
 </div>
 </div>
 <div class="section" id="singular-another-approach">
@@ -560,23 +556,21 @@ same as the ordering in the Singular variable <tt class="docutils literal"><span
 <p>There is also a more Python-like interface to Singular. Using this,
 the code is much simpler, as illustrated below. First, we demonstrate
 computing the places on a curve in a particular case.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">singular</span><span class="o">.</span><span class="n">lib</span><span class="p">(</span><span class="s">&#39;brnoeth.lib&#39;</span><span class="p">)</span>
-<span class="gp">sage: </span><span class="n">R</span> <span class="o">=</span> <span class="n">singular</span><span class="o">.</span><span class="n">ring</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;(x,y)&#39;</span><span class="p">,</span> <span class="s">&#39;lp&#39;</span><span class="p">)</span>
-<span class="gp">sage: </span><span class="n">f</span> <span class="o">=</span> <span class="n">singular</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&#39;y^2 - x^9 - x&#39;</span><span class="p">)</span>
-<span class="gp">sage: </span><span class="n">X1</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">Adj_div</span><span class="p">()</span>
-<span class="gp">sage: </span><span class="n">X2</span> <span class="o">=</span> <span class="n">singular</span><span class="o">.</span><span class="n">NSplaces</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">X1</span><span class="p">)</span>
-<span class="gp">sage: </span><span class="n">X3</span> <span class="o">=</span> <span class="n">singular</span><span class="o">.</span><span class="n">extcurve</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">X2</span><span class="p">)</span>
-<span class="gp">sage: </span><span class="n">R</span> <span class="o">=</span> <span class="n">X3</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span>
-<span class="gp">sage: </span><span class="n">singular</span><span class="o">.</span><span class="n">set_ring</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
-<span class="gp">sage: </span><span class="n">L</span> <span class="o">=</span> <span class="n">singular</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&#39;POINTS&#39;</span><span class="p">)</span>
-</pre></div>
+<div class="highlight-python"><pre>sage: singular.lib('brnoeth.lib')
+sage: R = singular.ring(5, '(x,y)', 'lp')
+sage: f = singular.new('y^2 - x^9 - x')
+sage: X1 = f.Adj_div()
+sage: X2 = singular.NSplaces(1, X1)
+sage: X3 = singular.extcurve(1, X2)
+sage: R = X3[1][5]
+sage: singular.set_ring(R)
+sage: L = singular.new('POINTS')</pre>
 </div>
 <p>Note that these elements of L are defined modulo 5 in Singular, and
 they compare differently than you would expect from their print
 representation:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="nb">sorted</span><span class="p">([(</span><span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">)])</span>
-<span class="go">[(0, 0, 1), (0, 1, 0), (2, 2, 1), (2, -2, 1), (-2, 1, 1), (-2, -1, 1)]</span>
-</pre></div>
+<div class="highlight-python"><pre>sage: sorted([(L[i][1], L[i][2], L[i][3]) for i in range(1,7)])
+[(0, 0, 1), (0, 1, 0), (2, 2, 1), (2, -2, 1), (-2, 1, 1), (-2, -1, 1)]</pre>
 </div>
 <p>Next, we implement the general function (for brevity we omit the
 docstring, which is the same as above). Note that the <tt class="docutils literal"><span class="pre">point_parser</span></tt>
@@ -802,7 +796,7 @@ to other software packages.</p>
     
     <div class="footer">
         &copy; Copyright 2013, The Sage Development Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
     <script type="text/javascript">
 /*global jQuery, window */

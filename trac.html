@@ -114,12 +114,11 @@ to upload code to. This is not required if you just want to report a bug or
 comment on a ticket, but as soon as you want to contribute code yourself you
 need to provide trac with the public half of your own personal key. In recent
 versions of Sage, you can use Sage to generate an upload an SSH key:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">sage: </span><span class="n">dev</span><span class="o">.</span><span class="n">upload_ssh_key</span><span class="p">()</span>
-<span class="go">I will now upload your ssh key at `/home/user/.ssh/id_dsa.pub` to trac. This will enable access to the git repository there. Is this what you want? [Yes/no] y</span>
-<span class="go">Trac username: user</span>
-<span class="go">Trac password:</span>
-<span class="go">Your key has been uploaded.</span>
-</pre></div>
+<div class="highlight-python"><pre>sage: dev.upload_ssh_key()
+I will now upload your ssh key at `/home/user/.ssh/id_dsa.pub` to trac. This will enable access to the git repository there. Is this what you want? [Yes/no] y
+Trac username: user
+Trac password:
+Your key has been uploaded.</pre>
 </div>
 <p>You can also manually generate an SSH key and upload it to trac. This is
 described in the following two sections.</p>
@@ -594,7 +593,7 @@ measure this properly and it is highly subjective.</p>
     
     <div class="footer">
         &copy; Copyright 2013, The Sage Development Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
     <script type="text/javascript">
 /*global jQuery, window */
