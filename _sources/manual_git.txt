@@ -279,17 +279,34 @@ changesets to complete your review. Assuming that you originally got
 your local branch as in :ref:`section-git-checkout`, you can just
 issue::
 
+    [user@localhost sage]$ git pull trac u/user/description
+    From ssh://trac.sagemath.org:2222/sage
+     * branch            u/user/description -> FETCH_HEAD
+    Updating 8237337..07152d8
+    Fast-forward
+     src/sage/tests/cmdline.py      | 3 ++-
+     1 file changed, 2 insertions(+), 1 deletions(-)
+
+where now ``user`` is the other developer's trac username and
+``description`` is some description that he chose. This command will
+download the changes from the originally-used remote branch and merge
+them into your local branch. If you haven't published your local
+commits yet then you can also rebase them via::
+
     [user@localhost sage]$ git pull -r trac u/user/description
     From ssh://trac.sagemath.org:2222/sage
      * branch            u/user/description -> FETCH_HEAD
     First, rewinding head to replay your work on top of it...
-    Fast-forwarded my_branch to 19e832a93094abbf7486b51335e6b0f7dc91478c.
+    Applying: my local commit
 
-This will download the changes from the originally-used remote branch
-and rebase (the ``-r`` command line option) your local branch onto
-them. Rebasing is appropriate if you haven't published any changes to
-the ticket yourself, see the :ref:`section-git-merge` section if that
-is not the case.
+See :ref:`section-git-merge` section for an in-depth explanation of
+merge vs. rebase.
+
+So far, we assumed that there are no conflicts. It is unavoidable in
+distributed development that, sometimes, the same location in a source
+source file is changed by more than one person. Reconciling these
+conflicting edits is explained in the :ref:`section-git-conflict`
+section.
 
 
 .. _section-git-merge:
@@ -310,6 +327,7 @@ How should you deal with upstream changes while you are
 still developing your code? In principle, there are two ways of
 dealing with it:
 
+
 * The first solution is to change the commits in your local branch to
   start out at the new master. This is called **rebase**, and it
   rewrites your current branch::
@@ -317,7 +335,11 @@ dealing with it:
       git checkout my_branch
       git rebase master
 
-  In terms of the commit graph, this results in::
+  Here, we assumed that ``master`` is your local and up-to-date copy
+  of the master branch. Alternatively, you can pull changes from the
+  trac server and rebase the current in one go with the combination
+  ``git pull -r master`` command, see :ref:`section-git-pull`. In
+  terms of the commit graph, this results in::
 
                              X'--Y'--Z' my_branch
                             /
@@ -328,6 +350,7 @@ dealing with it:
   else has used one of your ``X``, ``Y``, ``Z`` commits to base their
   development on. 
 
+
 * The other solution is to not change any commits, and instead create
   a new merge commit ``W`` which merges in the changes from the newer
   master. This is called **merge**, and it merges your current branch
@@ -336,7 +359,11 @@ dealing with it:
       git checkout my_branch
       git merge master
 
-  The result is the following commit graph::
+  Here, we assumed that ``master`` is your local and up-to-date copy
+  of the master branch. Alternatively, you can pull changes from the
+  trac server and merge them into the current branch with the
+  combination ``git pull master`` command, see
+  :ref:`section-git-pull`. The result is the following commit graph::
 
                      X---Y---Z---W my_branch
                     /           /
@@ -347,6 +374,7 @@ dealing with it:
   merging: None of the existing commits is changed, only a new commit
   is made. This additional commit is then easily pushed to the git
   repository and distributed to your collaborators.
+
 
 As a general rule of thumb, use merge if you are in doubt. The
 downsides of rebasing can be really severe for other developers, while
@@ -360,3 +388,162 @@ works on the current master. Unless either a) you really need a
 feature that is only available in the current master, or b) there is a
 conflict with the current master, there is no need to do anything on
 your side.
+
+
+.. _section-git-conflict:
+
+Conflict Resolution
+===================
+
+Merge conflicts happen if there are overlapping edits, and they are an
+unavoidable consequence of distributed development. Fortunately,
+wresolving them is common and easy with git. As a hypothetical
+example, consider the following code snippet::
+
+    def fibonacci(i):
+        """
+	Return the `i`-th Fibonacci number
+	"""
+	return fibonacci(i-1) * fibonacci(i-2)
+
+This is clearly wrong; Two developers, namely Alice and Bob, decide to
+fix it. First, in a cabin in the woods far away from any internet
+connection, Alice corrects the seed values::
+
+    def fibonacci(i):
+       """
+       Return the `i`-th Fibonacci number
+       """
+       if i > 1:
+           return fibonacci(i-1) * fibonacci(i-2)
+       return [0, 1][i]
+
+and turns those changes into a new commit::
+
+    [alice@laptop]$ git commit -m 'return correct seed values'
+    [fibonacci_alice 14ae1d3] return correct seed values
+     1 file changed, 3 insertions(+), 1 deletion(-)
+
+However, not having an internet connection, she cannot immediately
+send her changes to the trac server. Meanwhile, Bob changes the
+multiplication to an addition since that is the correct recursion
+formula::
+
+    def fibonacci(i):
+        """
+	Return the `i`-th Fibonacci number
+	"""
+	return fibonacci(i-1) + fibonacci(i-2)
+
+and immediately uploads his change::
+
+    [bob@home]$ git commit -m 'corrected recursion formula, must be + instead of *'
+    [fibonacci_bob 41675df] corrected recursion formula, must be + instead of *
+    1 file changed, 1 insertion(+), 1 deletion(-)
+
+    [bob@home]$ git push trac HEAD:u/bob/fibonacci
+    Counting objects: 5, done.
+    Delta compression using up to 8 threads.
+    Compressing objects: 100% (2/2), done.
+    Writing objects: 100% (3/3), 320 bytes | 0 bytes/s, done.
+    Total 3 (delta 1), reused 0 (delta 0)
+    To ssh://trac.sagemath.org:2222/sage
+       14afe53..41675df  HEAD -> u/bob/fibonacci
+
+Eventually, Alice returns to civilization. In her mailbox, she finds a
+trac notification email that Bob has uploaded further changes to their
+joint project. Hence, she starts out by getting his changes into her
+own local branch::
+
+    [alice@laptop]$ git pull trac u/bob/fibonacci
+    From ssh://trac.sagemath.org:2222/sage
+     * branch            u/bob/fibonacci     -> FETCH_HEAD
+    Auto-merging fibonacci.py
+    CONFLICT (content): Merge conflict in fibonacci.py
+    Automatic merge failed; fix conflicts and then commit the result.
+
+The file now looks like this::
+
+    def fibonacci(i):
+        """
+        Return the `i`-th Fibonacci number
+        """
+    <<<<<<< HEAD
+        if i > 1:
+            return fibonacci(i-1) * fibonacci(i-2)
+        return i
+    =======
+        return fibonacci(i-1) + fibonacci(i-2)
+    >>>>>>> 41675dfaedbfb89dcff0a47e520be4aa2b6c5d1b
+    
+The conflict is shown between the conflict markers ``<<<<<<<`` and
+``>>>>>>>``. The first half (up to the ``=======`` marker) is Alice's
+current version, the second half is Bob's version. The 40-digit hex
+number after the second conflict marker is the SHA1 hash of the most
+recent common parent of both.
+
+It is now Alice's job to resolve the conflict by reconciling their
+changes, for example by editing the file. Her result is::
+    
+    def fibonacci(i):
+        """
+        Return the `i`-th Fibonacci number
+        """
+        if i > 1:
+            return fibonacci(i-1) + fibonacci(i-2)
+        return [0, 1][i]
+    
+And then upload both her original change *and* her merge commit to trac::
+
+    [alice@laptop]$ git commit -m "merged Bob's changes with mine"
+    [fibonacci_allice 6316447] merged Bob's changes with mine
+    $ git push trac HEAD:u/alice/fibonacci
+
+The resulting commit graph now has a loop::
+    
+    $ git log --graph --oneline
+    *   6316447 merged Bob's changes with mine
+    |\  
+    | * 41675df corrected recursion formula, must be + instead of *
+    * | 14ae1d3 return correct seed values
+    |/  
+    * 14afe53 initial commit
+    
+If Bob decides to do further work on the ticket then he will have to
+pull from ``u/alice/fibonacci``. However, this time there is no
+conflict on his end: git downloads both Alice's conflicting commit and
+her resolution.
+
+
+Merge Tools
+-----------
+
+Just editing the file with the conflict markers is often the simplest
+solution. However, for more complicated conflicts there is a range of
+specialized programs available to help you identify the
+conflicts. Because the conflict marker includes the hash of the most
+recent common parent, you can use a three-way diff::
+
+    [alice@laptop]$ git mergetool
+    
+    This message is displayed because 'merge.tool' is not configured.
+    See 'git mergetool --tool-help' or 'git help config' for more details.
+    'git mergetool' will now attempt to use one of the following tools:
+    meld opendiff kdiff3 [...] merge araxis bc3 codecompare emerge vimdiff
+    Merging:
+    fibonacci.py
+    
+    Normal merge conflict for 'fibonacci.py':
+      {local}: modified file
+      {remote}: modified file
+    Hit return to start merge resolution tool (meld): 
+    
+If you don't have a favorite merge tool we suggest you try meld
+(cross-platform). The result looks like the following screenshot.
+
+.. image:: static/meld-screenshot.png
+
+The middle file is the most recent common parent; on the right is
+Bob's version and on the left is Alice's conflicting version. Clicking
+on the arrow moves the marked change to the file in the adjacent
+pane. 

@@ -294,17 +294,32 @@ your suggestions into his branch, and you want to get the added
 changesets to complete your review. Assuming that you originally got
 your local branch as in <a class="reference internal" href="#section-git-checkout"><em>Checking Out Tickets</em></a>, you can just
 issue:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git pull trac u/user/description
+From ssh://trac.sagemath.org:2222/sage
+ * branch            u/user/description -&gt; FETCH_HEAD
+Updating 8237337..07152d8
+Fast-forward
+ src/sage/tests/cmdline.py      | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletions(-)</pre>
+</div>
+<p>where now <tt class="docutils literal"><span class="pre">user</span></tt> is the other developer&#8217;s trac username and
+<tt class="docutils literal"><span class="pre">description</span></tt> is some description that he chose. This command will
+download the changes from the originally-used remote branch and merge
+them into your local branch. If you haven&#8217;t published your local
+commits yet then you can also rebase them via:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git pull -r trac u/user/description
 From ssh://trac.sagemath.org:2222/sage
  * branch            u/user/description -&gt; FETCH_HEAD
 First, rewinding head to replay your work on top of it...
-Fast-forwarded my_branch to 19e832a93094abbf7486b51335e6b0f7dc91478c.</pre>
+Applying: my local commit</pre>
 </div>
-<p>This will download the changes from the originally-used remote branch
-and rebase (the <tt class="docutils literal"><span class="pre">-r</span></tt> command line option) your local branch onto
-them. Rebasing is appropriate if you haven&#8217;t published any changes to
-the ticket yourself, see the <a class="reference internal" href="#section-git-merge"><em>Merging and Rebasing</em></a> section if that
-is not the case.</p>
+<p>See <a class="reference internal" href="#section-git-merge"><em>Merging and Rebasing</em></a> section for an in-depth explanation of
+merge vs. rebase.</p>
+<p>So far, we assumed that there are no conflicts. It is unavoidable in
+distributed development that, sometimes, the same location in a source
+source file is changed by more than one person. Reconciling these
+conflicting edits is explained in the <a class="reference internal" href="#section-git-conflict"><em>Conflict Resolution</em></a>
+section.</p>
 </div>
 </div>
 <div class="section" id="merging-and-rebasing">
@@ -327,7 +342,11 @@ rewrites your current branch:</p>
 <div class="highlight-python"><pre>git checkout my_branch
 git rebase master</pre>
 </div>
-<p>In terms of the commit graph, this results in:</p>
+<p>Here, we assumed that <tt class="docutils literal"><span class="pre">master</span></tt> is your local and up-to-date copy
+of the master branch. Alternatively, you can pull changes from the
+trac server and rebase the current in one go with the combination
+<tt class="docutils literal"><span class="pre">git</span> <span class="pre">pull</span> <span class="pre">-r</span> <span class="pre">master</span></tt> command, see <a class="reference internal" href="#section-git-pull"><em>Getting Changes</em></a>. In
+terms of the commit graph, this results in:</p>
 <div class="highlight-python"><pre>              X'--Y'--Z' my_branch
              /
 A---B---C---D master</pre>
@@ -344,7 +363,11 @@ with another branch:</p>
 <div class="highlight-python"><pre>git checkout my_branch
 git merge master</pre>
 </div>
-<p>The result is the following commit graph:</p>
+<p>Here, we assumed that <tt class="docutils literal"><span class="pre">master</span></tt> is your local and up-to-date copy
+of the master branch. Alternatively, you can pull changes from the
+trac server and merge them into the current branch with the
+combination <tt class="docutils literal"><span class="pre">git</span> <span class="pre">pull</span> <span class="pre">master</span></tt> command, see
+<a class="reference internal" href="#section-git-pull"><em>Getting Changes</em></a>. The result is the following commit graph:</p>
 <div class="highlight-python"><pre>      X---Y---Z---W my_branch
      /           /
 A---B---C-------D master</pre>
@@ -369,6 +392,149 @@ feature that is only available in the current master, or b) there is a
 conflict with the current master, there is no need to do anything on
 your side.</p>
 </div>
+<div class="section" id="conflict-resolution">
+<span id="section-git-conflict"></span><h2>Conflict Resolution<a class="headerlink" href="#conflict-resolution" title="Permalink to this headline">¶</a></h2>
+<p>Merge conflicts happen if there are overlapping edits, and they are an
+unavoidable consequence of distributed development. Fortunately,
+wresolving them is common and easy with git. As a hypothetical
+example, consider the following code snippet:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the `i`-th Fibonacci number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is clearly wrong; Two developers, namely Alice and Bob, decide to
+fix it. First, in a cabin in the woods far away from any internet
+connection, Alice corrects the seed values:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   Return the `i`-th Fibonacci number</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+   <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+       <span class="k">return</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+   <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>and turns those changes into a new commit:</p>
+<div class="highlight-python"><pre>[alice@laptop]$ git commit -m 'return correct seed values'
+[fibonacci_alice 14ae1d3] return correct seed values
+ 1 file changed, 3 insertions(+), 1 deletion(-)</pre>
+</div>
+<p>However, not having an internet connection, she cannot immediately
+send her changes to the trac server. Meanwhile, Bob changes the
+multiplication to an addition since that is the correct recursion
+formula:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the `i`-th Fibonacci number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and immediately uploads his change:</p>
+<div class="highlight-python"><pre>[bob@home]$ git commit -m 'corrected recursion formula, must be + instead of *'
+[fibonacci_bob 41675df] corrected recursion formula, must be + instead of *
+1 file changed, 1 insertion(+), 1 deletion(-)
+
+[bob@home]$ git push trac HEAD:u/bob/fibonacci
+Counting objects: 5, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 320 bytes | 0 bytes/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+To ssh://trac.sagemath.org:2222/sage
+   14afe53..41675df  HEAD -&gt; u/bob/fibonacci</pre>
+</div>
+<p>Eventually, Alice returns to civilization. In her mailbox, she finds a
+trac notification email that Bob has uploaded further changes to their
+joint project. Hence, she starts out by getting his changes into her
+own local branch:</p>
+<div class="highlight-python"><pre>[alice@laptop]$ git pull trac u/bob/fibonacci
+From ssh://trac.sagemath.org:2222/sage
+ * branch            u/bob/fibonacci     -&gt; FETCH_HEAD
+Auto-merging fibonacci.py
+CONFLICT (content): Merge conflict in fibonacci.py
+Automatic merge failed; fix conflicts and then commit the result.</pre>
+</div>
+<p>The file now looks like this:</p>
+<div class="highlight-python"><pre>def fibonacci(i):
+    """
+    Return the `i`-th Fibonacci number
+    """
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+    if i &gt; 1:
+        return fibonacci(i-1) * fibonacci(i-2)
+    return i
+=======
+    return fibonacci(i-1) + fibonacci(i-2)
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 41675dfaedbfb89dcff0a47e520be4aa2b6c5d1b</pre>
+</div>
+<p>The conflict is shown between the conflict markers <tt class="docutils literal"><span class="pre">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span></tt> and
+<tt class="docutils literal"><span class="pre">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span></tt>. The first half (up to the <tt class="docutils literal"><span class="pre">=======</span></tt> marker) is Alice&#8217;s
+current version, the second half is Bob&#8217;s version. The 40-digit hex
+number after the second conflict marker is the SHA1 hash of the most
+recent common parent of both.</p>
+<p>It is now Alice&#8217;s job to resolve the conflict by reconciling their
+changes, for example by editing the file. Her result is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the `i`-th Fibonacci number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>And then upload both her original change <em>and</em> her merge commit to trac:</p>
+<div class="highlight-python"><pre>[alice@laptop]$ git commit -m "merged Bob's changes with mine"
+[fibonacci_allice 6316447] merged Bob's changes with mine
+$ git push trac HEAD:u/alice/fibonacci</pre>
+</div>
+<p>The resulting commit graph now has a loop:</p>
+<div class="highlight-python"><pre>$ git log --graph --oneline
+*   6316447 merged Bob's changes with mine
+|\
+| * 41675df corrected recursion formula, must be + instead of *
+* | 14ae1d3 return correct seed values
+|/
+* 14afe53 initial commit</pre>
+</div>
+<p>If Bob decides to do further work on the ticket then he will have to
+pull from <tt class="docutils literal"><span class="pre">u/alice/fibonacci</span></tt>. However, this time there is no
+conflict on his end: git downloads both Alice&#8217;s conflicting commit and
+her resolution.</p>
+<div class="section" id="merge-tools">
+<h3>Merge Tools<a class="headerlink" href="#merge-tools" title="Permalink to this headline">¶</a></h3>
+<p>Just editing the file with the conflict markers is often the simplest
+solution. However, for more complicated conflicts there is a range of
+specialized programs available to help you identify the
+conflicts. Because the conflict marker includes the hash of the most
+recent common parent, you can use a three-way diff:</p>
+<div class="highlight-python"><pre>[alice@laptop]$ git mergetool
+
+This message is displayed because 'merge.tool' is not configured.
+See 'git mergetool --tool-help' or 'git help config' for more details.
+'git mergetool' will now attempt to use one of the following tools:
+meld opendiff kdiff3 [...] merge araxis bc3 codecompare emerge vimdiff
+Merging:
+fibonacci.py
+
+Normal merge conflict for 'fibonacci.py':
+  {local}: modified file
+  {remote}: modified file
+Hit return to start merge resolution tool (meld):</pre>
+</div>
+<p>If you don&#8217;t have a favorite merge tool we suggest you try meld
+(cross-platform). The result looks like the following screenshot.</p>
+<img alt="_images/meld-screenshot.png" src="_images/meld-screenshot.png" />
+<p>The middle file is the most recent common parent; on the right is
+Bob&#8217;s version and on the left is Alice&#8217;s conflicting version. Clicking
+on the arrow moves the marked change to the file in the adjacent
+pane.</p>
+</div>
+</div>
 </div>
 
 
@@ -389,6 +555,10 @@ your side.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#merging-and-rebasing">Merging and Rebasing</a></li>
+<li><a class="reference internal" href="#conflict-resolution">Conflict Resolution</a><ul>
+<li><a class="reference internal" href="#merge-tools">Merge Tools</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
