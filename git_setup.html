@@ -65,14 +65,16 @@
 <span id="chapter-git-setup"></span><h1>Setting Up Git<a class="headerlink" href="#setting-up-git" title="Permalink to this headline">¶</a></h1>
 <p>To work on the Sage source code, you need</p>
 <ul class="simple">
-<li>a working git installation, see <a class="reference internal" href="#section-git-install"><em>Installing Git</em></a></li>
+<li>a working git installation, see <a class="reference internal" href="#section-git-install"><em>Installing Git</em></a>. Sage
+actually comes with git, see below. However, it is recommended that
+you have a system-wide install if only to save you some typing.</li>
 <li>configure git to use your name and email address for commits, see
-<a class="reference internal" href="#section-git-setup-name"><em>Your Name and Email</em></a></li>
+<a class="reference internal" href="#section-git-setup-name"><em>Your Name and Email</em></a>. The Sage development scripts will
+prompt you if you don&#8217;t. But, especially if you use git for other
+projects in the future as well, you really should configure git.</li>
 </ul>
-<p>You need to perform these two steps to participate in the Sage
-development. The <a class="reference internal" href="git_background.html#chapter-git-background"><em>Git Background</em></a> chapter contains
-further information about git that might be useful to some but are not
-required.</p>
+<p>The <a class="reference internal" href="git_background.html#chapter-git-background"><em>Git Background</em></a> chapter contains further information
+about git that might be useful to some but are not required.</p>
 <div class="section" id="installing-git">
 <span id="section-git-install"></span><h2>Installing Git<a class="headerlink" href="#installing-git" title="Permalink to this headline">¶</a></h2>
 <p>First, try <tt class="docutils literal"><span class="pre">git</span></tt> on the command line. Most distributions will have
@@ -88,7 +90,14 @@ that fails, use the following to install git:</p>
 <dt>OS X</dt>
 <dd>Use the <a class="reference external" href="http://code.google.com/p/git-osx-installer/downloads/list">git OSX installer</a></dd>
 </dl>
-<p>Some further ressources for installation help are:</p>
+<p>Finally, Sage includes git. Obviously there is a chicken-and-egg
+problem to checkout the Sage source code from its git repository, but
+one can always download a Sage source tarball or binary
+distribution. You can then run git via the <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-git</span></tt> command line
+switch. So, for example, <tt class="docutils literal"><span class="pre">git</span> <span class="pre">help</span></tt> becomes <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-git</span> <span class="pre">help</span></tt> and
+so on. Note that the examples in the developer guide will assume that
+you have a system-wide git installation.</p>
+<p>Some further resources for installation help are:</p>
 <ul class="simple">
 <li><a class="reference external" href="http://book.git-scm.com/2_installing_git.html">Chapter 2 of the git book</a></li>
 <li>The <a class="reference external" href="http://git-scm.com">git homepage</a> for the most recent

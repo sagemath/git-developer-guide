@@ -78,68 +78,123 @@ to).</p>
 <p>Most of the commands in the following section will not work unless you have an
 account on the bug tracker. If you want to contribute to Sage, it is a good
 idea to get an account now (see <a class="reference internal" href="trac.html#section-trac-account"><em>Obtaining an Account</em></a>).</p>
-<p>We assume here that the <tt class="docutils literal"><span class="pre">sage</span></tt> executable of your development installation of
-Sage is in your <tt class="docutils literal"><span class="pre">PATH</span></tt>. If this is not the case, you might have to replace
-<tt class="docutils literal"><span class="pre">sage</span></tt> by <tt class="docutils literal"><span class="pre">./sage</span></tt> in the following (assuming you are in the sage root
-directory). You can also use the developer scripts from the Sage prompt. All
-commands to <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-dev</span></tt> are available as methods on the global <tt class="docutils literal"><span class="pre">dev</span></tt>
-object, e.g., the equivalent of <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-dev</span> <span class="pre">switch-ticket</span> <span class="pre">12345</span></tt> would be
-<tt class="docutils literal"><span class="pre">dev.switch_ticket(12345)</span></tt>.</p>
+<p>We assume here that the <tt class="docutils literal"><span class="pre">sage</span></tt> executable of your development
+installation of Sage is in your <tt class="docutils literal"><span class="pre">PATH</span></tt>. If this is not the case, you
+might have to replace <tt class="docutils literal"><span class="pre">sage</span></tt> by <tt class="docutils literal"><span class="pre">./sage</span></tt> or <tt class="docutils literal"><span class="pre">/path/to/sage</span></tt> in
+the following. You can also use the developer scripts from the Sage
+prompt. All commandline options to <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-dev</span></tt> are also available as
+methods of the <tt class="docutils literal"><span class="pre">dev</span></tt> object in a Sage session. That is, for example,
+to checkout a ticktet you can either run:</p>
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev checkout --ticket 1729
+On ticket #1729 with associated local branch "ticket/1729".
+
+#  Use "sage --dev commit" to save changes in a new commit when
+#  you are finished editing.</pre>
+</div>
+<p>in a terminal or, equivalently, within Sage:</p>
+<div class="highlight-python"><pre>sage: dev.checkout(1729)
+On ticket #1729 with associated local branch "ticket/1729".
+
+#  Use "dev.commit()" to save changes in a new commit when you
+#  are finished editing.</pre>
+</div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p>In the transitional period it can happen that you end up on a branch where
-the developer scripts are not available or outdated. If this is the case,
-i.e., if <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-dev</span></tt> does not work properly anymore:</p>
-<ul class="last simple">
-<li>Go to <a class="reference external" href="http://trac.sagemath.org/14482">http://trac.sagemath.org/14482</a></li>
-<li>Note the branch field on the ticket, e.g., <tt class="docutils literal"><span class="pre">u/saraedum/ticket/14482</span></tt></li>
-<li>Run <tt class="docutils literal"><span class="pre">git</span> <span class="pre">pull</span> <span class="pre">git://trac.sagemath.org/sage.git</span> <span class="pre">u/saraedum/ticket/14482</span></tt>
-to add the latest version of the developer scripts to your branch</li>
-</ul>
+<p>During the transitional period it can happen that you end up
+on a branch where the developer scripts are not available or
+outdated. If this is the case, i.e., if <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-dev</span></tt> does not
+work properly anymore, run:</p>
+<div class="highlight-python"><pre>git pull git://trac.sagemath.org/sage.git public/sage-git/master
+sage -b</pre>
 </div>
-<div class="section" id="adding-to-the-sage-sources">
-<span id="section-walkthrough-add"></span><h2>Adding to the Sage Sources<a class="headerlink" href="#adding-to-the-sage-sources" title="Permalink to this headline">¶</a></h2>
+<p class="last">This will merge the latest version of the developer scripts
+with your current branch. After rebuilding the Sage library,
+the dev scripts should work again.</p>
+</div>
+<div class="section" id="contributing-to-the-sage-source-code">
+<span id="section-walkthrough-add"></span><h2>Contributing to the Sage Source Code<a class="headerlink" href="#contributing-to-the-sage-source-code" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-a-ticket">
+<h3>Create a Ticket<a class="headerlink" href="#create-a-ticket" title="Permalink to this headline">¶</a></h3>
 <p>Suppose you have written an algorithm for calculating the last twin prime, and
 want to add it to Sage. You would first open a ticket for that:</p>
-<div class="highlight-python"><pre>sage -dev create-ticket</pre>
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev create-ticket</pre>
 </div>
-<p>This will give you an editor in which you can give a summary and a description
-of what you want to do. If you are not sure which values to put for the other
-fields, you can leave the defaults or have a look at
-<a class="reference internal" href="trac.html#section-trac-fields"><em>The Ticket Fields</em></a>. After you close the editor, a new ticket will be
-opened on the trac server. From that point on, everyone can see what you intend
-to do, which is very useful for avoiding double work.</p>
-<p>If you want to cancel the creation of a ticket, then you can just save an empty
-file. This will abort the operation.</p>
-<p>After saving your ticket on the trac server, a branch will be created for you.
-A branch is essentially a named container to store your modifications to the
-Sage source code. Your new branch is now called <tt class="docutils literal"><span class="pre">ticket/&lt;TICKETNUM&gt;</span></tt>. Unless
-you upload it (see below), it will only be on your local system and not visible
-to anyone else.</p>
-<p>At this point, you will start editing the source code, trying it out, running
-doctests, et cetera. At some point, you may wish to share your changes with the
-rest of us: maybe it is ready for review, or maybe you are collaborating with
-someone and want to share your changes &#8220;up until now&#8221;.</p>
-<p>The first step is to record your changes into your branch:</p>
-<div class="highlight-python"><pre>sage -dev commit</pre>
+<p>This will give you an editor in which you can give a summary and a
+description of what you want to do. If you are not sure which values
+to put for the other fields, you can leave the defaults or have a look
+at <a class="reference internal" href="trac.html#section-trac-fields"><em>The Ticket Fields</em></a>. After you close the editor, a new
+ticket will be opened on the trac server. From that point on, everyone
+can see what you intend to do which lets us avoid duplicating work. If
+you want to cancel the creation of a ticket, then you can just save an
+empty file. This will abort the operation.</p>
+<p>Alternatively, you can use the <a class="reference external" href="http://trac.sagemath.org">web interface to the Sage trac
+development server</a> to open a new ticket,
+just log in and click on &#8220;Create Ticket&#8221;.</p>
 </div>
-<p>You will be asked to write a message describing your changes. It is common to
-write a one line summary, then a blank line, and then a 1 - 2 paragraph
-explanation of your changes. (Of course, if your changes are minor, then just
-the one-line summary can be enough.)</p>
-<p>The next step is to upload your changes to Trac:</p>
-<div class="highlight-python"><pre>sage -dev upload</pre>
+<div class="section" id="editing-the-source-code">
+<h3>Editing the Source Code<a class="headerlink" href="#editing-the-source-code" title="Permalink to this headline">¶</a></h3>
+<p>If you want to work on a ticket which you or somebody else created,
+you first need to make a local &#8220;branch&#8221;. The development scripts
+maintain a mapping between local branches and trac tickets. Creating a
+new local branch for a ticket is easy:</p>
+<div class="highlight-python"><pre>[user@localhost]$ ./sage -dev checkout --ticket 1729
+On ticket #1729 with associated local branch "ticket/1729".
+
+#  Use "sage --dev commit" to save changes in a new commit when you are finished
+#  editing.</pre>
 </div>
-<p>On trac, your branch will be called <tt class="docutils literal"><span class="pre">u/&lt;USERNAME&gt;/ticket/&lt;TICKETNUM&gt;</span></tt>.
-Additionally, this will set the Branch field on the ticket to point to this
-branch. This way, other people know where to find your work.</p>
-<p>It is common to go through some iterations of <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-dev</span> <span class="pre">commit</span></tt> before you
-upload, and you will probably also have uploaded a few times before your
-changes are ready for review.</p>
-<p>If you are happy with the changes you uploaded, you want somebody else to
-review them, so they can be included into the next version of Sage. If your
-ticket is ready for review, run:</p>
-<div class="highlight-python"><pre>sage -dev edit-ticket</pre>
+<p>Essentially, a branch is a copy (except that it doesn&#8217;t take up twice
+the space) of the Sage source code where you can store your
+modifications to the Sage source code and which you can upload to trac
+tickets. Your new branch is now called <tt class="docutils literal"><span class="pre">ticket/&lt;TICKETNUM&gt;</span></tt>. Unless
+you upload (&#8220;push&#8221;) it, see below, it will only be on your local
+system and not visible to anyone else.</p>
+<p>At this point you can start editing the source code. The subsequent
+chapters of this developer guide explain how your code should look
+like to fit into Sage, and how we ensure high code quality
+throughout. Whenever you have reached one of your goals, you should
+make a <em>commit</em>. This takes a snapshot of the whole Sage source code
+that you have been working on and records the changes into your local
+branch:</p>
+<div class="highlight-python"><pre>[user@localhost]$ ./sage -dev commit
+Commit your changes to branch "ticket/1729"? [Yes/no] y
+
+#  Use "sage --dev push" to push your commits to the trac server once you are
+#  done.</pre>
+</div>
+<p>You will be asked to write a message describing your changes. It is
+common to write a one line summary, then a blank line, and then a 1-2
+paragraph explanation of your changes. If your changes are minor, then
+just the one-line summary can be enough.</p>
+<p>If you are working on a larger project, it can be useful to break up
+your work into multiple commits: Each commit is saved, enabling you to
+retrieve older versions of files from the repository. So, even if you
+accidentally delete something, you can get it back later. Also, if you
+find a mistake in one of your earlier commits, then you just correct
+it in the Sage source code and then add another commit on top.</p>
+</div>
+<div class="section" id="uploading-changes-to-trac">
+<h3>Uploading Changes to Trac<a class="headerlink" href="#uploading-changes-to-trac" title="Permalink to this headline">¶</a></h3>
+<p>At some point, you may wish to share your changes with the rest of us:
+maybe it is ready for review, or maybe you are collaborating with
+someone and want to share your changes &#8220;up until now&#8221;. This is simply
+done by:</p>
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev push</pre>
+</div>
+<p>On trac, your remote branch will be called
+<tt class="docutils literal"><span class="pre">u/&lt;USERNAME&gt;/ticket/&lt;TICKETNUM&gt;</span></tt>. This name will automatically be
+added to the &#8220;Branch:&#8221; field on the ticket. Other developers then know
+where to find your work in the git repository.</p>
+<p>It is common to go through some iterations of <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-dev</span> <span class="pre">commit</span></tt>
+before you upload, and you will probably also have uploaded a few
+times before your changes are ready for review.</p>
+<p>If you are happy with the changes you uploaded, you want somebody else
+to review them, so they can be included into the next version of
+Sage. If your ticket is ready for review, you should set it to
+<tt class="docutils literal"><span class="pre">needs_review</span></tt> on the trac server. This can be done though the <a class="reference external" href="http://trac.sagemath.org">web
+interface</a>, or, alternatively, using the
+development scripts. For the latter, run:</p>
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev edit-ticket</pre>
 </div>
 <p>This will give you an editor in which you can edit the ticket. Change the
 status to:</p>
@@ -150,7 +205,15 @@ first line:</p>
 <div class="highlight-python"><pre>Authors: Your Real Name</pre>
 </div>
 <p>If you want to add an additional comment for potential reviewers, run:</p>
-<div class="highlight-python"><pre>sage -dev add-comment</pre>
+<div class="highlight-python"><pre>sage -dev comment</pre>
+</div>
+</div>
+<div class="section" id="starting-without-a-ticket">
+<h3>Starting Without a Ticket<a class="headerlink" href="#starting-without-a-ticket" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">describe starting with a local branch</p>
+</div>
 </div>
 </div>
 <div class="section" id="reviewing">
@@ -158,24 +221,25 @@ first line:</p>
 <p>Now suppose you want to review the existing work on a ticket, such as the one
 you created in the last section.  For definiteness, suppose you want to review
 #12270. You would do that as follows:</p>
-<div class="highlight-python"><pre>sage -dev switch-ticket 12270</pre>
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev checkout --ticket 12270</pre>
 </div>
 <p>This command will download the branch on Trac in case you do not have any local
 work on ticket 12270. (If you do, you may have to merge your changes; see
 below). You can now test the ticket; you&#8217;ll probably want to call <tt class="docutils literal"><span class="pre">make</span></tt> or
-<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-b</span></tt>.</p>
+<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-b</span></tt> first to rebuild Sage with the changes.</p>
 <p>Your will want to add a comment to the ticket as part of your review:</p>
-<div class="highlight-python"><pre>sage -dev add-comment</pre>
+<div class="highlight-python"><pre>sage -dev comment</pre>
 </div>
 <p>This will open a text editor in which you can type, and upload the result to Trac.</p>
 <p>It is also possible that you make some changes to the code as part of your review. After
 you&#8217;ve done that, you can upload your changes back to trac:</p>
 <div class="highlight-python"><pre>sage -dev commit
-sage -dev upload</pre>
+sage -dev push</pre>
 </div>
-<p>This will update the ticket to now point to your branch, including your changes. Your branch
-is based on the original author&#8217;s branch, so s/he can easily incorporate your changes into his/her
-own branch (see below).</p>
+<p>This will update the ticket to now point to your branch, including
+your changes. Your branch is based on the original author&#8217;s branch, so
+s/he can easily incorporate your changes into his/her own branch (see
+below).</p>
 </div>
 <div class="section" id="collaboration">
 <span id="section-walkthrough-collaborate"></span><h2>Collaboration<a class="headerlink" href="#collaboration" title="Permalink to this headline">¶</a></h2>
@@ -183,43 +247,49 @@ own branch (see below).</p>
 <div class="highlight-python"><pre># developer 1
 &lt;EDIT EDIT&gt;
 sage -dev commit
-sage -dev upload
+sage -dev push
+
 # developer 2
-sage -dev download
+sage -dev pull
 &lt;EDIT EDIT&gt;
 sage -dev commit
-sage -dev upload
+sage -dev push
+
 # developer 1
-sage -dev download
+sage -dev pull
 &lt;EDIT EDIT&gt;
 sage -dev commit
-sage -dev upload
+sage -dev push
 (etc)</pre>
 </div>
 <p>The obvious problem is when you both work on the same ticket simultaneously:</p>
 <div class="highlight-python"><pre># developer 1
 &lt;EDIT EDIT&gt;
 sage -dev commit
-sage -dev upload
+sage -dev push
+
 # developer 2
 &lt;EDIT EDIT&gt;
 sage -dev commit
-sage -dev upload
-Changes not compatible with remote branch u/&lt;developer1&gt;/ticket/12270; consider downloading first. Are you sure you want to continue?</pre>
+sage -dev push
+Changes not compatible with remote branch
+u/&lt;developer1&gt;/ticket/12270; consider
+downloading first. Are you sure you want to continue?</pre>
 </div>
 <p>Developer 2 should probably select <tt class="docutils literal"><span class="pre">No</span></tt>, and do as suggested:</p>
-<div class="highlight-python"><pre>sage -dev download</pre>
+<div class="highlight-python"><pre>sage -dev pull</pre>
 </div>
-<p>This will try to merge the changes developer 1 made into the ones that developer 2 made. The latter should check whether
-all seems okay, and if so, upload the changes:</p>
-<div class="highlight-python"><pre>sage -dev upload   # works now</pre>
+<p>This will try to merge the changes developer 1 made into the ones that
+developer 2 made. The latter should check whether all seems okay, and
+if so, upload the changes:</p>
+<div class="highlight-python"><pre>sage -dev push   # works now</pre>
 </div>
 <p>It is possible that the changes cannot be automatically merged. In
 that case, developer 2 will have to do some manual fixup after
 downloading and before uploading:</p>
 <div class="highlight-python"><pre>&lt;EDIT EDIT FOR FIXUP&gt;
 sage -dev commit
-sage -dev upload</pre>
+sage -dev push</pre>
 </div>
 </div>
 </div>
@@ -233,7 +303,13 @@ sage -dev upload</pre>
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference internal" href="#">Sage Development Process</a><ul>
-<li><a class="reference internal" href="#adding-to-the-sage-sources">Adding to the Sage Sources</a></li>
+<li><a class="reference internal" href="#contributing-to-the-sage-source-code">Contributing to the Sage Source Code</a><ul>
+<li><a class="reference internal" href="#create-a-ticket">Create a Ticket</a></li>
+<li><a class="reference internal" href="#editing-the-source-code">Editing the Source Code</a></li>
+<li><a class="reference internal" href="#uploading-changes-to-trac">Uploading Changes to Trac</a></li>
+<li><a class="reference internal" href="#starting-without-a-ticket">Starting Without a Ticket</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#reviewing">Reviewing</a></li>
 <li><a class="reference internal" href="#collaboration">Collaboration</a></li>
 </ul>
