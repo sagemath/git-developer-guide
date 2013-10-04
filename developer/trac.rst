@@ -69,7 +69,8 @@ need to provide trac with the public half of your own personal key. In recent
 versions of Sage, you can use Sage to generate an upload an SSH key::
 
 	sage: dev.upload_ssh_key()
-	I will now upload your ssh key at `/home/user/.ssh/id_dsa.pub` to trac. This will enable access to the git repository there. Is this what you want? [Yes/no] y
+	The trac git server requires your SSH public key to be able to identify you.
+	Upload "/home/vbraun/.ssh/id_dsa.pub" to trac? [Yes/no] y
 	Trac username: user
 	Trac password:
 	Your key has been uploaded.
@@ -134,7 +135,7 @@ ssh into that machine you don't have to provide your password.
 .. _section-trac-ssh-key:
 
 Manually Linking your Public Key to your Trac Account
---------------------------------------------
+-----------------------------------------------------
 
 The Sage trac server needs to know one of your public keys. You can
 upload it in the preferences, that is
