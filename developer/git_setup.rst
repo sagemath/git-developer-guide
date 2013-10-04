@@ -6,15 +6,17 @@ Setting Up Git
 
 To work on the Sage source code, you need
 
-* a working git installation, see :ref:`section-git-install`
+* a working git installation, see :ref:`section-git-install`. Sage
+  actually comes with git, see below. However, it is recommended that
+  you have a system-wide install if only to save you some typing.
 
 * configure git to use your name and email address for commits, see
-  :ref:`section-git-setup-name`
+  :ref:`section-git-setup-name`. The Sage development scripts will
+  prompt you if you don't. But, especially if you use git for other
+  projects in the future as well, you really should configure git.
 
-You need to perform these two steps to participate in the Sage
-development. The :ref:`chapter-git-background` chapter contains
-further information about git that might be useful to some but are not
-required.
+The :ref:`chapter-git-background` chapter contains further information
+about git that might be useful to some but are not required.
 
 
 .. _section-git-install:
@@ -40,8 +42,15 @@ OS X
     Use the `git OSX installer
     <http://code.google.com/p/git-osx-installer/downloads/list>`_
 
+Finally, Sage includes git. Obviously there is a chicken-and-egg
+problem to checkout the Sage source code from its git repository, but
+one can always download a Sage source tarball or binary
+distribution. You can then run git via the ``sage -git`` command line
+switch. So, for example, ``git help`` becomes ``sage -git help`` and
+so on. Note that the examples in the developer guide will assume that
+you have a system-wide git installation.
 
-Some further ressources for installation help are:
+Some further resources for installation help are:
 
 * `Chapter 2 of the git book
   <http://book.git-scm.com/2_installing_git.html>`_
