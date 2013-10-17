@@ -88,16 +88,21 @@ to checkout a ticktet you can either run:</p>
 <div class="highlight-python"><pre>[user@localhost]$ sage -dev checkout --ticket 1729
 On ticket #1729 with associated local branch "ticket/1729".
 
-#  Use "sage --dev commit" to save changes in a new commit when
-#  you are finished editing.</pre>
+#  Use "sage --dev merge" to include another ticket/branch.
+#  Use "sage --dev commit" to save changes into a new commit.</pre>
 </div>
 <p>in a terminal or, equivalently, within Sage:</p>
 <div class="highlight-python"><pre>sage: dev.checkout(1729)
 On ticket #1729 with associated local branch "ticket/1729".
 
-#  Use "dev.commit()" to save changes in a new commit when you
-#  are finished editing.</pre>
+#  Use "dev.merge()" to include another ticket/branch.
+#  Use "dev.commit()" to save changes in a new commit.</pre>
 </div>
+<p>Note that the number sign <tt class="docutils literal"><span class="pre">#</span></tt> (a.k.a. hash or pound sign) is the
+comment marker for both the shell and Python. So if you were to input
+<tt class="docutils literal"><span class="pre">#1729</span></tt>, it will be interpreted as the comment &#8220;1729&#8221; and not passed
+to the development scripts. Always specify the ticket number as a
+plain number, without the number sign in front.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p>During the transitional period it can happen that you end up
@@ -114,7 +119,7 @@ the dev scripts should work again.</p>
 <div class="section" id="contributing-to-the-sage-source-code">
 <span id="section-walkthrough-add"></span><h2>Contributing to the Sage Source Code<a class="headerlink" href="#contributing-to-the-sage-source-code" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="create-a-ticket">
-<h3>Create a Ticket<a class="headerlink" href="#create-a-ticket" title="Permalink to this headline">¶</a></h3>
+<span id="section-walkthrough-add-create"></span><h3>Create a Ticket<a class="headerlink" href="#create-a-ticket" title="Permalink to this headline">¶</a></h3>
 <p>Suppose you have written an algorithm for calculating the last twin prime, and
 want to add it to Sage. You would first open a ticket for that:</p>
 <div class="highlight-python"><pre>[user@localhost]$ sage -dev create-ticket</pre>
@@ -132,16 +137,16 @@ development server</a> to open a new ticket,
 just log in and click on &#8220;Create Ticket&#8221;.</p>
 </div>
 <div class="section" id="editing-the-source-code">
-<h3>Editing the Source Code<a class="headerlink" href="#editing-the-source-code" title="Permalink to this headline">¶</a></h3>
+<span id="section-walkthrough-add-edit"></span><h3>Editing the Source Code<a class="headerlink" href="#editing-the-source-code" title="Permalink to this headline">¶</a></h3>
 <p>If you want to work on a ticket which you or somebody else created,
 you first need to make a local &#8220;branch&#8221;. The development scripts
 maintain a mapping between local branches and trac tickets. Creating a
 new local branch for a ticket is easy:</p>
-<div class="highlight-python"><pre>[user@localhost]$ ./sage -dev checkout --ticket 1729
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev checkout --ticket 1729
 On ticket #1729 with associated local branch "ticket/1729".
 
-#  Use "sage --dev commit" to save changes in a new commit when you are finished
-#  editing.</pre>
+#  Use "sage --dev merge" to include another ticket/branch.
+#  Use "sage --dev commit" to save changes into a new commit.</pre>
 </div>
 <p>Essentially, a branch is a copy (except that it doesn&#8217;t take up twice
 the space) of the Sage source code where you can store your
@@ -156,7 +161,7 @@ throughout. Whenever you have reached one of your goals, you should
 make a <em>commit</em>. This takes a snapshot of the whole Sage source code
 that you have been working on and records the changes into your local
 branch:</p>
-<div class="highlight-python"><pre>[user@localhost]$ ./sage -dev commit
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev commit
 Commit your changes to branch "ticket/1729"? [Yes/no] y
 
 #  Use "sage --dev push" to push your commits to the trac server once you are
@@ -174,7 +179,7 @@ find a mistake in one of your earlier commits, then you just correct
 it in the Sage source code and then add another commit on top.</p>
 </div>
 <div class="section" id="uploading-changes-to-trac">
-<h3>Uploading Changes to Trac<a class="headerlink" href="#uploading-changes-to-trac" title="Permalink to this headline">¶</a></h3>
+<span id="section-walkthrough-add-push"></span><h3>Uploading Changes to Trac<a class="headerlink" href="#uploading-changes-to-trac" title="Permalink to this headline">¶</a></h3>
 <p>At some point, you may wish to share your changes with the rest of us:
 maybe it is ready for review, or maybe you are collaborating with
 someone and want to share your changes &#8220;up until now&#8221;. This is simply
@@ -205,16 +210,81 @@ first line:</p>
 <div class="highlight-python"><pre>Authors: Your Real Name</pre>
 </div>
 <p>If you want to add an additional comment for potential reviewers, run:</p>
-<div class="highlight-python"><pre>sage -dev comment</pre>
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev comment</pre>
 </div>
 </div>
 <div class="section" id="starting-without-a-ticket">
-<h3>Starting Without a Ticket<a class="headerlink" href="#starting-without-a-ticket" title="Permalink to this headline">¶</a></h3>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">describe starting with a local branch</p>
+<span id="section-walkthrough-add-local"></span><h3>Starting Without a Ticket<a class="headerlink" href="#starting-without-a-ticket" title="Permalink to this headline">¶</a></h3>
+<p>You might not want to create a trac ticket for your changes. For
+example, if you are only working on your own code or if you are making
+experimental changes that you are likely to throw away if they do not
+work out. In that case, you can also start a branch that only lives in
+your local repository. To do this, you use checkout but specify a
+branch name instead of the ticket number. For example, to create a new
+branch <tt class="docutils literal"><span class="pre">my_branch</span></tt>, you would run:</p>
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev checkout --branch my_branch</pre>
+</div>
+<p>This is assuming that you do not already have a local branch called
+<tt class="docutils literal"><span class="pre">my_branch</span></tt>. If that were the case, you would just switch to the
+already-existing branch. Once on your branch, you can work with it as
+described in <a class="reference internal" href="#section-walkthrough-add-edit"><em>Editing the Source Code</em></a>.</p>
+<p>You can upload your local branch later to an existing ticket. This
+works exactly like in the case where you started with a ticket, except
+that you have to specify the ticket number. That is:</p>
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev push --ticket &lt;TICKETNUM&gt;</pre>
+</div>
+<p>where you have to replace <tt class="docutils literal"><span class="pre">&lt;TICKETNUM&gt;</span></tt> with the number of the trac
+ticket.</p>
 </div>
 </div>
+<div class="section" id="merging">
+<span id="section-walkthrough-merge"></span><h2>Merging<a class="headerlink" href="#merging" title="Permalink to this headline">¶</a></h2>
+<p>As soon as you are working on a bigger project that spans multiple
+tickets you will want to base your work on branches that have not been
+merged into Sage yet. This is natural in collaborative development,
+and in fact you are very much encouraged to split your work into
+logically different parts. Ideally, each part that is useful on its
+own and and can be reviewed independently should be a different
+ticket, instead of a huge patch bomb.</p>
+<p>For this purpose, you can incorporate branches from other tickets (or
+just other local branches) into your current branch. This is called
+merging, and all it does is include commits from other branches into
+your current branch. In particular, this is done when a new Sage
+release is made: the finished tickets are merged with the Sage master
+and the result is the next Sage version. Git is smart enough to not
+merge commits twice. In particular, it is possible to merge two
+branches, one of which had already merged the other branch.</p>
+<p>The syntax for merging is easy. If the code that you want to
+incorporate is on a trac ticket number <tt class="docutils literal"><span class="pre">&lt;TICKETNUM&gt;</span></tt>, use:</p>
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev merge --ticket &lt;TICKETNUM&gt;</pre>
+</div>
+<p>Optionally, you can add the merged ticket to the trac &#8220;Dependency:&#8221;
+field. Note that the merged commits become part of the current branch,
+regardless of whether they are noted on trac. Adding a dependency
+implies that the dependency must be reviewed first. After the
+dependency is reviewed, the commits that came from the dependency are
+no longer listed in the output of <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-dev</span> <span class="pre">diff</span></tt>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>You should avoid merging tickets both ways. Once ticket A merged
+ticket B and ticket B merged ticket A, there is no way to
+distinguish commits that were originally made in ticket A or in
+ticket B. Effectively, merging both ways combines the branches and
+makes individual review impossible. Effectively, you should never
+merge unless one of the following holds:</p>
+<ul class="last simple">
+<li>Either two tickets conflict, then you have to merge one into the
+other in order to resolve the merge conflict.</li>
+<li>Or you definitely need a feature that has been developed as part
+of another branch.</li>
+</ul>
+</div>
+<p>A special case of merging is merging in the <tt class="docutils literal"><span class="pre">master</span></tt> branch. This
+brings your local branch up to date with the newest Sage version. The
+above warning against unnecessary merges still applies, though. Try to
+do all of your development with the Sage version that you originally
+started with. The only reason for merging in the master branch is if
+you need a new feature or if your branch conflicts.</p>
 </div>
 <div class="section" id="reviewing">
 <span id="section-walkthrough-review"></span><h2>Reviewing<a class="headerlink" href="#reviewing" title="Permalink to this headline">¶</a></h2>
@@ -226,15 +296,30 @@ you created in the last section.  For definiteness, suppose you want to review
 <p>This command will download the branch on Trac in case you do not have any local
 work on ticket 12270. (If you do, you may have to merge your changes; see
 below). You can now test the ticket; you&#8217;ll probably want to call <tt class="docutils literal"><span class="pre">make</span></tt> or
-<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-b</span></tt> first to rebuild Sage with the changes.</p>
-<p>Your will want to add a comment to the ticket as part of your review:</p>
-<div class="highlight-python"><pre>sage -dev comment</pre>
+<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-b</span></tt> first to rebuild Sage with the changes. Another important
+command is:</p>
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev diff</pre>
 </div>
-<p>This will open a text editor in which you can type, and upload the result to Trac.</p>
-<p>It is also possible that you make some changes to the code as part of your review. After
-you&#8217;ve done that, you can upload your changes back to trac:</p>
-<div class="highlight-python"><pre>sage -dev commit
-sage -dev push</pre>
+<p>which lists all souce code changes that are part of the current
+branch. That is, it lists the changes from the current master to the
+current branch. If the ticket were to be positively reviewed, this is
+the code that will be added to Sage. Note that there is no way to
+&#8220;exclude dependencies&#8221;, just as there is no guarantee that unreviewed
+dependencies will become part of Sage. The best way to exclude
+dependencies from the diff output is to review them. Once the
+dependency becomes part of the master branch, they are automatically
+removed.</p>
+<p>Most likely, your will want to add a comment to the ticket as part of
+your review:</p>
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev comment</pre>
+</div>
+<p>This will open a text editor in which you can type, and upload the
+result to Trac.</p>
+<p>It is also possible that you make some changes to the code as part of
+your review. After you have done that, you can upload your changes
+back to trac:</p>
+<div class="highlight-python"><pre>[user@localhost]$ sage -dev commit
+[user@localhost]$ sage -dev push</pre>
 </div>
 <p>This will update the ticket to now point to your branch, including
 your changes. Your branch is based on the original author&#8217;s branch, so
@@ -310,6 +395,7 @@ sage -dev push</pre>
 <li><a class="reference internal" href="#starting-without-a-ticket">Starting Without a Ticket</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#merging">Merging</a></li>
 <li><a class="reference internal" href="#reviewing">Reviewing</a></li>
 <li><a class="reference internal" href="#collaboration">Collaboration</a></li>
 </ul>

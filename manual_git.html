@@ -75,32 +75,28 @@ by running:</p>
 [user@localhost ~]$ cd sage
 [user@localhost sage]$ make</pre>
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">For now, use the <tt class="docutils literal"><span class="pre">public/sage-git/master</span></tt> branch instead of
-master. This will be changed soon.</p>
-</div>
 <div class="section" id="branching-out">
 <span id="section-git-branch"></span><h2>Branching Out<a class="headerlink" href="#branching-out" title="Permalink to this headline">¶</a></h2>
 <p>A branch is any set of changes that deviates from the current official
 Sage tree. Whenever you start developing some new feature or fix a bug
 you should first create a new branch to hold the changes. It is easy
 to create a new branch, just check out (switch to) the branch from
-where you want to start (that is, <tt class="docutils literal"><span class="pre">build_system</span></tt>) and use the <em>git
+where you want to start (that is, <tt class="docutils literal"><span class="pre">master</span></tt>) and use the <em>git
 branch</em> command:</p>
-<div class="highlight-python"><pre>[user@localhost sage]$ git checkout build_system
+<div class="highlight-python"><pre>[user@localhost sage]$ git checkout master
 [user@localhost sage]$ git branch my_new_branch
 [user@localhost sage]$ git checkout my_new_branch
 [user@localhost sage]$ git branch
-  build_system
+  master
 * my_new_branch</pre>
 </div>
-<p>Without an argument, the <em>git branch</em> command just displays a list of
-all local branches with the current one marked by an asterisk. Also
-note that <em>git branch</em> creates a new branch, but does not switch to
-it. To avoid typing the new branch name twice you can use the shortcut
-<tt class="docutils literal"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">my_new_branch</span></tt> to create and switch to the new
-branch in one command.</p>
+<p>The asterisk shows you which branch you are on. Without an argument,
+the <em>git branch</em> command just displays a list of all local branches
+with the current one marked by an asterisk. Also note that <em>git
+branch</em> creates a new branch, but does not switch to it. To avoid
+typing the new branch name twice you can use the shortcut <tt class="docutils literal"><span class="pre">git</span>
+<span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">my_new_branch</span></tt> to create and switch to the new branch in
+one command.</p>
 </div>
 <div class="section" id="commits-snapshots">
 <span id="section-git-commit"></span><h2>Commits (Snapshots)<a class="headerlink" href="#commits-snapshots" title="Permalink to this headline">¶</a></h2>
@@ -113,7 +109,7 @@ git which files you want to be part of the next commit:</p>
 <div class="highlight-python"><pre>... edit foobar.txt ...
 
 [user@localhost sage]$ git status
-# On branch build_system
+# On branch my_branch
 # Untracked files:
 #   (use "git add &lt;file&gt;..." to include in what will be committed)
 #
@@ -122,7 +118,7 @@ nothing added to commit but untracked files present (use "git add" to track)
 
 [user@localhost sage]$ git add foobar.txt
 [user@localhost sage]$ git status
-# On branch build_system
+# On branch my_branch
 # Changes to be committed:
 #   (use "git reset HEAD &lt;file&gt;..." to unstage)
 #
@@ -133,7 +129,7 @@ nothing added to commit but untracked files present (use "git add" to track)
 snapshot with the <em>commit</em> command:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git commit
 ... editor opens ...
-[build_system 31331f7] Added the very important foobar text file
+[my_branch 31331f7] Added the very important foobar text file
  1 file changed, 1 insertion(+)
   create mode 100644 foobar.txt</pre>
 </div>
@@ -262,27 +258,7 @@ branch. The remaining arguments are</p>
 <p>The <tt class="docutils literal"><span class="pre">Branch</span></tt> field is color coded: red means there is an issue,
 green means it will merge cleanly into <tt class="docutils literal"><span class="pre">master</span></tt>. If it is red, the
 tooltip will tell you what is wrong.  If it is green, then it will
-link to a diff of the changes against <tt class="docutils literal"><span class="pre">u/ohanar/build_system</span></tt>. (This
-is temporary until <a class="reference external" href="http://trac.sagemath.org/14480">#14480</a> is merged
-into the <tt class="docutils literal"><span class="pre">master</span></tt> branch.)</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>You also have to fill in the &#8220;Commit:&#8221; field with the 40-digit
-SHA1 hash of your last commit. If you first fill out the &#8220;Branch:&#8221;
-field on trac and then push to git, then git will automatically
-search for the ticket and fill in the &#8220;Commit:&#8221; field for you.</p>
-<p>If, for some reason, you first push to the trac git repository and
-then change the &#8220;Branch:&#8221; field, then you also have to update the
-&#8220;Commit:&#8221; field yourself. You can find out the SHA1 hash, for
-example, with:</p>
-<div class="last highlight-python"><pre>$ git log -1
-commit 2ee18c5b5c7417e0f8939d9db54d753c468964d8
-Author: Firstname Lastname &lt;user@sagemath.org&gt;
-Date:   Wed Aug 7 21:50:00 2013 +0100
-
-    My first commit message!</pre>
-</div>
-</div>
+link to a diff of the changes against <tt class="docutils literal"><span class="pre">master</span></tt>.</p>
 </div>
 <div class="section" id="getting-changes">
 <span id="section-git-pull"></span><h3>Getting Changes<a class="headerlink" href="#getting-changes" title="Permalink to this headline">¶</a></h3>

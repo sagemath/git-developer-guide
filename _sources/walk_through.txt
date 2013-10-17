@@ -33,17 +33,22 @@ to checkout a ticktet you can either run::
     [user@localhost]$ sage -dev checkout --ticket 1729
     On ticket #1729 with associated local branch "ticket/1729".
 
-    #  Use "sage --dev commit" to save changes in a new commit when 
-    #  you are finished editing.
+    #  Use "sage --dev merge" to include another ticket/branch.
+    #  Use "sage --dev commit" to save changes into a new commit.
 
 in a terminal or, equivalently, within Sage::
 
     sage: dev.checkout(1729)
     On ticket #1729 with associated local branch "ticket/1729".
  
-    #  Use "dev.commit()" to save changes in a new commit when you 
-    #  are finished editing.
+    #  Use "dev.merge()" to include another ticket/branch.
+    #  Use "dev.commit()" to save changes in a new commit.
 
+Note that the number sign ``#`` (a.k.a. hash or pound sign) is the
+comment marker for both the shell and Python. So if you were to input
+``#1729``, it will be interpreted as the comment "1729" and not passed
+to the development scripts. Always specify the ticket number as a
+plain number, without the number sign in front.
 
 .. warning::
 
@@ -64,6 +69,8 @@ in a terminal or, equivalently, within Sage::
 
 Contributing to the Sage Source Code
 ====================================
+
+.. _section-walkthrough-add-create:
 
 Create a Ticket
 ---------------
@@ -87,6 +94,8 @@ development server <http://trac.sagemath.org>`_ to open a new ticket,
 just log in and click on "Create Ticket".
 
 
+.. _section-walkthrough-add-edit:
+
 Editing the Source Code
 -----------------------
 
@@ -95,11 +104,11 @@ you first need to make a local "branch". The development scripts
 maintain a mapping between local branches and trac tickets. Creating a
 new local branch for a ticket is easy::
 
-    [user@localhost]$ ./sage -dev checkout --ticket 1729
+    [user@localhost]$ sage -dev checkout --ticket 1729
     On ticket #1729 with associated local branch "ticket/1729".
 
-    #  Use "sage --dev commit" to save changes in a new commit when you are finished
-    #  editing.
+    #  Use "sage --dev merge" to include another ticket/branch.
+    #  Use "sage --dev commit" to save changes into a new commit.
 
 Essentially, a branch is a copy (except that it doesn't take up twice
 the space) of the Sage source code where you can store your
@@ -116,7 +125,7 @@ make a *commit*. This takes a snapshot of the whole Sage source code
 that you have been working on and records the changes into your local
 branch::
 
-    [user@localhost]$ ./sage -dev commit
+    [user@localhost]$ sage -dev commit
     Commit your changes to branch "ticket/1729"? [Yes/no] y
 
     #  Use "sage --dev push" to push your commits to the trac server once you are
@@ -134,6 +143,8 @@ accidentally delete something, you can get it back later. Also, if you
 find a mistake in one of your earlier commits, then you just correct
 it in the Sage source code and then add another commit on top.
 
+
+.. _section-walkthrough-add-push:
 
 Uploading Changes to Trac
 -------------------------
@@ -175,18 +186,94 @@ first line::
 
 If you want to add an additional comment for potential reviewers, run::
 
-    sage -dev comment
+    [user@localhost]$ sage -dev comment
 
 
+.. _section-walkthrough-add-local:
 
 Starting Without a Ticket
 -------------------------
 
-.. TODO::
+You might not want to create a trac ticket for your changes. For
+example, if you are only working on your own code or if you are making
+experimental changes that you are likely to throw away if they do not
+work out. In that case, you can also start a branch that only lives in
+your local repository. To do this, you use checkout but specify a
+branch name instead of the ticket number. For example, to create a new
+branch ``my_branch``, you would run::
 
-    describe starting with a local branch
+    [user@localhost]$ sage -dev checkout --branch my_branch
+
+This is assuming that you do not already have a local branch called
+``my_branch``. If that were the case, you would just switch to the
+already-existing branch. Once on your branch, you can work with it as
+described in :ref:`section-walkthrough-add-edit`.
+
+You can upload your local branch later to an existing ticket. This
+works exactly like in the case where you started with a ticket, except
+that you have to specify the ticket number. That is::
+
+    [user@localhost]$ sage -dev push --ticket <TICKETNUM>
+    
+where you have to replace ``<TICKETNUM>`` with the number of the trac
+ticket. 
 
 
+.. _section-walkthrough-merge:
+
+Merging
+=======
+
+As soon as you are working on a bigger project that spans multiple
+tickets you will want to base your work on branches that have not been
+merged into Sage yet. This is natural in collaborative development,
+and in fact you are very much encouraged to split your work into
+logically different parts. Ideally, each part that is useful on its
+own and and can be reviewed independently should be a different
+ticket, instead of a huge patch bomb.
+
+For this purpose, you can incorporate branches from other tickets (or
+just other local branches) into your current branch. This is called
+merging, and all it does is include commits from other branches into
+your current branch. In particular, this is done when a new Sage
+release is made: the finished tickets are merged with the Sage master
+and the result is the next Sage version. Git is smart enough to not
+merge commits twice. In particular, it is possible to merge two
+branches, one of which had already merged the other branch.
+
+The syntax for merging is easy. If the code that you want to
+incorporate is on a trac ticket number ``<TICKETNUM>``, use::
+
+    [user@localhost]$ sage -dev merge --ticket <TICKETNUM>
+
+Optionally, you can add the merged ticket to the trac "Dependency:"
+field. Note that the merged commits become part of the current branch,
+regardless of whether they are noted on trac. Adding a dependency
+implies that the dependency must be reviewed first. After the
+dependency is reviewed, the commits that came from the dependency are
+no longer listed in the output of ``sage -dev diff``.
+
+.. warning::
+
+    You should avoid merging tickets both ways. Once ticket A merged
+    ticket B and ticket B merged ticket A, there is no way to
+    distinguish commits that were originally made in ticket A or in
+    ticket B. Effectively, merging both ways combines the branches and
+    makes individual review impossible. Effectively, you should never
+    merge unless one of the following holds:
+
+    * Either two tickets conflict, then you have to merge one into the
+      other in order to resolve the merge conflict.
+
+    * Or you definitely need a feature that has been developed as part
+      of another branch.
+
+A special case of merging is merging in the ``master`` branch. This
+brings your local branch up to date with the newest Sage version. The
+above warning against unnecessary merges still applies, though. Try to
+do all of your development with the Sage version that you originally
+started with. The only reason for merging in the master branch is if
+you need a new feature or if your branch conflicts.
 
 
 .. _section-walkthrough-review:
@@ -203,19 +290,35 @@ you created in the last section.  For definiteness, suppose you want to review
 This command will download the branch on Trac in case you do not have any local
 work on ticket 12270. (If you do, you may have to merge your changes; see
 below). You can now test the ticket; you'll probably want to call ``make`` or
-``sage -b`` first to rebuild Sage with the changes.
+``sage -b`` first to rebuild Sage with the changes. Another important
+command is::
 
-Your will want to add a comment to the ticket as part of your review::
+    [user@localhost]$ sage -dev diff
 
-    sage -dev comment
+which lists all souce code changes that are part of the current
+branch. That is, it lists the changes from the current master to the
+current branch. If the ticket were to be positively reviewed, this is
+the code that will be added to Sage. Note that there is no way to
+"exclude dependencies", just as there is no guarantee that unreviewed
+dependencies will become part of Sage. The best way to exclude
+dependencies from the diff output is to review them. Once the
+dependency becomes part of the master branch, they are automatically
+removed.
 
-This will open a text editor in which you can type, and upload the result to Trac.
+Most likely, your will want to add a comment to the ticket as part of
+your review::
+
+    [user@localhost]$ sage -dev comment
+
+This will open a text editor in which you can type, and upload the
+result to Trac.
     
-It is also possible that you make some changes to the code as part of your review. After
-you've done that, you can upload your changes back to trac::
+It is also possible that you make some changes to the code as part of
+your review. After you have done that, you can upload your changes
+back to trac::
 
-    sage -dev commit
-    sage -dev push
+    [user@localhost]$ sage -dev commit
+    [user@localhost]$ sage -dev push
 
 This will update the ticket to now point to your branch, including
 your changes. Your branch is based on the original author's branch, so
