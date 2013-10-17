@@ -18,10 +18,6 @@ by running::
     [user@localhost ~]$ cd sage
     [user@localhost sage]$ make
 
-.. warning::
-
-    For now, use the ``public/sage-git/master`` branch instead of
-    master. This will be changed soon.
 
 .. _section-git-branch:
 
@@ -32,22 +28,23 @@ A branch is any set of changes that deviates from the current official
 Sage tree. Whenever you start developing some new feature or fix a bug
 you should first create a new branch to hold the changes. It is easy
 to create a new branch, just check out (switch to) the branch from
-where you want to start (that is, ``build_system``) and use the *git
+where you want to start (that is, ``master``) and use the *git
 branch* command::
 
-    [user@localhost sage]$ git checkout build_system
+    [user@localhost sage]$ git checkout master
     [user@localhost sage]$ git branch my_new_branch
     [user@localhost sage]$ git checkout my_new_branch
     [user@localhost sage]$ git branch
-      build_system
+      master
     * my_new_branch
 
-Without an argument, the *git branch* command just displays a list of
-all local branches with the current one marked by an asterisk. Also
-note that *git branch* creates a new branch, but does not switch to
-it. To avoid typing the new branch name twice you can use the shortcut
-``git checkout -b my_new_branch`` to create and switch to the new
-branch in one command.
+The asterisk shows you which branch you are on. Without an argument,
+the *git branch* command just displays a list of all local branches
+with the current one marked by an asterisk. Also note that *git
+branch* creates a new branch, but does not switch to it. To avoid
+typing the new branch name twice you can use the shortcut ``git
+checkout -b my_new_branch`` to create and switch to the new branch in
+one command.
 
 
 .. _section-git-commit:
@@ -65,7 +62,7 @@ git which files you want to be part of the next commit::
     ... edit foobar.txt ...
 
     [user@localhost sage]$ git status
-    # On branch build_system
+    # On branch my_branch
     # Untracked files:
     #   (use "git add <file>..." to include in what will be committed)
     #
@@ -74,7 +71,7 @@ git which files you want to be part of the next commit::
 
     [user@localhost sage]$ git add foobar.txt
     [user@localhost sage]$ git status
-    # On branch build_system
+    # On branch my_branch
     # Changes to be committed:
     #   (use "git reset HEAD <file>..." to unstage)
     #
@@ -86,7 +83,7 @@ snapshot with the *commit* command::
 
     [user@localhost sage]$ git commit
     ... editor opens ...
-    [build_system 31331f7] Added the very important foobar text file
+    [my_branch 31331f7] Added the very important foobar text file
      1 file changed, 1 insertion(+)
       create mode 100644 foobar.txt
 
@@ -241,28 +238,8 @@ branch. The remaining arguments are
 The ``Branch`` field is color coded: red means there is an issue,
 green means it will merge cleanly into ``master``. If it is red, the
 tooltip will tell you what is wrong.  If it is green, then it will
-link to a diff of the changes against ``u/ohanar/build_system``. (This
-is temporary until `#14480 <http://trac.sagemath.org/14480>`_ is merged
-into the ``master`` branch.)
+link to a diff of the changes against ``master``.
 
-.. note::
-
-    You also have to fill in the "Commit:" field with the 40-digit
-    SHA1 hash of your last commit. If you first fill out the "Branch:"
-    field on trac and then push to git, then git will automatically
-    search for the ticket and fill in the "Commit:" field for you. 
-
-    If, for some reason, you first push to the trac git repository and
-    then change the "Branch:" field, then you also have to update the
-    "Commit:" field yourself. You can find out the SHA1 hash, for
-    example, with::
-   
-        $ git log -1
-        commit 2ee18c5b5c7417e0f8939d9db54d753c468964d8
-        Author: Firstname Lastname <user@sagemath.org>
-        Date:   Wed Aug 7 21:50:00 2013 +0100
-       
-            My first commit message!
 
 
 .. _section-git-pull:
