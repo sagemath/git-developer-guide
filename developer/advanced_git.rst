@@ -219,3 +219,59 @@ branch::
 And, again, we note that the SHA1 of commit C changed because its
 parent changed. Voila, now you have two branches where the first
 contains commits A, C and the second contains commit B.
+
+
+.. _section-git-interactive-rebase:
+
+Interactively Rebasing
+======================
+
+An alternative approach to :ref:`section-git-rewriting-history` is to
+use the interactive rebase feature. This will open an editor where you
+can modify the most recent commits. Again, this will naturally modify
+the hash of all changed commits and all of their children.
+
+Now we start by making an identical branch to the first branch::
+
+    [user@localhost]$ git log --oneline
+    9621dae added file C
+    7873447 added file B
+    bf817a5 added file A
+    5b5588e base commit
+    [user@localhost]$ git checkout -b second_branch
+    Switched to a new branch 'second_branch'
+    [user@localhost]$ git rebase -i HEAD~3
+    
+This will open an editor with the last 3 (corresponding to ``HEAD~3``)
+commits and instuctions for how to modify them::
+
+    pick bf817a5 added file A
+    pick 7873447 added file B
+    pick 9621dae added file C
+    
+    # Rebase 5b5588e..9621dae onto 5b5588e
+    #
+    # Commands:
+    #  p, pick = use commit
+    #  r, reword = use commit, but edit the commit message
+    #  e, edit = use commit, but stop for amending
+    #  s, squash = use commit, but meld into previous commit
+    #  f, fixup = like "squash", but discard this commit's log message
+    #  x, exec = run command (the rest of the line) using shell
+    #
+    # These lines can be re-ordered; they are executed from top to bottom.
+    #
+    # If you remove a line here THAT COMMIT WILL BE LOST.
+    #
+    # However, if you remove everything, the rebase will be aborted.
+    #
+    # Note that empty commits are commented out
+   
+To only use commit B, we delete the first and third line. Then save
+and edit your favorite editor, and your branch now consists only of
+the B commit.
+
+You still have to delete the B commit from the first branch, so you
+would go back (``git checkout first_branch``) and then run the same
+``git rebase -i`` command and delete the B commit.
+ 
