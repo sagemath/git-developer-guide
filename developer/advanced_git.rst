@@ -128,3 +128,94 @@ reset* command, we just have to reset back into the future::
 
     [user@localhost sage]$ git reset --hard HEAD@{2}
     
+
+
+.. _section-git-rewriting-history:
+
+Rewriting History
+=================
+
+Git allows you to rewrite history, but be careful: the SHA1 hash of a
+commit includes the parent's hash. This means that the hash really
+depends on the entire content of the working directory; every source
+file is in exactly the same state as when the hash was computed. This
+also means that you can't change history without modifying the
+hash. If others branched off your code and then you rewrite history,
+then the others are thoroughly screwed. So, ideally, you would only
+rewrite history on branches that you have not yet pushed to trac.
+
+As an advanced example, consider three commits A, B, C that were made
+on top of each other. For simplicity, we'll assume they just added a
+file named ``file_A.py``, ``file_B.py``, and ``file_C.py`` ::
+
+    [user@localhost]$ git log --oneline
+    9621dae added file C
+    7873447 added file B
+    bf817a5 added file A
+    5b5588e base commit
+
+Now, let's assume that the commit B was really independent and ought
+to be on a separate ticket. So we want to move it to a new branch,
+which we'll call ``second_branch``. First, branch off at the base
+commit before we added A::
+
+    [user@localhost]$ git checkout 5b5588e
+    Note: checking out '5b5588e'.
+
+    You are in 'detached HEAD' state. You can look around, make experimental
+    changes and commit them, and you can discard any commits you make in this
+    state without impacting any branches by performing another checkout.
+
+    If you want to create a new branch to retain commits you create, you may
+    do so (now or later) by using -b with the checkout command again. Example:
+
+      git checkout -b new_branch_name
+
+    HEAD is now at 5b5588e... base commit
+    [user@localhost]$ git checkout -b second_branch
+    Switched to a new branch 'second_branch'
+    [user@localhost]$ git branch
+      first_branch
+    * second_branch
+    [user@localhost]$ git log --oneline
+    5b5588e base commit
+
+Now, we make a copy of commit B in the current branch::
+
+    [user@localhost]$ git cherry-pick 7873447
+    [second_branch 758522b] added file B
+     1 file changed, 1 insertion(+)
+     create mode 100644 file_B.py
+    [user@localhost]$ git log --oneline
+    758522b added file B
+    5b5588e base commit
+
+Note that this changes the SHA1 of the commit B, since its parent
+changed! Also, cherry-picking *copies* commits, it does not remove
+them from the source branch. So we now have to modify the first branch
+to exclude commit B, otherwise there will be two commits adding
+``file_B.py`` and our two branches would conflict later when they are
+being merged into Sage. Hence, we first reset the first branch back to
+before B was added::
+
+    [user@localhost]$ git checkout first_branch 
+    Switched to branch 'first_branch'
+    [user@localhost]$ git reset --hard bf817a5
+    HEAD is now at bf817a5 added file A
+
+Now we still want commit C, so we cherry-pick it again. Note that this
+works even though commit C is, at this point, not included in any
+branch::
+
+    [user@localhost]$ git cherry-pick 9621dae
+    [first_branch 5844535] added file C
+     1 file changed, 1 insertion(+)
+     create mode 100644 file_C.py
+    [user@localhost]$ git log --oneline
+    5844535 added file C
+    bf817a5 added file A
+    5b5588e base commit
+
+And, again, we note that the SHA1 of commit C changed because its
+parent changed. Voila, now you have two branches where the first
+contains commits A, C and the second contains commit B.
