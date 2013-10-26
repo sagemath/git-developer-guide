@@ -170,6 +170,87 @@ reset</em> command, we just have to reset back into the future:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git reset --hard HEAD@{2}</pre>
 </div>
 </div>
+<div class="section" id="rewriting-history">
+<span id="section-git-rewriting-history"></span><h2>Rewriting History<a class="headerlink" href="#rewriting-history" title="Permalink to this headline">¶</a></h2>
+<p>Git allows you to rewrite history, but be careful: the SHA1 hash of a
+commit includes the parent&#8217;s hash. This means that the hash really
+depends on the entire content of the working directory; every source
+file is in exactly the same state as when the hash was computed. This
+also means that you can&#8217;t change history without modifying the
+hash. If others branched off your code and then you rewrite history,
+then the others are thoroughly screwed. So, ideally, you would only
+rewrite history on branches that you have not yet pushed to trac.</p>
+<p>As an advanced example, consider three commits A, B, C that were made
+on top of each other. For simplicity, we&#8217;ll assume they just added a
+file named <tt class="docutils literal"><span class="pre">file_A.py</span></tt>, <tt class="docutils literal"><span class="pre">file_B.py</span></tt>, and <tt class="docutils literal"><span class="pre">file_C.py</span></tt></p>
+<div class="highlight-python"><pre>[user@localhost]$ git log --oneline
+9621dae added file C
+7873447 added file B
+bf817a5 added file A
+5b5588e base commit</pre>
+</div>
+<p>Now, let&#8217;s assume that the commit B was really independent and ought
+to be on a separate ticket. So we want to move it to a new branch,
+which we&#8217;ll call <tt class="docutils literal"><span class="pre">second_branch</span></tt>. First, branch off at the base
+commit before we added A:</p>
+<div class="highlight-python"><pre>[user@localhost]$ git checkout 5b5588e
+Note: checking out '5b5588e'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b new_branch_name
+
+HEAD is now at 5b5588e... base commit
+[user@localhost]$ git checkout -b second_branch
+Switched to a new branch 'second_branch'
+[user@localhost]$ git branch
+  first_branch
+* second_branch
+[user@localhost]$ git log --oneline
+5b5588e base commit</pre>
+</div>
+<p>Now, we make a copy of commit B in the current branch:</p>
+<div class="highlight-python"><pre>[user@localhost]$ git cherry-pick 7873447
+[second_branch 758522b] added file B
+ 1 file changed, 1 insertion(+)
+ create mode 100644 file_B.py
+[user@localhost]$ git log --oneline
+758522b added file B
+5b5588e base commit</pre>
+</div>
+<p>Note that this changes the SHA1 of the commit B, since its parent
+changed! Also, cherry-picking <em>copies</em> commits, it does not remove
+them from the source branch. So we now have to modify the first branch
+to exclude commit B, otherwise there will be two commits adding
+<tt class="docutils literal"><span class="pre">file_B.py</span></tt> and our two branches would conflict later when they are
+being merged into Sage. Hence, we first reset the first branch back to
+before B was added:</p>
+<div class="highlight-python"><pre>[user@localhost]$ git checkout first_branch
+Switched to branch 'first_branch'
+[user@localhost]$ git reset --hard bf817a5
+HEAD is now at bf817a5 added file A</pre>
+</div>
+<p>Now we still want commit C, so we cherry-pick it again. Note that this
+works even though commit C is, at this point, not included in any
+branch:</p>
+<div class="highlight-python"><pre>[user@localhost]$ git cherry-pick 9621dae
+[first_branch 5844535] added file C
+ 1 file changed, 1 insertion(+)
+ create mode 100644 file_C.py
+[user@localhost]$ git log --oneline
+5844535 added file C
+bf817a5 added file A
+5b5588e base commit</pre>
+</div>
+<p>And, again, we note that the SHA1 of commit C changed because its
+parent changed. Voila, now you have two branches where the first
+contains commits A, C and the second contains commit B.</p>
+</div>
 </div>
 
 
@@ -183,6 +264,7 @@ reset</em> command, we just have to reset back into the future:</p>
 <li><a class="reference internal" href="#">Advanced Git</a><ul>
 <li><a class="reference internal" href="#detached-heads-and-reviewing-tickets">Detached Heads and Reviewing Tickets</a></li>
 <li><a class="reference internal" href="#reset-and-recovery">Reset and Recovery</a></li>
+<li><a class="reference internal" href="#rewriting-history">Rewriting History</a></li>
 </ul>
 </li>
 </ul>
