@@ -36,7 +36,10 @@ to checkout a ticktet you can either run::
     #  Use "sage --dev merge" to include another ticket/branch.
     #  Use "sage --dev commit" to save changes into a new commit.
 
-in a terminal or, equivalently, within Sage::
+in a terminal or, equivalently, within Sage
+
+.. skip   # don't actually doctest
+::
 
     sage: dev.checkout(1729)
     On ticket #1729 with associated local branch "ticket/1729".
@@ -52,17 +55,17 @@ plain number, without the number sign in front.
 
 .. warning::
 
-	During the transitional period it can happen that you end up
-	on a branch where the developer scripts are not available or
-	outdated. If this is the case, i.e., if ``sage -dev`` does not
-	work properly anymore, run::
+    During the transitional period it can happen that you end up
+    on a branch where the developer scripts are not available or
+    outdated. If this is the case, i.e., if ``sage -dev`` does not
+    work properly anymore, run::
 
-	    git pull git://trac.sagemath.org/sage.git public/sage-git/master
-	    sage -b
+        git pull git://trac.sagemath.org/sage.git public/sage-git/master
+        sage -b
 
-	This will merge the latest version of the developer scripts
-	with your current branch. After rebuilding the Sage library,
-	the dev scripts should work again.
+    This will merge the latest version of the developer scripts
+    with your current branch. After rebuilding the Sage library,
+    the dev scripts should work again.
 
 
 .. _section-walkthrough-add:

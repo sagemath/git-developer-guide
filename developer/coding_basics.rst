@@ -104,7 +104,7 @@ In particular,
 
       class SomeValue(object):
           def __init__(self, x):
-	      self._x  = 1
+          self._x  = 1
 
   and factory functions that mimic object constructors, for example
   ``PolynomialRing`` or::
@@ -400,7 +400,10 @@ a guide.
          http://www.sagemath.org/doc/developer/conventions.html.
 
 Use the following template when documenting functions. Note the
-indentation::
+indentation
+
+.. skip    # do not doctest
+::
 
     def point(self, x=1, y=2):
         r"""
@@ -487,19 +490,19 @@ users. Having said that, you can explicitly enable their docstrings to
 be shown. For example::
 
     class Foo(SageObject):
-	
+    
         def f(self):
-	    """
-	    <usual docstring>
+            """
+            <usual docstring>
 
-	    .. automethod:: _f
-	    """
-	    return self._f()
-				 
-	def _f(self):
-	     """
-	     This would be hidden without the ``.. automethod::``
-	     """
+            .. automethod:: _f
+            """
+            return self._f()
+                 
+        def _f(self):
+             """
+             This would be hidden without the ``.. automethod::``
+             """
 
 A special case is the constructor ``__init__``, which clearly starts
 with an underscore. However, due to its special status the
@@ -685,9 +688,10 @@ framework. Here is a comprehensive list:
   ``__hash__`` method for ``CombinatorialObject`` in
   ``SAGE_ROOT/src/sage/combinat/combinat.py`` includes the lines::
 
+      sage: c = CombinatorialObject([1,2,3])
       sage: hash(c)   # random
       1335416675971793195
-      sage: c._hash   # random
+      sage: c.__hash__()   # random
       1335416675971793195
 
   However, most functions generating pseudorandom output do not need
@@ -979,8 +983,8 @@ For example, see the file
 .. [2]  See http://www.sagemath.org/development-map.html
 
 
-GlobalOptions
-=============
+Global Options
+==============
 
 Global options for classes can be defined in Sage using
 :class:`~sage.structure.global_options.GlobalOptions`.

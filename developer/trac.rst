@@ -66,14 +66,17 @@ Git will use SSH public key cryptography to decide if and where you are allowed
 to upload code to. This is not required if you just want to report a bug or
 comment on a ticket, but as soon as you want to contribute code yourself you
 need to provide trac with the public half of your own personal key. In recent
-versions of Sage, you can use Sage to generate an upload an SSH key::
+versions of Sage, you can use Sage to generate an upload an SSH key
 
-	sage: dev.upload_ssh_key()
-	The trac git server requires your SSH public key to be able to identify you.
-	Upload "/home/vbraun/.ssh/id_dsa.pub" to trac? [Yes/no] y
-	Trac username: user
-	Trac password:
-	Your key has been uploaded.
+.. skip   # do not doctest
+::
+
+    sage: dev.upload_ssh_key()
+    The trac git server requires your SSH public key to be able to identify you.
+    Upload "/home/vbraun/.ssh/id_dsa.pub" to trac? [Yes/no] y
+    Trac username: user
+    Trac password:
+    Your key has been uploaded.
 
 You can also manually generate an SSH key and upload it to trac. This is
 described in the following two sections.
@@ -161,17 +164,17 @@ issuing some basic gitolite commands, for example::
     [user@localhost ~]$ ssh -p 2222 git@trac.sagemath.org info
     hello user, this is git@trac running gitolite3 (unknown) on git 1.7.9.5
 
-     R W	sage
+     R W      sage
     [user@localhost ~]$ ssh -p 2222 git@trac.sagemath.org help
     hello user, this is gitolite3 (unknown) on git 1.7.9.5
 
     list of remote commands available:
 
-    	desc
-    	help
-    	info
-    	perms
-    	writable
+        desc
+        help
+        info
+        perms
+        writable
 
 
 Reporting bugs
