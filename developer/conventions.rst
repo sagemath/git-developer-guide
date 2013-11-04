@@ -1,4 +1,4 @@
-.. _chapter-conventions:
+.. _chapter-conventions-old:
 
 ==============================
 Conventions for Coding in Sage
@@ -251,7 +251,7 @@ are not receiving proper credit for anything you submit to Sage,
 please let the development team know!
 
 
-.. _section-docstrings:
+.. _section-docstrings-old:
 
 Documentation strings
 =====================
@@ -731,7 +731,7 @@ it needs to be imported before it is tested. Hence the first line in
 the example.
 
 
-.. _section-further_conventions:
+.. _section-further_conventions-old:
 
 Further conventions for automated testing of examples
 -----------------------------------------------------
@@ -972,7 +972,7 @@ follow. The chapter :ref:`chapter-doctesting` contains a tutorial on
 doctesting modules in the Sage library.
 
 
-.. _section-testpython:
+.. _section-testpython-old:
 
 Testing .py, .pyx and .sage files
 ---------------------------------

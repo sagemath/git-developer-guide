@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+echo "Watching for changes in developer/"
+
+while true ; do
+    inotifywait -e close_write "developer/"
+    if [ $? -ne 0 ] ; then
+	echo "Error $? occured, exiting..."
+	exit 1
+    fi
+    echo "Detected file save to $@"
+    ./build
+done
