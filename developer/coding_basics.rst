@@ -114,6 +114,8 @@ In particular,
 
 
 
+.. _chapter-directory-structure:
+
 Files and Directory Structure
 =============================
 
@@ -152,6 +154,26 @@ of several different types of polynomial rings.
    discussions, etc., in your package.  Make these plain text files
    (with extension ``.txt``) in a subdirectory called ``notes``.  For
    example, see ``SAGE_ROOT/src/sage/ext/notes/``.
+
+If you want to create a new directory in the Sage library
+``SAGE_ROOT/src/sage`` (say, ``measure_theory``), that directory
+should contain an empty file ``__init__.py`` in addition to whatever
+files you want to add (say, ``borel_measure.py`` and
+``banach_tarski.py``), and also a file ``all.py`` listing imports from
+that directory.  The file ``all.py`` might look like this::
+
+    from borel_measure import BorelMeasure
+    from banach_tarski import BanachTarskiParadox
+
+but it is generally better to use the lazy import framework::
+
+    from sage.misc.lazy_import import lazy_import
+    lazy_import('sage.measure_theory.borel_measue', 'BorelMeasure')
+    lazy_import('sage.measure_theory.banach_tarski', 'BanachTarskiParadox')
+
+Then in the file ``SAGE_ROOT/src/sage/all.py``, add a line ::
+
+    from sage.measure_theory.all import *
 
 
 An example is worth a thousand words
@@ -977,10 +999,8 @@ input. Your test code should define a class ``Test`` with a
 together later, and each test is run for a certain amount of time on a
 regular basis.
 
-For example, see the file
+For an example, see the file
 ``SAGE_ROOT/src/sage/modular/modsym/tests.py``.
-
-.. [2]  See http://www.sagemath.org/development-map.html
 
 
 Global Options

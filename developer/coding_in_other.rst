@@ -6,15 +6,15 @@ Coding using external libraries and interfaces
 
 When writing code for Sage, use Python for the basic structure and
 interface. For speed, efficiency, or convenience, you can implement
-parts of the code using any of the following languages:
-:ref:`Cython <chapter-cython>`, C/C++,
-Fortran 95, GAP, Common Lisp, Singular, and PARI/GP. You can also use
-all C/C++ libraries included with Sage  [3]_. (And if you are okay
-with your code depending on optional Sage packages, you can use
-Octave, or even Magma, Mathematica, or Maple.)
+parts of the code using any of the following languages: :ref:`Cython
+<chapter-cython>`, C/C++, Fortran 95, GAP, Common Lisp, Singular, and
+PARI/GP. You can also use all C/C++ libraries included with Sage
+[3]_. (And if you are okay with your code depending on optional Sage
+packages, you can use Octave, or even Magma, Mathematica, or Maple.)
 
-In this chapter, we discuss interfaces between Sage and
-:ref:`PARI <section-pari-library>`, :ref:`section-gap` and :ref:`section-singular`.
+In this chapter, we discuss interfaces between Sage and :ref:`PARI
+<section-pari-library>`, :ref:`section-gap` and
+:ref:`section-singular`.
 
 
 .. _section-pari-library:
@@ -22,14 +22,11 @@ In this chapter, we discuss interfaces between Sage and
 The PARI C library interface
 ============================
 
-(This chapter was written by Martin Albrecht.)
-
 Here is a step-by-step guide to adding new PARI functions to Sage. We
-use the Frobenius form of a matrix as an example.
-
-Some heavy lifting for matrices over integers is implemented using
-the PARI library. To compute the Frobenius form in PARI, the
-``matfrobenius`` function is used.
+use the Frobenius form of a matrix as an example. Some heavy lifting
+for matrices over integers is implemented using the PARI library. To
+compute the Frobenius form in PARI, the ``matfrobenius`` function is
+used.
 
 There are two ways to interact with the PARI library from Sage. The
 gp interface uses the gp interpreter. The PARI interface uses
@@ -71,29 +68,26 @@ add the method ``matfrobenius``::
 
 Note the use of the :ref:`sig_on() statement <section_sig_on>`.
 
-The ``matfrobenius`` call is just a call
-to the PARI C library function ``matfrobenius`` with the appropriate
-parameters.
+The ``matfrobenius`` call is just a call to the PARI C library
+function ``matfrobenius`` with the appropriate parameters.
 
-The ``self.new_gen(GEN x)`` call constructs a new Sage ``gen`` object from a
-given PARI ``GEN`` where the PARI ``GEN`` is stored as the
-``.g`` attribute.
-Apart from this, ``self.new_gen()`` calls a closing ``sig_off()`` macro
-and also clears the PARI stack so it is very convenient to use in a
-``return`` statement as illustrated above.
-So after ``self.new_gen()``, all PARI ``GEN``'s which are not converted
-to Sage ``gen``'s are gone.
-There is also ``self.new_gen_noclear(GEN x)`` which does the same as
-``self.new_gen(GEN x)`` except that it does *not* call ``sig_off()`` nor
-clear the PARI stack.
+The ``self.new_gen(GEN x)`` call constructs a new Sage ``gen`` object
+from a given PARI ``GEN`` where the PARI ``GEN`` is stored as the
+``.g`` attribute.  Apart from this, ``self.new_gen()`` calls a closing
+``sig_off()`` macro and also clears the PARI stack so it is very
+convenient to use in a ``return`` statement as illustrated above.  So
+after ``self.new_gen()``, all PARI ``GEN``'s which are not converted
+to Sage ``gen``'s are gone.  There is also ``self.new_gen_noclear(GEN
+x)`` which does the same as ``self.new_gen(GEN x)`` except that it
+does *not* call ``sig_off()`` nor clear the PARI stack.
 
 The information about which function to call and how to call it can be
 retrieved from the PARI user's manual (note: Sage includes the
 development version of PARI, so check that version of the user's
 manual). Looking for ``matfrobenius`` you can find:
 
-    The library syntax is ``GEN matfrobenius(GEN M, long flag, long v = -1)``,
-    where ``v`` is a variable number.
+    The library syntax is ``GEN matfrobenius(GEN M, long flag, long v
+    = -1)``, where ``v`` is a variable number.
 
 In case you are familiar with gp, please note that the PARI C function
 may have a name that is different from the corresponding gp function
@@ -163,8 +157,6 @@ convert output from PARI to Sage objects::
 GAP
 ===
 
-(The first version of this chapter was written by David Joyner.)
-
 Wrapping a GAP function in Sage is a matter of writing a program in
 Python that uses the pexpect interface to pipe various commands to GAP
 and read back the input into Sage. This is sometimes easy, sometimes
@@ -172,9 +164,7 @@ hard.
 
 For example, suppose we want to make a wrapper for the computation of
 the Cartan matrix of a simple Lie algebra. The Cartan matrix of `G_2`
-is available in GAP using the commands
-
-::
+is available in GAP using the commands::
 
     gap> L:= SimpleLieAlgebra( "G", 2, Rationals );
     <Lie algebra of dimension 14 over Rationals>
