@@ -67,22 +67,19 @@
 <span id="chapter-other"></span><h1>Coding using external libraries and interfaces<a class="headerlink" href="#coding-using-external-libraries-and-interfaces" title="Permalink to this headline">¶</a></h1>
 <p>When writing code for Sage, use Python for the basic structure and
 interface. For speed, efficiency, or convenience, you can implement
-parts of the code using any of the following languages:
-<a class="reference internal" href="coding_in_cython.html#chapter-cython"><em>Cython</em></a>, C/C++,
-Fortran 95, GAP, Common Lisp, Singular, and PARI/GP. You can also use
-all C/C++ libraries included with Sage  <a class="footnote-reference" href="#id2" id="id1">[3]</a>. (And if you are okay
-with your code depending on optional Sage packages, you can use
-Octave, or even Magma, Mathematica, or Maple.)</p>
-<p>In this chapter, we discuss interfaces between Sage and
-<a class="reference internal" href="#section-pari-library"><em>PARI</em></a>, <a class="reference internal" href="#section-gap"><em>GAP</em></a> and <a class="reference internal" href="#section-singular"><em>Singular</em></a>.</p>
+parts of the code using any of the following languages: <a class="reference internal" href="coding_in_cython.html#chapter-cython"><em>Cython</em></a>, C/C++, Fortran 95, GAP, Common Lisp, Singular, and
+PARI/GP. You can also use all C/C++ libraries included with Sage
+<a class="footnote-reference" href="#id2" id="id1">[3]</a>. (And if you are okay with your code depending on optional Sage
+packages, you can use Octave, or even Magma, Mathematica, or Maple.)</p>
+<p>In this chapter, we discuss interfaces between Sage and <a class="reference internal" href="#section-pari-library"><em>PARI</em></a>, <a class="reference internal" href="#section-gap"><em>GAP</em></a> and
+<a class="reference internal" href="#section-singular"><em>Singular</em></a>.</p>
 <div class="section" id="the-pari-c-library-interface">
 <span id="section-pari-library"></span><h2>The PARI C library interface<a class="headerlink" href="#the-pari-c-library-interface" title="Permalink to this headline">¶</a></h2>
-<p>(This chapter was written by Martin Albrecht.)</p>
 <p>Here is a step-by-step guide to adding new PARI functions to Sage. We
-use the Frobenius form of a matrix as an example.</p>
-<p>Some heavy lifting for matrices over integers is implemented using
-the PARI library. To compute the Frobenius form in PARI, the
-<tt class="docutils literal"><span class="pre">matfrobenius</span></tt> function is used.</p>
+use the Frobenius form of a matrix as an example. Some heavy lifting
+for matrices over integers is implemented using the PARI library. To
+compute the Frobenius form in PARI, the <tt class="docutils literal"><span class="pre">matfrobenius</span></tt> function is
+used.</p>
 <p>There are two ways to interact with the PARI library from Sage. The
 gp interface uses the gp interpreter. The PARI interface uses
 direct calls to the PARI C functions&#8212;this is the preferred way
@@ -120,27 +117,24 @@ add the method <tt class="docutils literal"><span class="pre">matfrobenius</span
 </pre></div>
 </div>
 <p>Note the use of the <a class="reference internal" href="coding_in_cython.html#section-sig-on"><em>sig_on() statement</em></a>.</p>
-<p>The <tt class="docutils literal"><span class="pre">matfrobenius</span></tt> call is just a call
-to the PARI C library function <tt class="docutils literal"><span class="pre">matfrobenius</span></tt> with the appropriate
-parameters.</p>
-<p>The <tt class="docutils literal"><span class="pre">self.new_gen(GEN</span> <span class="pre">x)</span></tt> call constructs a new Sage <tt class="docutils literal"><span class="pre">gen</span></tt> object from a
-given PARI <tt class="docutils literal"><span class="pre">GEN</span></tt> where the PARI <tt class="docutils literal"><span class="pre">GEN</span></tt> is stored as the
-<tt class="docutils literal"><span class="pre">.g</span></tt> attribute.
-Apart from this, <tt class="docutils literal"><span class="pre">self.new_gen()</span></tt> calls a closing <tt class="docutils literal"><span class="pre">sig_off()</span></tt> macro
-and also clears the PARI stack so it is very convenient to use in a
-<tt class="docutils literal"><span class="pre">return</span></tt> statement as illustrated above.
-So after <tt class="docutils literal"><span class="pre">self.new_gen()</span></tt>, all PARI <tt class="docutils literal"><span class="pre">GEN</span></tt>&#8216;s which are not converted
-to Sage <tt class="docutils literal"><span class="pre">gen</span></tt>&#8216;s are gone.
-There is also <tt class="docutils literal"><span class="pre">self.new_gen_noclear(GEN</span> <span class="pre">x)</span></tt> which does the same as
-<tt class="docutils literal"><span class="pre">self.new_gen(GEN</span> <span class="pre">x)</span></tt> except that it does <em>not</em> call <tt class="docutils literal"><span class="pre">sig_off()</span></tt> nor
-clear the PARI stack.</p>
+<p>The <tt class="docutils literal"><span class="pre">matfrobenius</span></tt> call is just a call to the PARI C library
+function <tt class="docutils literal"><span class="pre">matfrobenius</span></tt> with the appropriate parameters.</p>
+<p>The <tt class="docutils literal"><span class="pre">self.new_gen(GEN</span> <span class="pre">x)</span></tt> call constructs a new Sage <tt class="docutils literal"><span class="pre">gen</span></tt> object
+from a given PARI <tt class="docutils literal"><span class="pre">GEN</span></tt> where the PARI <tt class="docutils literal"><span class="pre">GEN</span></tt> is stored as the
+<tt class="docutils literal"><span class="pre">.g</span></tt> attribute.  Apart from this, <tt class="docutils literal"><span class="pre">self.new_gen()</span></tt> calls a closing
+<tt class="docutils literal"><span class="pre">sig_off()</span></tt> macro and also clears the PARI stack so it is very
+convenient to use in a <tt class="docutils literal"><span class="pre">return</span></tt> statement as illustrated above.  So
+after <tt class="docutils literal"><span class="pre">self.new_gen()</span></tt>, all PARI <tt class="docutils literal"><span class="pre">GEN</span></tt>&#8216;s which are not converted
+to Sage <tt class="docutils literal"><span class="pre">gen</span></tt>&#8216;s are gone.  There is also <tt class="docutils literal"><span class="pre">self.new_gen_noclear(GEN</span>
+<span class="pre">x)</span></tt> which does the same as <tt class="docutils literal"><span class="pre">self.new_gen(GEN</span> <span class="pre">x)</span></tt> except that it
+does <em>not</em> call <tt class="docutils literal"><span class="pre">sig_off()</span></tt> nor clear the PARI stack.</p>
 <p>The information about which function to call and how to call it can be
 retrieved from the PARI user&#8217;s manual (note: Sage includes the
 development version of PARI, so check that version of the user&#8217;s
 manual). Looking for <tt class="docutils literal"><span class="pre">matfrobenius</span></tt> you can find:</p>
 <blockquote>
-<div>The library syntax is <tt class="docutils literal"><span class="pre">GEN</span> <span class="pre">matfrobenius(GEN</span> <span class="pre">M,</span> <span class="pre">long</span> <span class="pre">flag,</span> <span class="pre">long</span> <span class="pre">v</span> <span class="pre">=</span> <span class="pre">-1)</span></tt>,
-where <tt class="docutils literal"><span class="pre">v</span></tt> is a variable number.</div></blockquote>
+<div>The library syntax is <tt class="docutils literal"><span class="pre">GEN</span> <span class="pre">matfrobenius(GEN</span> <span class="pre">M,</span> <span class="pre">long</span> <span class="pre">flag,</span> <span class="pre">long</span> <span class="pre">v</span>
+<span class="pre">=</span> <span class="pre">-1)</span></tt>, where <tt class="docutils literal"><span class="pre">v</span></tt> is a variable number.</div></blockquote>
 <p>In case you are familiar with gp, please note that the PARI C function
 may have a name that is different from the corresponding gp function
 (for example, see <tt class="docutils literal"><span class="pre">mathnf</span></tt>), so always check the manual.</p>
@@ -204,14 +198,13 @@ convert output from PARI to Sage objects:</p>
 </div>
 <div class="section" id="gap">
 <span id="section-gap"></span><h2>GAP<a class="headerlink" href="#gap" title="Permalink to this headline">¶</a></h2>
-<p>(The first version of this chapter was written by David Joyner.)</p>
 <p>Wrapping a GAP function in Sage is a matter of writing a program in
 Python that uses the pexpect interface to pipe various commands to GAP
 and read back the input into Sage. This is sometimes easy, sometimes
 hard.</p>
 <p>For example, suppose we want to make a wrapper for the computation of
 the Cartan matrix of a simple Lie algebra. The Cartan matrix of <span class="math">\(G_2\)</span>
-is available in GAP using the commands</p>
+is available in GAP using the commands:</p>
 <div class="highlight-python"><pre>gap&gt; L:= SimpleLieAlgebra( "G", 2, Rationals );
 &lt;Lie algebra of dimension 14 over Rationals&gt;
 gap&gt; R:= RootSystem( L );

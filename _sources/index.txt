@@ -22,9 +22,16 @@ your new and modified code with other Sage users around the globe.
 Writing Code for Sage
 =====================
 
-.. todo::
+.. toctree::
+   :maxdepth: 3
 
-    Check paths in the "Writing Code for Sage" section
+   coding_basics
+   coding_in_python
+   coding_in_cython
+   coding_in_other
+   doctesting
+   sage_manuals
+
 
 
 Git and Sage Development

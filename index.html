@@ -108,9 +108,101 @@ your new and modified code with other Sage users around the globe.</p>
 </div>
 <div class="section" id="writing-code-for-sage">
 <h2>Writing Code for Sage<a class="headerlink" href="#writing-code-for-sage" title="Permalink to this headline">¶</a></h2>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">Check paths in the &#8220;Writing Code for Sage&#8221; section</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="coding_basics.html">General Conventions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="coding_basics.html#python-code-style">Python Code Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_basics.html#files-and-directory-structure">Files and Directory Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_basics.html#an-example-is-worth-a-thousand-words">An example is worth a thousand words</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_basics.html#headings-of-sage-library-code-files">Headings of Sage library code files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_basics.html#documentation-strings">Documentation strings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="coding_basics.html#docstring-markup-with-rest-and-sphinx">Docstring markup with ReST and Sphinx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_basics.html#latex-typesetting">LaTeX typesetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_basics.html#writing-testable-examples">Writing testable examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_basics.html#special-markup-to-influence-tests">Special markup to influence tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="coding_basics.html#running-automated-tests">Running automated tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="coding_basics.html#testing-py-pyx-and-sage-files">Testing .py, .pyx and .sage files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_basics.html#testing-rest-documentation">Testing ReST documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="coding_basics.html#the-pickle-jar">The Pickle Jar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_basics.html#randomized-testing">Randomized testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_basics.html#global-options">Global Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="coding_in_python.html">Coding in Python for Sage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_python.html#design">Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_python.html#special-sage-functions">Special Sage Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#latex-representation">LaTeX representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#print-representation">Print representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#matrix-or-vector-from-object">Matrix or vector from object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_python.html#sage-preparsing">Sage Preparsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_python.html#the-sage-coercion-model">The Sage Coercion Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_python.html#mutability">Mutability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_python.html#the-hash-special-method">The  __hash__ Special Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_python.html#exceptions">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_python.html#importing">Importing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_python.html#deprecation">Deprecation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_python.html#using-optional-packages">Using optional packages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="coding_in_cython.html">Coding in Cython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_cython.html#writing-cython-code-in-sage">Writing Cython Code in Sage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_cython.html#special-pragmas">Special Pragmas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_cython.html#attaching-or-loading-spyx-files">Attaching or Loading .spyx Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_cython.html#interrupt-and-signal-handling">Interrupt and Signal Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#using-sig-on-and-sig-off">Using <tt class="docutils literal"><span class="pre">sig_on()</span></tt> and <tt class="docutils literal"><span class="pre">sig_off()</span></tt></a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#other-signals">Other signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#advanced-functions">Advanced functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#testing-interrupts">Testing interrupts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_cython.html#unpickling-cython-code">Unpickling Cython Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="coding_in_other.html">Coding using external libraries and interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#the-pari-c-library-interface">The PARI C library interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#gap">GAP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#singular">Singular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#singular-another-approach">Singular: Another approach</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#creating-a-new-pseudo-tty-interface">Creating a new pseudo-tty interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doctesting.html">Doctesting the Sage Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doctesting.html#testing-a-module">Testing a module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctesting.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctesting.html#parallel-testing-many-modules">Parallel testing many modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctesting.html#parallel-testing-the-whole-sage-library">Parallel testing the whole Sage library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctesting.html#beyond-the-sage-library">Beyond the Sage library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctesting.html#doctesting-from-within-sage">Doctesting from within Sage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctesting.html#optional-arguments">Optional Arguments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#run-long-tests">Run long tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#run-optional-tests">Run optional tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#running-tests-in-parallel">Running tests in parallel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#doctesting-all-of-sage">Doctesting all of Sage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#debugging-tools">Debugging tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#other-options">Other options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sage_manuals.html">The Sage Manuals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#editing-the-manuals">Editing the manuals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#linking-to-modules-classes-methods-trac-tickets-and-wikipedia">Linking to modules, classes, methods, ..., trac tickets and Wikipedia</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#adding-a-new-file">Adding a new file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#building-the-manuals">Building the manuals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#document-names">Document names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#output-formats">Output formats</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#syntax-highlighting-cython-code">Syntax highlighting Cython code</a></li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 <div class="section" id="git-and-sage-development">
@@ -232,25 +324,23 @@ your new and modified code with other Sage users around the globe.</p>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="coding_in_python.html">Coding in Python for Sage</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#design">Design</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#special-sage-functions">Special Sage functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#sage-preparsing">Sage preparsing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#the-sage-coercion-model">The Sage coercion model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#special-sage-functions">Special Sage Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#sage-preparsing">Sage Preparsing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#the-sage-coercion-model">The Sage Coercion Model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#mutability">Mutability</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#the-hash-special-method">The  __hash__ special method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#the-hash-special-method">The  __hash__ Special Method</a></li>
 <li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#exceptions">Exceptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#importing">Importing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#deprecation">Deprecation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#editing-existing-files">Editing existing files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#creating-a-new-directory">Creating a new directory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#using-optional-packages">Using optional packages</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="coding_in_cython.html">Coding in Cython</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#writing-cython-code-in-sage">Writing Cython code in Sage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#special-pragmas">Special pragmas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#attaching-or-loading-spyx-files">Attaching or loading .spyx files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#interrupt-and-signal-handling">Interrupt and signal handling</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#unpickling-cython-code">Unpickling cython code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#writing-cython-code-in-sage">Writing Cython Code in Sage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#special-pragmas">Special Pragmas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#attaching-or-loading-spyx-files">Attaching or Loading .spyx Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#interrupt-and-signal-handling">Interrupt and Signal Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#unpickling-cython-code">Unpickling Cython Code</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="coding_in_other.html">Coding using external libraries and interfaces</a><ul>
@@ -338,7 +428,9 @@ your new and modified code with other Sage users around the globe.</p>
             <h3><a href="#">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference internal" href="#">Welcome to the Sage Developer&#8217;s Guide!</a><ul>
-<li><a class="reference internal" href="#writing-code-for-sage">Writing Code for Sage</a></li>
+<li><a class="reference internal" href="#writing-code-for-sage">Writing Code for Sage</a><ul>
+</ul>
+</li>
 <li><a class="reference internal" href="#git-and-sage-development">Git and Sage Development</a><ul>
 </ul>
 </li>

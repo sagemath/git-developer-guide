@@ -80,7 +80,7 @@ scratch. Try to figure out how your code should fit in with other Sage
 code, and design it accordingly.</p>
 </div>
 <div class="section" id="special-sage-functions">
-<h2>Special Sage functions<a class="headerlink" href="#special-sage-functions" title="Permalink to this headline">¶</a></h2>
+<h2>Special Sage Functions<a class="headerlink" href="#special-sage-functions" title="Permalink to this headline">¶</a></h2>
 <p>Functions with leading and trailing double underscores <tt class="docutils literal"><span class="pre">__XXX__</span></tt> are
 all predefined by Python. Functions with leading and trailing single
 underscores <tt class="docutils literal"><span class="pre">_XXX_</span></tt> are defined for Sage. Functions with a single
@@ -88,10 +88,10 @@ leading underscore are meant to be semi-private, and those with a
 double leading underscore are considered really private. Users can
 create functions with leading and trailing underscores.</p>
 <p>Just as Python has many standard special methods for objects, Sage
-also has special methods. They are typically of the form
-<tt class="docutils literal"><span class="pre">_XXX_</span></tt>. (In a few cases, the trailing underscore is not included,
-but this will be changed so that the trailing underscore is always
-included.) This section describes these special methods.</p>
+also has special methods. They are typically of the form <tt class="docutils literal"><span class="pre">_XXX_</span></tt>.
+In a few cases, the trailing underscore is not included, but this will
+eventually be changed so that the trailing underscore is always
+included. This section describes these special methods.</p>
 <p>All objects in Sage should derive from the Cython extension class
 <tt class="docutils literal"><span class="pre">SageObject</span></tt>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sage.ext.sage_object</span> <span class="kn">import</span> <span class="n">SageObject</span>
@@ -206,8 +206,7 @@ for this object.</p>
 </div>
 <p>Similarly, provide a <tt class="docutils literal"><span class="pre">_vector_</span></tt> method for an object that can be
 coerced to a vector over a ring <span class="math">\(R\)</span>. Then the Sage function <tt class="docutils literal"><span class="pre">vector</span></tt>
-will work for this object.</p>
-<p>The following is from the file
+will work for this object. The following is from the file
 <tt class="docutils literal"><span class="pre">SAGE_ROOT/sage/sage/modules/free_module_element.pyx</span></tt>:</p>
 <div class="highlight-python"><pre>cdef class FreeModuleElement(element_Vector):   # abstract base class
     ...
@@ -217,18 +216,24 @@ will work for this object.</p>
 </div>
 </div>
 <div class="section" id="sage-preparsing">
-<span id="section-preparsing"></span><h2>Sage preparsing<a class="headerlink" href="#sage-preparsing" title="Permalink to this headline">¶</a></h2>
-<p>The following files are relevant to preparsing in Sage:</p>
-<ol class="arabic simple">
-<li><tt class="docutils literal"><span class="pre">SAGE_ROOT/spkg/bin/sage</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SAGE_ROOT/local/bin/sage-preparse</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/misc/preparser.py</span></tt></li>
-</ol>
-<p>In particular, the file <tt class="docutils literal"><span class="pre">preparser.py</span></tt> contains the Sage preparser
-code. The following are some notes from it:</p>
+<span id="section-preparsing"></span><h2>Sage Preparsing<a class="headerlink" href="#sage-preparsing" title="Permalink to this headline">¶</a></h2>
+<p>To make Python even more usable interactively, there are a number of
+tweaks to the syntax made when you use Sage from the commandline or
+via the notebook (but not for Python code in the Sage
+library). Technically, this is implemented by a <tt class="docutils literal"><span class="pre">preparse()</span></tt>
+function that rewrites the input string. Most notably, the following
+replacements are made:</p>
 <ul>
-<li><p class="first">In Sage, methods can be called on integer and real literals. Note
-that in pure Python this would be a syntax error. For example:</p>
+<li><p class="first">Sage supports a special syntax for generating rings or, more
+generally, parents with named generators:</p>
+<div class="highlight-python"><pre>sage: R.&lt;x,y&gt; = QQ[]
+sage: preparse('R.&lt;x,y&gt; = QQ[]')
+"R = QQ['x, y']; (x, y,) = R._first_ngens(2)"</pre>
+</div>
+</li>
+<li><p class="first">Integer and real literals are Sage integers and Sage floating point
+numbers. For example, in pure Python these would be an attribute
+error:</p>
 <div class="highlight-python"><pre>sage: 16.sqrt()
 4
 sage: 87.factor()
@@ -236,9 +241,9 @@ sage: 87.factor()
 </div>
 </li>
 <li><p class="first">Raw literals are not preparsed, which can be useful from an
-efficiency point of view. Just like Python ints are denoted by an
-L, in Sage raw integer and floating literals are followed by an &#8220;r&#8221;
-(or &#8220;R&#8221;) for raw, meaning not preparsed. For example:</p>
+efficiency point of view. Just like Python ints are denoted by an L,
+in Sage raw integer and floating literals are followed by an &#8220;r&#8221; (or
+&#8220;R&#8221;) for raw, meaning not preparsed. For example:</p>
 <div class="highlight-python"><pre>sage: a = 393939r
 sage: a
 393939
@@ -254,8 +259,7 @@ True</pre>
 <li><p class="first">Raw literals can be very useful in certain cases. For instance,
 Python integers can be more efficient than Sage integers when they
 are very small.  Large Sage integers are much more efficient than
-Python integers since they are implemented using the GMP C
-library.</p>
+Python integers since they are implemented using the GMP C library.</p>
 </li>
 </ul>
 <p>Consult the file <tt class="docutils literal"><span class="pre">preparser.py</span></tt> for more details about Sage
@@ -265,12 +269,20 @@ version of <tt class="docutils literal"><span class="pre">foo.sage</span></tt> i
 of <tt class="docutils literal"><span class="pre">foo.py</span></tt> states:</p>
 <div class="highlight-python"><pre>This file was *autogenerated* from the file foo.sage.</pre>
 </div>
+<p>The following files are relevant to preparsing in Sage:</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">SAGE_ROOT/spkg/bin/sage</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SAGE_ROOT/local/bin/sage-preparse</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/misc/preparser.py</span></tt></li>
+</ol>
+<p>In particular, the file <tt class="docutils literal"><span class="pre">preparser.py</span></tt> contains the Sage preparser
+code.</p>
 </div>
 <div class="section" id="the-sage-coercion-model">
-<h2>The Sage coercion model<a class="headerlink" href="#the-sage-coercion-model" title="Permalink to this headline">¶</a></h2>
+<h2>The Sage Coercion Model<a class="headerlink" href="#the-sage-coercion-model" title="Permalink to this headline">¶</a></h2>
 <p>The primary goal of coercion is to be able to transparently do
 arithmetic, comparisons, etc. between elements of distinct sets. For
-example, when one writes <span class="math">\(1 + 1/2\)</span>, one wants to perform arithmetic on
+example, when one writes <span class="math">\(3 + 1/2\)</span>, one wants to perform arithmetic on
 the operands as rational numbers, despite the left term being an
 integer.  This makes sense given the obvious and natural inclusion of
 the integers into the rational numbers. The goal of the coercion
@@ -292,12 +304,12 @@ the standard Python weakref module, a factory function, and module
 scope variable.</p>
 <p>Certain objects, e.g. matrices, may start out mutable and become
 immutable later. See the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/structure/mutability.py</span></tt>.</p>
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/structure/mutability.py</span></tt>.</p>
 </div>
 <div class="section" id="the-hash-special-method">
-<h2>The  __hash__ special method<a class="headerlink" href="#the-hash-special-method" title="Permalink to this headline">¶</a></h2>
+<h2>The  __hash__ Special Method<a class="headerlink" href="#the-hash-special-method" title="Permalink to this headline">¶</a></h2>
 <p>Here is the definition of <tt class="docutils literal"><span class="pre">__hash__</span></tt> from the Python reference
-manual.</p>
+manual:</p>
 <blockquote>
 <div>Called by built-in function <tt class="docutils literal"><span class="pre">hash()</span></tt> and for operations on members of
 hashed collections including set, frozenset, and dict. <tt class="docutils literal"><span class="pre">__hash__()</span></tt>
@@ -367,47 +379,47 @@ For example,</p>
 </div>
 <p>The output 2 is better than some random hash that also involves the
 moduli, but it is of course not right from the Python point of view,
-since <tt class="docutils literal"><span class="pre">9</span> <span class="pre">==</span> <span class="pre">Mod(2,7)</span></tt>.</p>
-<p>The goal is to make a hash function that is fast, but within reason
-respects any obvious natural inclusions and coercions.</p>
+since <tt class="docutils literal"><span class="pre">9</span> <span class="pre">==</span> <span class="pre">Mod(2,7)</span></tt>. The goal is to make a hash function that is
+fast, but within reason respects any obvious natural inclusions and
+coercions.</p>
 </div>
 <div class="section" id="exceptions">
 <h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
-<p>Please avoid code like this:</p>
+<p>Please avoid catch-all code like this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
     <span class="n">some_code</span><span class="p">()</span>
 <span class="k">except</span><span class="p">:</span>               <span class="c"># bad</span>
     <span class="n">more_code</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Instead, catch specific exceptions. For example,</p>
+<p>If you do not have any exceptions explicitly listed (as a tuple), your
+code will catch absolutely anything, including <tt class="docutils literal"><span class="pre">ctrl-C</span></tt>, typos in
+the code, and alarms, and this will lead to confusion. Also, this
+might catch real errors which should be propagated to the user.</p>
+<p>To summarize, only catch specific exceptions as in the following
+example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coordinate_ring</span>
-<span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="n">OtherExceptions</span><span class="p">)</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>           <span class="c"># Good</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="n">OtherExceptions</span><span class="p">)</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>           <span class="c"># good</span>
     <span class="n">more_code_to_compute_something</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Note that the syntax in <tt class="docutils literal"><span class="pre">except</span></tt> is to list all the exceptions that
 are caught as a tuple, followed by an error message.</p>
-<p>If you do not have any exceptions explicitly listed (as a tuple), your
-code will catch absolutely anything, including <tt class="docutils literal"><span class="pre">ctrl-C</span></tt>, typos in
-the code, and alarms, and this will lead to confusion. Also, this
-might catch real errors which should be propagated to the user.</p>
 </div>
 <div class="section" id="importing">
 <h2>Importing<a class="headerlink" href="#importing" title="Permalink to this headline">¶</a></h2>
 <p>We mention two issues with importing: circular imports and importing
 large third-party modules.</p>
-<p>First, you must avoid circular imports. For example, suppose that
-the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/algebras/steenrod_algebra.py</span></tt>
-started with a line</p>
+<p>First, you must avoid circular imports. For example, suppose that the
+file <tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/algebras/steenrod_algebra.py</span></tt>
+started with a line:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sage.sage.algebras.steenrod_algebra_bases</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 <p>and that the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/algebras/steenrod_algebra_bases.py</span></tt>
-started with a line</p>
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/algebras/steenrod_algebra_bases.py</span></tt>
+started with a line:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sage.sage.algebras.steenrod_algebra</span> <span class="kn">import</span> <span class="n">SteenrodAlgebra</span>
 </pre></div>
 </div>
@@ -438,7 +450,12 @@ above, you might instead import specific components of the module when
 they are needed, rather than at the top level of your file.</p>
 <p>It is important to try to make <tt class="docutils literal"><span class="pre">from</span> <span class="pre">sage.all</span> <span class="pre">import</span> <span class="pre">*</span></tt> as fast as
 possible, since this is what dominates the Sage startup time, and
-controlling the top-level imports helps to do this.</p>
+controlling the top-level imports helps to do this. One important
+mechanism in Sage are lazy imports, which don&#8217;t actually perform the
+import but delay it until the object is actually used. See
+<tt class="xref py py-mod docutils literal"><span class="pre">sage.misc.lazy_import</span></tt> for more details of lazy imports, and
+<a class="reference internal" href="coding_basics.html#chapter-directory-structure"><em>Files and Directory Structure</em></a> for an example using lazy imports
+for a new module.</p>
 </div>
 <div class="section" id="deprecation">
 <h2>Deprecation<a class="headerlink" href="#deprecation" title="Permalink to this headline">¶</a></h2>
@@ -462,6 +479,8 @@ module in the Sage library:</p>
     <span class="k">def</span> <span class="nf">bad_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">1</span>
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weird_keyword</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_f_implementation</span><span class="p">(</span><span class="n">weird_keyword</span><span class="o">=</span><span class="n">weird_keyword</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_f_implementation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weird_keyword</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">1</span>
 </pre></div>
 </div>
@@ -487,30 +506,38 @@ open the trac ticket number 4444, and replace it with:</p>
 and replacing it with:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@rename_keyword</span><span class="p">(</span><span class="n">deprecation</span><span class="o">=</span><span class="mi">5555</span><span class="p">,</span> <span class="n">weird_keyword</span><span class="o">=</span><span class="s">&#39;nice_keyword&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nice_keyword</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_f_implementation</span><span class="p">(</span><span class="n">nice_keyword</span><span class="o">=</span><span class="n">nice_keyword</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_f_implementation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nice_keyword</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span>
 </pre></div>
 </div>
+<p>Note that the underscore-method <tt class="docutils literal"><span class="pre">_f_implementation</span></tt> is, by
+convention, not something that ought to be used by others. So we do
+not need to deprecate anything when we change it.</p>
 <p>Now, any user that still relies on the deprecated functionality will
 be informed that this is about to change, yet the deprecated commands
 still work. With all necessary imports, the final result looks like
 this:</p>
 <div class="highlight-python"><pre>sage: from sage.misc.superseded import deprecation, deprecated_function_alias
 sage: from sage.misc.decorators import rename_keyword
-
 sage: class Foo(SageObject):
-...
-...     def terrible_idea(self):
-...         deprecation(3333, 'You can just call f() instead')
-...         return 1
-...
-...     def much_better_name(self):
-...         return 1
-...
-...     bad_name = deprecated_function_alias(4444, much_better_name)
-...
-...     @rename_keyword(deprecation=5555, weird_keyword='nice_keyword')
-...     def f(self, nice_keyword=True):
-...         return 1
+....:
+....:     def terrible_idea(self):
+....:         deprecation(3333, 'You can just call f() instead')
+....:         return 1
+....:
+....:     def much_better_name(self):
+....:         return 1
+....:
+....:     bad_name = deprecated_function_alias(4444, much_better_name)
+....:
+....:     @rename_keyword(deprecation=5555, weird_keyword='nice_keyword')
+....:     def f(self, nice_keyword=True):
+....:         return self._f_implementation(nice_keyword=nice_keyword)
+....:
+....:     def _f_implementation(self, nice_keyword=True):
+....:         return 1
 
 sage: foo = Foo()
 sage: foo.terrible_idea()
@@ -528,62 +555,6 @@ doctest:...: DeprecationWarning: use the option 'nice_keyword' instead of 'weird
 See http://trac.sagemath.org/5555 for details.
 1</pre>
 </div>
-</div>
-<div class="section" id="editing-existing-files">
-<h2>Editing existing files<a class="headerlink" href="#editing-existing-files" title="Permalink to this headline">¶</a></h2>
-<p>There are several copies of Sage library files, and it can be
-confusing for beginners to know which one to modify.  In the directory
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage</span></tt>, there is a subdirectory <tt class="docutils literal"><span class="pre">build</span></tt> which
-contains copies of Python files and their byte-compiled versions,
-along with compiled version of Cython files.  These are the files that
-Sage actually uses, but <em>you</em> <em>never</em> <em>need</em> <em>to</em> <em>touch</em> <em>these</em>.
-Instead, always work with files in the directory
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage</span></tt>.  For example, if you want to add a new
-method for simplicial complexes, then edit the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/homology/simplicial_complex.py</span></tt>.  Save
-your changes, and then type <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-b</span></tt> to incorporate those changes.
-This automatically copies the appropriate files into the appropriate
-places under <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/build</span></tt>.</p>
-<p>You should also read <a class="reference internal" href="producing_patches.html#chapter-mercurial"><em>Producing Patches with Mercurial</em></a> for information about
-how to create a copy of the Sage library and make your changes there,
-so that first, it is easy to undo your changes, and second, it is easy
-to produce a &#8220;patch&#8221; file so you can share your changes with other
-people.</p>
-</div>
-<div class="section" id="creating-a-new-directory">
-<h2>Creating a new directory<a class="headerlink" href="#creating-a-new-directory" title="Permalink to this headline">¶</a></h2>
-<p>If you want to create a new directory in the Sage library
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage</span></tt> (say, <tt class="docutils literal"><span class="pre">measure_theory</span></tt>), that directory
-should contain an empty file <tt class="docutils literal"><span class="pre">__init__.py</span></tt> in addition to whatever
-files you want to add (say, <tt class="docutils literal"><span class="pre">borel_measure.py</span></tt> and
-<tt class="docutils literal"><span class="pre">banach_tarski.py</span></tt>), and also a file <tt class="docutils literal"><span class="pre">all.py</span></tt> listing imports from
-that directory.  The file <tt class="docutils literal"><span class="pre">all.py</span></tt> might look like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">borel_measure</span> <span class="kn">import</span> <span class="n">BorelMeasure</span>
-
-<span class="kn">from</span> <span class="nn">banach_tarski</span> <span class="kn">import</span> <span class="n">BanachTarskiParadox</span>
-</pre></div>
-</div>
-<p>Then in the file <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/all.py</span></tt>, add a line</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sage.measure_theory.all</span>  <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-</div>
-<p>Finally, add the directory name (&#8220;measure_theory&#8221;) to the <tt class="docutils literal"><span class="pre">packages</span></tt>
-list in the Distutils section of the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/setup.py</span></tt>: add a line</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;sage.measure_theory&#39;</span><span class="p">,</span>
-</pre></div>
-</div>
-<p>between</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;sage.matrix&#39;</span><span class="p">,</span>
-</pre></div>
-</div>
-<p>and</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;sage.media&#39;</span><span class="p">,</span>
-</pre></div>
-</div>
-<p>As noted above, you should also read <a class="reference internal" href="producing_patches.html#chapter-mercurial"><em>Producing Patches with Mercurial</em></a> for
-information about how to do this in a copy of the Sage library and how
-to disseminate your changes.</p>
 </div>
 <div class="section" id="using-optional-packages">
 <h2>Using optional packages<a class="headerlink" href="#using-optional-packages" title="Permalink to this headline">¶</a></h2>
@@ -607,21 +578,19 @@ returns this list.</p>
             <ul>
 <li><a class="reference internal" href="#">Coding in Python for Sage</a><ul>
 <li><a class="reference internal" href="#design">Design</a></li>
-<li><a class="reference internal" href="#special-sage-functions">Special Sage functions</a><ul>
+<li><a class="reference internal" href="#special-sage-functions">Special Sage Functions</a><ul>
 <li><a class="reference internal" href="#latex-representation">LaTeX representation</a></li>
 <li><a class="reference internal" href="#print-representation">Print representation</a></li>
 <li><a class="reference internal" href="#matrix-or-vector-from-object">Matrix or vector from object</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#sage-preparsing">Sage preparsing</a></li>
-<li><a class="reference internal" href="#the-sage-coercion-model">The Sage coercion model</a></li>
+<li><a class="reference internal" href="#sage-preparsing">Sage Preparsing</a></li>
+<li><a class="reference internal" href="#the-sage-coercion-model">The Sage Coercion Model</a></li>
 <li><a class="reference internal" href="#mutability">Mutability</a></li>
-<li><a class="reference internal" href="#the-hash-special-method">The  __hash__ special method</a></li>
+<li><a class="reference internal" href="#the-hash-special-method">The  __hash__ Special Method</a></li>
 <li><a class="reference internal" href="#exceptions">Exceptions</a></li>
 <li><a class="reference internal" href="#importing">Importing</a></li>
 <li><a class="reference internal" href="#deprecation">Deprecation</a></li>
-<li><a class="reference internal" href="#editing-existing-files">Editing existing files</a></li>
-<li><a class="reference internal" href="#creating-a-new-directory">Creating a new directory</a></li>
 <li><a class="reference internal" href="#using-optional-packages">Using optional packages</a></li>
 </ul>
 </li>

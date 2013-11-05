@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Conventions for Coding in Sage &mdash; Sage Developer&#39;s Guide v1.0</title>
+    <title>General Conventions &mdash; Sage Developer&#39;s Guide v1.0</title>
     
     <link rel="stylesheet" href="_static/sage.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,9 +27,8 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="index.html" />
-    <link rel="up" title="Writing Code for Sage" href="writing_code_old.html" />
     <link rel="next" title="Coding in Python for Sage" href="coding_in_python.html" />
-    <link rel="prev" title="Writing Code for Sage" href="writing_code_old.html" />
+    <link rel="prev" title="The Sage Trac Server" href="trac.html" />
     <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
 
   </head>
@@ -44,7 +43,7 @@
           <a href="coding_in_python.html" title="Coding in Python for Sage"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="writing_code_old.html" title="Writing Code for Sage"
+          <a href="trac.html" title="The Sage Trac Server"
              accesskey="P">previous</a> |</li>
   
     
@@ -53,8 +52,7 @@
   
   
         <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
-
-          <li><a href="writing_code_old.html" accesskey="U">Writing Code for Sage</a> &raquo;</li> 
+ 
       </ul>
     </div>  
 
@@ -63,13 +61,52 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="conventions-for-coding-in-sage">
-<span id="chapter-conventions-old"></span><h1>Conventions for Coding in Sage<a class="headerlink" href="#conventions-for-coding-in-sage" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="general-conventions">
+<span id="chapter-code-basics"></span><h1>General Conventions<a class="headerlink" href="#general-conventions" title="Permalink to this headline">¶</a></h1>
+<p>If there is something you would like to implement and make available
+in Sage, you have a wide range of options:</p>
+<ol class="arabic simple">
+<li>Implement it as Sage scripts, see <a class="reference internal" href="coding_in_python.html#section-preparsing"><em>Sage Preparsing</em></a>.</li>
+<li>Implement it as Python scripts that use the Sage library, see
+<a class="reference internal" href="coding_in_python.html#chapter-python"><em>Coding in Python for Sage</em></a>.</li>
+<li>Implement it in C/C++ and make the result accessible to Sage using
+Cython.</li>
+<li>Implement it using Cython.</li>
+<li>Implement it using one or more of the following: Flint, FpLLL, GAP,
+GSL, IML, LinBox, M4RI, Matplotlib, Maxima, MWRank, ECLib,
+NetworkX, NTL, Numpy, PARI/GP, PolyBoRi, R, Scipy, Singular, Sympy
+or any of the other libraries included with Sage <a class="footnote-reference" href="#id2" id="id1">[1]</a>.</li>
+<li>Or any combination of the above.</li>
+<li>If you have Magma, Maple or Mathematica and do not mind restricting
+who can use your code, you could also implement parts of your
+program in one of these systems and make it available in Sage
+through interfaces to these non-free systems.</li>
+</ol>
+<p>Flint, FpLLL, GAP, GSL, IML, LinBox, M4RI, Matplotlib, Maxima, MWRank,
+ECLib, NetworkX, NTL, Numpy, PARI/GP, PolyBoRi, R, Scipy, Singular,
+Sympy are all included with all distributions of Sage. GAP, Singular,
+and PARI are very mature, and each implements a great amount of
+functionality, though in different domains. GAP addresses group theory
+well, Singular attacks polynomial computation, and PARI contains
+sophisticated, optimized number theory algorithms.</p>
+<p>Sage is not just about gathering together functionality. It is about
+providing a clear, systematic and consistent way to access a large
+number of algorithms, in a coherent framework that makes sense
+mathematically. In the design of Sage, the semantics of objects, the
+definitions, etc., are informed by how the corresponding objects are
+used in everyday mathematics.</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>See <a class="reference external" href="http://www.sagemath.org/links-components.html">http://www.sagemath.org/links-components.html</a> for a full list
+of packages shipped with every copy of Sage</td></tr>
+</tbody>
+</table>
 <p>To meet the goal of making Sage easy to read, maintain, and improve,
 all Python/Cython code that is included with Sage should adhere to the
 style conventions discussed in this chapter.</p>
-<div class="section" id="python-coding-conventions">
-<h2>Python coding conventions<a class="headerlink" href="#python-coding-conventions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="python-code-style">
+<span id="section-coding-python"></span><h2>Python Code Style<a class="headerlink" href="#python-code-style" title="Permalink to this headline">¶</a></h2>
 <p>Follow the standard Python formatting rules when writing code for
 Sage, as explained at the following URLs:</p>
 <ul class="simple">
@@ -83,30 +120,107 @@ result in indentation confusion. Most editors have a feature that
 will insert 4 spaces when the tab key is hit. Also, many editors
 will automatically search/replace leading tabs with 4 spaces.</p>
 </li>
+<li><p class="first">Whitespace before and after assignment and binary operator of the
+lowest priority in the expression:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">No whitespace before or after the <tt class="docutils literal"><span class="pre">=</span></tt> sign if it is used for
+keyword arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">complex</span><span class="p">(</span><span class="n">real</span><span class="p">,</span> <span class="n">imag</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">magic</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">real</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">imag</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">No whitespace immediately inside parenthesis, brackets, and braces:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">spam</span><span class="p">(</span><span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">{</span><span class="n">eggs</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+<span class="p">[</span><span class="n">i</span><span class="o">^</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+</pre></div>
+</div>
+</li>
 <li><p class="first">Use all lowercase function names with words separated by
 underscores. For example, you are encouraged to write Python
-functions using the naming convention</p>
-<div class="highlight-python"><pre>def set_some_value()</pre>
+functions using the naming convention:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">set_some_value</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">1</span>
+</pre></div>
 </div>
-<p>instead of the CamelCase convention</p>
-<div class="highlight-python"><pre>def SetSomeValue()</pre>
-</div>
+<p>Note, however, that some functions do have uppercase letters where
+it makes sense. For instance, the function for lattice reduction by
+the LLL algorithm is called <tt class="docutils literal"><span class="pre">Matrix_integer_dense.LLL</span></tt>.</p>
 </li>
-<li><p class="first">Use CamelCase for class names and major functions that create
-objects, e.g. <tt class="docutils literal"><span class="pre">PolynomialRing</span></tt>.</p>
+<li><p class="first">Use CamelCase for class names:</p>
+<div class="highlight-python"><pre>class SomeValue(object):
+    def __init__(self, x):
+    self._x  = 1</pre>
+</div>
+<p>and factory functions that mimic object constructors, for example
+<tt class="docutils literal"><span class="pre">PolynomialRing</span></tt> or:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">SomeIdentityValue</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">SomeValue</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
 </li>
 </ul>
-<p>Note, however, that some functions do have uppercase letters where it
-makes sense. For instance, the function for lattice reduction by the
-LLL algorithm is called <tt class="docutils literal"><span class="pre">Matrix_integer_dense.LLL</span></tt>.</p>
 </div>
-<div class="section" id="file-and-directory-names">
-<h2>File and directory names<a class="headerlink" href="#file-and-directory-names" title="Permalink to this headline">¶</a></h2>
-<p>Python Sage library code uses the following conventions. Directory
-names may be plural (e.g. <tt class="docutils literal"><span class="pre">rings</span></tt>) and file names are almost always
-singular (e.g. <tt class="docutils literal"><span class="pre">polynomial_ring.py</span></tt>). Note that the file
-<tt class="docutils literal"><span class="pre">polynomial_ring.py</span></tt> might still contain definitions of several
-different types of polynomial rings.</p>
+<div class="section" id="files-and-directory-structure">
+<span id="chapter-directory-structure"></span><h2>Files and Directory Structure<a class="headerlink" href="#files-and-directory-structure" title="Permalink to this headline">¶</a></h2>
+<p>Roughly, the Sage directory tree is layout like this. Note that we use
+<tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt> in the following as a shortcut for the (arbitrary) name
+of the directory containing the Sage sources:</p>
+<div class="highlight-python"><pre>SAGE_ROOT/
+    sage          # the Sage launcher
+    Makefile      # top level Makefile
+    build/        # sage's build system
+        deps
+        install
+        ...
+        pkgs/     # install, patch, and metadata from spkgs
+    src/
+        setup.py
+        module_list.py
+        ...
+        sage/     # sage library, i.e. devel/sage-main/sage
+        ext/      # sage_extcode, i.e. devel/ext-main
+        mac-app/  # would no longer have to awkwardly be in extcode
+        bin/      # the scripts in local/bin that are tracked
+    upstream/     # tarballs of upstream sources
+    local/        # installed binaries</pre>
+</div>
+<p>Python Sage library code goes into <tt class="docutils literal"><span class="pre">src/</span></tt> and uses the following
+conventions. Directory names may be plural (e.g. <tt class="docutils literal"><span class="pre">rings</span></tt>) and file
+names are almost always singular (e.g. <tt class="docutils literal"><span class="pre">polynomial_ring.py</span></tt>). Note
+that the file <tt class="docutils literal"><span class="pre">polynomial_ring.py</span></tt> might still contain definitions
+of several different types of polynomial rings.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You are encouraged to include miscellaneous notes, emails, design
+discussions, etc., in your package.  Make these plain text files
+(with extension <tt class="docutils literal"><span class="pre">.txt</span></tt>) in a subdirectory called <tt class="docutils literal"><span class="pre">notes</span></tt>.  For
+example, see <tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/ext/notes/</span></tt>.</p>
+</div>
+<p>If you want to create a new directory in the Sage library
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage</span></tt> (say, <tt class="docutils literal"><span class="pre">measure_theory</span></tt>), that directory
+should contain an empty file <tt class="docutils literal"><span class="pre">__init__.py</span></tt> in addition to whatever
+files you want to add (say, <tt class="docutils literal"><span class="pre">borel_measure.py</span></tt> and
+<tt class="docutils literal"><span class="pre">banach_tarski.py</span></tt>), and also a file <tt class="docutils literal"><span class="pre">all.py</span></tt> listing imports from
+that directory.  The file <tt class="docutils literal"><span class="pre">all.py</span></tt> might look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">borel_measure</span> <span class="kn">import</span> <span class="n">BorelMeasure</span>
+<span class="kn">from</span> <span class="nn">banach_tarski</span> <span class="kn">import</span> <span class="n">BanachTarskiParadox</span>
+</pre></div>
+</div>
+<p>but it is generally better to use the lazy import framework:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sage.misc.lazy_import</span> <span class="kn">import</span> <span class="n">lazy_import</span>
+<span class="n">lazy_import</span><span class="p">(</span><span class="s">&#39;sage.measure_theory.borel_measue&#39;</span><span class="p">,</span> <span class="s">&#39;BorelMeasure&#39;</span><span class="p">)</span>
+<span class="n">lazy_import</span><span class="p">(</span><span class="s">&#39;sage.measure_theory.banach_tarski&#39;</span><span class="p">,</span> <span class="s">&#39;BanachTarskiParadox&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then in the file <tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/all.py</span></tt>, add a line</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sage.measure_theory.all</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="an-example-is-worth-a-thousand-words">
 <h2>An example is worth a thousand words<a class="headerlink" href="#an-example-is-worth-a-thousand-words" title="Permalink to this headline">¶</a></h2>
@@ -127,7 +241,6 @@ docstrings for more information and more options.</p>
 <span class="sd">&lt;Very short 1-line summary&gt;</span>
 
 <span class="sd">&lt;Paragraph description&gt;</span>
-<span class="sd">...</span>
 
 <span class="sd">AUTHORS:</span>
 
@@ -135,160 +248,34 @@ docstrings for more information and more options.</p>
 
 <span class="sd">- person (date in ISO year-month-day format): short desc</span>
 
-<span class="sd">...</span>
+<span class="sd">EXAMPLES::</span>
 
-<span class="sd">- person (date in ISO year-month-day format): short desc</span>
-
-<span class="sd">...</span>
-
-<span class="sd">Lots and lots of examples.</span>
+<span class="sd">&lt;Lots and lots of examples&gt;</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="c">#*****************************************************************************</span>
-<span class="c">#       Copyright (C) 2010 YOUR NAME &lt;your email&gt;</span>
+<span class="c">#       Copyright (C) 2013 YOUR NAME &lt;your email&gt;</span>
 <span class="c">#</span>
-<span class="c">#  Distributed under the terms of the GNU General Public License (GPL)</span>
-<span class="c">#  as published by the Free Software Foundation; either version 2 of</span>
-<span class="c">#  the License, or (at your option) any later version.</span>
+<span class="c"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published by</span>
+<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
 <span class="c">#                  http://www.gnu.org/licenses/</span>
 <span class="c">#*****************************************************************************</span>
 </pre></div>
 </div>
-<p>The following is the top of the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/rings/integer.pyx</span></tt>, which
-contains the implementation for <span class="math">\(\ZZ\)</span>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="sd">r&quot;&quot;&quot;</span>
-<span class="sd">Elements of the ring `\ZZ` of integers</span>
-
-<span class="sd">AUTHORS:</span>
-
-<span class="sd">- William Stein (2005): initial version</span>
-
-<span class="sd">- Gonzalo Tornaria (2006-03-02): vastly improved python/GMP</span>
-<span class="sd">  conversion; hashing</span>
-
-<span class="sd">- Didier Deshommes (2006-03-06): numerous examples</span>
-<span class="sd">  and docstrings</span>
-
-<span class="sd">- William Stein (2006-03-31): changes to reflect GMP bug fixes</span>
-
-<span class="sd">- William Stein (2006-04-14): added GMP factorial method (since it&#39;s</span>
-<span class="sd">  now very fast).</span>
-
-<span class="sd">- David Harvey (2006-09-15): added nth_root, exact_log</span>
-
-<span class="sd">- David Harvey (2006-09-16): attempt to optimise Integer constructor</span>
-
-<span class="sd">- Rishikesh (2007-02-25): changed quo_rem so that the rem is positive</span>
-
-<span class="sd">- David Harvey, Martin Albrecht, Robert Bradshaw (2007-03-01):</span>
-<span class="sd">  optimized Integer constructor and pool</span>
-
-<span class="sd">- Pablo De Napoli (2007-04-01): multiplicative_order should return</span>
-<span class="sd">  +infinity for non zero numbers</span>
-
-<span class="sd">- Robert Bradshaw (2007-04-12): is_perfect_power, Jacobi symbol (with</span>
-<span class="sd">  Kronecker extension).  Convert some methods to use GMP directly</span>
-<span class="sd">  rather than pari, Integer(), PY_NEW(Integer)</span>
-
-<span class="sd">- David Roe (2007-03-21): sped up valuation and is_square, added</span>
-<span class="sd">  val_unit, is_power, is_power_of and divide_knowing_divisible_by</span>
-
-<span class="sd">- Robert Bradshaw (2008-03-26): gamma function, multifactorials</span>
-
-<span class="sd">- Robert Bradshaw (2008-10-02): bounded squarefree part</span>
-
-<span class="sd">EXAMPLES:</span>
-
-<span class="sd">Add 2 integers::</span>
-
-<span class="sd">    sage: a = Integer(3) ; b = Integer(4)</span>
-<span class="sd">    sage: a + b == 7</span>
-<span class="sd">    True</span>
-
-<span class="sd">Add an integer and a real number::</span>
-
-<span class="sd">    sage: a + 4.0</span>
-<span class="sd">    7.00000000000000</span>
-
-<span class="sd">Add an integer and a rational number::</span>
-
-<span class="sd">    sage: a + Rational(2)/5</span>
-<span class="sd">    17/5</span>
-
-<span class="sd">Add an integer and a complex number::</span>
-
-<span class="sd">    sage: b = ComplexField().0 + 1.5</span>
-<span class="sd">    sage: loads((a+b).dumps()) == a+b</span>
-<span class="sd">    True</span>
-
-<span class="sd">    sage: z = 32</span>
-<span class="sd">    sage: -z</span>
-<span class="sd">    -32</span>
-<span class="sd">    sage: z = 0; -z</span>
-<span class="sd">    0</span>
-<span class="sd">    sage: z = -0; -z</span>
-<span class="sd">    0</span>
-<span class="sd">    sage: z = -1; -z</span>
-<span class="sd">    1</span>
-
-<span class="sd">Multiplication::</span>
-
-<span class="sd">    sage: a = Integer(3) ; b = Integer(4)</span>
-<span class="sd">    sage: a * b == 12</span>
-<span class="sd">    True</span>
-<span class="sd">    sage: loads((a * 4.0).dumps()) == a*b</span>
-<span class="sd">    True</span>
-<span class="sd">    sage: a * Rational(2)/5</span>
-<span class="sd">    6/5</span>
-
-<span class="sd">::</span>
-
-<span class="sd">    sage: list([2,3]) * 4</span>
-<span class="sd">    [2, 3, 2, 3, 2, 3, 2, 3]</span>
-
-<span class="sd">::</span>
-
-<span class="sd">    sage: &#39;sage&#39;*Integer(3)</span>
-<span class="sd">    &#39;sagesagesage&#39;</span>
-
-<span class="sd">COERCIONS:</span>
-
-<span class="sd">Return a version of this integer in the multi-precision floating</span>
-<span class="sd">real field R::</span>
-
-<span class="sd">    sage: n = 9390823</span>
-<span class="sd">    sage: RR = RealField(200)</span>
-<span class="sd">    sage: RR(n)</span>
-<span class="sd">    9.3908230000000000000000000000000000000000000000000000000000e6</span>
-
-
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="c">#*****************************************************************************</span>
-<span class="c">#       Copyright (C) 2004,2006 William Stein &lt;wstein@gmail.com&gt;</span>
-<span class="c">#       Copyright (C) 2006 Gonzalo Tornaria &lt;tornaria@math.utexas.edu&gt;</span>
-<span class="c">#       Copyright (C) 2006 Didier Deshommes &lt;dfdeshom@gmail.com&gt;</span>
-<span class="c">#       Copyright (C) 2007 David Harvey &lt;dmharvey@math.harvard.edu&gt;</span>
-<span class="c">#       Copyright (C) 2007 Martin Albrecht &lt;malb@informatik.uni-bremen.de&gt;</span>
-<span class="c">#       Copyright (C) 2007,2008 Robert Bradshaw &lt;robertwb@math.washington.edu&gt;</span>
-<span class="c">#       Copyright (C) 2007 David Roe &lt;roed314@gmail.com&gt;</span>
-<span class="c">#</span>
-<span class="c">#  Distributed under the terms of the GNU General Public License (GPL)</span>
-<span class="c">#  as published by the Free Software Foundation; either version 2 of</span>
-<span class="c">#  the License, or (at your option) any later version.</span>
-<span class="c">#                  http://www.gnu.org/licenses/</span>
-<span class="c">#*****************************************************************************</span>
-</pre></div>
-</div>
-<p>All code included with Sage must be licensed under the GPLv2+ or a
-less restrictive license (e.g. the BSD license). It is very important
-that you include your name in the AUTHORS log so that everybody who
-submits code to Sage receives proper credit <a class="footnote-reference" href="#id2" id="id1">[2]</a>. If ever you feel you
-are not receiving proper credit for anything you submit to Sage,
-please let the development team know!</p>
+<p>As an example, see <tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/rings/integer.pyx</span></tt> which
+contains the implementation for <span class="math">\(\ZZ\)</span>. The <tt class="docutils literal"><span class="pre">AUTHORS:</span></tt> section is
+redundant, the authorative log for who wrote what is always the git
+repository (see the output of <tt class="docutils literal"><span class="pre">git</span> <span class="pre">blame</span></tt>). Nevertheless, it is
+sometimes useful to have a very rough overview over the history,
+especially if a lot of people have been working on that source file.</p>
+<p>All code included with Sage must be licensed under the GPLv3+ or a
+compatible, that is, less restrictive license (e.g. GPLv2+ or the BSD
+license).</p>
 </div>
 <div class="section" id="documentation-strings">
-<span id="section-docstrings-old"></span><h2>Documentation strings<a class="headerlink" href="#documentation-strings" title="Permalink to this headline">¶</a></h2>
+<span id="section-docstrings"></span><h2>Documentation strings<a class="headerlink" href="#documentation-strings" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="docstring-markup-with-rest-and-sphinx">
 <h3>Docstring markup with ReST and Sphinx<a class="headerlink" href="#docstring-markup-with-rest-and-sphinx" title="Permalink to this headline">¶</a></h3>
 <p><strong>Every</strong> function must have a docstring that includes the following
@@ -299,7 +286,7 @@ a guide.</p>
 <li><p class="first">A one-sentence description of the function, followed by a blank line
 and ending in a period. It prescribes the function or method&#8217;s
 effect as a command (&#8220;Do this&#8221;, &#8220;Return that&#8221;), not as a
-description; e.g. don&#8217;t write &#8220;Returns the pathname ...&#8221;</p>
+description; e.g. don&#8217;t write &#8220;Returns the pathname ...&#8221;.</p>
 </li>
 <li><p class="first">An INPUT and an OUTPUT block for input and output arguments (see
 below for format). The type names should be descriptive, but do not
@@ -331,11 +318,6 @@ using a dash. That is acceptable as well:</p>
 - The plaintext resulting from decrypting the ciphertext ``C``
   using the Blum-Goldwasser decryption algorithm.</pre>
 </div>
-</li>
-<li><p class="first">Instead of INPUT and OUTPUT blocks, you can include descriptions of
-the arguments and output using Sphinx/ReST markup, as described in
-<a class="reference external" href="http://sphinx.pocoo.org/markup/desc.html#info-field-lists">http://sphinx.pocoo.org/markup/desc.html#info-field-lists</a>.  See
-below for an example.</p>
 </li>
 <li><p class="first">An EXAMPLES block for examples. This is not optional. These
 examples are used for automatic testing before each release and new
@@ -473,13 +455,9 @@ REFERENCES:
    http://www.sagemath.org/doc/developer/conventions.html.</pre>
 </div>
 </li>
-<li><p class="first">An AUTHORS block (optional, but encouraged for important
-functions, so users can see from the docstring who wrote it and
-therefore whom to contact if they have questions).</p>
-</li>
 </ul>
 <p>Use the following template when documenting functions. Note the
-indentation:</p>
+indentation</p>
 <div class="highlight-python"><pre>def point(self, x=1, y=2):
     r"""
     Return the point `(x^5,y)`.
@@ -536,40 +514,71 @@ indentation:</p>
 
     .. [BCDT] Breuil, Conrad, Diamond, Taylor,
        "Modularity ...."
-
-    AUTHORS:
-
-    - William Stein (2005-01-03)
-
-    - First_name Last_name (yyyy-mm-dd)
     """
     &lt;body of the function&gt;</pre>
 </div>
-<p>If you used Sphinx/ReST markup for the arguments, the beginning of the
-docstring would look like this:</p>
-<div class="highlight-python"><pre>def point(self, x=1, y=2):
-    r"""
-    Return the point `(x^5,y)`.
-
-    :param x: the description of the argument x goes here.
-    If it contains multiple lines, all the lines after the
-    first need to be indented.
-
-    :type x: integer; default 1
-
-    :param y: the ...
-
-    :type y: integer; default 2
-
-    :returns: the ...
-
-    :rtype: integer, the return type</pre>
-</div>
 <p>You are strongly encouraged to:</p>
-<ul>
-<li><p class="first">Use nice LaTeX formatting everywhere. If you use backslashes,
-either use double backslashes or place an &#8220;r&#8221; right before the
-first triple opening quote. For example,</p>
+<ul class="simple">
+<li>Use nice LaTeX formatting everywhere, see
+<a class="reference internal" href="#section-latex-typeset"><em>LaTeX typesetting</em></a>.</li>
+<li>Liberally describe what the examples do. Note that there must be a
+blank line after the example code and before the explanatory text
+for the next example (indentation is not enough).</li>
+<li>Illustrate any exceptions raised by the function with examples, as
+given above. (It is an error to ...; In particular, use ...)</li>
+<li>Include many examples. These are automatically tested on a regular
+basis, and are crucial for the quality and adaptability of
+Sage. Without such examples, small changes to one part of Sage that
+break something else might not go seen until much later when someone
+uses the system, which is unacceptable. Note that new functions
+without doctests will not be accepted for inclusion in Sage.</li>
+</ul>
+<p>Functions whose names start with an underscore are considered
+private. Hence they do not appear in the reference manual, and their
+docstring should not contain any information that is crucial for Sage
+users. Having said that, you can explicitly enable their docstrings to
+be shown. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &lt;usual docstring&gt;</span>
+
+<span class="sd">        .. automethod:: _f</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_f</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_f</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">         This would be hidden without the ``.. automethod::``</span>
+<span class="sd">         &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>A special case is the constructor <tt class="docutils literal"><span class="pre">__init__</span></tt>, which clearly starts
+with an underscore. However, due to its special status the
+<tt class="docutils literal"><span class="pre">__init__</span></tt> docstring is used as the class docstring if there is not
+one already. That is, you can do the following:</p>
+<div class="highlight-python"><pre>sage: class Foo(SageObject):
+....:     # no class docstring
+....:     def __init__(self):
+....:         """Construct a Foo."""
+sage: foo = Foo()
+sage: from sage.misc.sageinspect import sage_getdoc
+sage: sage_getdoc(foo)              # class docstring
+'Construct a Foo.\n'
+sage: sage_getdoc(foo.__init__)     # constructor docstring
+'Construct a Foo.\n'</pre>
+</div>
+</div>
+<div class="section" id="latex-typesetting">
+<span id="section-latex-typeset"></span><h3>LaTeX typesetting<a class="headerlink" href="#latex-typesetting" title="Permalink to this headline">¶</a></h3>
+<p>In ReST documentation, you use backticks ` to mark LaTeX code to be
+typeset.  In Sage docstrings, you may also use dollar signs instead.
+Thus <tt class="docutils literal"><span class="pre">`x^2</span> <span class="pre">+</span> <span class="pre">y^2</span> <span class="pre">=</span> <span class="pre">1`</span></tt> and <tt class="docutils literal"><span class="pre">$x^2</span> <span class="pre">+</span> <span class="pre">y^2</span> <span class="pre">=</span> <span class="pre">1$</span></tt> should produce
+identical output. If you use TeX commands containing backslashes in
+docstrings, then either use double backslashes or place an &#8220;r&#8221; right
+before the first triple opening quote. For example, both of the
+following are valid:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">cos</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return `\\cos(x)`.</span>
@@ -577,7 +586,7 @@ first triple opening quote. For example,</p>
 
 <span class="k">def</span> <span class="nf">sin</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">r&quot;&quot;&quot;</span>
-<span class="sd">    Return `\sin(x)`.</span>
+<span class="sd">    Return $\sin(x)$.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 </pre></div>
 </div>
@@ -613,116 +622,38 @@ currently will work if you use environments such as <strong>align</strong>
 which wrap their contents in math mode. However, <tt class="docutils literal"><span class="pre">:nowrap:</span></tt>
 is necessary for the <em>pdf</em> documentation to build correctly.</p>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>In ReST documentation, you use backticks ` to mark LaTeX code
-to be typeset.  In Sage docstrings, unofficially you may use
-dollar signs instead &#8211; &#8220;unofficially&#8221; means that it ought to
-work, but might be a little buggy.  Thus <tt class="docutils literal"><span class="pre">`x^2</span> <span class="pre">+</span> <span class="pre">y^2</span> <span class="pre">=</span> <span class="pre">1`</span></tt> and
-<tt class="docutils literal"><span class="pre">$x^2</span> <span class="pre">+</span> <span class="pre">y^2</span> <span class="pre">=</span> <span class="pre">1$</span></tt> should produce identical output, typeset in math
-mode.</p>
-<p>LaTeX style: typeset standard rings and fields like the integers
-and the real numbers using the locally-defined macro <tt class="docutils literal"><span class="pre">\\Bold</span></tt>,
-as in <tt class="docutils literal"><span class="pre">\\Bold{Z}</span></tt> for the integers. This macro is defined to be
-ordinary bold-face <tt class="docutils literal"><span class="pre">\\mathbf</span></tt> by default, but users can switch to
-blackboard-bold <tt class="docutils literal"><span class="pre">\\mathbb</span></tt> and back on-the-fly by using
-<tt class="docutils literal"><span class="pre">latex.blackboard_bold(True)</span></tt> and
+<p>The Sage LaTeX style is to typeset standard rings and fields like the
+integers and the real numbers using the locally-defined macro
+<tt class="docutils literal"><span class="pre">\\Bold</span></tt>, as in <tt class="docutils literal"><span class="pre">\\Bold{Z}</span></tt> for the integers. This macro is
+defined to be ordinary bold-face <tt class="docutils literal"><span class="pre">\\mathbf</span></tt> by default, but users
+can switch to blackboard-bold <tt class="docutils literal"><span class="pre">\\mathbb</span></tt> and back on-the-fly by
+using <tt class="docutils literal"><span class="pre">latex.blackboard_bold(True)</span></tt> and
 <tt class="docutils literal"><span class="pre">latex.blackboard_bold(False)</span></tt>.</p>
-<p>The docstring will be available interactively (for the &#8220;def
-point...&#8221; example above, by typing &#8220;point?&#8221; at the &#8220;sage:&#8221;
-prompt) and also in the reference manual. When viewed
-interactively, LaTeX code has the backslashes stripped from it,
-so &#8220;\cos&#8221; will appear as &#8220;cos&#8221;.</p>
+<p>The docstring will be available interactively (for the &#8220;def point...&#8221;
+example above, by typing &#8220;point?&#8221; at the &#8220;sage:&#8221; prompt) and also in
+the reference manual. When viewed interactively, LaTeX code has the
+backslashes stripped from it, so &#8220;\cos&#8221; will appear as &#8220;cos&#8221;.</p>
 <p>Because of the dual role of the docstring, you need to strike a
-balance between readability (for interactive help) and using
-perfect LaTeX code (for the reference manual).  For instance,
-instead of using &#8220;\frac{a}{b}&#8221;, use &#8220;a/b&#8221; or maybe &#8220;a b^{-1}&#8221;.
-Also keep in mind that some users of Sage are not familiar with
-LaTeX; this is another reason to avoid complicated LaTeX
-expressions in docstrings, if at all possible: &#8220;\frac{a}{b}&#8221;
-will be obscure to someone who doesn&#8217;t know any LaTeX.</p>
-<p class="last">Finally, a few non-standard LaTeX macros are available to help
-achieve this balance, including &#8220;\ZZ&#8221;, &#8220;\RR&#8221;, &#8220;\CC&#8221;, and
-&#8220;\QQ&#8221;.  These are names of Sage rings, and they are typeset
-using a single boldface character; they allow the use of &#8220;\ZZ&#8221;
-in a docstring, for example, which will appear interactively as
-&#8220;ZZ&#8221; while being typeset as &#8220;\Bold{Z}&#8221; in the reference
-manual.  Other examples are &#8220;\GF&#8221; and &#8220;\Zmod&#8221;, each of which
-takes an argument: &#8220;\GF{q}&#8221; is typeset as &#8220;\Bold{F}_{q}&#8221; and
-&#8220;\Zmod{n}&#8221; is typeset as &#8220;\Bold{Z}/n\Bold{Z}&#8221;.  See the
-file <tt class="docutils literal"><span class="pre">$SAGE_ROOT/devel/sage/sage/misc/latex_macros.py</span></tt> for a
+balance between readability (for interactive help) and using perfect
+LaTeX code (for the reference manual).  For instance, instead of using
+&#8220;\frac{a}{b}&#8221;, use &#8220;a/b&#8221; or maybe &#8220;a b^{-1}&#8221;.  Also keep in mind that
+some users of Sage are not familiar with LaTeX; this is another reason
+to avoid complicated LaTeX expressions in docstrings, if at all
+possible: &#8220;\frac{a}{b}&#8221; will be obscure to someone who doesn&#8217;t know
+any LaTeX.</p>
+<p>Finally, a few non-standard LaTeX macros are available to help achieve
+this balance, including &#8220;\ZZ&#8221;, &#8220;\RR&#8221;, &#8220;\CC&#8221;, and &#8220;\QQ&#8221;.  These are
+names of Sage rings, and they are typeset using a single boldface
+character; they allow the use of &#8220;\ZZ&#8221; in a docstring, for example,
+which will appear interactively as &#8220;ZZ&#8221; while being typeset as
+&#8220;\Bold{Z}&#8221; in the reference manual.  Other examples are &#8220;\GF&#8221; and
+&#8220;\Zmod&#8221;, each of which takes an argument: &#8220;\GF{q}&#8221; is typeset as
+&#8220;\Bold{F}_{q}&#8221; and &#8220;\Zmod{n}&#8221; is typeset as &#8220;\Bold{Z}/n\Bold{Z}&#8221;.
+See the file <tt class="docutils literal"><span class="pre">$SAGE_ROOT/src/sage/misc/latex_macros.py</span></tt> for a
 full list and for details about how to add more macros.</p>
 </div>
-</li>
-<li><p class="first">Liberally describe what the examples do. Note that there must be
-a blank line after the example code and before the explanatory text
-for the next example (indentation is not enough).</p>
-</li>
-<li><p class="first">Illustrate any exceptions raised by the function with examples,
-as given above. (It is an error to ...; In particular, use ...)</p>
-</li>
-<li><p class="first">Include many examples. These are automatically tested on a regular
-basis, and are crucial for the quality and adaptability of
-Sage. Without such examples, small changes to one part of Sage that
-break something else might not go seen until much later when
-someone uses the system, which is unacceptable. Note that new
-functions without doctests will not be accepted for inclusion in Sage.</p>
-</li>
-</ul>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p>Functions whose names start with an underscore do not currently
-appear in the reference manual, so avoid putting crucial
-documentation in their docstrings. In particular, if you are
-defining a class, you might put a long informative docstring after
-the class definition, not for the <tt class="docutils literal"><span class="pre">__init__</span></tt> method. For example,
-from the file <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/crypto/classical.py</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">HillCryptosystem</span><span class="p">(</span><span class="n">SymmetricKeyCryptosystem</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a Hill cryptosystem defined by the `m` x `m` matrix space</span>
-<span class="sd">    over `\mathbf{Z} / N \mathbf{Z}`, where `N` is the alphabet size of</span>
-<span class="sd">    the string monoid ``S``.</span>
-
-<span class="sd">    INPUT:</span>
-
-<span class="sd">    - ``S`` -- a string monoid over some alphabet</span>
-
-<span class="sd">    - ``m`` -- a positive integer; the block length of matrices that</span>
-<span class="sd">      specify block permutations</span>
-
-<span class="sd">    OUTPUT:</span>
-
-<span class="sd">    - A Hill cryptosystem of block length ``m`` over the alphabet ``S``.</span>
-
-<span class="sd">    EXAMPLES::</span>
-
-<span class="sd">        sage: S = AlphabeticStrings()</span>
-<span class="sd">        sage: E = HillCryptosystem(S,3)</span>
-<span class="sd">        sage: E</span>
-<span class="sd">        Hill cryptosystem on Free alphabetic string monoid on A-Z of block length 3</span>
-<span class="sd">&quot;&quot;&quot;</span>
-</pre></div>
-</div>
-<p>and so on, while the <tt class="docutils literal"><span class="pre">__init__</span></tt> method starts like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    See ``HillCryptosystem`` for full documentation.</span>
-
-<span class="sd">    EXAMPLES::</span>
-
-<span class="sd">        ...</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-</pre></div>
-</div>
-<p>Note also that the first docstring is printed if users type
-&#8220;HillCryptosystem?&#8221; at the &#8220;sage:&#8221; prompt.</p>
-<p class="last">(Before Sage 3.4, the reference manual used to include methods
-starting with underscores, so you will probably find many examples
-in the code which don&#8217;t follow this advice...)</p>
-</div>
-</div>
-<div class="section" id="automatic-testing">
-<h3>Automatic testing<a class="headerlink" href="#automatic-testing" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="writing-testable-examples">
+<h3>Writing testable examples<a class="headerlink" href="#writing-testable-examples" title="Permalink to this headline">¶</a></h3>
 <p>The code in the examples should pass automatic testing. This means
 that if the above code is in the file <tt class="docutils literal"><span class="pre">f.py</span></tt> (or <tt class="docutils literal"><span class="pre">f.sage</span></tt>), then
 <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">f.py</span></tt> should not give any error messages. Testing occurs
@@ -732,8 +663,8 @@ The file <tt class="docutils literal"><span class="pre">f.py</span></tt> is not 
 arranged that it be imported into your Sage environment, i.e. unless
 its functions are available when you start Sage using the <tt class="docutils literal"><span class="pre">sage</span></tt>
 command. For example, the function <tt class="docutils literal"><span class="pre">AA()</span></tt> in the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/algebras/steenrod/steenrod_algebra.py</span></tt>
-includes an EXAMPLES block containing the following:</p>
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/algebras/steenrod/steenrod_algebra.py</span></tt> includes
+an EXAMPLES block containing the following:</p>
 <div class="highlight-python"><pre>sage: from sage.algebras.steenrod.steenrod_algebra import AA as A
 sage: A()
 mod 2 Steenrod algebra, milnor basis</pre>
@@ -741,189 +672,22 @@ mod 2 Steenrod algebra, milnor basis</pre>
 <p>Sage does not know about the function <tt class="docutils literal"><span class="pre">AA()</span></tt> by default, so
 it needs to be imported before it is tested. Hence the first line in
 the example.</p>
-</div>
-<div class="section" id="further-conventions-for-automated-testing-of-examples">
-<span id="section-further-conventions-old"></span><h3>Further conventions for automated testing of examples<a class="headerlink" href="#further-conventions-for-automated-testing-of-examples" title="Permalink to this headline">¶</a></h3>
-<p>The Python script <tt class="docutils literal"><span class="pre">SAGE_LOCAL/bin/sage-runtests</span></tt> implements
-documentation testing in Sage (see <a class="reference internal" href="#chapter-testing"><em>Automated testing</em></a> for more
-details). When writing documentation, keep the following points in
-mind:</p>
+<p>When writing documentation, keep the following points in mind:</p>
 <ul>
 <li><p class="first">All input is preparsed before being passed to Python, e.g. <tt class="docutils literal"><span class="pre">2/3</span></tt>
-is replaced by <tt class="docutils literal"><span class="pre">Integer(2)/Integer(3)</span></tt>, which evaluates to
-<tt class="docutils literal"><span class="pre">2/3</span></tt> as a rational instead of the Python int <tt class="docutils literal"><span class="pre">0</span></tt>. For more
-information on preparsing, see <a class="reference internal" href="coding_in_python.html#section-preparsing"><em>Sage Preparsing</em></a>.</p>
+is replaced by <tt class="docutils literal"><span class="pre">Integer(2)/Integer(3)</span></tt>, which evaluates to <tt class="docutils literal"><span class="pre">2/3</span></tt>
+as a rational instead of the Python int <tt class="docutils literal"><span class="pre">0</span></tt>. For more information
+on preparsing, see <a class="reference internal" href="coding_in_python.html#section-preparsing"><em>Sage Preparsing</em></a>.</p>
 </li>
 <li><p class="first">If a test outputs to a file, the file should be a temporary file.
-Use <tt class="xref py py-func docutils literal"><span class="pre">tmp_filename()</span></tt> to get a temporary filename,
-or <tt class="xref py py-func docutils literal"><span class="pre">tmp_dir()</span></tt> to get a temporary directory.
-For example (taken from the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/plot/graphics.py</span></tt>):</p>
+Use <tt class="xref py py-func docutils literal"><span class="pre">tmp_filename()</span></tt> to get a temporary filename, or
+<tt class="xref py py-func docutils literal"><span class="pre">tmp_dir()</span></tt> to get a temporary directory.  For example (taken
+from the file <tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/plot/graphics.py</span></tt>):</p>
 <div class="highlight-python"><pre>sage: plot(x^2 - 5, (x, 0, 5), ymin=0).save(tmp_filename(ext='.png'))</pre>
 </div>
 </li>
-<li><p class="first">If a test line contains the text <tt class="docutils literal"><span class="pre">random</span></tt>, it is executed by
-<tt class="docutils literal"><span class="pre">sage-runtests</span></tt> but <tt class="docutils literal"><span class="pre">sage-runtests</span></tt> does not check that the
-output agrees with the output in the documentation string. For
-example, the docstring for the <tt class="docutils literal"><span class="pre">__hash__</span></tt> method for
-<tt class="docutils literal"><span class="pre">CombinatorialObject</span></tt> in
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/combinat/combinat.py</span></tt> includes
-the lines</p>
-<div class="highlight-python"><pre>sage: hash(c) #random
-1335416675971793195
-sage: c._hash #random
-1335416675971793195</pre>
-</div>
-<p>However, most functions generating pseudorandom output do not need
-this tag since the doctesting framework guarantees the state of the
-pseudorandom number generators (PRNGs) used in Sage for a given
-doctest. See <a class="reference internal" href="#chapter-randomtesting"><em>Randomized testing</em></a> for details on this
-framework.</p>
-</li>
-<li><p class="first">If a line contains the text <tt class="docutils literal"><span class="pre">long</span> <span class="pre">time</span></tt> then that line is not
-tested unless the <tt class="docutils literal"><span class="pre">--long</span></tt> option is given, e.g.
-<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--long</span> <span class="pre">f.py</span></tt>. Use this to include examples that take more
-than about a second to run. These will not be run regularly during
-Sage development, but will get run before major releases. No
-example should take more than about 30 seconds.</p>
-<p>For instance, here is part of the docstring from the <tt class="docutils literal"><span class="pre">regulator</span></tt>
-method for rational elliptic curves, from the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/schemes/elliptic_curves/ell_rational.py</span></tt>:</p>
-<div class="highlight-python"><pre>sage: E = EllipticCurve([0, 0, 1, -1, 0])
-sage: E.regulator()              # long time (1 second)
-0.0511114082399688</pre>
-</div>
-</li>
-<li><p class="first">If a line contains <tt class="docutils literal"><span class="pre">tol</span></tt> or <tt class="docutils literal"><span class="pre">tolerance</span></tt>, numerical results are only
-verified to the given tolerance. This may be prefixed by <tt class="docutils literal"><span class="pre">abs[olute]</span></tt>
-or <tt class="docutils literal"><span class="pre">rel[ative]</span></tt> to specify whether to measure absolute or relative
-error; this defaults to relative error except when the expected value
-is exactly zero:</p>
-<div class="highlight-python"><pre>sage: RDF(pi)                               # abs tol 1e-5
-3.14159
-sage: [10^n for n in [0.0 .. 4]]            # rel tol 2e-4
-[0.9999, 10.001, 100.01, 999.9, 10001]</pre>
-</div>
-<p>This can be useful when the exact output is subject to rounding error
-and/or processor floating point arithmetic variation.  Here are some
-more examples.</p>
-<p>A singular value decomposition of a matrix will produce two unitary
-matrices.  Over the reals, this means the inverse of the matrix is
-equal to its transpose.  We test this result by applying the norm to
-a matrix difference.  The result will usually be a &#8220;small&#8221; number,
-distinct from zero.</p>
-<div class="highlight-python"><pre>sage: A = matrix(RDF, 8, range(64))
-sage: U, S, V = A.SVD()
-sage: (U.transpose()*U-identity_matrix(8)).norm(p=2)    # abs tol 1e-10
-0.0</pre>
-</div>
-<p>The 8-th cyclotomic field is generated by the complex number
-<span class="math">\(e^\frac{i\pi}{4}\)</span>.  Here we compute a numerical approximation:</p>
-<div class="highlight-python"><pre>sage: K.&lt;zeta8&gt; = CyclotomicField(8)
-sage: N(zeta8)                             # absolute tolerance 1e-10
-0.7071067812 + 0.7071067812*I</pre>
-</div>
-<p>A relative tolerance on a root of a polynomial.  Notice that the
-root should normally print as <tt class="docutils literal"><span class="pre">1e+16</span></tt>, or something similar.
-However, the tolerance testing causes the doctest framework to use
-the output in a <em>computation</em>, so other valid text representations
-of the predicted value may be used.  However, they must fit the
-pattern defined by the regular expression <tt class="docutils literal"><span class="pre">float_regex</span></tt> in
-<tt class="xref py py-mod docutils literal"><span class="pre">sage.doctest.parsing</span></tt>.</p>
-<div class="highlight-python"><pre>sage: y = polygen(RDF, 'y')
-sage: p = (y - 10^16)*(y-10^(-13))*(y-2); p
-y^3 - 1e+16*y^2 + 2e+16*y - 2000.0
-sage: p.roots(multiplicities=False)[2]     # relative tol 1e-10
-10000000000000000</pre>
-</div>
-</li>
-<li><p class="first">If a line contains <tt class="docutils literal"><span class="pre">not</span> <span class="pre">implemented</span></tt> or <tt class="docutils literal"><span class="pre">not</span> <span class="pre">tested</span></tt>, it is
-never tested. It is good to include lines like this to make clear
-what we want Sage to eventually implement:</p>
-<div class="highlight-python"><pre>sage: factor(x*y - x*z)    # todo: not implemented</pre>
-</div>
-<p>It is also immediately clear to the user that the indicated example
-does not currently work.</p>
-</li>
-<li><p class="first">If one of the first 10 lines of a file starts with <tt class="docutils literal"><span class="pre">r&quot;&quot;&quot;</span> <span class="pre">nodoctest</span></tt>
-(or <tt class="docutils literal"><span class="pre">&quot;&quot;&quot;</span> <span class="pre">nodoctest</span></tt> or <tt class="docutils literal"><span class="pre">#</span> <span class="pre">nodoctest</span></tt> or <tt class="docutils literal"><span class="pre">%</span> <span class="pre">nodoctest</span></tt> or
-<tt class="docutils literal"><span class="pre">..</span> <span class="pre">nodoctest</span></tt>, or any of these with different spacing), then
-that file will be skipped.
-If a directory contains a file <tt class="docutils literal"><span class="pre">nodoctest.py</span></tt>, then that whole
-directory will be skipped. Neither of this applies to files or
-directories which are explicitly given as command line arguments:
-those are always tested.</p>
-</li>
-<li><p class="first">If a line contains <tt class="docutils literal"><span class="pre">#</span> <span class="pre">optional</span> <span class="pre">-</span> <span class="pre">PKGNAME</span></tt> (where the <tt class="docutils literal"><span class="pre">#</span></tt> may be any
-non-letter non-space character), it is not tested unless
-the <tt class="docutils literal"><span class="pre">--optional=PKGNAME</span></tt> flag is passed to <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span></tt>.
-Mark a doctest as <tt class="docutils literal"><span class="pre">optional</span></tt> if it requires optional packages.
-Running <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--optional=all</span> <span class="pre">f.py</span></tt> executes all doctests,
-including all optional tests.
-Running <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--optional=sage,sloane_database</span> <span class="pre">f.py</span></tt> runs the
-normal tests (because of <tt class="docutils literal"><span class="pre">--optional=sage</span></tt>),
-as well as those marked as <tt class="docutils literal"><span class="pre">#</span> <span class="pre">optional</span> <span class="pre">-</span> <span class="pre">sloane_database</span></tt>.
-For example, the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/databases/sloane.py</span></tt> contains the lines</p>
-<div class="highlight-python"><pre>sage: sloane_sequence(60843)       # optional - internet</pre>
-</div>
-<p>and</p>
-<div class="highlight-python"><pre>sage: SloaneEncyclopedia[60843]    # optional - sloane_database</pre>
-</div>
-<p>The first of these just needs internet access, while the second
-requires that the &#8220;sloane_database&#8221; package be installed.  Calling
-<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--optional=all</span></tt> on this file runs both of these tests, while
-calling <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--optional=sage,internet</span></tt> on it will only run the
-first test.
-A test requiring several packages should be marked
-<tt class="docutils literal"><span class="pre">#</span> <span class="pre">optional</span> <span class="pre">-</span> <span class="pre">pkg1</span> <span class="pre">pkg2</span></tt> and executed by
-<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--optional=sage,pkg1,pkg2</span> <span class="pre">f.py</span></tt>.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Any words after <tt class="docutils literal"><span class="pre">#</span> <span class="pre">optional</span></tt> are
-interpreted as a list of package names, separated by spaces.
-Any punctuation (periods, commas, hyphens, semicolons, ...)
-after the first word ends the list of packages.
-Hyphens or colons between the word <tt class="docutils literal"><span class="pre">optional</span></tt> and the first
-package name are allowed.
-Therefore, you should not write
-<tt class="docutils literal"><span class="pre">optional:</span> <span class="pre">needs</span> <span class="pre">package</span> <span class="pre">CHomP</span></tt> but simply <tt class="docutils literal"><span class="pre">optional:</span> <span class="pre">CHomP</span></tt>.
-Optional tags are case-insensitive, so you could also
-write <tt class="docutils literal"><span class="pre">optional:</span> <span class="pre">cHoMp</span></tt>.</p>
-</div>
-</li>
-<li><p class="first">If you are documenting a known bug in Sage, mark it as <tt class="docutils literal"><span class="pre">known</span> <span class="pre">bug</span></tt>
-or <tt class="docutils literal"><span class="pre">optional:</span> <span class="pre">bug</span></tt>.  For example:</p>
-<div class="highlight-python"><pre>The following should yield 4.  See :trac:`2`. ::
-
-   sage: 2+2 # optional: bug
-   5</pre>
-</div>
-<p>Then the doctest will be skipped by default, but could be revealed
-by running <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--optional=sage,bug</span> <span class="pre">...</span></tt>.  (A doctest marked
-as <tt class="docutils literal"><span class="pre">known</span> <span class="pre">bug</span></tt> gets automatically converted to <tt class="docutils literal"><span class="pre">optional</span> <span class="pre">bug</span></tt>).</p>
-</li>
-</ul>
-<p>Using <tt class="docutils literal"><span class="pre">search_src</span></tt> from the Sage prompt (or <tt class="docutils literal"><span class="pre">grep</span></tt>), one can
-easily find the aforementioned keywords. In the case of
-<tt class="docutils literal"><span class="pre">todo:</span> <span class="pre">not</span> <span class="pre">implemented</span></tt>, one can use the results of such a search to
-direct further development on Sage.</p>
-<ul>
-<li><p class="first">Some tests (hashing for example) behave differently on 32-bit and
-64-bit platforms.  You can mark a line (generally the output) with
-either <tt class="docutils literal"><span class="pre">#</span> <span class="pre">32-bit</span></tt> or <tt class="docutils literal"><span class="pre">#</span> <span class="pre">64-bit</span></tt> and the testing framework will
-remove any lines that don&#8217;t match the current architecture.  For
-example:</p>
-<div class="highlight-python"><pre>sage: z = 32
-sage: z.powermodm_ui(2^32-1, 14)
-Traceback (most recent call last):                              # 32-bit
-...                                                             # 32-bit
-OverflowError: exp (=4294967295) must be &lt;= 4294967294          # 32-bit
-8              # 64-bit</pre>
-</div>
-</li>
 <li><p class="first">You may write tests that span multiple lines.  The best way to do so
-is to use the line continuation marker <tt class="docutils literal"><span class="pre">....:</span></tt>.</p>
+is to use the line continuation marker <tt class="docutils literal"><span class="pre">....:</span></tt></p>
 <div class="highlight-python"><pre>sage: for n in srange(1,10):
 ....:     if n.is_prime():
 ....:         print n,
@@ -943,30 +707,188 @@ False</pre>
 </li>
 </ul>
 </div>
+<div class="section" id="special-markup-to-influence-tests">
+<span id="section-further-conventions"></span><h3>Special markup to influence tests<a class="headerlink" href="#special-markup-to-influence-tests" title="Permalink to this headline">¶</a></h3>
+<p>There are a number of magic comments that you can put into the example
+code that change how the output is verified by the Sage doctest
+framework. Here is a comprehensive list:</p>
+<ul>
+<li><p class="first">If a test line contains the comment <tt class="docutils literal"><span class="pre">random</span></tt>, it is executed but
+it is not checked that the output agrees with the output in the
+documentation string. For example, the docstring for the
+<tt class="docutils literal"><span class="pre">__hash__</span></tt> method for <tt class="docutils literal"><span class="pre">CombinatorialObject</span></tt> in
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/combinat/combinat.py</span></tt> includes the lines:</p>
+<div class="highlight-python"><pre>sage: c = CombinatorialObject([1,2,3])
+sage: hash(c)   # random
+1335416675971793195
+sage: c.__hash__()   # random
+1335416675971793195</pre>
 </div>
-<div class="section" id="automated-testing">
-<span id="chapter-testing"></span><h2>Automated testing<a class="headerlink" href="#automated-testing" title="Permalink to this headline">¶</a></h2>
+<p>However, most functions generating pseudorandom output do not need
+this tag since the doctesting framework guarantees the state of the
+pseudorandom number generators (PRNGs) used in Sage for a given
+doctest. See <a class="reference internal" href="conventions.html#chapter-randomtesting"><em>Randomized testing</em></a> for details on this
+framework.</p>
+</li>
+<li><p class="first">If a line contains the comment <tt class="docutils literal"><span class="pre">long</span> <span class="pre">time</span></tt> then that line is not
+tested unless the <tt class="docutils literal"><span class="pre">--long</span></tt> option is given, e.g.  <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--long</span>
+<span class="pre">f.py</span></tt>. Use this to include examples that take more than about a
+second to run. These will not be run regularly during Sage
+development, but will get run before major releases. No example
+should take more than about 30 seconds.</p>
+<p>For instance, here is part of the docstring from the <tt class="docutils literal"><span class="pre">regulator</span></tt>
+method for rational elliptic curves, from the file
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/schemes/elliptic_curves/ell_rational.py</span></tt>:</p>
+<div class="highlight-python"><pre>sage: E = EllipticCurve([0, 0, 1, -1, 0])
+sage: E.regulator()        # long time (1 second)
+0.0511114082399688</pre>
+</div>
+</li>
+<li><p class="first">If a comment contains <tt class="docutils literal"><span class="pre">tol</span></tt> or <tt class="docutils literal"><span class="pre">tolerance</span></tt>, numerical results are
+only verified to the given tolerance. This may be prefixed by
+<tt class="docutils literal"><span class="pre">abs[olute]</span></tt> or <tt class="docutils literal"><span class="pre">rel[ative]</span></tt> to specify whether to measure
+absolute or relative error; this defaults to relative error except
+when the expected value is exactly zero:</p>
+<div class="highlight-python"><pre>sage: RDF(pi)                               # abs tol 1e-5
+3.14159
+sage: [10^n for n in [0.0 .. 4]]            # rel tol 2e-4
+[0.9999, 10.001, 100.01, 999.9, 10001]</pre>
+</div>
+<p>This can be useful when the exact output is subject to rounding
+error and/or processor floating point arithmetic variation.  Here
+are some more examples.</p>
+<p>A singular value decomposition of a matrix will produce two unitary
+matrices.  Over the reals, this means the inverse of the matrix is
+equal to its transpose.  We test this result by applying the norm to
+a matrix difference.  The result will usually be a &#8220;small&#8221; number,
+distinct from zero:</p>
+<div class="highlight-python"><pre>sage: A = matrix(RDF, 8, range(64))
+sage: U, S, V = A.SVD()
+sage: (U.transpose()*U-identity_matrix(8)).norm(p=2)    # abs tol 1e-10
+0.0</pre>
+</div>
+<p>The 8-th cyclotomic field is generated by the complex number
+<span class="math">\(e^\frac{i\pi}{4}\)</span>.  Here we compute a numerical approximation:</p>
+<div class="highlight-python"><pre>sage: K.&lt;zeta8&gt; = CyclotomicField(8)
+sage: N(zeta8)                             # absolute tolerance 1e-10
+0.7071067812 + 0.7071067812*I</pre>
+</div>
+<p>A relative tolerance on a root of a polynomial.  Notice that the
+root should normally print as <tt class="docutils literal"><span class="pre">1e+16</span></tt>, or something similar.
+However, the tolerance testing causes the doctest framework to use
+the output in a <em>computation</em>, so other valid text representations
+of the predicted value may be used.  However, they must fit the
+pattern defined by the regular expression <tt class="docutils literal"><span class="pre">float_regex</span></tt> in
+<tt class="xref py py-mod docutils literal"><span class="pre">sage.doctest.parsing</span></tt>:</p>
+<div class="highlight-python"><pre>sage: y = polygen(RDF, 'y')
+sage: p = (y - 10^16)*(y-10^(-13))*(y-2); p
+y^3 - 1e+16*y^2 + 2e+16*y - 2000.0
+sage: p.roots(multiplicities=False)[2]     # relative tol 1e-10
+10000000000000000</pre>
+</div>
+</li>
+<li><p class="first">If a comment contains <tt class="docutils literal"><span class="pre">not</span> <span class="pre">implemented</span></tt> or <tt class="docutils literal"><span class="pre">not</span> <span class="pre">tested</span></tt>, it is
+never tested. It is good to include lines like this to make clear
+what we want Sage to eventually implement:</p>
+<div class="highlight-python"><pre>sage: factor(x*y - x*z)    # todo: not implemented</pre>
+</div>
+<p>It is also immediately clear to the user that the indicated example
+does not currently work.</p>
+</li>
+<li><p class="first">If one of the first 10 lines of a file starts with <tt class="docutils literal"><span class="pre">r&quot;&quot;&quot;</span>
+<span class="pre">nodoctest</span></tt> (or <tt class="docutils literal"><span class="pre">&quot;&quot;&quot;</span> <span class="pre">nodoctest</span></tt> or <tt class="docutils literal"><span class="pre">#</span> <span class="pre">nodoctest</span></tt> or <tt class="docutils literal"><span class="pre">%</span>
+<span class="pre">nodoctest</span></tt> or <tt class="docutils literal"><span class="pre">..</span> <span class="pre">nodoctest</span></tt>, or any of these with different
+spacing), then that file will be skipped.  If a directory contains a
+file <tt class="docutils literal"><span class="pre">nodoctest.py</span></tt>, then that whole directory will be
+skipped. Neither of this applies to files or directories which are
+explicitly given as command line arguments: those are always tested.</p>
+</li>
+<li><p class="first">If a comment contains <tt class="docutils literal"><span class="pre">optional</span> <span class="pre">-</span> <span class="pre">PKGNAME</span></tt>, it is not tested
+unless the <tt class="docutils literal"><span class="pre">--optional=PKGNAME</span></tt> flag is passed to <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span></tt>.
+Mark a doctest as <tt class="docutils literal"><span class="pre">optional</span></tt> if it requires optional packages.
+Running <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--optional=all</span> <span class="pre">f.py</span></tt> executes all doctests,
+including all optional tests.  Running
+<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--optional=sage,sloane_database</span> <span class="pre">f.py</span></tt> runs the normal
+tests (because of <tt class="docutils literal"><span class="pre">--optional=sage</span></tt>), as well as those marked as
+<tt class="docutils literal"><span class="pre">#</span> <span class="pre">optional</span> <span class="pre">-</span> <span class="pre">sloane_database</span></tt>.  For example, the file
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/databases/sloane.py</span></tt> contains the lines:</p>
+<div class="highlight-python"><pre>sage: sloane_sequence(60843)       # optional - internet</pre>
+</div>
+<p>and:</p>
+<div class="highlight-python"><pre>sage: SloaneEncyclopedia[60843]    # optional - sloane_database</pre>
+</div>
+<p>The first of these just needs internet access, while the second
+requires that the &#8220;sloane_database&#8221; package be installed.  Calling
+<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--optional=all</span></tt> on this file runs both of these tests,
+while calling <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--optional=sage,internet</span></tt> on it will only
+run the first test.  A test requiring several packages should be
+marked <tt class="docutils literal"><span class="pre">#</span> <span class="pre">optional</span> <span class="pre">-</span> <span class="pre">pkg1</span> <span class="pre">pkg2</span></tt> and executed by
+<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--optional=sage,pkg1,pkg2</span> <span class="pre">f.py</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any words after <tt class="docutils literal"><span class="pre">#</span> <span class="pre">optional</span></tt> are interpreted as a list of
+package names, separated by spaces.  Any punctuation (periods,
+commas, hyphens, semicolons, ...)  after the first word ends the
+list of packages.  Hyphens or colons between the word
+<tt class="docutils literal"><span class="pre">optional</span></tt> and the first package name are allowed.  Therefore,
+you should not write <tt class="docutils literal"><span class="pre">optional:</span> <span class="pre">needs</span> <span class="pre">package</span> <span class="pre">CHomP</span></tt> but
+simply <tt class="docutils literal"><span class="pre">optional:</span> <span class="pre">CHomP</span></tt>.  Optional tags are case-insensitive,
+so you could also write <tt class="docutils literal"><span class="pre">optional:</span> <span class="pre">cHoMp</span></tt>.</p>
+</div>
+</li>
+<li><p class="first">If you are documenting a known bug in Sage, mark it as <tt class="docutils literal"><span class="pre">known</span> <span class="pre">bug</span></tt>
+or <tt class="docutils literal"><span class="pre">optional:</span> <span class="pre">bug</span></tt>.  For example:</p>
+<div class="highlight-python"><pre>The following should yield 4.  See :trac:`2`. ::
+
+    sage: 2+2  # optional: bug
+    5</pre>
+</div>
+<p>Then the doctest will be skipped by default, but could be revealed
+by running <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">--optional=sage,bug</span> <span class="pre">...</span></tt>.  (A doctest marked
+as <tt class="docutils literal"><span class="pre">known</span> <span class="pre">bug</span></tt> gets automatically converted to <tt class="docutils literal"><span class="pre">optional</span> <span class="pre">bug</span></tt>).</p>
+</li>
+<li><p class="first">Some tests (hashing for example) behave differently on 32-bit and
+64-bit platforms.  You can mark a line (generally the output) with
+either <tt class="docutils literal"><span class="pre">#</span> <span class="pre">32-bit</span></tt> or <tt class="docutils literal"><span class="pre">#</span> <span class="pre">64-bit</span></tt> and the testing framework will
+remove any lines that don&#8217;t match the current architecture.  For
+example:</p>
+<div class="highlight-python"><pre>sage: z = 32
+sage: z.powermodm_ui(2^32-1, 14)
+Traceback (most recent call last):                              # 32-bit
+...                                                             # 32-bit
+OverflowError: exp (=4294967295) must be &lt;= 4294967294          # 32-bit
+8              # 64-bit</pre>
+</div>
+</li>
+</ul>
+<p>Using <tt class="docutils literal"><span class="pre">search_src</span></tt> from the Sage prompt (or <tt class="docutils literal"><span class="pre">grep</span></tt>), one can
+easily find the aforementioned keywords. In the case of <tt class="docutils literal"><span class="pre">todo:</span> <span class="pre">not</span>
+<span class="pre">implemented</span></tt>, one can use the results of such a search to direct
+further development on Sage.</p>
+</div>
+</div>
+<div class="section" id="running-automated-tests">
+<span id="chapter-testing"></span><h2>Running automated tests<a class="headerlink" href="#running-automated-tests" title="Permalink to this headline">¶</a></h2>
 <p>This section describes Sage&#8217;s automated testing of test files of the
 following types: <tt class="docutils literal"><span class="pre">.py</span></tt>, <tt class="docutils literal"><span class="pre">.pyx</span></tt>, <tt class="docutils literal"><span class="pre">.sage</span></tt>, <tt class="docutils literal"><span class="pre">.rst</span></tt>. Briefly, use
 <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">&lt;file&gt;</span></tt> to test that the examples in <tt class="docutils literal"><span class="pre">&lt;file&gt;</span></tt> behave
 exactly as claimed. See the following subsections for more
-details. See also <a class="reference internal" href="coding_basics.html#section-docstrings"><em>Documentation strings</em></a> for a discussion on how to
+details. See also <a class="reference internal" href="#section-docstrings"><em>Documentation strings</em></a> for a discussion on how to
 include examples in documentation strings and what conventions to
 follow. The chapter <a class="reference internal" href="doctesting.html#chapter-doctesting"><em>Doctesting the Sage Library</em></a> contains a tutorial on
 doctesting modules in the Sage library.</p>
 <div class="section" id="testing-py-pyx-and-sage-files">
-<span id="section-testpython-old"></span><h3>Testing .py, .pyx and .sage files<a class="headerlink" href="#testing-py-pyx-and-sage-files" title="Permalink to this headline">¶</a></h3>
+<span id="section-testpython"></span><h3>Testing .py, .pyx and .sage files<a class="headerlink" href="#testing-py-pyx-and-sage-files" title="Permalink to this headline">¶</a></h3>
 <p>Run <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-t</span> <span class="pre">&lt;filename.py&gt;</span></tt> to test all code examples in
 <tt class="docutils literal"><span class="pre">filename.py</span></tt>. Similar remarks apply to <tt class="docutils literal"><span class="pre">.sage</span></tt> and <tt class="docutils literal"><span class="pre">.pyx</span></tt>
-files.</p>
+files:</p>
 <div class="highlight-python"><pre>sage -t [--verbose] [--optional]  [files and directories ... ]</pre>
 </div>
 <p>The Sage doctesting framework is based on the standard Python doctest
 module, but with many additional features (such as parallel testing,
-timeouts, optional tests).
-The Sage doctester recognizes <tt class="docutils literal"><span class="pre">sage:</span></tt> prompts
-as well as <tt class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></tt> prompts.
-It also preparses the doctests, just like in interactive Sage sessions.</p>
+timeouts, optional tests).  The Sage doctester recognizes <tt class="docutils literal"><span class="pre">sage:</span></tt>
+prompts as well as <tt class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></tt> prompts.  It also preparses the doctests,
+just like in interactive Sage sessions.</p>
 <p>Your file passes the tests if the code in it will run when entered
 at the <tt class="docutils literal"><span class="pre">sage:</span></tt> prompt with no extra imports. Thus users are
 guaranteed to be able to exactly copy code out of the examples you
@@ -980,16 +902,14 @@ environments in ReST documentation.</p>
 <p>Of course in ReST files, one often inserts explanatory texts between
 different verbatim environments. To link together verbatim
 environments, use the <tt class="docutils literal"><span class="pre">..</span> <span class="pre">link</span></tt> comment. For example:</p>
-<div class="highlight-python"><pre>::
+<div class="highlight-python"><pre>EXAMPLES::
 
         sage: a = 1
 
 
 Next we add 1 to ``a``.
 
-.. link
-
-::
+.. link::
 
         sage: 1 + a
         2</pre>
@@ -1002,22 +922,22 @@ verbatim environment.  The file
 <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/en/tutorial/interfaces.rst</span></tt> contains a
 <tt class="docutils literal"><span class="pre">..</span> <span class="pre">linkall</span></tt> directive, for example.</p>
 <p>You can also put <tt class="docutils literal"><span class="pre">..</span> <span class="pre">skip</span></tt> right before a verbatim environment to
-have that example skipped when testing the file.  This goes in
-the same place as the <tt class="docutils literal"><span class="pre">..</span> <span class="pre">link</span></tt> in the previous example.</p>
+have that example skipped when testing the file.  This goes in the
+same place as the <tt class="docutils literal"><span class="pre">..</span> <span class="pre">link</span></tt> in the previous example.</p>
 <p>See the files in <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/en/tutorial/</span></tt> for many
-examples of how to include automated testing in ReST documentation
-for Sage.</p>
+examples of how to include automated testing in ReST documentation for
+Sage.</p>
 </div>
 </div>
 <div class="section" id="the-pickle-jar">
-<span id="chapter-picklejar"></span><h2>The pickle jar<a class="headerlink" href="#the-pickle-jar" title="Permalink to this headline">¶</a></h2>
+<span id="chapter-picklejar"></span><h2>The Pickle Jar<a class="headerlink" href="#the-pickle-jar" title="Permalink to this headline">¶</a></h2>
 <p>Sage maintains a pickle jar at
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/data/extcode/pickle_jar/pickle_jar.tar.bz2</span></tt> which is a tar file of
-&#8220;standard&#8221; pickles created by <tt class="docutils literal"><span class="pre">sage</span></tt>. This pickle jar is used to ensure that
-sage maintains backward compatibility by have having
-<tt class="xref py py-func docutils literal"><span class="pre">sage.structure.sage_object.unpickle_all()</span></tt> check that <tt class="docutils literal"><span class="pre">sage</span></tt> can always
-unpickle all of the pickles in the pickle jar as part of the standard doc
-testing framework.</p>
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/ext/pickle_jar/pickle_jar.tar.bz2</span></tt> which is a tar
+file of &#8220;standard&#8221; pickles created by <tt class="docutils literal"><span class="pre">sage</span></tt>. This pickle jar is
+used to ensure that sage maintains backward compatibility by have
+having <tt class="xref py py-func docutils literal"><span class="pre">sage.structure.sage_object.unpickle_all()</span></tt> check that
+<tt class="docutils literal"><span class="pre">sage</span></tt> can always unpickle all of the pickles in the pickle jar as
+part of the standard doc testing framework.</p>
 <p>Most people first become aware of the pickle_jar when their patch breaks the
 unpickling of one of the &#8220;standard&#8221; pickles in the pickle jar due to the
 failure of the doctest:</p>
@@ -1034,13 +954,6 @@ hints for fixing the uneatable pickle:</p>
 </div>
 <p>For more details about how to fix unpickling errors in the pickle jar
 see <tt class="xref py py-func docutils literal"><span class="pre">sage.structure.sage_object.register_unpickle_override()</span></tt></p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Every so often the standard pickle jar should be updated by running the
-doctest suite with the environment variable <tt class="docutils literal"><span class="pre">SAGE_PICKLE_JAR</span></tt> set, then
-copying the files from <tt class="docutils literal"><span class="pre">SAGE_ROOT/tmp/pickle_jar*</span></tt> into the standard pickle
-jar.</p>
-</div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Sage&#8217;s pickle jar helps to ensure backward compatibility in sage. Pickles should
@@ -1059,17 +972,11 @@ input. Your test code should define a class <tt class="docutils literal"><span c
 <tt class="docutils literal"><span class="pre">random()</span></tt> method that runs random tests. These are all assembled
 together later, and each test is run for a certain amount of time on a
 regular basis.</p>
-<p>For example, see the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/modular/modsym/tests.py</span></tt>.</p>
-<table class="docutils footnote" frame="void" id="id2" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[2]</a></td><td>See <a class="reference external" href="http://www.sagemath.org/development-map.html">http://www.sagemath.org/development-map.html</a></td></tr>
-</tbody>
-</table>
+<p>For an example, see the file
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/modular/modsym/tests.py</span></tt>.</p>
 </div>
-<div class="section" id="globaloptions">
-<h2>GlobalOptions<a class="headerlink" href="#globaloptions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="global-options">
+<h2>Global Options<a class="headerlink" href="#global-options" title="Permalink to this headline">¶</a></h2>
 <p>Global options for classes can be defined in Sage using
 <tt class="xref py py-class docutils literal"><span class="pre">GlobalOptions</span></tt>.</p>
 </div>
@@ -1083,38 +990,39 @@ regular basis.</p>
         <div class="sphinxsidebarwrapper">
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference internal" href="#">Conventions for Coding in Sage</a><ul>
-<li><a class="reference internal" href="#python-coding-conventions">Python coding conventions</a></li>
-<li><a class="reference internal" href="#file-and-directory-names">File and directory names</a></li>
+<li><a class="reference internal" href="#">General Conventions</a><ul>
+<li><a class="reference internal" href="#python-code-style">Python Code Style</a></li>
+<li><a class="reference internal" href="#files-and-directory-structure">Files and Directory Structure</a></li>
 <li><a class="reference internal" href="#an-example-is-worth-a-thousand-words">An example is worth a thousand words</a></li>
 <li><a class="reference internal" href="#headings-of-sage-library-code-files">Headings of Sage library code files</a></li>
 <li><a class="reference internal" href="#documentation-strings">Documentation strings</a><ul>
 <li><a class="reference internal" href="#docstring-markup-with-rest-and-sphinx">Docstring markup with ReST and Sphinx</a></li>
-<li><a class="reference internal" href="#automatic-testing">Automatic testing</a></li>
-<li><a class="reference internal" href="#further-conventions-for-automated-testing-of-examples">Further conventions for automated testing of examples</a></li>
+<li><a class="reference internal" href="#latex-typesetting">LaTeX typesetting</a></li>
+<li><a class="reference internal" href="#writing-testable-examples">Writing testable examples</a></li>
+<li><a class="reference internal" href="#special-markup-to-influence-tests">Special markup to influence tests</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#automated-testing">Automated testing</a><ul>
+<li><a class="reference internal" href="#running-automated-tests">Running automated tests</a><ul>
 <li><a class="reference internal" href="#testing-py-pyx-and-sage-files">Testing .py, .pyx and .sage files</a></li>
 <li><a class="reference internal" href="#testing-rest-documentation">Testing ReST documentation</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#the-pickle-jar">The pickle jar</a></li>
+<li><a class="reference internal" href="#the-pickle-jar">The Pickle Jar</a></li>
 <li><a class="reference internal" href="#randomized-testing">Randomized testing</a></li>
-<li><a class="reference internal" href="#globaloptions">GlobalOptions</a></li>
+<li><a class="reference internal" href="#global-options">Global Options</a></li>
 </ul>
 </li>
 </ul>
 
             <h4>Previous topic</h4>
-            <p class="topless"><a href="writing_code_old.html"
-                                  title="previous chapter">Writing Code for Sage</a></p>
+            <p class="topless"><a href="trac.html"
+                                  title="previous chapter">The Sage Trac Server</a></p>
             <h4>Next topic</h4>
             <p class="topless"><a href="coding_in_python.html"
                                   title="next chapter">Coding in Python for Sage</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="_sources/conventions.txt"
+              <li><a href="_sources/coding_basics.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
@@ -1148,7 +1056,7 @@ regular basis.</p>
           <a href="coding_in_python.html" title="Coding in Python for Sage"
              >next</a> |</li>
         <li class="right" >
-          <a href="writing_code_old.html" title="Writing Code for Sage"
+          <a href="trac.html" title="The Sage Trac Server"
              >previous</a> |</li>
   
     
@@ -1157,8 +1065,7 @@ regular basis.</p>
   
   
         <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
-
-          <li><a href="writing_code_old.html" >Writing Code for Sage</a> &raquo;</li> 
+ 
       </ul>
     </div>
     

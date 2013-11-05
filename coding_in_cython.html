@@ -65,32 +65,26 @@
             
   <div class="section" id="coding-in-cython">
 <span id="chapter-cython"></span><h1>Coding in Cython<a class="headerlink" href="#coding-in-cython" title="Permalink to this headline">¶</a></h1>
-<p>This chapter discusses Cython, which is a
-compiled language based on Python.
-The major advantage it has over Python is that code can be
+<p>This chapter discusses Cython, which is a compiled language based on
+Python.  The major advantage it has over Python is that code can be
 much faster (sometimes orders of magnitude).</p>
-<p>Cython also allows Sage to interface with C and C++, as well
-as other languages. See the Python documentation at
-<a class="reference external" href="http://www.python.org/doc/">http://www.python.org/doc/</a> for more details. In particular, the
-section &#8220;Extending and Embedding the Python Interpreter&#8221;, available at
-<a class="reference external" href="http://docs.python.org/ext/ext.html">http://docs.python.org/ext/ext.html</a>, describes how to write C or
-C++ modules for use in Python.</p>
-<p>Cython is a compiled version of Python. It is based on Pyrex
-(<a class="reference external" href="http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/">http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/</a>). To a
-large degree, Cython has changed based on what Sage&#8217;s developers
-needed; Cython has been developed in concert with Sage. However, it is
-an independent project now, which is used beyond the scope of Sage.</p>
-<p>As such, it is a young, but developing language, with young, but
-developing documentation. See its web page,
-<a class="reference external" href="http://www.cython.org/">http://www.cython.org/</a>, for the most up-to-date information.</p>
 <p>Python is an interpreted language and has no declared data types for
 variables. These features make it easy to write and debug, but Python
 code can sometimes be slow. Cython code can look a lot like Python,
 but it gets translated into C code (often very efficient C code) and
 then compiled. Thus it offers a language which is familiar to Python
-developers, but with the potential for much greater speed.</p>
+developers, but with the potential for much greater speed. Cython also
+allows Sage developers to interface with C and C++ much easier than
+using the Python C API directly.</p>
+<p>Cython is a compiled version of Python. It was originally based on
+Pyrex but has changed based on what Sage&#8217;s developers needed; Cython
+has been developed in concert with Sage. However, it is an independent
+project now, which is used beyond the scope of Sage. As such, it is a
+young, but developing language, with young, but developing
+documentation. See its web page, <a class="reference external" href="http://www.cython.org/">http://www.cython.org/</a>, for the most
+up-to-date information.</p>
 <div class="section" id="writing-cython-code-in-sage">
-<h2>Writing Cython code in Sage<a class="headerlink" href="#writing-cython-code-in-sage" title="Permalink to this headline">¶</a></h2>
+<h2>Writing Cython Code in Sage<a class="headerlink" href="#writing-cython-code-in-sage" title="Permalink to this headline">¶</a></h2>
 <p>There are several ways to create and build Cython code in Sage.</p>
 <ol class="arabic">
 <li><p class="first">In the Sage Notebook, begin any cell with <tt class="docutils literal"><span class="pre">%cython</span></tt>. When you
@@ -101,8 +95,8 @@ evaluate that cell,</p>
 <li><p class="first">Cython is run on it with all the standard Sage libraries
 automatically linked if necessary.</p>
 </li>
-<li><p class="first">The resulting <tt class="docutils literal"><span class="pre">.so</span></tt> file is then loaded into your running
-instance of Sage.</p>
+<li><p class="first">The resulting shared library file (<tt class="docutils literal"><span class="pre">.so</span></tt> / <tt class="docutils literal"><span class="pre">.dll</span></tt> /
+<tt class="docutils literal"><span class="pre">.dylib</span></tt>) is then loaded into your running instance of Sage.</p>
 </li>
 <li><p class="first">The functionality defined in that cell is now available for you
 to use in the notebook. Also, the output cell has a link to the C
@@ -127,17 +121,17 @@ the notebook).</p>
 <ol class="arabic simple">
 <li>First, add a listing for the Cython extension to the variable
 <tt class="docutils literal"><span class="pre">ext_modules</span></tt> in the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/module_list.py</span></tt>. See the
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/module_list.py</span></tt>. See the
 <tt class="docutils literal"><span class="pre">distutils.extension.Extension</span></tt> class for more information on
 creating a new Cython extension.</li>
 <li>Then, if you created a new directory for your <tt class="docutils literal"><span class="pre">.pyx</span></tt> file, add
 the directory name to the <tt class="docutils literal"><span class="pre">packages</span></tt> list in the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/setup.py</span></tt>.  (See also the section on
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/setup.py</span></tt>.  (See also the section on
 &#8220;Creating a new directory&#8221; in <a class="reference internal" href="coding_in_python.html#chapter-python"><em>Coding in Python for Sage</em></a>.)</li>
 <li>Run <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-b</span></tt> to rebuild Sage.</li>
 </ol>
 <p>For example, the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/graphs/chrompoly.pyx</span></tt> has the lines</p>
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/graphs/chrompoly.pyx</span></tt> has the lines:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">Extension</span><span class="p">(</span><span class="s">&#39;sage.graphs.chrompoly&#39;</span><span class="p">,</span>
           <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sage/graphs/chrompoly.pyx&#39;</span><span class="p">]),</span>
 </pre></div>
@@ -150,7 +144,7 @@ since <tt class="docutils literal"><span class="pre">chrompoly.pyx</span></tt> i
 </ol>
 </div>
 <div class="section" id="special-pragmas">
-<h2>Special pragmas<a class="headerlink" href="#special-pragmas" title="Permalink to this headline">¶</a></h2>
+<h2>Special Pragmas<a class="headerlink" href="#special-pragmas" title="Permalink to this headline">¶</a></h2>
 <p>If Cython code is either attached or loaded as a <tt class="docutils literal"><span class="pre">.spyx</span></tt> file or
 loaded from the notebook as a <tt class="docutils literal"><span class="pre">%cython</span></tt> block, the following
 pragmas are available:</p>
@@ -174,7 +168,7 @@ space separated list is split and passed to distutils.</li>
 </div>
 </div>
 <div class="section" id="attaching-or-loading-spyx-files">
-<h2>Attaching or loading .spyx files<a class="headerlink" href="#attaching-or-loading-spyx-files" title="Permalink to this headline">¶</a></h2>
+<h2>Attaching or Loading .spyx Files<a class="headerlink" href="#attaching-or-loading-spyx-files" title="Permalink to this headline">¶</a></h2>
 <p>The easiest way to try out Cython without having to learn anything
 about distutils, etc., is to create a file with the extension
 <tt class="docutils literal"><span class="pre">spyx</span></tt>, which stands for &#8220;Sage Pyrex&#8221;:</p>
@@ -224,19 +218,17 @@ version with a type declaration, by changing <tt class="docutils literal"><span 
 <tt class="docutils literal"><span class="pre">def</span> <span class="pre">is2pow(unsigned</span> <span class="pre">int</span> <span class="pre">n):</span></tt>.</p>
 </div>
 <div class="section" id="interrupt-and-signal-handling">
-<span id="section-sig-on"></span><h2>Interrupt and signal handling<a class="headerlink" href="#interrupt-and-signal-handling" title="Permalink to this headline">¶</a></h2>
-<p>(This section was written by Jeroen Demeyer.)</p>
-<p>When writing Cython code for Sage, special care must be taken to ensure
-the code can be interrupted with <tt class="docutils literal"><span class="pre">CTRL-C</span></tt>.
-Since Cython optimizes for speed,
-Cython normally does not check for interrupts.
+<span id="section-sig-on"></span><h2>Interrupt and Signal Handling<a class="headerlink" href="#interrupt-and-signal-handling" title="Permalink to this headline">¶</a></h2>
+<p>When writing Cython code for Sage, special care must be taken to
+ensure the code can be interrupted with <tt class="docutils literal"><span class="pre">CTRL-C</span></tt>.  Since Cython
+optimizes for speed, Cython normally does not check for interrupts.
 For example, code like the following cannot be interrupted:</p>
 <div class="highlight-python"><pre>sage: cython('while True: pass')  # DON'T DO THIS</pre>
 </div>
 <p>While this is running, pressing <tt class="docutils literal"><span class="pre">CTRL-C</span></tt> has no effect.  The only
-way out is to kill the Sage process.
-On certain systems, you can still quit Sage by typing <tt class="docutils literal"><span class="pre">CTRL-\</span></tt>
-(sending a Quit signal) instead of <tt class="docutils literal"><span class="pre">CTRL-C</span></tt>.</p>
+way out is to kill the Sage process.  On certain systems, you can
+still quit Sage by typing <tt class="docutils literal"><span class="pre">CTRL-\</span></tt> (sending a Quit signal) instead
+of <tt class="docutils literal"><span class="pre">CTRL-C</span></tt>.</p>
 <div class="section" id="using-sig-on-and-sig-off">
 <h3>Using <tt class="docutils literal"><span class="pre">sig_on()</span></tt> and <tt class="docutils literal"><span class="pre">sig_off()</span></tt><a class="headerlink" href="#using-sig-on-and-sig-off" title="Permalink to this headline">¶</a></h3>
 <p>To enable interrupt handling, use the <tt class="docutils literal"><span class="pre">sig_on()</span></tt> and <tt class="docutils literal"><span class="pre">sig_off()</span></tt> functions.
@@ -254,13 +246,12 @@ These two <em>must always</em> be called in <strong>pairs</strong>, i.e. every
     <span class="k">return</span> <span class="n">something</span>
 </pre></div>
 </div>
-<p>You can put <tt class="docutils literal"><span class="pre">sig_on()</span></tt> and <tt class="docutils literal"><span class="pre">sig_off()</span></tt> in all kinds of Cython functions:
-<tt class="docutils literal"><span class="pre">def</span></tt>, <tt class="docutils literal"><span class="pre">cdef</span></tt> or <tt class="docutils literal"><span class="pre">cpdef</span></tt>.
-You cannot put them in pure Python code (i.e. files with extension <tt class="docutils literal"><span class="pre">.py</span></tt>).</p>
-<p>It is possible to put <tt class="docutils literal"><span class="pre">sig_on()</span></tt> and <tt class="docutils literal"><span class="pre">sig_off()</span></tt> in different functions,
-provided that <tt class="docutils literal"><span class="pre">sig_off()</span></tt> is called before the function which calls
-<tt class="docutils literal"><span class="pre">sig_on()</span></tt> returns.
-The following code is <em>invalid</em>:</p>
+<p>You can put <tt class="docutils literal"><span class="pre">sig_on()</span></tt> and <tt class="docutils literal"><span class="pre">sig_off()</span></tt> in all kinds of Cython
+functions: <tt class="docutils literal"><span class="pre">def</span></tt>, <tt class="docutils literal"><span class="pre">cdef</span></tt> or <tt class="docutils literal"><span class="pre">cpdef</span></tt>.  You cannot put them in
+pure Python code (i.e. files with extension <tt class="docutils literal"><span class="pre">.py</span></tt>).</p>
+<p>It is possible to put <tt class="docutils literal"><span class="pre">sig_on()</span></tt> and <tt class="docutils literal"><span class="pre">sig_off()</span></tt> in different
+functions, provided that <tt class="docutils literal"><span class="pre">sig_off()</span></tt> is called before the function
+which calls <tt class="docutils literal"><span class="pre">sig_on()</span></tt> returns.  The following code is <em>invalid</em>:</p>
 <div class="highlight-cython"><div class="highlight"><pre><span class="c"># INVALID code because we return from function foo()</span>
 <span class="c"># without calling sig_off() first.</span>
 <span class="k">cdef</span> <span class="nf">foo</span><span class="p">():</span>
@@ -271,7 +262,8 @@ The following code is <em>invalid</em>:</p>
     <span class="n">sig_off</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>But the following is valid:</p>
+<p>But the following is valid since you cannot call <tt class="docutils literal"><span class="pre">foo</span></tt>
+interactively:</p>
 <div class="highlight-cython"><div class="highlight"><pre><span class="k">cdef</span> <span class="kt">int</span> <span class="nf">foo</span><span class="p">():</span>
     <span class="n">sig_off</span><span class="p">()</span>
     <span class="k">return</span> <span class="mf">2</span><span class="o">+</span><span class="mf">2</span>
@@ -281,27 +273,26 @@ The following code is <em>invalid</em>:</p>
     <span class="k">return</span> <span class="n">foo</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>For clarity however, it is best to avoid this.
-One good example where the above makes sense is the <tt class="docutils literal"><span class="pre">new_gen()</span></tt>
-function in <a class="reference internal" href="coding_in_other.html#section-pari-library"><em>The PARI C library interface</em></a>.</p>
-<p>A common mistake is to put <tt class="docutils literal"><span class="pre">sig_off()</span></tt> towards the end of a
+<p>For clarity however, it is best to avoid this.  One good example where
+the above makes sense is the <tt class="docutils literal"><span class="pre">new_gen()</span></tt> function in
+<a class="reference internal" href="coding_in_other.html#section-pari-library"><em>The PARI C library interface</em></a>.</p>
+<p>A common mqistake is to put <tt class="docutils literal"><span class="pre">sig_off()</span></tt> towards the end of a
 function (before the <tt class="docutils literal"><span class="pre">return</span></tt>) when the function has multiple
-<tt class="docutils literal"><span class="pre">return</span></tt> statements.
-So make sure there is a <tt class="docutils literal"><span class="pre">sig_off()</span></tt> before <em>every</em> <tt class="docutils literal"><span class="pre">return</span></tt>
-(and also before every <tt class="docutils literal"><span class="pre">raise</span></tt>).</p>
+<tt class="docutils literal"><span class="pre">return</span></tt> statements.  So make sure there is a <tt class="docutils literal"><span class="pre">sig_off()</span></tt> before
+<em>every</em> <tt class="docutils literal"><span class="pre">return</span></tt> (and also before every <tt class="docutils literal"><span class="pre">raise</span></tt>).</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p>The code inside <tt class="docutils literal"><span class="pre">sig_on()</span></tt> should be pure C or Cython code.
-If you call Python code, an interrupt is likely to mess up Python.</p>
+<p>The code inside <tt class="docutils literal"><span class="pre">sig_on()</span></tt> should be pure C or Cython code. If
+you call Python code, an interrupt is likely to mess up Python.</p>
 <p class="last">Also, when an interrupt occurs inside <tt class="docutils literal"><span class="pre">sig_on()</span></tt>, code execution
-immediately stops without cleaning up.
-For example, any memory allocated inside <tt class="docutils literal"><span class="pre">sig_on()</span></tt> is lost.
-See <a class="reference internal" href="#advanced-sig"><em>Advanced functions</em></a> for ways to deal with this.</p>
+immediately stops without cleaning up.  For example, any memory
+allocated inside <tt class="docutils literal"><span class="pre">sig_on()</span></tt> is lost.  See <a class="reference internal" href="#advanced-sig"><em>Advanced functions</em></a>
+for ways to deal with this.</p>
 </div>
-<p>When the user presses <tt class="docutils literal"><span class="pre">CTRL-C</span></tt> inside <tt class="docutils literal"><span class="pre">sig_on()</span></tt>, execution will jump back
-to <tt class="docutils literal"><span class="pre">sig_on()</span></tt> (the first one if there is a stack) and <tt class="docutils literal"><span class="pre">sig_on()</span></tt>
-will raise <tt class="docutils literal"><span class="pre">KeyboardInterrupt</span></tt>.  These can be handled just like other
-Python exceptions:</p>
+<p>When the user presses <tt class="docutils literal"><span class="pre">CTRL-C</span></tt> inside <tt class="docutils literal"><span class="pre">sig_on()</span></tt>, execution will
+jump back to <tt class="docutils literal"><span class="pre">sig_on()</span></tt> (the first one if there is a stack) and
+<tt class="docutils literal"><span class="pre">sig_on()</span></tt> will raise <tt class="docutils literal"><span class="pre">KeyboardInterrupt</span></tt>.  These can be handled
+just like other Python exceptions:</p>
 <div class="highlight-cython"><div class="highlight"><pre><span class="k">def</span> <span class="nf">catch_interrupts</span><span class="p">():</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">sig_on</span><span class="p">()</span>  <span class="c"># This MUST be inside the try</span>
@@ -312,16 +303,15 @@ Python exceptions:</p>
 </pre></div>
 </div>
 <p>Certain C libraries in Sage are written in a way that they will raise
-Python exceptions: NTL and PARI are examples of this.
-NTL can raise <tt class="docutils literal"><span class="pre">RuntimeError</span></tt> and PARI can raise <tt class="docutils literal"><span class="pre">PariError</span></tt>.
-Since these use the <tt class="docutils literal"><span class="pre">sig_on()</span></tt> mechanism,
-these exceptions can be caught just like the <tt class="docutils literal"><span class="pre">KeyboardInterrupt</span></tt>
-in the example above.</p>
-<p>It is possible to stack <tt class="docutils literal"><span class="pre">sig_on()</span></tt> and <tt class="docutils literal"><span class="pre">sig_off()</span></tt>.
-If you do this, the effect is exactly the same as if only the outer
+Python exceptions: NTL and PARI are examples of this.  NTL can raise
+<tt class="docutils literal"><span class="pre">RuntimeError</span></tt> and PARI can raise <tt class="docutils literal"><span class="pre">PariError</span></tt>.  Since these use
+the <tt class="docutils literal"><span class="pre">sig_on()</span></tt> mechanism, these exceptions can be caught just like
+the <tt class="docutils literal"><span class="pre">KeyboardInterrupt</span></tt> in the example above.</p>
+<p>It is possible to stack <tt class="docutils literal"><span class="pre">sig_on()</span></tt> and <tt class="docutils literal"><span class="pre">sig_off()</span></tt>.  If you do
+this, the effect is exactly the same as if only the outer
 <tt class="docutils literal"><span class="pre">sig_on()</span></tt>/<tt class="docutils literal"><span class="pre">sig_off()</span></tt> was there.  The inner ones will just change
-a reference counter and otherwise do nothing.  Make sure that the number
-of <tt class="docutils literal"><span class="pre">sig_on()</span></tt> calls equal the number of <tt class="docutils literal"><span class="pre">sig_off()</span></tt> calls:</p>
+a reference counter and otherwise do nothing.  Make sure that the
+number of <tt class="docutils literal"><span class="pre">sig_on()</span></tt> calls equal the number of <tt class="docutils literal"><span class="pre">sig_off()</span></tt> calls:</p>
 <div class="highlight-cython"><div class="highlight"><pre><span class="k">def</span> <span class="nf">stack_sig_on</span><span class="p">():</span>
     <span class="n">sig_on</span><span class="p">()</span>
     <span class="n">sig_on</span><span class="p">()</span>
@@ -333,9 +323,10 @@ of <tt class="docutils literal"><span class="pre">sig_on()</span></tt> calls equ
 </pre></div>
 </div>
 <p>Extra care must be taken with exceptions raised inside <tt class="docutils literal"><span class="pre">sig_on()</span></tt>.
-The problem is that, if you do not do anything special, the <tt class="docutils literal"><span class="pre">sig_off()</span></tt>
-will never be called if there is an exception.
-If you need to <em>raise</em> an exception yourself, call a <tt class="docutils literal"><span class="pre">sig_off()</span></tt> before it:</p>
+The problem is that, if you do not do anything special, the
+<tt class="docutils literal"><span class="pre">sig_off()</span></tt> will never be called if there is an exception.  If you
+need to <em>raise</em> an exception yourself, call a <tt class="docutils literal"><span class="pre">sig_off()</span></tt> before
+it:</p>
 <div class="highlight-cython"><div class="highlight"><pre><span class="k">def</span> <span class="nf">raising_an_exception</span><span class="p">():</span>
     <span class="n">sig_on</span><span class="p">()</span>
     <span class="c"># (some long computation)</span>
@@ -362,11 +353,11 @@ exceptions raised by subroutines inside the <tt class="docutils literal"><span c
 <div class="section" id="other-signals">
 <h3>Other signals<a class="headerlink" href="#other-signals" title="Permalink to this headline">¶</a></h3>
 <p>Apart from handling interrupts, <tt class="docutils literal"><span class="pre">sig_on()</span></tt> provides more general
-signal handling.
-Indeed, if the code inside <tt class="docutils literal"><span class="pre">sig_on()</span></tt> would generate
-a segmentation fault or call the C function <tt class="docutils literal"><span class="pre">abort()</span></tt>
-(or more generally, raise any of SIGSEGV, SIGILL, SIGABRT, SIGFPE, SIGBUS),
-this is caught by the interrupt framework and a <tt class="docutils literal"><span class="pre">RuntimeError</span></tt> is raised:</p>
+signal handling.  Indeed, if the code inside <tt class="docutils literal"><span class="pre">sig_on()</span></tt> would
+generate a segmentation fault or call the C function <tt class="docutils literal"><span class="pre">abort()</span></tt> (or
+more generally, raise any of SIGSEGV, SIGILL, SIGABRT, SIGFPE,
+SIGBUS), this is caught by the interrupt framework and a
+<tt class="docutils literal"><span class="pre">RuntimeError</span></tt> is raised:</p>
 <div class="highlight-cython"><div class="highlight"><pre><span class="k">cdef</span> <span class="kr">extern</span> <span class="k">from</span> <span class="s">&#39;stdlib.h&#39;</span><span class="p">:</span>
     <span class="n">void</span> <span class="n">abort</span><span class="p">()</span>
 
@@ -382,16 +373,15 @@ this is caught by the interrupt framework and a <tt class="docutils literal"><sp
 <span class="ne">RuntimeError</span><span class="p">:</span> <span class="n">Aborted</span>
 </pre></div>
 </div>
-<p>This exception can then be caught as explained above.
-This means that <tt class="docutils literal"><span class="pre">abort()</span></tt> can be used
-as an alternative to exceptions within <tt class="docutils literal"><span class="pre">sig_on()</span></tt>/<tt class="docutils literal"><span class="pre">sig_off()</span></tt>.
-A segmentation fault unguarded by <tt class="docutils literal"><span class="pre">sig_on()</span></tt> would simply terminate Sage.</p>
+<p>This exception can then be caught as explained above.  This means that
+<tt class="docutils literal"><span class="pre">abort()</span></tt> can be used as an alternative to exceptions within
+<tt class="docutils literal"><span class="pre">sig_on()</span></tt>/<tt class="docutils literal"><span class="pre">sig_off()</span></tt>.  A segmentation fault unguarded by
+<tt class="docutils literal"><span class="pre">sig_on()</span></tt> would simply terminate Sage.</p>
 <p>Instead of <tt class="docutils literal"><span class="pre">sig_on()</span></tt>, there is also a function <tt class="docutils literal"><span class="pre">sig_str(s)</span></tt>,
-which takes a C string <tt class="docutils literal"><span class="pre">s</span></tt> as argument.
-It behaves the same as <tt class="docutils literal"><span class="pre">sig_on()</span></tt>, except that the string <tt class="docutils literal"><span class="pre">s</span></tt>
-will be used as a string for the exception.
-<tt class="docutils literal"><span class="pre">sig_str(s)</span></tt> should still be closed by <tt class="docutils literal"><span class="pre">sig_off()</span></tt>.
-Example Cython code:</p>
+which takes a C string <tt class="docutils literal"><span class="pre">s</span></tt> as argument.  It behaves the same as
+<tt class="docutils literal"><span class="pre">sig_on()</span></tt>, except that the string <tt class="docutils literal"><span class="pre">s</span></tt> will be used as a string
+for the exception.  <tt class="docutils literal"><span class="pre">sig_str(s)</span></tt> should still be closed by
+<tt class="docutils literal"><span class="pre">sig_off()</span></tt>.  Example Cython code:</p>
 <div class="highlight-cython"><div class="highlight"><pre><span class="k">cdef</span> <span class="kr">extern</span> <span class="k">from</span> <span class="s">&#39;stdlib.h&#39;</span><span class="p">:</span>
     <span class="n">void</span> <span class="n">abort</span><span class="p">()</span>
 
@@ -409,21 +399,21 @@ Example Cython code:</p>
 </pre></div>
 </div>
 <p>With regard to ordinary interrupts (i.e. SIGINT), <tt class="docutils literal"><span class="pre">sig_str(s)</span></tt>
-behaves the same as <tt class="docutils literal"><span class="pre">sig_on()</span></tt>:
-a simple <tt class="docutils literal"><span class="pre">KeyboardInterrupt</span></tt> is raised.</p>
+behaves the same as <tt class="docutils literal"><span class="pre">sig_on()</span></tt>: a simple <tt class="docutils literal"><span class="pre">KeyboardInterrupt</span></tt> is
+raised.</p>
 </div>
 <div class="section" id="advanced-functions">
 <span id="advanced-sig"></span><h3>Advanced functions<a class="headerlink" href="#advanced-functions" title="Permalink to this headline">¶</a></h3>
-<p>There are several more specialized functions for dealing with interrupts.
-The function <tt class="docutils literal"><span class="pre">sig_check()</span></tt> behaves exactly as <tt class="docutils literal"><span class="pre">sig_on();</span> <span class="pre">sig_off()</span></tt>
-(except that <tt class="docutils literal"><span class="pre">sig_check()</span></tt> is faster since it does not involve a <tt class="docutils literal"><span class="pre">setjmp()</span></tt> call).</p>
-<p><tt class="docutils literal"><span class="pre">sig_check()</span></tt> can be used to check for pending interrupts.
-If an interrupt happens outside of a <tt class="docutils literal"><span class="pre">sig_on()</span></tt>/<tt class="docutils literal"><span class="pre">sig_off()</span></tt> block,
-it will be caught by the next <tt class="docutils literal"><span class="pre">sig_check()</span></tt> or <tt class="docutils literal"><span class="pre">sig_on()</span></tt>.</p>
+<p>There are several more specialized functions for dealing with
+interrupts.  The function <tt class="docutils literal"><span class="pre">sig_check()</span></tt> behaves exactly as
+<tt class="docutils literal"><span class="pre">sig_on();</span> <span class="pre">sig_off()</span></tt> (except that <tt class="docutils literal"><span class="pre">sig_check()</span></tt> is faster since
+it does not involve a <tt class="docutils literal"><span class="pre">setjmp()</span></tt> call).</p>
+<p><tt class="docutils literal"><span class="pre">sig_check()</span></tt> can be used to check for pending interrupts.  If an
+interrupt happens outside of a <tt class="docutils literal"><span class="pre">sig_on()</span></tt>/<tt class="docutils literal"><span class="pre">sig_off()</span></tt> block, it
+will be caught by the next <tt class="docutils literal"><span class="pre">sig_check()</span></tt> or <tt class="docutils literal"><span class="pre">sig_on()</span></tt>.</p>
 <p>The typical use case for <tt class="docutils literal"><span class="pre">sig_check()</span></tt> is within tight loops doing
-complicated stuff
-(mixed Python and Cython code, potentially raising exceptions).
-It gives more control, because a <tt class="docutils literal"><span class="pre">KeyboardInterrupt</span></tt>
+complicated stuff (mixed Python and Cython code, potentially raising
+exceptions).  It gives more control, because a <tt class="docutils literal"><span class="pre">KeyboardInterrupt</span></tt>
 can <em>only</em> be raised during <tt class="docutils literal"><span class="pre">sig_check()</span></tt>:</p>
 <div class="highlight-cython"><div class="highlight"><pre><span class="k">def</span> <span class="nf">sig_check_example</span><span class="p">():</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">foo</span><span class="p">:</span>
@@ -432,18 +422,17 @@ can <em>only</em> be raised during <tt class="docutils literal"><span class="pre
 </pre></div>
 </div>
 <p>As mentioned above, <tt class="docutils literal"><span class="pre">sig_on()</span></tt> makes no attempt to clean anything up
-(restore state or freeing memory) when an interrupt occurs.
-In fact, it would be impossible for <tt class="docutils literal"><span class="pre">sig_on()</span></tt> to do that.
-If you want to add some cleanup code, use <tt class="docutils literal"><span class="pre">sig_on_no_except()</span></tt>
-for this. This function behaves <em>exactly</em> like <tt class="docutils literal"><span class="pre">sig_on()</span></tt>, except that
-any exception raised (either <tt class="docutils literal"><span class="pre">KeyboardInterrupt</span></tt> or <tt class="docutils literal"><span class="pre">RuntimeError</span></tt>)
-is not yet passed to Python. Essentially, the exception is there, but
-we prevent Cython from looking for the exception.
-Then <tt class="docutils literal"><span class="pre">cython_check_exception()</span></tt> can be used to make Cython look
-for the exception.</p>
-<p>Normally, <tt class="docutils literal"><span class="pre">sig_on_no_except()</span></tt> returns 1.
-If a signal was caught and an exception raised, <tt class="docutils literal"><span class="pre">sig_on_no_except()</span></tt>
-instead returns 0.
+(restore state or freeing memory) when an interrupt occurs.  In fact,
+it would be impossible for <tt class="docutils literal"><span class="pre">sig_on()</span></tt> to do that.  If you want to
+add some cleanup code, use <tt class="docutils literal"><span class="pre">sig_on_no_except()</span></tt> for this. This
+function behaves <em>exactly</em> like <tt class="docutils literal"><span class="pre">sig_on()</span></tt>, except that any
+exception raised (either <tt class="docutils literal"><span class="pre">KeyboardInterrupt</span></tt> or <tt class="docutils literal"><span class="pre">RuntimeError</span></tt>) is
+not yet passed to Python. Essentially, the exception is there, but we
+prevent Cython from looking for the exception.  Then
+<tt class="docutils literal"><span class="pre">cython_check_exception()</span></tt> can be used to make Cython look for the
+exception.</p>
+<p>Normally, <tt class="docutils literal"><span class="pre">sig_on_no_except()</span></tt> returns 1.  If a signal was caught
+and an exception raised, <tt class="docutils literal"><span class="pre">sig_on_no_except()</span></tt> instead returns 0.
 The following example shows how to use <tt class="docutils literal"><span class="pre">sig_on_no_except()</span></tt>:</p>
 <div class="highlight-cython"><div class="highlight"><pre><span class="k">def</span> <span class="nf">no_except_example</span><span class="p">():</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">sig_on_no_except</span><span class="p">():</span>
@@ -457,17 +446,17 @@ The following example shows how to use <tt class="docutils literal"><span class=
     <span class="n">sig_off</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>There is also a function <tt class="docutils literal"><span class="pre">sig_str_no_except(s)</span></tt>
-which is analogous to <tt class="docutils literal"><span class="pre">sig_str(s)</span></tt>.</p>
+<p>There is also a function <tt class="docutils literal"><span class="pre">sig_str_no_except(s)</span></tt> which is analogous
+to <tt class="docutils literal"><span class="pre">sig_str(s)</span></tt>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">See the file <tt class="file docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/tests/interrupt.pyx</span></tt>
+<p class="last">See the file <tt class="file docutils literal"><span class="pre">SAGE_ROOT/src/sage/tests/interrupt.pyx</span></tt>
 for more examples of how to use the various <tt class="docutils literal"><span class="pre">sig_*()</span></tt> functions.</p>
 </div>
 </div>
 <div class="section" id="testing-interrupts">
 <h3>Testing interrupts<a class="headerlink" href="#testing-interrupts" title="Permalink to this headline">¶</a></h3>
-<p>When writing <a class="reference internal" href="conventions.html#section-docstrings"><em>Documentation strings</em></a>,
+<p>When writing <a class="reference internal" href="coding_basics.html#section-docstrings"><em>Documentation strings</em></a>,
 one sometimes wants to check that certain code can be interrupted in a clean way.
 In the module <tt class="docutils literal"><span class="pre">sage.tests.interrupt</span></tt>, there is a function
 <tt class="docutils literal"><span class="pre">interrupt_after_delay(ms_delay</span> <span class="pre">=</span> <span class="pre">500)</span></tt> which can be used to test interrupts.
@@ -486,14 +475,15 @@ ok!</pre>
 </div>
 </div>
 <div class="section" id="unpickling-cython-code">
-<h2>Unpickling cython code<a class="headerlink" href="#unpickling-cython-code" title="Permalink to this headline">¶</a></h2>
-<p>Pickling for python classes and extension classes, such as cython, is different.
-This is discussed in the <a class="reference external" href="http://docs.python.org/library/pickle.html#pickle-protocol">python pickling documentation</a>. For the unpickling of
-extension classes you need to write a <tt class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></tt> method which typically
-returns a tuple <tt class="docutils literal"><span class="pre">(f,</span> <span class="pre">args,...)</span></tt> such that <tt class="docutils literal"><span class="pre">f(*args)</span></tt> returns (a copy of) the
+<h2>Unpickling Cython Code<a class="headerlink" href="#unpickling-cython-code" title="Permalink to this headline">¶</a></h2>
+<p>Pickling for python classes and extension classes, such as cython, is
+different.  This is discussed in the <a class="reference external" href="http://docs.python.org/library/pickle.html#pickle-protocol">python pickling
+documentation</a>. For the unpickling of extension classes you need to
+write a <tt class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></tt> method which typically returns a tuple
+<tt class="docutils literal"><span class="pre">(f,</span> <span class="pre">args,...)</span></tt> such that <tt class="docutils literal"><span class="pre">f(*args)</span></tt> returns (a copy of) the
 original object. As an example, the following code snippet is the
 <tt class="xref py py-meth docutils literal"><span class="pre">__reduce__()</span></tt> method from
-<tt class="xref py py-class docutils literal"><span class="pre">sage.rings.integer.Integer</span></tt>.</p>
+<tt class="xref py py-class docutils literal"><span class="pre">sage.rings.integer.Integer</span></tt>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    This is used when pickling integers.</span>
@@ -530,17 +520,17 @@ original object. As an example, the following code snippet is the
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference internal" href="#">Coding in Cython</a><ul>
-<li><a class="reference internal" href="#writing-cython-code-in-sage">Writing Cython code in Sage</a></li>
-<li><a class="reference internal" href="#special-pragmas">Special pragmas</a></li>
-<li><a class="reference internal" href="#attaching-or-loading-spyx-files">Attaching or loading .spyx files</a></li>
-<li><a class="reference internal" href="#interrupt-and-signal-handling">Interrupt and signal handling</a><ul>
+<li><a class="reference internal" href="#writing-cython-code-in-sage">Writing Cython Code in Sage</a></li>
+<li><a class="reference internal" href="#special-pragmas">Special Pragmas</a></li>
+<li><a class="reference internal" href="#attaching-or-loading-spyx-files">Attaching or Loading .spyx Files</a></li>
+<li><a class="reference internal" href="#interrupt-and-signal-handling">Interrupt and Signal Handling</a><ul>
 <li><a class="reference internal" href="#using-sig-on-and-sig-off">Using <tt class="docutils literal"><span class="pre">sig_on()</span></tt> and <tt class="docutils literal"><span class="pre">sig_off()</span></tt></a></li>
 <li><a class="reference internal" href="#other-signals">Other signals</a></li>
 <li><a class="reference internal" href="#advanced-functions">Advanced functions</a></li>
 <li><a class="reference internal" href="#testing-interrupts">Testing interrupts</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#unpickling-cython-code">Unpickling cython code</a></li>
+<li><a class="reference internal" href="#unpickling-cython-code">Unpickling Cython Code</a></li>
 </ul>
 </li>
 </ul>
