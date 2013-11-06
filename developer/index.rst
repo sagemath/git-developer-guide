@@ -29,6 +29,8 @@ Writing Code for Sage
    coding_in_python
    coding_in_cython
    coding_in_other
+   packaging
+   packaging_old_spkgs
    doctesting
    sage_manuals
 

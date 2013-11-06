@@ -1,17 +1,17 @@
 .. _chapter-other:
 
-==============================================
-Coding using external libraries and interfaces
-==============================================
+=======================================
+Using External Libraries and Interfaces
+=======================================
 
 When writing code for Sage, use Python for the basic structure and
 interface. For speed, efficiency, or convenience, you can implement
 parts of the code using any of the following languages: :ref:`Cython
 <chapter-cython>`, C/C++, Fortran 95, GAP, Common Lisp, Singular, and
 PARI/GP. You can also use all C/C++ libraries included with Sage
-[SageComponents]_. (And if you are okay with your code depending on
+[SageComponents]_. And if you are okay with your code depending on
 optional Sage packages, you can use Octave, or even Magma,
-Mathematica, or Maple.)
+Mathematica, or Maple.
 
 In this chapter, we discuss interfaces between Sage and :ref:`PARI
 <section-pari-library>`, :ref:`section-gap` and
