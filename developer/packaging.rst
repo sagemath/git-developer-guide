@@ -5,7 +5,7 @@ Packaging Third-Party Code
 ==========================
 
 One of the mottoes of the Sage project is to not reinvent the
-wheel. If an algorithm is already implemented in a well-tested library
+wheel: If an algorithm is already implemented in a well-tested library
 then consider incorporating that library into Sage. The current list
 of available packages are the subdirectories of
 ``SAGE_ROOT/build/pkgs/``.
@@ -23,18 +23,13 @@ Inclusion Procedure for New Packages
 For a package to become part of Sage's standard distribution, it
 must meet the following requirements:
 
-- **License**. For external packages, the license must be compatible
-  with the GNU General Public License, version 3. More precisely, it
-  must be allowed to license the code that you wish to include under
-  the GPL version 3.  Sage library code (anything which is not an
-  external package) must be licensed under the
-  "GNU General Public License as published by the Free Software Foundation;
-  either version 2 of the License, or (at your option) any later version."
-  The Free Software Foundation maintains a long list of
-  `licenses and comments about them <http://www.gnu.org/licenses/license-list.html>`_.
+- **License**. For standard packages, the license must be compatible
+  with the GNU General Public License, version 3. The Free Software
+  Foundation maintains a long list of `licenses and comments about
+  them <http://www.gnu.org/licenses/license-list.html>`_.
 
-- **Build Support**. The code **must** build on all the `fully
-  supported platforms
+- **Build Support**. The code must build on all the `fully supported
+  platforms
   <http://wiki.sagemath.org/SupportedPlatforms#Fully_supported>`_.
 
   A standard package should also work on all the platforms where Sage
@@ -44,43 +39,7 @@ must meet the following requirements:
   <http://wiki.sagemath.org/SupportedPlatforms#Almost_works>`_ but
   since we don't fully support these platforms and often lack the
   resources to test on them, you are not expected to confirm your
-  packages works on those platforms.  However, if you can, it is
-  better to do so. As noted `here
-  <http://wiki.sagemath.org/SupportedPlatforms#Expected_to_work>`_, a
-  failure of Sage to work on a platform where it is expected to work,
-  will be considered a bug.
-
-  There is no need to worry too much about platforms where Sage will
-  `probably not work
-  <http://wiki.sagemath.org/SupportedPlatforms#Probably_will_not_work>`_
-  though if it's clear that there is significant effort taking place
-  to port Sage to a platform, then you should aim to ensure your
-  package does not cause unnecessary headaches to those working on the
-  port.
-
-  If it's clear that a port is stagnent, with nobody working on it,
-  then you can safely ignore it.
-
-  Remarks:
-
-  - Some Sage developers are willing to help you port to OS X, Solaris
-    and Windows. But this is no guarantee and you or your project are
-    expected to do the heavy lifting and also support those ports
-    upstream if there is no Sage developer who is willing to share the
-    burden.
-
-  - One of the best ways to ensure your code works on multiple
-    platforms is to only use commands which are defined by
-    `POSIX.1-2008 <http://www.opengroup.org/onlinepubs/9699919799/>`_
-    and only use options which are defined in the POSIX standard. For
-    example, do not use the -p option to `uname
-    <http://www.opengroup.org/onlinepubs/9699919799/utilities/uname.html>`_
-    as the '-p' option is not defined by the POSIX standard, so is not
-    portable.  If you must use a non-POSIX command, or a option which
-    is not defined by POSIX, then ensure the code only gets executed
-    on the platform(s) where that command and/or option will be
-    acceptable.
-
+  packages works on those platforms.
 
 - **Quality**. The code should be "better" than any other available
   code (that passes the two above criteria), and the authors need to
@@ -93,7 +52,7 @@ must meet the following requirements:
 
   - Usability
 
-  - Memory leaks
+  - Absence of memory leaks
 
   - Maintainable
 
@@ -101,15 +60,16 @@ must meet the following requirements:
 
   - Reasonable build time, size, dependencies
 
-
-- **Previously an optional package**. Usually a new standard package
-  must have spent some time as an optional package. However, sometimes
-  this is not possible, if for example a new library is needed to
-  permit an updated version of a standard package to function.
+- **Previously an optional package**. A new standard package must have
+  spent some time as an optional package. Or have a good reason why
+  this is not possible.
 
 - **Refereeing**. The code must be refereed, as discussed in
   :ref:`chapter-sage-trac`.
 
+
+
+.. _section-directory-structure:
 
 Directory Structure
 ===================
@@ -118,8 +78,9 @@ Third-party packages in Sage consists of two parts:
 
 #. The tarball as it is distributed by the third party, or as close as
    possible. Valid reasons for modifying the tarball are deleting
-   unnecessary files to keeep the download size manageable, but the
-   actual code must be unmodified.
+   unnecessary files to keeep the download size manageable or
+   regenerating auto-generated files if necessary. But the actual code
+   must be unmodified. See also :ref:`section-spkg-src`.
 
 #. The build scripts and associated files are in a subdirectory
    ``SAGE_ROOT/build/pkgs/package``, where you replace ``package``
@@ -148,14 +109,15 @@ We discuss the individual files in the following.
 Install Script
 --------------
 
-
 The ``spkg-install`` file is a shell script installing the package,
 with ``PACKAGE_NAME`` replaced by the the package name. In the best
 case, the upstream project can simply be installed by the usual
 configure / make / make install steps. In that case, the build script
-would simply be::
+would simply consist of::
 
     #!/usr/bin/env bash
+
+    cd src
 
     ./configure --prefix="$SAGE_LOCAL" --libdir="$SAGE_LOCAL/lib"
     if [ $? -ne 0 ]; then
@@ -176,6 +138,43 @@ would simply be::
     fi
 
 
+Note that the top-level directory inside the tarball is renamed to
+``src`` before calling the ``spkg-install`` script, so you can just
+use ``cd src`` instead of ``cd foo-1.3``.
+
+If there is any meaningful documentation included but not installed by
+``make install``, then you can add something like the following to
+install it::
+
+    if [ "$SAGE_SPKG_INSTALL_DOCS" = yes ] ; then
+        $MAKE doc
+        if [ $? -ne 0 ]; then
+            echo >&2 "Error building PACKAGE_NAME docs."
+            exit 1
+        fi
+        mkdir -p "$SAGE_LOCAL/share/doc/PACKAGE_NAME"
+        cp -R doc/* "$SAGE_ROOT/local/share/doc/PACKAGE_NAME"
+    fi
+    
+
+
+
+.. _section-spkg-check:
+
+Self-Tests
+----------
+
+The ``spkg-check`` file is an optional, but highly recommended, script
+to run self-tests of the package. It is run after building and
+installing if the ``SAGE_CHECK`` environment variable is set, see the
+Sage installation guide. Ideally, upstream has some sort of tests
+suite that can be run with the standard ``make check`` target. In that
+case, the ``spkg-check`` script would simply contain::
+
+    #!/usr/bin/env bash
+
+    cd src
+    $MAKE check
 
 
 .. _section-spkg-versioning:
@@ -183,24 +182,20 @@ would simply be::
 Package Versioning
 ------------------
 
-If you want to bump up the version of an spkg, you need to follow some
-naming conventions. Use the name and version number as given by the
-upstream project, e.g. ``matplotlib-1.0.1``. If the upstream package is
-taken from some revision other than a stable version, you need to
-append the date at which the revision is made, e.g. the Singular
-package ``singular-3-1-0-4-20090818.p3.spkg`` is made with the
-revision as of 2009-08-18. If you start afresh from an upstream
-release without any patches to its source code, the resulting spkg
-need not have any patch-level labels (appending ".p0" is allowed, but
-is optional). For example, ``sagenb-0.6.spkg``
-is taken from the upstream stable version ``sagenb-0.6`` without any
-patches applied to its source code. So you do not see any patch-level
-numbering such as ``.p0`` or ``.p1``.
+The ``package-version.txt`` file containts just the version. So if
+upstream is ``foo-1.3.tar.gz`` then the package version file would
+only contain ``1.3``.
 
+If the upstream package is taken from some revision other than a
+stable version, you should use the date at which the revision is made,
+e.g. the Singular package ``20090818`` is made with the revision as of
+2009-08-18. 
 
-``package-version.txt``
-
-
+If you made any changes to the upstream tarball (see
+:ref:`section-directory-structure` for allowable changes) then you
+should append a ``.p1`` to the version. If you make further changes,
+increase the patch level as necessary. So the different versions would
+be ``1.3``, ``1.3.p1``, ``1.3.p2``, ...
 
 
 .. _section-spkg-SPKG-txt:
@@ -208,34 +203,61 @@ numbering such as ``.p0`` or ``.p1``.
 The SPKG.txt File
 -----------------
 
+The ``SPKG.txt`` file should follow this pattern::
+
+     = PACKAGE_NAME =
+
+     == Description ==
+
+     What does the package do?
+
+     == License ==
+
+     What is the license? If non-standard, is it GPLv3+ compatible?
+
+     == SPKG Maintainers ==
+
+     * Mary Smith
+     * Bill Jones
+     * Leonhard Euler
+
+     == Upstream Contact ==
+
+     Provide information for upstream contact.
+
+     == Dependencies ==
+
+     Put a bulleted list of dependencies here:
+
+     * python
+     * readline
+
+     == Special Update/Build Instructions ==
+
+     List patches that need to be applied and what they do. If the
+     tarball was modified by hand and not via a spkg-src script,
+     describe what was changed.
+
+
+with ``PACKAGE_NAME`` replaced by the the package name. Legacy
+``SPKG.txt`` files have an additional changelog section, but this
+information is now kept in the git repository.
+
 
 .. _section-spkg-patching:
 
 Patching Sources
 ----------------
 
-The ``patches`` directory and 
+Actual changes to the source code must be via patches, which should be
+placed in the ``patches`` directory. GNU patch is distributed with
+Sage, so you can rely on it being available. All patches must be
+documented in ``SPKG.txt``, i.e. what they do, if they are platform
+specific, if they should be pushed upstream, etc.
 
-The main message of this section is: use the GNU program ``patch`` to
-apply patches to files in ``src/``.  GNU patch is distributed with
-Sage, so if you are writing an spkg which is not part of the standard
-Sage distribution, you may use ``patch`` in the ``spkg-install``
-script freely. 
-
-
-- ``patches/``: this directory contains patches to source files in
-  ``src/``.  See :ref:`section-old-spkg-patching-overview`.  Patches
-  to files in ``src/`` should be applied in ``spkg-install``, and all
-  patches must be documented in ``SPKG.txt``, i.e. what they do, if
-  they are platform specific, if they should be pushed upstream,
-  etc. To ensure that all patched versions of upstream source files
-  under ``src/`` are under revision control, the whole directory
-  ``patches/`` must be under revision control.
-
-
-
-If there are any patches then your ``spkg-install`` script should
-contain a section like this::
+Patches to files in ``src/`` need to be applied in ``spkg-install``,
+that is, if there are any patches then your ``spkg-install`` script
+should contain a section like this::
 
     for patch in ../patches/*.patch; do
         [ -r "$patch" ] || continue  # Skip non-existing or non-readable patches
@@ -254,10 +276,44 @@ which applies the patches to the sources.
 Modified Tarballs
 -----------------
 
-The ``spkg-src`` file is optional, and ideally not used at all. 
+The ``spkg-src`` file is optional and only to document how the
+upstream tarball was changed. Ideally it is not modified, then there
+would be no ``spkg-src`` file present either.
+
+However, if you really must modify the upstream tarball then it is
+recommended that you write a script, called ``spkg-src``, that makes
+the changes. This not only serves as documentation but also makes it
+easier to apply the same modifications to future versions.
 
 
 Checksums
 ---------
 
-``checksums.ini``
+The ``checksums.ini`` file contains checksums of the upstream
+tarball. It is autogenerated, so you just have to place the upstream
+tarball in the ``SAGE_ROOT/upstream/`` directory and run::
+
+    [user@localhost]$ sage -sh sage-fix-pkg-checksums
+
+
+Testing
+=======
+
+If you have a new tarball that is not yet distributed with Sage, then
+you have to manually place it in the ``SAGE_ROOT/upstream/`
+directory. Then you can run the istallation via ``sage -f
+package_name``. If your package contains any
+:ref:`section-spkg-check`, run::
+
+    [user@localhost]$ SAGE_CHECK=yes sage -f package_name
+
+
+License information
+===================
+
+If you are patching a standard Sage spkg, then you should make sure
+that the license information for that package is up-to-date, both in
+its ``SPKG.txt`` file and in the file ``SAGE_ROOT/COPYING.txt``.  For
+example, if you are producing an spkg which upgrades the vanilla
+source to a new version, check whether the license changed between
+versions.

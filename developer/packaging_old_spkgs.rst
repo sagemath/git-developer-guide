@@ -276,38 +276,10 @@ the actual output intended for the user.
 The file SPKG.txt
 -----------------
 
-The ``SPKG.txt`` file should follow this pattern::
-
-     = name of spkg =
-
-     == Description ==
-
-     Describe the package here.
-
-     == License ==
-
-     Describe the package's license here.
-
-     == SPKG Maintainers ==
-
-     * Mary Smith
-     * Bill Jones
-     * Leonhard Euler
-
-     == Upstream Contact ==
-
-     Provide information for upstream contact.
-
-     == Dependencies ==
-
-     Put a bulleted list of dependencies here:
-
-     * python
-     * readline
-
-     == Special Update/Build Instructions ==
-
-     List patches that need to be applied and what they do
+The old-style ``SPKG.txt`` file is the same as described in
+:ref:`section-spkg-SPKG-txt`, but with a hand-maintained changelog
+appended since the contents are not part of the Sage repository
+tree. It should follow the following pattern::
 
      == Changelog ==
 
@@ -570,13 +542,3 @@ untar a Sage source tarball, remove the existing spkg under
 ``SAGE_ROOT/spkg/standard/``. In its place, put your replacement
 spkg. Then execute ``make`` from ``SAGE_ROOT``.
 
-
-License information
-===================
-
-If you are patching a standard Sage spkg, then you should make sure
-that the license information for that package is up-to-date, both in
-its ``SPKG.txt`` file and in the file ``SAGE_ROOT/COPYING.txt``.  For
-example, if you are producing an spkg which upgrades the vanilla
-source to a new version, check whether the license changed between
-versions.
