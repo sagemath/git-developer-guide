@@ -425,6 +425,7 @@ Use the following template when documenting functions. Note the
 indentation
 
 .. skip    # do not doctest
+
 ::
 
     def point(self, x=1, y=2):

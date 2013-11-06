@@ -143,6 +143,7 @@ The following syntax is not recommended as we are using a system-wide
 Sage installation (if it exists):
 
 .. skip
+
 ::
 
     [jdemeyer@sage sage-6.0]$ sage -t src/sage/games/sudoku.py

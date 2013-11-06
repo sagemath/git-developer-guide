@@ -92,12 +92,11 @@ More precisely, the directory should contain the following:
   coordination with Sage.  See John Cremona's  eclib spkg, for
   instance. The directory ``src/`` must not be under revision control.
 
-- ``.hg``, ``.hgignore``, and ``.hgtags``: The Sage project uses
-  Mercurial for its revision control system (see
-  :ref:`chapter-mercurial`).  The hidden directory ``.hg`` is part of
-  the standard Sage spkg layout.  It contains the Mercurial repository
-  for all files not in the ``src/`` directory.  To create this
-  Mercurial repository from scratch, you should do::
+- ``.hg``, ``.hgignore``, and ``.hgtags``: Old-style spkgs use
+  Mercurial for its revision control system. The hidden directory
+  ``.hg`` is part of the standard Sage spkg layout.  It contains the
+  Mercurial repository for all files not in the ``src/`` directory.
+  To create this Mercurial repository from scratch, you should do::
 
       hg init
 
@@ -305,7 +304,7 @@ creates an uncompressed tar file.
 
 When your spkg is ready, you should post about it on ``sage-devel``.
 If people there think it is a good idea, then post a link to the spkg
-on the Sage trac server (see :ref:`chapter-trac-old`) so it can be
+on the Sage trac server (see :ref:`chapter-sage-trac`) so it can be
 refereed.  Do not post the spkg itself to the trac server: you only
 need to provide a link to your spkg.  If your spkg gets a positive
 review, it might be included into the core Sage library, or it might

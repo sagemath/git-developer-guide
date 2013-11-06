@@ -138,12 +138,11 @@ upstream, and development on that code base is happening in close
 coordination with Sage.  See John Cremona&#8217;s  eclib spkg, for
 instance. The directory <tt class="docutils literal"><span class="pre">src/</span></tt> must not be under revision control.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">.hg</span></tt>, <tt class="docutils literal"><span class="pre">.hgignore</span></tt>, and <tt class="docutils literal"><span class="pre">.hgtags</span></tt>: The Sage project uses
-Mercurial for its revision control system (see
-<a class="reference internal" href="producing_patches.html#chapter-mercurial"><em>Producing Patches with Mercurial</em></a>).  The hidden directory <tt class="docutils literal"><span class="pre">.hg</span></tt> is part of
-the standard Sage spkg layout.  It contains the Mercurial repository
-for all files not in the <tt class="docutils literal"><span class="pre">src/</span></tt> directory.  To create this
-Mercurial repository from scratch, you should do:</p>
+<li><p class="first"><tt class="docutils literal"><span class="pre">.hg</span></tt>, <tt class="docutils literal"><span class="pre">.hgignore</span></tt>, and <tt class="docutils literal"><span class="pre">.hgtags</span></tt>: Old-style spkgs use
+Mercurial for its revision control system. The hidden directory
+<tt class="docutils literal"><span class="pre">.hg</span></tt> is part of the standard Sage spkg layout.  It contains the
+Mercurial repository for all files not in the <tt class="docutils literal"><span class="pre">src/</span></tt> directory.
+To create this Mercurial repository from scratch, you should do:</p>
 <div class="highlight-python"><pre>hg init</pre>
 </div>
 <p>The files <tt class="docutils literal"><span class="pre">.hgignore</span></tt> and <tt class="docutils literal"><span class="pre">.hgtags</span></tt> also belong to the Mercurial
@@ -333,7 +332,7 @@ creates a compressed tar file. Running <tt class="docutils literal"><span class=
 creates an uncompressed tar file.</p>
 <p>When your spkg is ready, you should post about it on <tt class="docutils literal"><span class="pre">sage-devel</span></tt>.
 If people there think it is a good idea, then post a link to the spkg
-on the Sage trac server (see <em class="xref std std-ref">chapter-trac-old</em>) so it can be
+on the Sage trac server (see <a class="reference internal" href="trac.html#chapter-sage-trac"><em>The Sage Trac Server</em></a>) so it can be
 refereed.  Do not post the spkg itself to the trac server: you only
 need to provide a link to your spkg.  If your spkg gets a positive
 review, it might be included into the core Sage library, or it might

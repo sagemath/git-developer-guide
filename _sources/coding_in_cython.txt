@@ -136,6 +136,7 @@ about distutils, etc., is to create a file with the extension
    (this will fail if you do not have a C compiler installed).
 
    .. skip
+
    ::
 
        sage: load "power2.spyx"
@@ -148,6 +149,7 @@ will be recompiled on the fly. You can also attach ``power2.spyx`` so
 it is reloaded whenever you make changes:
 
 .. skip
+
 ::
 
     sage: attach "power2.spyx"
@@ -156,6 +158,7 @@ Cython is used for its speed. Here is a timed test on a 2.6 GHz
 Opteron:
 
 .. skip
+
 ::
 
     sage: %time [n for n in range(10^5) if is2pow(n)]
@@ -168,6 +171,7 @@ copy this to a file ``powerslow.py`` and load that, we get the
 following:
 
 .. skip
+
 ::
 
     sage: load "powerslow.py"
@@ -192,6 +196,7 @@ optimizes for speed, Cython normally does not check for interrupts.
 For example, code like the following cannot be interrupted:
 
 .. skip
+
 ::
 
     sage: cython('while True: pass')  # DON'T DO THIS

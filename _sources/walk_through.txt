@@ -39,6 +39,7 @@ to checkout a ticktet you can either run::
 in a terminal or, equivalently, within Sage
 
 .. skip   # don't actually doctest
+
 ::
 
     sage: dev.checkout(1729)
@@ -60,12 +61,12 @@ plain number, without the number sign in front.
     outdated. If this is the case, i.e., if ``sage -dev`` does not
     work properly anymore, run::
 
-        git pull git://trac.sagemath.org/sage.git public/sage-git/master
+        git pull git://trac.sagemath.org/sage.git master
         sage -b
 
     This will merge the latest version of the developer scripts
     with your current branch. After rebuilding the Sage library,
-    the dev scripts should work again.
+    the dev scripts will work again.
 
 
 .. _section-walkthrough-add:
