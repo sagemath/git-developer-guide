@@ -29,6 +29,8 @@ Writing Code for Sage
    coding_in_python
    coding_in_cython
    coding_in_other
+   packaging
+   packaging_old_spkgs
    doctesting
    sage_manuals
 
@@ -54,18 +56,6 @@ Sage Notebook Developer Guide
 
    sagenb/index
 
-
-To be deleted
-=============
-
-Old Developer Guide (Mercurial-based)
-
-.. toctree::
-   :maxdepth: 3
-
-   walk_through_old
-   writing_code_old
-   disseminating_code_old
 
 Indices and tables
 ==================

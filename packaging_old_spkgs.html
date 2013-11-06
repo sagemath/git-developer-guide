@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Producing New Sage Packages &mdash; Sage Developer&#39;s Guide v1.0</title>
+    <title>Packaging Old-Style SPKGs &mdash; Sage Developer&#39;s Guide v1.0</title>
     
     <link rel="stylesheet" href="_static/sage.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,6 +27,8 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="index.html" />
+    <link rel="next" title="Doctesting the Sage Library" href="doctesting.html" />
+    <link rel="prev" title="Packaging Third-Party Code" href="packaging.html" />
     <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
 
   </head>
@@ -37,6 +39,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="doctesting.html" title="Doctesting the Sage Library"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="packaging.html" title="Packaging Third-Party Code"
+             accesskey="P">previous</a> |</li>
   
     
       <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>
@@ -53,8 +61,13 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="producing-new-sage-packages">
-<span id="chapter-spkg"></span><h1>Producing New Sage Packages<a class="headerlink" href="#producing-new-sage-packages" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="packaging-old-style-spkgs">
+<span id="chapter-old-spkg"></span><h1>Packaging Old-Style SPKGs<a class="headerlink" href="#packaging-old-style-spkgs" title="Permalink to this headline">¶</a></h1>
+<p>This chapter explains old-style spkgs; It applies only to legacy
+optional spkgs and experimental spkgs. See <a class="reference internal" href="packaging.html#chapter-packaging"><em>Packaging Third-Party Code</em></a>
+for the modern way of packaging third-party software.</p>
+<div class="section" id="creating-an-old-style-spkg">
+<h2>Creating an Old-Style SPKG<a class="headerlink" href="#creating-an-old-style-spkg" title="Permalink to this headline">¶</a></h2>
 <p>If you are producing code to add new functionality to Sage, you might
 consider turning it into a package (an &#8220;spkg&#8221;) instead of a patch
 file. If your code is very large (for instance) and should be offered
@@ -62,14 +75,6 @@ as an optional download, a package is the right choice. Similarly, if
 your code depends on some other optional component of Sage, you should
 produce a package. When in doubt, ask for advice on the <tt class="docutils literal"><span class="pre">sage-devel</span></tt>
 mailing list.</p>
-<p>This chapter covers issues relevant to producing a package. The
-directory structure of a package is discussed along with scripts for
-installing a package and running the test suite (if any) contained in
-an upstream project&#8217;s source distribution. For guidelines on patching
-an existing Sage package, see the chapter
-<a class="reference internal" href="patching_spkgs.html#chapter-patching-spkgs"><em>Patching a Sage Package</em></a>.</p>
-<div class="section" id="creating-a-new-spkg">
-<h2>Creating a new spkg<a class="headerlink" href="#creating-a-new-spkg" title="Permalink to this headline">¶</a></h2>
 <p>The abbreviation &#8220;spkg&#8221; stands for &#8220;Sage package&#8221;. The directory
 <tt class="docutils literal"><span class="pre">SAGE_ROOT/spkg/standard</span></tt> contains spkg&#8217;s. In a source install,
 these are all Sage spkg files (actually <tt class="docutils literal"><span class="pre">.tar</span></tt> or <tt class="docutils literal"><span class="pre">.tar.bz2</span></tt>
@@ -81,18 +86,16 @@ to discourage confusion. Although Sage packages are packed using tar
 and/or bzip2, note that <tt class="docutils literal"><span class="pre">.spkg</span></tt> files contain control information
 (installation scripts and metadata) that are necessary for building
 and installing them.  When you compile Sage from a source distribution
-(or when you run <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-i</span> <span class="pre">&lt;pkg&gt;</span></tt> or <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-f</span> <span class="pre">&lt;pkg&gt;</span></tt>),
-the file <tt class="docutils literal"><span class="pre">SAGE_ROOT/spkg/bin/sage-spkg</span></tt> takes care of the unpacking,
-compilation, and installation of Sage packages for you. You can
-type</p>
+(or when you run <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-i</span> <span class="pre">&lt;pkg&gt;</span></tt> or <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">-f</span> <span class="pre">&lt;pkg&gt;</span></tt>), the file
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/bin/sage-spkg</span></tt> takes care of the unpacking,
+compilation, and installation of Sage packages for you. You can type:</p>
 <div class="highlight-python"><pre>tar -jxvf mypackage-version.spkg</pre>
 </div>
 <p>to extract an spkg and see what is inside.  If you want to create a
 new Sage package, it is recommended that you start by examining some
-existing spkg&#8217;s. In a source distribution of Sage, the standard spkg&#8217;s
-can be found under <tt class="docutils literal"><span class="pre">SAGE_ROOT/spkg/standard/</span></tt>. The URL
-<a class="reference external" href="http://www.sagemath.org/download-packages.html">http://www.sagemath.org/download-packages.html</a> lists standard spkg&#8217;s
-available for download.</p>
+existing spkg&#8217;s. The URL
+<a class="reference external" href="http://www.sagemath.org/download-packages.html">http://www.sagemath.org/download-packages.html</a> lists spkg&#8217;s available
+for download.</p>
 <div class="section" id="naming-your-spkg">
 <h3>Naming your spkg<a class="headerlink" href="#naming-your-spkg" title="Permalink to this headline">¶</a></h3>
 <p>Each Sage spkg has a name of the following form:</p>
@@ -102,24 +105,22 @@ available for download.</p>
 <p><tt class="docutils literal"><span class="pre">BASENAME</span></tt> is the name of the package; it may contain lower-case
 letters, numbers, and underscores, but no hyphens.  <tt class="docutils literal"><span class="pre">VERSION</span></tt> is the
 version number; it should start with a number and may contain numbers,
-letters, dots, and hyphens; it may end in a string of the form
-&#8220;pNUM&#8221;, where &#8220;NUM&#8221; is a non-negative integer.  If your spkg is a
-&#8220;vanilla&#8221; (unmodified) version of some piece of software, say version
-5.3 of &#8220;my-python-package&#8221;, then <tt class="docutils literal"><span class="pre">BASENAME</span></tt> would be
-&#8220;my_python_package&#8221; &#8211; note the change from hyphens to underscores,
-because <tt class="docutils literal"><span class="pre">BASENAME</span></tt> should not contain any hyphens &#8211; and <tt class="docutils literal"><span class="pre">VERSION</span></tt>
-would be &#8220;5.3&#8221;.  If you need to modify the software to use it with
-Sage (as described below and in the chapter
-<a class="reference internal" href="patching_spkgs.html#chapter-patching-spkgs"><em>Patching a Sage Package</em></a>), then <tt class="docutils literal"><span class="pre">VERSION</span></tt> would be &#8220;5.3.p0&#8221;,
-the &#8220;p0&#8221; indicating a patch-level of 0.  If someone adds more patches,
-later, this would become &#8220;p1&#8221;, then &#8220;p2&#8221;, etc.</p>
+letters, dots, and hyphens; it may end in a string of the form &#8220;pNUM&#8221;,
+where &#8220;NUM&#8221; is a non-negative integer.  If your spkg is a &#8220;vanilla&#8221;
+(unmodified) version of some piece of software, say version 5.3 of
+&#8220;my-python-package&#8221;, then <tt class="docutils literal"><span class="pre">BASENAME</span></tt> would be &#8220;my_python_package&#8221; &#8211;
+note the change from hyphens to underscores, because <tt class="docutils literal"><span class="pre">BASENAME</span></tt>
+should not contain any hyphens &#8211; and <tt class="docutils literal"><span class="pre">VERSION</span></tt> would be &#8220;5.3&#8221;.  If
+you need to modify the software to use it with Sage (as described
+below and in the chapter <a class="reference internal" href="#section-old-spkg-patching-overview"><em>Overview of patching SPKGs</em></a>),
+then <tt class="docutils literal"><span class="pre">VERSION</span></tt> would be &#8220;5.3.p0&#8221;, the &#8220;p0&#8221; indicating a patch-level
+of 0.  If someone adds more patches, later, this would become &#8220;p1&#8221;,
+then &#8220;p2&#8221;, etc.</p>
 <p>The string <tt class="docutils literal"><span class="pre">VERSION</span></tt> must be present.  If you are using a piece
-software with no obvious version number, use a date: you can see
-several such names among the standard Sage packages:
-<a class="reference external" href="http://www.sagemath.org/packages/standard/">http://www.sagemath.org/packages/standard/</a>.</p>
-<p>To give your spkg a name like this, create a directory called
-<tt class="docutils literal"><span class="pre">BASENAME-VERSION</span></tt> and put your files in that directory &#8211; the
-next section describes the directory structure.</p>
+software with no obvious version number, use a date. To give your spkg
+a name like this, create a directory called <tt class="docutils literal"><span class="pre">BASENAME-VERSION</span></tt> and
+put your files in that directory &#8211; the next section describes the
+directory structure.</p>
 </div>
 <div class="section" id="directory-structure">
 <h3>Directory structure<a class="headerlink" href="#directory-structure" title="Permalink to this headline">¶</a></h3>
@@ -139,42 +140,41 @@ instance. The directory <tt class="docutils literal"><span class="pre">src/</spa
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">.hg</span></tt>, <tt class="docutils literal"><span class="pre">.hgignore</span></tt>, and <tt class="docutils literal"><span class="pre">.hgtags</span></tt>: The Sage project uses
 Mercurial for its revision control system (see
-<a class="reference internal" href="producing_patches.html#chapter-mercurial"><em>Producing Patches with Mercurial</em></a>).  The hidden directory <tt class="docutils literal"><span class="pre">.hg</span></tt> is part
-of the standard Sage spkg layout.  It contains the Mercurial
-repository for all files not in the <tt class="docutils literal"><span class="pre">src/</span></tt> directory.
-To create this Mercurial repository from scratch, you should do</p>
+<a class="reference internal" href="producing_patches.html#chapter-mercurial"><em>Producing Patches with Mercurial</em></a>).  The hidden directory <tt class="docutils literal"><span class="pre">.hg</span></tt> is part of
+the standard Sage spkg layout.  It contains the Mercurial repository
+for all files not in the <tt class="docutils literal"><span class="pre">src/</span></tt> directory.  To create this
+Mercurial repository from scratch, you should do:</p>
 <div class="highlight-python"><pre>hg init</pre>
 </div>
-<p>The files <tt class="docutils literal"><span class="pre">.hgignore</span></tt> and <tt class="docutils literal"><span class="pre">.hgtags</span></tt> also belong to the
-Mercurial repository.  The file <tt class="docutils literal"><span class="pre">.hgtags</span></tt> is optional, and is
-frequently omitted.  You should make sure that the file
-<tt class="docutils literal"><span class="pre">.hgignore</span></tt> contains &#8220;src/&#8221;, since we are not tracking its
-content.  Indeed, frequently this file contains only a single line,</p>
+<p>The files <tt class="docutils literal"><span class="pre">.hgignore</span></tt> and <tt class="docutils literal"><span class="pre">.hgtags</span></tt> also belong to the Mercurial
+repository.  The file <tt class="docutils literal"><span class="pre">.hgtags</span></tt> is optional, and is frequently
+omitted.  You should make sure that the file <tt class="docutils literal"><span class="pre">.hgignore</span></tt> contains
+&#8220;src/&#8221;, since we are not tracking its content.  Indeed, frequently
+this file contains only a single line:</p>
 <div class="highlight-python"><pre>src/</pre>
 </div>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">spkg-install</span></tt>: this file contains the install script.
-See <a class="reference internal" href="#section-spkg-install"><em>The file spkg-install</em></a> for more information and a template.</p>
+<li><p class="first"><tt class="docutils literal"><span class="pre">spkg-install</span></tt>: this file contains the install script.  See
+<a class="reference internal" href="#section-old-spkg-install"><em>The file spkg-install</em></a> for more information and a template.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">SPKG.txt</span></tt>: this file describes the spkg in wiki format.  Each
-new revision needs an updated changelog entry or the spkg will
-get an automatic &#8220;needs work&#8221; at review time.  See
-<a class="reference internal" href="#section-spkg-txt"><em>The file SPKG.txt</em></a> for a template.</p>
+<li><p class="first"><tt class="docutils literal"><span class="pre">SPKG.txt</span></tt>: this file describes the spkg in wiki format.  Each new
+revision needs an updated changelog entry or the spkg will get an
+automatic &#8220;needs work&#8221; at review time.  See
+<a class="reference internal" href="#section-old-spkg-spkg-txt"><em>The file SPKG.txt</em></a> for a template.</p>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">spkg-check</span></tt>: this file runs the test suite.  This is somewhat
 optional since not all spkg&#8217;s have test suites. If possible, do
 create such a script since it helps isolate bugs in upstream
 packages.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">patches/</span></tt>: this directory contains patches to
-source files in <tt class="docutils literal"><span class="pre">src/</span></tt>.  See <a class="reference internal" href="patching_spkgs.html#chapter-patching-spkgs"><em>Patching a Sage Package</em></a>.
-Patches to files in <tt class="docutils literal"><span class="pre">src/</span></tt> should be applied in
-<tt class="docutils literal"><span class="pre">spkg-install</span></tt>, and all patches must be documented in
-<tt class="docutils literal"><span class="pre">SPKG.txt</span></tt>, i.e. what they do, if they are platform
-specific, if they should be pushed upstream, etc. To ensure that all
-patched versions of upstream source files under <tt class="docutils literal"><span class="pre">src/</span></tt> are under
-revision control, the whole directory <tt class="docutils literal"><span class="pre">patches/</span></tt> must be under
-revision control.</p>
+<li><p class="first"><tt class="docutils literal"><span class="pre">patches/</span></tt>: this directory contains patches to source files in
+<tt class="docutils literal"><span class="pre">src/</span></tt>.  See <a class="reference internal" href="#section-old-spkg-patching-overview"><em>Overview of patching SPKGs</em></a>.  Patches
+to files in <tt class="docutils literal"><span class="pre">src/</span></tt> should be applied in <tt class="docutils literal"><span class="pre">spkg-install</span></tt>, and all
+patches must be documented in <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt>, i.e. what they do, if
+they are platform specific, if they should be pushed upstream,
+etc. To ensure that all patched versions of upstream source files
+under <tt class="docutils literal"><span class="pre">src/</span></tt> are under revision control, the whole directory
+<tt class="docutils literal"><span class="pre">patches/</span></tt> must be under revision control.</p>
 </li>
 </ul>
 <p><strong>Never</strong> apply patches to upstream source files under <tt class="docutils literal"><span class="pre">src/</span></tt> and
@@ -190,12 +190,12 @@ But be sure to document this in the &#8220;Special Update/Build Instructions&#82
 section in <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt>!</p>
 </div>
 <div class="section" id="the-file-spkg-install">
-<span id="section-spkg-install"></span><h3>The file spkg-install<a class="headerlink" href="#the-file-spkg-install" title="Permalink to this headline">¶</a></h3>
+<span id="section-old-spkg-install"></span><h3>The file spkg-install<a class="headerlink" href="#the-file-spkg-install" title="Permalink to this headline">¶</a></h3>
 <p>The script <tt class="docutils literal"><span class="pre">spkg-install</span></tt> is run during installation of the Sage
 package. In this script, you may make the following assumptions:</p>
 <ul>
 <li><p class="first">The PATH has the locations of <tt class="docutils literal"><span class="pre">sage</span></tt> and <tt class="docutils literal"><span class="pre">python</span></tt> (from the Sage
-installation) at the front. Thus the command</p>
+installation) at the front. Thus the command:</p>
 <div class="highlight-python"><pre>python setup.py install</pre>
 </div>
 <p>will run the correct version of Python with everything set up
@@ -300,48 +300,20 @@ if there is an error), before installing (e.g. with <tt class="docutils literal"
 version with a non-working newer version of the spkg.</p>
 <p>When copying documentation to
 <tt class="docutils literal"><span class="pre">$SAGE_ROOT/local/share/doc/PACKAGE_NAME</span></tt>, it may be necessary to
-check that only the actual documentation files intended for the
-user are copied.  For example, if the documentation is built from
-<tt class="docutils literal"><span class="pre">.tex</span></tt> files, you may just need to copy the resulting pdf files,
-rather than copying the entire doc directory.  When generating
-documentation using Sphinx, copying the <tt class="docutils literal"><span class="pre">build/html</span></tt> directory
-generally will copy just the actual output intended for the user.</p>
+check that only the actual documentation files intended for the user
+are copied.  For example, if the documentation is built from <tt class="docutils literal"><span class="pre">.tex</span></tt>
+files, you may just need to copy the resulting pdf files, rather than
+copying the entire doc directory.  When generating documentation using
+Sphinx, copying the <tt class="docutils literal"><span class="pre">build/html</span></tt> directory generally will copy just
+the actual output intended for the user.</p>
 </div>
 <div class="section" id="the-file-spkg-txt">
-<span id="section-spkg-txt"></span><h3>The file SPKG.txt<a class="headerlink" href="#the-file-spkg-txt" title="Permalink to this headline">¶</a></h3>
-<p>The <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt> file should follow this pattern:</p>
-<div class="highlight-python"><pre>= name of spkg =
-
-== Description ==
-
-Describe the package here.
-
-== License ==
-
-Describe the package's license here.
-
-== SPKG Maintainers ==
-
-* Mary Smith
-* Bill Jones
-* Leonhard Euler
-
-== Upstream Contact ==
-
-Provide information for upstream contact.
-
-== Dependencies ==
-
-Put a bulleted list of dependencies here:
-
-* python
-* readline
-
-== Special Update/Build Instructions ==
-
-List patches that need to be applied and what they do
-
-== Changelog ==
+<span id="section-old-spkg-spkg-txt"></span><h3>The file SPKG.txt<a class="headerlink" href="#the-file-spkg-txt" title="Permalink to this headline">¶</a></h3>
+<p>The old-style <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt> file is the same as described in
+<a class="reference internal" href="packaging.html#section-spkg-spkg-txt"><em>The SPKG.txt File</em></a>, but with a hand-maintained changelog
+appended since the contents are not part of the Sage repository
+tree. It should follow the following pattern:</p>
+<div class="highlight-python"><pre>== Changelog ==
 
 Provide a changelog of the spkg here, where the entries have this format:
 
@@ -379,73 +351,16 @@ into the repository.</li>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<ul class="last">
-<li><p class="first">If your package is intended to be a standard Sage spkg, then you
-should make sure that any dependencies for your package are
-recorded in the makefile <tt class="docutils literal"><span class="pre">SAGE_ROOT/spkg/standard/deps</span></tt>.  Also
-add a line for your package to the script
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/spkg/install</span></tt>.  For example, the relevant line for
-the readline package is</p>
-<div class="highlight-python"><pre>READLINE=`newest_version readline`</pre>
-</div>
-</li>
-<li><p class="first">If your package is not a standard package and depends on another
-non-standard package, say <tt class="docutils literal"><span class="pre">fricas-1.0.9.spkg</span></tt>, then
-your package&#8217;s <tt class="docutils literal"><span class="pre">spkg-install</span></tt> script should check that the
-other package has been installed, with code like the following:</p>
-<div class="highlight-python"><pre>if [ ! -f "$SAGE_ROOT/spkg/installed/fricas-1.0.9" ]; then
-    echo &gt;&amp;2 "The fricas spkg, version 1.0.9 is required; please install it."
-    exit 1
-fi</pre>
-</div>
-<p>If you don&#8217;t care which version of the fricas spkg is installed,
-you could instead use</p>
-<div class="highlight-python"><pre>if ! ls -1 "$SAGE_ROOT/spkg/installed/" | grep '^fricas-.*' &gt; /dev/null ; then
-    echo &gt;&amp;2 "The fricas spkg is required; please install it."
-    exit 1
-fi</pre>
-</div>
-<p>(The regular expression matches the package name followed by a
-hyphen and then other characters; in particular, it was chosen so
-that it wouldn&#8217;t match a package like <tt class="docutils literal"><span class="pre">fricasaldor-1.0.9</span></tt> whose
-name also starts with &#8220;fricas&#8221;.)</p>
-<p>This could be made more sophisticated, for example testing which
-version of fricas is installed vs. which version is required,
-etc. You could, instead of or in addition to checking the
-existence of the appropriate file in
-<tt class="docutils literal"><span class="pre">$SAGE_ROOT/spkg/installed/</span></tt>, check for the required
-functionality somehow. For instance, the <tt class="docutils literal"><span class="pre">spkg-install</span></tt> script
-for the <tt class="docutils literal"><span class="pre">p_group_cohomology</span></tt> package checks whether
-<tt class="docutils literal"><span class="pre">database_gap</span></tt> is installed using the following:</p>
-<div class="highlight-python"><pre>SMALL_GROUPS=`echo "SmallGroup(13,1); quit;" | $SAGE_ROOT/sage -gap -b -T | grep "13"`
-if [ "$SMALL_GROUPS" = "" ]; then
-    echo "It seems that GAP's SmallGroups library is missing."
-    echo "One way to install it is by doing"
-    echo "    sage: install_package('database_gap')"
-    echo "in a Sage session."
-    exit 1
-fi</pre>
-</div>
-</li>
-<li><p class="first">If your package will be merged as a standard Sage spkg, then add
-license information for it to the file <tt class="docutils literal"><span class="pre">SAGE_ROOT/COPYING.txt</span></tt>.</p>
-</li>
-<li><p class="first"><em>Caveat</em>: Do not just copy to e.g. <tt class="docutils literal"><span class="pre">SAGE_ROOT/local/lib/gap*/</span></tt>
-since that will copy your package to the lib directory of the old
-version of GAP if GAP is upgraded.</p>
-</li>
-<li><p class="first">External Magma code goes in <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/ext/magma/user</span></tt>,
-so if you want to redistribute Magma code with Sage as a package
-that Magma-enabled users can use, that is where you would put
-it. You would also want to have relevant Python code to make the
-Magma code easily usable.</p>
-</li>
-</ul>
+<p class="last">External Magma code goes in <tt class="docutils literal"><span class="pre">SAGE_ROOT/src/ext/magma/user</span></tt>, so
+if you want to redistribute Magma code with Sage as a package that
+Magma-enabled users can use, that is where you would put it. You
+would also want to have relevant Python code to make the Magma
+code easily usable.</p>
 </div>
 </div>
 </div>
 <div class="section" id="avoiding-troubles">
-<span id="section-spkg-avoiding-troubles"></span><h2>Avoiding troubles<a class="headerlink" href="#avoiding-troubles" title="Permalink to this headline">¶</a></h2>
+<span id="section-old-spkg-avoiding-troubles"></span><h2>Avoiding troubles<a class="headerlink" href="#avoiding-troubles" title="Permalink to this headline">¶</a></h2>
 <p>This section contains some guidelines on what an spkg must never do to
 a Sage installation. You are encouraged to produce an spkg that is as
 self-contained as possible.</p>
@@ -457,6 +372,174 @@ other spkg &#8211; see above. You need to first test for the existence of the
 prerequisite spkg before installing an spkg that depends on it.</li>
 </ol>
 </div>
+<div class="section" id="overview-of-patching-spkgs">
+<span id="section-old-spkg-patching-overview"></span><h2>Overview of patching SPKGs<a class="headerlink" href="#overview-of-patching-spkgs" title="Permalink to this headline">¶</a></h2>
+<p>Make sure you are familiar with the structure and conventions relating
+to spkg&#8217;s; see the chapter <a class="reference internal" href="#chapter-old-spkg"><em>Packaging Old-Style SPKGs</em></a> for
+details. Patching an spkg involves patching the installation script of
+the spkg and/or patching the upstream source code contained in the
+spkg. Say you want to patch the Matplotlib package
+<tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p0</span></tt>. Note that &#8220;p0&#8221; denotes the patch level of the
+spkg, while &#8220;1.0.1&#8221; refers to the upstream version of Matplotlib as
+contained under <tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p0/src/</span></tt>. The installation script
+of that spkg is:</p>
+<div class="highlight-python"><pre>matplotlib-1.0.1.p0/spkg-install</pre>
+</div>
+<p>In general, a script with the name <tt class="docutils literal"><span class="pre">spkg-install</span></tt>  is an
+installation script for an spkg. To patch the installation script, use
+a text editor to edit that script. Then in the log file <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt>,
+provide a high-level description of your changes. Once you are
+satisfied with your changes in the installation script and the log
+file <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt>, use Mercurial to check in your changes and make
+sure to provide a meaningful commit message.</p>
+<p>The directory <tt class="docutils literal"><span class="pre">src/</span></tt> contains the source code provided by the
+upstream project. For example, the source code of Matplotlib 1.0.1 is
+contained under</p>
+<div class="highlight-python"><pre>matplotlib-1.0.1.p0/src/</pre>
+</div>
+<p>To patch the upstream source code, you should edit a copy of the
+relevant file &#8211; files in the <tt class="docutils literal"><span class="pre">src/</span></tt> directory should be untouched,
+&#8220;vanilla&#8221; versions of the source code.  For example, you might copy
+the entire <tt class="docutils literal"><span class="pre">src/</span></tt> directory:</p>
+<div class="highlight-python"><pre>$ pwd
+matplotlib-1.0.1.p0
+$ cp -pR src src-patched</pre>
+</div>
+<p>Then edit files in <tt class="docutils literal"><span class="pre">src-patched/</span></tt>.  Once you are satisfied with your
+changes, generate a unified diff between the original file and the
+edited one, and save it in <tt class="docutils literal"><span class="pre">patches/</span></tt>:</p>
+<div class="highlight-python"><pre>$ diff -u src/configure src-patched/configure &gt; patches/configure.patch</pre>
+</div>
+<p>Save the unified diff to a file with the same name as the source file
+you patched, but using the file extension &#8221;.patch&#8221;. Note that the
+directory <tt class="docutils literal"><span class="pre">src/</span></tt> should not be under revision control, whereas
+<tt class="docutils literal"><span class="pre">patches/</span></tt> must be under revision control. The Mercurial
+configuration file <tt class="docutils literal"><span class="pre">.hgignore</span></tt> should contain the following line:</p>
+<div class="highlight-python"><pre>src/</pre>
+</div>
+<p>Ensure that the installation script <tt class="docutils literal"><span class="pre">spkg-install</span></tt> contains code to
+apply the patches to the relevant files under <tt class="docutils literal"><span class="pre">src/</span></tt>. For example,
+the file</p>
+<div class="highlight-python"><pre>matplotlib-1.0.1.p0/patches/finance.py.patch</pre>
+</div>
+<p>is a patch for the file</p>
+<div class="highlight-python"><pre>matplotlib-1.0.1.p0/src/lib/matplotlib/finance.py</pre>
+</div>
+<p>The installation script <tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p0/spkg-install</span></tt> contains the
+following code to install the relevant patches:</p>
+<div class="highlight-python"><pre>cd src
+
+# Apply patches.  See SPKG.txt for information about what each patch
+# does.
+for patch in ../patches/*.patch; do
+    patch -p1 &lt;"$patch"
+    if [ $? -ne 0 ]; then
+        echo &gt;&amp;2 "Error applying '$patch'"
+        exit 1
+    fi
+done</pre>
+</div>
+<p>Of course, this could be modified if the order in which the patches
+are applied is important, or if some patches were platform-dependent.
+For example:</p>
+<div class="highlight-python"><pre>if [ "$UNAME" = "Darwin" ]; then
+    for patch in ../patches/darwin/*.patch; do
+        patch -p1 &lt;"$patch"
+        if [ $? -ne 0 ]; then
+            echo &gt;&amp;2 "Error applying '$patch'"
+            exit 1
+        fi
+    done
+fi</pre>
+</div>
+<p>(The environment variable <span class="target" id="index-0"></span><tt class="xref std std-envvar docutils literal"><span class="pre">UNAME</span></tt> is defined by the script
+<tt class="docutils literal"><span class="pre">sage-env</span></tt>, and is available when <tt class="docutils literal"><span class="pre">spkg-install</span></tt> is run.)</p>
+<p>Now provide a high-level explanation of your changes in <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt>.
+Note the format of <tt class="docutils literal"><span class="pre">SPKG.txt</span></tt> &#8211; see the chapter
+<a class="reference internal" href="#chapter-old-spkg"><em>Packaging Old-Style SPKGs</em></a> for details.  Once you are satisfied with your
+changes, use Mercurial to check in your changes with a meaningful
+commit message.  Then use the command <tt class="docutils literal"><span class="pre">hg</span> <span class="pre">tag</span></tt> to tag the tip with
+the new version number (using &#8220;p1&#8221; instead of &#8220;p0&#8221;: we have made
+changes, so we need to update the patch level):</p>
+<div class="highlight-python"><pre>$ hg tag matplotlib-1.0.1.p1</pre>
+</div>
+<p>Next, rename the directory <tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p0</span></tt> to
+<tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p1</span></tt> to match the new patch level.  To produce the
+actual spkg file, change to the parent directory of
+<tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p1</span></tt> and execute</p>
+<div class="highlight-python"><pre>$ /path/to/sage-x.y.z/sage --pkg matplotlib-1.0.1.p1
+Creating Sage package matplotlib-1.0.1.p1
+
+Created package matplotlib-1.0.1.p1.spkg.
+
+    NAME: matplotlib
+ VERSION: 1.0.1.p1
+    SIZE: 11.8M
+ HG REPO: Good
+SPKG.txt: Good</pre>
+</div>
+<p>Spkg files are either bzipped tar files or just plain tar files; the
+command <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">--pkg</span> <span class="pre">...</span></tt> produces the bzipped version.  If your spkg
+contains mostly binary files which will not compress well, you can use
+<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">--pkg_nc</span> <span class="pre">...</span></tt> to produce an uncompressed version, i.e., a
+plain tar file:</p>
+<div class="highlight-python"><pre>$ sage --pkg_nc matplotlib-1.0.1.p0/
+Creating Sage package matplotlib-1.0.1.p0/ with no compression
+
+Created package matplotlib-1.0.1.p0.spkg.
+
+    NAME: matplotlib
+ VERSION: 1.0.1.p0
+    SIZE: 32.8M
+ HG REPO: Good
+SPKG.txt: Good</pre>
+</div>
+<p>Note that this is almost three times the size of the compressed
+version, so we should use the compressed version!</p>
+<p>At this point, you might want to submit your patched spkg for review.
+So provide a URL to your spkg on the relevant trac ticket and/or in an
+email to the relevant mailing list. Usually, you should not upload
+your spkg itself to the relevant trac ticket &#8211; don&#8217;t post large
+binary files to the trac server.</p>
+</div>
+<div class="section" id="spkg-versioning">
+<h2>SPKG Versioning<a class="headerlink" href="#spkg-versioning" title="Permalink to this headline">¶</a></h2>
+<p>If you want to bump up the version of an spkg, you need to follow some
+naming conventions. Use the name and version number as given by the
+upstream project, e.g. <tt class="docutils literal"><span class="pre">matplotlib-1.0.1</span></tt>. If the upstream package is
+taken from some revision other than a stable version, you need to
+append the date at which the revision is made, e.g. the Singular
+package <tt class="docutils literal"><span class="pre">singular-3-1-0-4-20090818.p3.spkg</span></tt> is made with the
+revision as of 2009-08-18. If you start afresh from an upstream
+release without any patches to its source code, the resulting spkg
+need not have any patch-level labels (appending &#8221;.p0&#8221; is allowed, but
+is optional). For example, <tt class="docutils literal"><span class="pre">sagenb-0.6.spkg</span></tt>
+is taken from the upstream stable version <tt class="docutils literal"><span class="pre">sagenb-0.6</span></tt> without any
+patches applied to its source code. So you do not see any patch-level
+numbering such as <tt class="docutils literal"><span class="pre">.p0</span></tt> or <tt class="docutils literal"><span class="pre">.p1</span></tt>.</p>
+<p>Say you start with <tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p0</span></tt> and you want to replace
+Matplotlib 1.0.1 with version 1.0.2. This entails replacing the source
+code for Matplotlib 1.0.1 under <tt class="docutils literal"><span class="pre">matplotlib-1.0.1.p0/src/</span></tt> with the
+new source code. To start with, follow the naming conventions as
+described in the section <a class="reference internal" href="#section-old-spkg-patching-overview"><em>Overview of patching SPKGs</em></a>. If
+necessary, remove any obsolete patches and create any new ones,
+placing them in the <tt class="docutils literal"><span class="pre">patches/</span></tt> directory.  Modify the script
+<tt class="docutils literal"><span class="pre">spkg-install</span></tt> to take any changes to the patches into account; you
+might also have to deal with changes to how the new version of the
+source code builds. Then package your replacement spkg using the Sage
+command line options <tt class="docutils literal"><span class="pre">--pkg</span></tt> or <tt class="docutils literal"><span class="pre">--pkg_nc</span></tt> (or tar and bzip2).</p>
+<p>To install your replacement spkg, you use:</p>
+<div class="highlight-python"><pre>sage -f http://URL/to/package-x.y.z.spkg</pre>
+</div>
+<p>or:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sage</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">package</span><span class="o">-</span><span class="n">x</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">z</span><span class="o">.</span><span class="n">spkg</span>
+</pre></div>
+</div>
+<p>To compile Sage from source with the replacement (standard) spkg,
+untar a Sage source tarball, remove the existing spkg under
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/spkg/standard/</span></tt>. In its place, put your replacement
+spkg. Then execute <tt class="docutils literal"><span class="pre">make</span></tt> from <tt class="docutils literal"><span class="pre">SAGE_ROOT</span></tt>.</p>
+</div>
 </div>
 
 
@@ -467,8 +550,8 @@ prerequisite spkg before installing an spkg that depends on it.</li>
         <div class="sphinxsidebarwrapper">
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference internal" href="#">Producing New Sage Packages</a><ul>
-<li><a class="reference internal" href="#creating-a-new-spkg">Creating a new spkg</a><ul>
+<li><a class="reference internal" href="#">Packaging Old-Style SPKGs</a><ul>
+<li><a class="reference internal" href="#creating-an-old-style-spkg">Creating an Old-Style SPKG</a><ul>
 <li><a class="reference internal" href="#naming-your-spkg">Naming your spkg</a></li>
 <li><a class="reference internal" href="#directory-structure">Directory structure</a></li>
 <li><a class="reference internal" href="#the-file-spkg-install">The file spkg-install</a></li>
@@ -476,13 +559,21 @@ prerequisite spkg before installing an spkg that depends on it.</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#avoiding-troubles">Avoiding troubles</a></li>
+<li><a class="reference internal" href="#overview-of-patching-spkgs">Overview of patching SPKGs</a></li>
+<li><a class="reference internal" href="#spkg-versioning">SPKG Versioning</a></li>
 </ul>
 </li>
 </ul>
 
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="packaging.html"
+                                  title="previous chapter">Packaging Third-Party Code</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="doctesting.html"
+                                  title="next chapter">Doctesting the Sage Library</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="_sources/producing_spkgs.txt"
+              <li><a href="_sources/packaging_old_spkgs.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
@@ -512,6 +603,12 @@ prerequisite spkg before installing an spkg that depends on it.</li>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="doctesting.html" title="Doctesting the Sage Library"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="packaging.html" title="Packaging Third-Party Code"
+             >previous</a> |</li>
   
     
       <a href="../index.html"><img src="_static/sagelogo.png" style="vertical-align: middle" title="Sage Logo"></a>

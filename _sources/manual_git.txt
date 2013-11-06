@@ -286,6 +286,31 @@ conflicting edits is explained in the :ref:`section-git-conflict`
 section.
 
 
+.. _section-git-pull-master:
+
+Updating Master
+---------------
+
+The ``master`` branch can be updated just like any other
+branch. However, you should be take care to keep your local copy of
+the master branch identical to the trac master branch, since this is
+the current official Sage version. In particular, if you accidentally
+added commits to your local copy of the master then you need to delete
+those instead of merging them with the official master branch. One way
+to ensure that you are notified of potential problems is to use ``git
+pull --ff-only``, which will raise an error if a non-trivial merge
+would be required::
+
+    [user@localhost sage]$ git checkout master
+    [user@localhost sage]$ git pull --ff-only trac master
+
+If this pull fails, then something is wrong with the local copy of the
+master branch. To switch to the correct Sage master branch, use::
+
+    [user@localhost sage]$ git checkout master
+    [user@localhost sage]$ git reset --hard trac master
+
+
 .. _section-git-merge:
 
 Merging and Rebasing

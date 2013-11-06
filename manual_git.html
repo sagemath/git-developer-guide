@@ -297,6 +297,26 @@ source file is changed by more than one person. Reconciling these
 conflicting edits is explained in the <a class="reference internal" href="#section-git-conflict"><em>Conflict Resolution</em></a>
 section.</p>
 </div>
+<div class="section" id="updating-master">
+<span id="section-git-pull-master"></span><h3>Updating Master<a class="headerlink" href="#updating-master" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">master</span></tt> branch can be updated just like any other
+branch. However, you should be take care to keep your local copy of
+the master branch identical to the trac master branch, since this is
+the current official Sage version. In particular, if you accidentally
+added commits to your local copy of the master then you need to delete
+those instead of merging them with the official master branch. One way
+to ensure that you are notified of potential problems is to use <tt class="docutils literal"><span class="pre">git</span>
+<span class="pre">pull</span> <span class="pre">--ff-only</span></tt>, which will raise an error if a non-trivial merge
+would be required:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git checkout master
+[user@localhost sage]$ git pull --ff-only trac master</pre>
+</div>
+<p>If this pull fails, then something is wrong with the local copy of the
+master branch. To switch to the correct Sage master branch, use:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git checkout master
+[user@localhost sage]$ git reset --hard trac master</pre>
+</div>
+</div>
 </div>
 <div class="section" id="merging-and-rebasing">
 <span id="section-git-merge"></span><h2>Merging and Rebasing<a class="headerlink" href="#merging-and-rebasing" title="Permalink to this headline">¶</a></h2>
@@ -528,6 +548,7 @@ pane.</p>
 <li><a class="reference internal" href="#checking-out-tickets">Checking Out Tickets</a></li>
 <li><a class="reference internal" href="#pushing-your-changes-to-a-ticket">Pushing Your Changes to a Ticket</a></li>
 <li><a class="reference internal" href="#getting-changes">Getting Changes</a></li>
+<li><a class="reference internal" href="#updating-master">Updating Master</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#merging-and-rebasing">Merging and Rebasing</a></li>

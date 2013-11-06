@@ -164,42 +164,72 @@ your new and modified code with other Sage users around the globe.</p>
 <li class="toctree-l2"><a class="reference internal" href="coding_in_cython.html#unpickling-cython-code">Unpickling Cython Code</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="coding_in_other.html">Coding using external libraries and interfaces</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="coding_in_other.html">Using External Libraries and Interfaces</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#the-pari-c-library-interface">The PARI C library interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#gap">GAP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#libgap">LibGAP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#singular">Singular</a></li>
-<li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#singular-another-approach">Singular: Another approach</a></li>
-<li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#creating-a-new-pseudo-tty-interface">Creating a new pseudo-tty interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#singular-another-approach">Singular: Another Approach</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding_in_other.html#creating-a-new-pseudo-tty-interface">Creating a New Pseudo-TTY Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="packaging.html">Packaging Third-Party Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="packaging.html#inclusion-procedure-for-new-packages">Inclusion Procedure for New Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging.html#directory-structure">Directory Structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="packaging.html#install-script">Install Script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="packaging.html#self-tests">Self-Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="packaging.html#package-versioning">Package Versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="packaging.html#the-spkg-txt-file">The SPKG.txt File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="packaging.html#patching-sources">Patching Sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="packaging.html#modified-tarballs">Modified Tarballs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="packaging.html#checksums">Checksums</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packaging.html#testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging.html#license-information">License information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="packaging_old_spkgs.html">Packaging Old-Style SPKGs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="packaging_old_spkgs.html#creating-an-old-style-spkg">Creating an Old-Style SPKG</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="packaging_old_spkgs.html#naming-your-spkg">Naming your spkg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="packaging_old_spkgs.html#directory-structure">Directory structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="packaging_old_spkgs.html#the-file-spkg-install">The file spkg-install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="packaging_old_spkgs.html#the-file-spkg-txt">The file SPKG.txt</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packaging_old_spkgs.html#avoiding-troubles">Avoiding troubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging_old_spkgs.html#overview-of-patching-spkgs">Overview of patching SPKGs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging_old_spkgs.html#spkg-versioning">SPKG Versioning</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="doctesting.html">Doctesting the Sage Library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="doctesting.html#testing-a-module">Testing a module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctesting.html#testing-a-module">Testing a Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doctesting.html#troubleshooting">Troubleshooting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doctesting.html#parallel-testing-many-modules">Parallel testing many modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doctesting.html#parallel-testing-the-whole-sage-library">Parallel testing the whole Sage library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="doctesting.html#beyond-the-sage-library">Beyond the Sage library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctesting.html#parallel-testing-many-modules">Parallel Testing Many Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctesting.html#parallel-testing-the-whole-sage-library">Parallel Testing the Whole Sage Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doctesting.html#beyond-the-sage-library">Beyond the Sage Library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doctesting.html#doctesting-from-within-sage">Doctesting from within Sage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doctesting.html#optional-arguments">Optional Arguments</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="doctesting.html#run-long-tests">Run long tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doctesting.html#run-optional-tests">Run optional tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doctesting.html#running-tests-in-parallel">Running tests in parallel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="doctesting.html#doctesting-all-of-sage">Doctesting all of Sage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="doctesting.html#debugging-tools">Debugging tools</a></li>
-<li class="toctree-l3"><a class="reference internal" href="doctesting.html#other-options">Other options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#debugging-tools">Debugging Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctesting.html#miscellaneous-options">Miscellaneous options</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sage_manuals.html">The Sage Manuals</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#editing-the-manuals">Editing the manuals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#linking-to-modules-classes-methods-trac-tickets-and-wikipedia">Linking to modules, classes, methods, ..., trac tickets and Wikipedia</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#adding-a-new-file">Adding a new file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#editing-the-manuals">Editing the Manuals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#hyperlinks">Hyperlinks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#adding-a-new-file">Adding a New File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#building-the-manuals">Building the manuals</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#document-names">Document names</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#output-formats">Output formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#output-formats">Output Formats</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#syntax-highlighting-cython-code">Syntax highlighting Cython code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html#syntax-highlighting-cython-code">Syntax Highlighting Cython Code</a></li>
 </ul>
 </li>
 </ul>
@@ -229,6 +259,7 @@ your new and modified code with other Sage users around the globe.</p>
 <li class="toctree-l3"><a class="reference internal" href="manual_git.html#checking-out-tickets">Checking Out Tickets</a></li>
 <li class="toctree-l3"><a class="reference internal" href="manual_git.html#pushing-your-changes-to-a-ticket">Pushing Your Changes to a Ticket</a></li>
 <li class="toctree-l3"><a class="reference internal" href="manual_git.html#getting-changes">Getting Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual_git.html#updating-master">Updating Master</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="manual_git.html#merging-and-rebasing">Merging and Rebasing</a></li>
@@ -286,127 +317,6 @@ your new and modified code with other Sage users around the globe.</p>
 </ul>
 </div>
 </div>
-<div class="section" id="to-be-deleted">
-<h2>To be deleted<a class="headerlink" href="#to-be-deleted" title="Permalink to this headline">¶</a></h2>
-<p>Old Developer Guide (Mercurial-based)</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="walk_through_old.html">Walking Through the Development Process</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#modifying-sage-source-code">Modifying Sage source code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#creating-a-sandbox">Creating a sandbox</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#reviewing-a-patch">Reviewing a patch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#creating-a-change">Creating a change</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#submitting-a-change">Submitting a change</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#updating-a-change">Updating a change</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#being-more-efficient-mercurial-queues">Being more efficient: Mercurial queues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#starting-with-mercurial-queues">Starting with Mercurial queues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#reviewing-patches-with-queues">Reviewing patches with queues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#creating-your-own-patch-with-queues">Creating your own patch with queues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#upgrading-sage-with-queues-present">Upgrading Sage with queues present</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#the-big-picture-for-mercurial-queues">The Big Picture for Mercurial queues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#more-on-queues">More on queues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#cherry-picking">Cherry picking</a></li>
-<li class="toctree-l2"><a class="reference internal" href="walk_through_old.html#more-about-mercurial">More about Mercurial</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="writing_code_old.html">Writing Code for Sage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="conventions.html">Conventions for Coding in Sage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="conventions.html#python-coding-conventions">Python coding conventions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conventions.html#file-and-directory-names">File and directory names</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conventions.html#an-example-is-worth-a-thousand-words">An example is worth a thousand words</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conventions.html#headings-of-sage-library-code-files">Headings of Sage library code files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conventions.html#documentation-strings">Documentation strings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conventions.html#automated-testing">Automated testing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conventions.html#the-pickle-jar">The pickle jar</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conventions.html#randomized-testing">Randomized testing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conventions.html#globaloptions">GlobalOptions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="coding_in_python.html">Coding in Python for Sage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#design">Design</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#special-sage-functions">Special Sage Functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#sage-preparsing">Sage Preparsing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#the-sage-coercion-model">The Sage Coercion Model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#mutability">Mutability</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#the-hash-special-method">The  __hash__ Special Method</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#exceptions">Exceptions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#importing">Importing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#deprecation">Deprecation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_python.html#using-optional-packages">Using optional packages</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="coding_in_cython.html">Coding in Cython</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#writing-cython-code-in-sage">Writing Cython Code in Sage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#special-pragmas">Special Pragmas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#attaching-or-loading-spyx-files">Attaching or Loading .spyx Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#interrupt-and-signal-handling">Interrupt and Signal Handling</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_cython.html#unpickling-cython-code">Unpickling Cython Code</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="coding_in_other.html">Coding using external libraries and interfaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_other.html#the-pari-c-library-interface">The PARI C library interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_other.html#gap">GAP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_other.html#singular">Singular</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_other.html#singular-another-approach">Singular: Another approach</a></li>
-<li class="toctree-l3"><a class="reference internal" href="coding_in_other.html#creating-a-new-pseudo-tty-interface">Creating a new pseudo-tty interface</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="doctesting.html">Doctesting the Sage Library</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="doctesting.html#testing-a-module">Testing a module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="doctesting.html#troubleshooting">Troubleshooting</a></li>
-<li class="toctree-l3"><a class="reference internal" href="doctesting.html#parallel-testing-many-modules">Parallel testing many modules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="doctesting.html#parallel-testing-the-whole-sage-library">Parallel testing the whole Sage library</a></li>
-<li class="toctree-l3"><a class="reference internal" href="doctesting.html#beyond-the-sage-library">Beyond the Sage library</a></li>
-<li class="toctree-l3"><a class="reference internal" href="doctesting.html#doctesting-from-within-sage">Doctesting from within Sage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="doctesting.html#optional-arguments">Optional Arguments</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="sage_manuals.html">The Sage Manuals</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#editing-the-manuals">Editing the manuals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#linking-to-modules-classes-methods-trac-tickets-and-wikipedia">Linking to modules, classes, methods, ..., trac tickets and Wikipedia</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#adding-a-new-file">Adding a new file</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#building-the-manuals">Building the manuals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sage_manuals.html#syntax-highlighting-cython-code">Syntax highlighting Cython code</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="disseminating_code_old.html">Disseminating Code for Sage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="inclusion.html">Inclusion Procedure for New Packages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="producing_patches.html">Producing Patches with Mercurial</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="producing_patches.html#quick-mercurial-tutorial-for-sage">Quick Mercurial tutorial for Sage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="producing_patches.html#using-mercurial-with-other-sage-repositories">Using Mercurial with other Sage repositories</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="producing_spkgs.html">Producing New Sage Packages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="producing_spkgs.html#creating-a-new-spkg">Creating a new spkg</a></li>
-<li class="toctree-l3"><a class="reference internal" href="producing_spkgs.html#avoiding-troubles">Avoiding troubles</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="patching_spkgs.html">Patching a Sage Package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="patching_spkgs.html#overview-of-patching-spkg-s">Overview of patching spkg&#8217;s</a></li>
-<li class="toctree-l3"><a class="reference internal" href="patching_spkgs.html#use-patch-for-patching">Use patch for patching</a></li>
-<li class="toctree-l3"><a class="reference internal" href="patching_spkgs.html#bumping-up-an-spkg-s-version">Bumping up an spkg&#8217;s version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="patching_spkgs.html#license-information">License information</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="trac_old.html">The Sage Trac Server: Submitting Patches and Packages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="trac_old.html#reporting-bugs">Reporting bugs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac_old.html#guidelines-for-opening-tickets">Guidelines for opening tickets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac_old.html#stopgaps">Stopgaps</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac_old.html#patching-bugs-working-on-tickets">Patching bugs/working on tickets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac_old.html#reviewing-patches">Reviewing patches</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac_old.html#closing-tickets">Closing tickets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac_old.html#reasons-to-invalidate-tickets">Reasons to invalidate tickets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac_old.html#milestones-vs-releases">Milestones vs. releases</a></li>
-<li class="toctree-l3"><a class="reference internal" href="trac_old.html#assigning-tickets">Assigning tickets</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
 <div class="section" id="indices-and-tables">
 <h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -435,9 +345,6 @@ your new and modified code with other Sage users around the globe.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#sage-notebook-developer-guide">Sage Notebook Developer Guide</a><ul>
-</ul>
-</li>
-<li><a class="reference internal" href="#to-be-deleted">To be deleted</a><ul>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>

@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Coding using external libraries and interfaces &mdash; Sage Developer&#39;s Guide v1.0</title>
+    <title>Using External Libraries and Interfaces &mdash; Sage Developer&#39;s Guide v1.0</title>
     
     <link rel="stylesheet" href="_static/sage.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,8 +27,7 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="index.html" />
-    <link rel="up" title="Writing Code for Sage" href="writing_code_old.html" />
-    <link rel="next" title="Doctesting the Sage Library" href="doctesting.html" />
+    <link rel="next" title="Packaging Third-Party Code" href="packaging.html" />
     <link rel="prev" title="Coding in Cython" href="coding_in_cython.html" />
     <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
 
@@ -41,7 +40,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="doctesting.html" title="Doctesting the Sage Library"
+          <a href="packaging.html" title="Packaging Third-Party Code"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="coding_in_cython.html" title="Coding in Cython"
@@ -53,8 +52,7 @@
   
   
         <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
-
-          <li><a href="writing_code_old.html" accesskey="U">Writing Code for Sage</a> &raquo;</li> 
+ 
       </ul>
     </div>  
 
@@ -63,14 +61,15 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="coding-using-external-libraries-and-interfaces">
-<span id="chapter-other"></span><h1>Coding using external libraries and interfaces<a class="headerlink" href="#coding-using-external-libraries-and-interfaces" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="using-external-libraries-and-interfaces">
+<span id="chapter-other"></span><h1>Using External Libraries and Interfaces<a class="headerlink" href="#using-external-libraries-and-interfaces" title="Permalink to this headline">¶</a></h1>
 <p>When writing code for Sage, use Python for the basic structure and
 interface. For speed, efficiency, or convenience, you can implement
 parts of the code using any of the following languages: <a class="reference internal" href="coding_in_cython.html#chapter-cython"><em>Cython</em></a>, C/C++, Fortran 95, GAP, Common Lisp, Singular, and
 PARI/GP. You can also use all C/C++ libraries included with Sage
-<a class="footnote-reference" href="#id2" id="id1">[3]</a>. (And if you are okay with your code depending on optional Sage
-packages, you can use Octave, or even Magma, Mathematica, or Maple.)</p>
+<a class="reference internal" href="#sagecomponents">[SageComponents]</a>. And if you are okay with your code depending on
+optional Sage packages, you can use Octave, or even Magma,
+Mathematica, or Maple.</p>
 <p>In this chapter, we discuss interfaces between Sage and <a class="reference internal" href="#section-pari-library"><em>PARI</em></a>, <a class="reference internal" href="#section-gap"><em>GAP</em></a> and
 <a class="reference internal" href="#section-singular"><em>Singular</em></a>.</p>
 <div class="section" id="the-pari-c-library-interface">
@@ -211,9 +210,7 @@ gap&gt; R:= RootSystem( L );
 &lt;root system of rank 2&gt;
 gap&gt; CartanMatrix( R );</pre>
 </div>
-<p>(Incidentally, most of the GAP Lie algebra implementation was written
-by Thomas Breuer, Willem de Graaf and Craig Struble.)</p>
-<p>In Sage, one can access these commands by typing</p>
+<p>In Sage, one can access these commands by typing:</p>
 <div class="highlight-python"><pre>sage: L = gap.SimpleLieAlgebra('"G"', 2, 'Rationals'); L
 Algebra( Rationals, [ v.1, v.2, v.3, v.4, v.5, v.6, v.7, v.8, v.9, v.10,
   v.11, v.12, v.13, v.14 ] )
@@ -297,9 +294,30 @@ these tables, it probably would be best to have new Python objects
 for this.</li>
 </ul>
 </div>
+<div class="section" id="libgap">
+<span id="section-libgap"></span><h2>LibGAP<a class="headerlink" href="#libgap" title="Permalink to this headline">¶</a></h2>
+<p>The disadvantage of using other programs through interfaces is that
+there is a certain unavoidable latency (of the order of 10ms) involved
+in sending input and receiving the result. If you have to call
+functions in a tight loop this can be unacceptably slow. Calling into
+a shared library has much lower latency and furthermore avoids having
+to convert everything into a string in-between. This is why Sage
+includes a shared library version of the GAP kernel, available as
+<span class="math">\(libgap\)</span> in Sage. The libgap analogue of the first example in
+<a class="reference internal" href="#section-gap"><em>GAP</em></a> is:</p>
+<div class="highlight-python"><pre>sage: SimpleLieAlgebra = libgap.function_factory('SimpleLieAlgebra')
+sage: L = SimpleLieAlgebra('G', 2, QQ)
+sage: R = L.RootSystem();  R
+&lt;root system of rank 2&gt;
+sage: R.CartanMatrix()    # output is a GAP matrix
+[ [ 2, -1 ], [ -3, 2 ] ]
+sage: matrix(R.CartanMatrix())   # convert to Sage matrix
+[ 2 -1]
+[-3  2]</pre>
+</div>
+</div>
 <div class="section" id="singular">
 <span id="section-singular"></span><h2>Singular<a class="headerlink" href="#singular" title="Permalink to this headline">¶</a></h2>
-<p>(The first version of this chapter was written by David Joyner.)</p>
 <p>Using Singular functions from Sage is not much different conceptually
 from using GAP functions from Sage. As with GAP, this can range from
 easy to hard, depending on how much of the data structure of the
@@ -416,9 +434,9 @@ sage: singular.eval("def R=X3[1][5];")
 'def R=X3[1][5];'
 sage: singular.eval("setring R;")
 'setring R;'
-sage: L = singular.eval("POINTS;")</pre>
-</div>
-<div class="highlight-python"><pre>sage: print L
+sage: L = singular.eval("POINTS;")
+
+sage: print L
 [1]:
    [1]:
       0
@@ -545,10 +563,10 @@ sage: places_on_curve(f,F)
 </div>
 </div>
 <div class="section" id="singular-another-approach">
-<h2>Singular: Another approach<a class="headerlink" href="#singular-another-approach" title="Permalink to this headline">¶</a></h2>
+<h2>Singular: Another Approach<a class="headerlink" href="#singular-another-approach" title="Permalink to this headline">¶</a></h2>
 <p>There is also a more Python-like interface to Singular. Using this,
 the code is much simpler, as illustrated below. First, we demonstrate
-computing the places on a curve in a particular case.</p>
+computing the places on a curve in a particular case:</p>
 <div class="highlight-python"><pre>sage: singular.lib('brnoeth.lib')
 sage: R = singular.ring(5, '(x,y)', 'lp')
 sage: f = singular.new('y^2 - x^9 - x')
@@ -567,7 +585,7 @@ representation:</p>
 </div>
 <p>Next, we implement the general function (for brevity we omit the
 docstring, which is the same as above). Note that the <tt class="docutils literal"><span class="pre">point_parser</span></tt>
-function is not required.</p>
+function is not required:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">places_on_curve</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">F</span><span class="p">):</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">characteristic</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">F</span><span class="o">.</span><span class="n">degree</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -591,7 +609,7 @@ implemented in the Sage/Singular interface, whereas the code in the
 previous section used only the barest minimum of that interface.</p>
 </div>
 <div class="section" id="creating-a-new-pseudo-tty-interface">
-<h2>Creating a new pseudo-tty interface<a class="headerlink" href="#creating-a-new-pseudo-tty-interface" title="Permalink to this headline">¶</a></h2>
+<h2>Creating a New Pseudo-TTY Interface<a class="headerlink" href="#creating-a-new-pseudo-tty-interface" title="Permalink to this headline">¶</a></h2>
 <p>You can create Sage pseudo-tty interfaces that allow Sage to work with
 almost any command line program, and which do not require any
 modification or extensions to that program. They are also surprisingly
@@ -601,9 +619,9 @@ be non-blocking (asynchronous). A pseudo-tty Sage interface is
 asynchronous because it derives from the Sage class <tt class="docutils literal"><span class="pre">Expect</span></tt>, which
 handles the communication between Sage and the external process.</p>
 <p>For example, here is part of the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/interfaces/octave.py</span></tt>, which
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/interfaces/octave.py</span></tt>, which
 defines an interface between Sage and Octave, an open source program
-for doing numerical computations, among other things.</p>
+for doing numerical computations, among other things:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">expect</span> <span class="kn">import</span> <span class="n">Expect</span><span class="p">,</span> <span class="n">ExpectElement</span>
 
@@ -632,7 +650,7 @@ docstring, which we omit here (see the file for details). Next comes:</p>
                     <span class="n">eval_using_file_cutoff</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This uses the class <tt class="docutils literal"><span class="pre">Expect</span></tt> to set up the Octave interface.</p>
+<p>This uses the class <tt class="docutils literal"><span class="pre">Expect</span></tt> to set up the Octave interface:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set the variable var to the given value.</span>
@@ -656,7 +674,7 @@ docstring, which we omit here (see the file for details). Next comes:</p>
 </div>
 <p>These let users type <tt class="docutils literal"><span class="pre">octave.set('x',</span> <span class="pre">3)</span></tt>, after which
 <tt class="docutils literal"><span class="pre">octave.get('x')</span></tt> returns <tt class="docutils literal"><span class="pre">'</span> <span class="pre">3'</span></tt>. Running <tt class="docutils literal"><span class="pre">octave.console()</span></tt>
-dumps the user into an Octave interactive shell.</p>
+dumps the user into an Octave interactive shell:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">solve_linear_system</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Use octave to compute a solution x to A*x = b, as a list.</span>
@@ -702,12 +720,13 @@ dumps the user into an Octave interactive shell.</p>
 documented.</p>
 <p>These are only excerpts from <tt class="docutils literal"><span class="pre">octave.py</span></tt>; check that file for more
 definitions and examples. Look at other files in the directory
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/sage/interfaces/</span></tt> for examples of interfaces
-to other software packages.</p>
-<table class="docutils footnote" frame="void" id="id2" rules="none">
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/sage/interfaces/</span></tt> for examples of interfaces to other
+software packages.</p>
+<table class="docutils citation" frame="void" id="sagecomponents" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[3]</a></td><td>See <a class="reference external" href="http://www.sagemath.org/links-components.html">http://www.sagemath.org/links-components.html</a> for a list</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[SageComponents]</a></td><td>See <a class="reference external" href="http://www.sagemath.org/links-components.html">http://www.sagemath.org/links-components.html</a>
+for a list</td></tr>
 </tbody>
 </table>
 </div>
@@ -721,12 +740,13 @@ to other software packages.</p>
         <div class="sphinxsidebarwrapper">
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference internal" href="#">Coding using external libraries and interfaces</a><ul>
+<li><a class="reference internal" href="#">Using External Libraries and Interfaces</a><ul>
 <li><a class="reference internal" href="#the-pari-c-library-interface">The PARI C library interface</a></li>
 <li><a class="reference internal" href="#gap">GAP</a></li>
+<li><a class="reference internal" href="#libgap">LibGAP</a></li>
 <li><a class="reference internal" href="#singular">Singular</a></li>
-<li><a class="reference internal" href="#singular-another-approach">Singular: Another approach</a></li>
-<li><a class="reference internal" href="#creating-a-new-pseudo-tty-interface">Creating a new pseudo-tty interface</a></li>
+<li><a class="reference internal" href="#singular-another-approach">Singular: Another Approach</a></li>
+<li><a class="reference internal" href="#creating-a-new-pseudo-tty-interface">Creating a New Pseudo-TTY Interface</a></li>
 </ul>
 </li>
 </ul>
@@ -735,8 +755,8 @@ to other software packages.</p>
             <p class="topless"><a href="coding_in_cython.html"
                                   title="previous chapter">Coding in Cython</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="doctesting.html"
-                                  title="next chapter">Doctesting the Sage Library</a></p>
+            <p class="topless"><a href="packaging.html"
+                                  title="next chapter">Packaging Third-Party Code</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/coding_in_other.txt"
@@ -770,7 +790,7 @@ to other software packages.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="doctesting.html" title="Doctesting the Sage Library"
+          <a href="packaging.html" title="Packaging Third-Party Code"
              >next</a> |</li>
         <li class="right" >
           <a href="coding_in_cython.html" title="Coding in Cython"
@@ -782,8 +802,7 @@ to other software packages.</p>
   
   
         <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
-
-          <li><a href="writing_code_old.html" >Writing Code for Sage</a> &raquo;</li> 
+ 
       </ul>
     </div>
     

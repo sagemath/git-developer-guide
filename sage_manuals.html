@@ -27,8 +27,7 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="Sage Developer&#39;s Guide v1.0" href="index.html" />
-    <link rel="up" title="Writing Code for Sage" href="writing_code_old.html" />
-    <link rel="next" title="Disseminating Code for Sage" href="disseminating_code_old.html" />
+    <link rel="next" title="Git Background" href="git_background.html" />
     <link rel="prev" title="Doctesting the Sage Library" href="doctesting.html" />
     <link rel="icon" href="_static/sageicon.png" type="image/x-icon" />
 
@@ -41,7 +40,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="disseminating_code_old.html" title="Disseminating Code for Sage"
+          <a href="git_background.html" title="Git Background"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="doctesting.html" title="Doctesting the Sage Library"
@@ -53,8 +52,7 @@
   
   
         <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
-
-          <li><a href="writing_code_old.html" accesskey="U">Writing Code for Sage</a> &raquo;</li> 
+ 
       </ul>
     </div>  
 
@@ -71,50 +69,50 @@ them, you just need to edit the appropriate file. The documentation
 builder is called <a class="reference external" href="http://sphinx.pocoo.org">Sphinx</a>.</p>
 <p>Here is a list of the Sage manuals and the corresponding files to edit:</p>
 <ul class="simple">
-<li>The Sage tutorial: <tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/en/tutorial</span></tt></li>
+<li>The Sage tutorial: <tt class="docutils literal"><span class="pre">SAGE_ROOT/src/doc/en/tutorial</span></tt></li>
 <li>The Sage developer&#8217;s guide:
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/en/developer</span></tt></li>
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/doc/en/developer</span></tt></li>
 <li>Constructions in Sage:
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/en/constructions</span></tt></li>
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/doc/en/constructions</span></tt></li>
 <li>The Sage installation guide:
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/en/installation</span></tt></li>
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/doc/en/installation</span></tt></li>
 <li>The Sage reference manual: some of this is contained in the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/en/reference</span></tt>, but most of it is
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/doc/en/reference</span></tt>, but most of it is
 automatically generated from the Sage source code.</li>
 <li>Additional, more specialized  manuals can be found under
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/en</span></tt> as well.</li>
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/doc/en</span></tt> as well.</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You can edit manuals that have been translated into another language
 by replacing the <tt class="docutils literal"><span class="pre">en/</span></tt> above with the appropriate two letter
 language code.  For example, the French tutorial is located in
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/fr/tutorial</span></tt></p>
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/doc/fr/tutorial</span></tt></p>
 </div>
 <div class="section" id="editing-the-manuals">
-<h2>Editing the manuals<a class="headerlink" href="#editing-the-manuals" title="Permalink to this headline">¶</a></h2>
+<h2>Editing the Manuals<a class="headerlink" href="#editing-the-manuals" title="Permalink to this headline">¶</a></h2>
 <p>If, for example, you want to change the Sage tutorial, then you should
 start by modifying the files in
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/en/tutorial/</span></tt>. Then to build a PDF file
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/doc/en/tutorial/</span></tt>. Then to build a PDF file
 with your changes, type:</p>
 <div class="highlight-python"><pre>sage --docbuild tutorial pdf</pre>
 </div>
 <p>You will get a file <tt class="docutils literal"><span class="pre">tutorial.pdf</span></tt> in
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/output/pdf/en/tutorial</span></tt> which you should
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/doc/output/pdf/en/tutorial</span></tt> which you should
 inspect.  You can build the HTML version of the tutorial by typing:</p>
 <div class="highlight-python"><pre>sage --docbuild tutorial html</pre>
 </div>
 <p>Once you have done this, you can access the new HTML version from the
 notebook interface to Sage by clicking the <tt class="docutils literal"><span class="pre">Help</span></tt> link, or you can
 open the file
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/output/html/en/tutorial/index.html</span></tt> in
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/doc/output/html/en/tutorial/index.html</span></tt> in
 your web browser.  For more detailed information about building the
-documentation, see <a class="reference internal" href="#building"><em>Building the manuals</em></a>.</p>
+documentation, see <a class="reference internal" href="#section-building-manuals"><em>Building the manuals</em></a>.</p>
 <p>You should also run</p>
-<div class="highlight-python"><pre>sage -tp 1 SAGE_ROOT/devel/sage/doc/en/tutorial/</pre>
+<div class="highlight-python"><pre>sage -tp 1 SAGE_ROOT/src/doc/en/tutorial/</pre>
 </div>
 <p>to test all of the examples in the tutorial, see
-<a class="reference internal" href="conventions.html#chapter-testing"><em>Automated testing</em></a> for more details.</p>
+<a class="reference internal" href="coding_basics.html#chapter-testing"><em>Running automated tests</em></a> for more details.</p>
 <p>Finally, you might want to share your changes with the Sage
 community. To do this, use Mercurial (see <a class="reference internal" href="producing_patches.html#chapter-mercurial"><em>Producing Patches with Mercurial</em></a>) to
 produce patch files, and submit them to the Sage trac server.</p>
@@ -127,9 +125,11 @@ sage --docbuild reference &lt;format&gt;</pre>
 <tt class="docutils literal"><span class="pre">&lt;format&gt;</span></tt> is <tt class="docutils literal"><span class="pre">html</span></tt>, <tt class="docutils literal"><span class="pre">pdf</span></tt>, or any other supported format (as listed
 when you run <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">--docbuild</span> <span class="pre">--formats</span></tt>).</p>
 </div>
-<div class="section" id="linking-to-modules-classes-methods-trac-tickets-and-wikipedia">
-<span id="chapter-sage-manuals-links"></span><h2>Linking to modules, classes, methods, ..., trac tickets and Wikipedia<a class="headerlink" href="#linking-to-modules-classes-methods-trac-tickets-and-wikipedia" title="Permalink to this headline">¶</a></h2>
-<p>For full documentation, refer to <a class="reference external" href="http://sphinx.pocoo.org/markup/inline.html">inline markup</a> in the Sphinx
+<div class="section" id="hyperlinks">
+<span id="chapter-sage-manuals-links"></span><h2>Hyperlinks<a class="headerlink" href="#hyperlinks" title="Permalink to this headline">¶</a></h2>
+<p>You can link to doctstings of modules, classes, methods. In addition,
+you can link web pages like trac tickets and Wikipedia. For full
+documentation, refer to <a class="reference external" href="http://sphinx.pocoo.org/markup/inline.html">inline markup</a> in the Sphinx
 documentation. Currently, there is no support for defining chapters
 and labels in the autogenerated documentation. However, it is possible
 to generate a link to the documentation for any module, class, method,
@@ -150,20 +150,20 @@ etc.) which carries the documentation to be linked to;</li>
 </ul>
 <p>If you do not provide any title then target will be used. For example,
 to link to the <tt class="docutils literal"><span class="pre">dyck_word</span></tt> module, you would use
-<tt class="docutils literal"><span class="pre">:mod:`sage.combinat.dyck_word`</span></tt> or if you prefer
-<tt class="docutils literal"><span class="pre">:mod:`Dyck</span> <span class="pre">words&lt;sage.combinat.dyck_word&gt;`</span></tt>. Note that, in the
-first case, the full qualified Python address is used which is usually
-too long. You can prefix it with a <tt class="docutils literal"><span class="pre">&quot;~&quot;</span></tt> to get only the final
-name. For example, in the huge link</p>
+<tt class="docutils literal"><span class="pre">:mod:`sage.combinat.dyck_word`</span></tt> or if you prefer <tt class="docutils literal"><span class="pre">:mod:`Dyck</span>
+<span class="pre">words&lt;sage.combinat.dyck_word&gt;`</span></tt>. Note that, in the first case, the
+full qualified Python address is used which is usually too long. You
+can prefix it with a <tt class="docutils literal"><span class="pre">&quot;~&quot;</span></tt> to get only the final name. For example,
+in the huge link:</p>
 <div class="highlight-python"><pre>:meth:`~sage.combinat.non_decreasing_parking_function.NonDecreasingParkingFunction.to_dyck_word`</pre>
 </div>
 <p>only <tt class="docutils literal"><span class="pre">&quot;.to_dyck_word()&quot;</span></tt> will appear. Note that the parentheses in
 the link are autogenerated.</p>
-<p>Local names are handled. That is, for example, in the
-definition of a class (and any of its members or methods), you can
-link to any member or method of the same class by simply giving the
-name of it prepended by a dot <tt class="docutils literal"><span class="pre">&quot;.&quot;</span></tt>. You do not need to give its
-full address. For example:</p>
+<p>Local names are handled. That is, for example, in the definition of a
+class (and any of its members or methods), you can link to any member
+or method of the same class by simply giving the name of it prepended
+by a dot <tt class="docutils literal"><span class="pre">&quot;.&quot;</span></tt>. You do not need to give its full address. For
+example:</p>
 <div class="highlight-python"><pre>:meth:`.to_dyck_word`</pre>
 </div>
 <p>sets up a link to the <tt class="docutils literal"><span class="pre">.to_dyck_word()</span></tt> method of the current class
@@ -174,16 +174,17 @@ name cannot be found, the title is typeset in boldface without any
 link produced and also without any error or warning. Note that without
 the prepended dot, the object is searched starting from the top-level
 to the innermost module or class.</p>
-<p>You can also link, without giving the full path, to objects imported in a
-local module or imported by default in Sage. For example, the two following
-are equivalent, as <tt class="xref py py-class docutils literal"><span class="pre">Parent</span></tt> is imported by default in Sage (using the
-<tt class="docutils literal"><span class="pre">all.py</span></tt> files):</p>
+<p>You can also link, without giving the full path, to objects imported
+in a local module or imported by default in Sage. For example, the two
+following are equivalent, as <tt class="xref py py-class docutils literal"><span class="pre">Parent</span></tt> is imported by default in
+Sage (using the <tt class="docutils literal"><span class="pre">all.py</span></tt> files):</p>
 <div class="highlight-python"><pre>:class:`Parent`
 :class:`~sage.structure.parent.Parent`</pre>
 </div>
-<p>Sage adds a special role to link to trac ticket. The code <tt class="docutils literal"><span class="pre">:trac:`12490`</span></tt>
-link to the <a class="reference external" href="http://trac.sagemath.org/12490">trac ticket #12490</a>. When fixing a bug, you should add the link to the
-corresponding trac ticket in the <tt class="docutils literal"><span class="pre">TEST</span></tt> section. Here is an example:</p>
+<p>Sage adds a special role to link to trac ticket. The code
+<tt class="docutils literal"><span class="pre">:trac:`12490`</span></tt> link to the <a class="reference external" href="http://trac.sagemath.org/12490">trac ticket #12490</a>. When fixing a bug, you
+should add the link to the corresponding trac ticket in the <tt class="docutils literal"><span class="pre">TEST</span></tt>
+section. Here is an example:</p>
 <div class="highlight-python"><pre>TEST:
 
 We check for :trac:`5534`::
@@ -194,37 +195,43 @@ We check for :trac:`5534`::
 </div>
 <p>In the same vein, you can also add external links of various kinds:</p>
 <ul class="simple">
-<li>Wikipedia: <tt class="docutils literal"><span class="pre">:wikipedia:`Sage_(mathematics_software)`</span></tt> adds the link <a class="reference external" href="http://en.wikipedia.org/wiki/Sage_(mathematics_software)">Wikipedia article Sage_(mathematics_software)</a>.</li>
+<li>Wikipedia: <tt class="docutils literal"><span class="pre">:wikipedia:`Sage_(mathematics_software)`</span></tt> adds the
+link <a class="reference external" href="http://en.wikipedia.org/wiki/Sage_(mathematics_software)">Wikipedia article Sage_(mathematics_software)</a>.</li>
 <li>Arxiv: <tt class="docutils literal"><span class="pre">:arxiv:`1202.1506`</span></tt> adds the link <a class="reference external" href="http://arxiv.org/abs/1202.1506">Arxiv 1202.1506</a>.</li>
-<li>On-Line Encyclopedia of Integer Sequences: <tt class="docutils literal"><span class="pre">:oeis:`A000081`</span></tt> adds the link <a class="reference external" href="http://oeis.org/A000081">OEIS sequence A000081</a>.</li>
-<li>Digital Object Identifier: <tt class="docutils literal"><span class="pre">:doi:`10.2752/175303708X390473`</span></tt> adds the link <a class="reference external" href="http://dx.doi.org/10.2752/175303708X390473">doi:10.2752/175303708X390473</a>.</li>
-<li>MathSciNet: <tt class="docutils literal"><span class="pre">:mathscinet:`MR0100971`</span></tt> adds the link <a class="reference external" href="http://www.ams.org/mathscinet-getitem?mr=MR0100971">MathSciNet MR0100971</a>.</li>
+<li>On-Line Encyclopedia of Integer Sequences: <tt class="docutils literal"><span class="pre">:oeis:`A000081`</span></tt> adds
+the link <a class="reference external" href="http://oeis.org/A000081">OEIS sequence A000081</a>.</li>
+<li>Digital Object Identifier: <tt class="docutils literal"><span class="pre">:doi:`10.2752/175303708X390473`</span></tt> adds
+the link <a class="reference external" href="http://dx.doi.org/10.2752/175303708X390473">doi:10.2752/175303708X390473</a>.</li>
+<li>MathSciNet: <tt class="docutils literal"><span class="pre">:mathscinet:`MR0100971`</span></tt> adds the link
+<a class="reference external" href="http://www.ams.org/mathscinet-getitem?mr=MR0100971">MathSciNet MR0100971</a>.</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>Finally, you can check that all links are properly resolved by adding the
-argument <tt class="docutils literal"><span class="pre">--warn-links</span></tt> to the documentation build command as in:</p>
+<p>Finally, you can check that all links are properly resolved by
+adding the argument <tt class="docutils literal"><span class="pre">--warn-links</span></tt> to the documentation build
+command as in:</p>
 <div class="highlight-python"><pre>sage -docbuild --warn-links reference html</pre>
 </div>
-<p class="last">In this case, when a link is not resolved Sphinx will issue a warning.</p>
+<p class="last">In this case, when a link is not resolved Sphinx will issue a
+warning.</p>
 </div>
 </div>
 <div class="section" id="adding-a-new-file">
-<h2>Adding a new file<a class="headerlink" href="#adding-a-new-file" title="Permalink to this headline">¶</a></h2>
-<p>If you write a new file, say, <tt class="docutils literal"><span class="pre">sage/combinat/family.py</span></tt>, and you want
-your documentation to be added to the standard documentation, you have
-to add your file to the relevant <tt class="docutils literal"><span class="pre">index.rst</span></tt> file usually located in
-the tree:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">SAGE_ROOT</span><span class="o">/</span><span class="n">devel</span><span class="o">/</span><span class="n">sage</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">reference</span>
+<h2>Adding a New File<a class="headerlink" href="#adding-a-new-file" title="Permalink to this headline">¶</a></h2>
+<p>If you write a new file, say, <tt class="docutils literal"><span class="pre">sage/combinat/family.py</span></tt>, and you
+want your documentation to be added to the standard documentation, you
+have to add your file to the relevant <tt class="docutils literal"><span class="pre">index.rst</span></tt> file usually
+located in the tree:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SAGE_ROOT</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">reference</span>
 </pre></div>
 </div>
-<p>For this example, you would need to add to the file</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">SAGE_ROOT</span><span class="o">/</span><span class="n">devel</span><span class="o">/</span><span class="n">sage</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">reference</span><span class="o">/</span><span class="n">combinat</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">rst</span>
+<p>For this example, you would need to add to the file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SAGE_ROOT</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">reference</span><span class="o">/</span><span class="n">combinat</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">rst</span>
 </pre></div>
 </div>
-<p>the following line</p>
+<p>the following line:</p>
 <div class="highlight-python"><pre> Combinatorics
- ============
+ =============
 
  .. toctree::
     :maxdepth: 2
@@ -238,20 +245,19 @@ the tree:</p>
 </div>
 </div>
 <div class="section" id="building-the-manuals">
-<span id="building"></span><h2>Building the manuals<a class="headerlink" href="#building-the-manuals" title="Permalink to this headline">¶</a></h2>
+<span id="section-building-manuals"></span><h2>Building the manuals<a class="headerlink" href="#building-the-manuals" title="Permalink to this headline">¶</a></h2>
 <p>All of the Sage manuals are built using the <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">--docbuild</span></tt>
 script.  The content of the <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">--docbuild</span></tt> script is defined in
-<tt class="docutils literal"><span class="pre">SAGE_ROOT/devel/sage/doc/common/builder.py</span></tt>.  It is a thin wrapper
-around the <tt class="docutils literal"><span class="pre">sphinx-build</span></tt> script which does all of the real work.
-It is designed to be a replacement for the default Makefiles generated
-by the <tt class="docutils literal"><span class="pre">sphinx-quickstart</span></tt> script.  The general form of the command
-is</p>
+<tt class="docutils literal"><span class="pre">SAGE_ROOT/src/doc/common/builder.py</span></tt>.  It is a thin wrapper around
+the <tt class="docutils literal"><span class="pre">sphinx-build</span></tt> script which does all of the real work.  It is
+designed to be a replacement for the default Makefiles generated by
+the <tt class="docutils literal"><span class="pre">sphinx-quickstart</span></tt> script.  The general form of the command
+is:</p>
 <div class="highlight-python"><pre>sage --docbuild &lt;document-name&gt; &lt;format&gt;</pre>
 </div>
-<p>as explained below.</p>
-<p>For more information, there are two help
-commands which give plenty of documentation for the
-<tt class="docutils literal"><span class="pre">sage</span> <span class="pre">--docbuild</span></tt> script:</p>
+<p>as explained below. For more information, there are two help commands
+which give plenty of documentation for the <tt class="docutils literal"><span class="pre">sage</span> <span class="pre">--docbuild</span></tt>
+script:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">sage</span> <span class="o">--</span><span class="n">docbuild</span> <span class="o">--</span><span class="n">help</span>
 </pre></div>
 </div>
@@ -263,7 +269,7 @@ help commands, while:</p>
 <p>(or <tt class="docutils literal"><span class="pre">-H</span></tt>) shows a somewhat more comprehensive help message.</p>
 <div class="section" id="document-names">
 <h3>Document names<a class="headerlink" href="#document-names" title="Permalink to this headline">¶</a></h3>
-<p>The <tt class="docutils literal"><span class="pre">&lt;document-name&gt;</span></tt> has the form</p>
+<p>The <tt class="docutils literal"><span class="pre">&lt;document-name&gt;</span></tt> has the form:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">lang</span><span class="o">/</span><span class="n">name</span>
 </pre></div>
 </div>
@@ -279,15 +285,15 @@ sage --docbuild en/tutorial html</pre>
 </div>
 </div>
 <div class="section" id="output-formats">
-<h3>Output formats<a class="headerlink" href="#output-formats" title="Permalink to this headline">¶</a></h3>
+<h3>Output Formats<a class="headerlink" href="#output-formats" title="Permalink to this headline">¶</a></h3>
 <p>The Sage documentation build system currently supports all of the
-output formats that Sphinx does.</p>
-<p>For more detailed information, see the documentation on builders at
-<a class="reference external" href="http://sphinx.pocoo.org/builders.html">http://sphinx.pocoo.org/builders.html</a> .</p>
+output formats that Sphinx does. For more detailed information, see
+the documentation on builders at <a class="reference external" href="http://sphinx.pocoo.org/builders.html">http://sphinx.pocoo.org/builders.html</a>
+.</p>
 </div>
 </div>
 <div class="section" id="syntax-highlighting-cython-code">
-<h2>Syntax highlighting Cython code<a class="headerlink" href="#syntax-highlighting-cython-code" title="Permalink to this headline">¶</a></h2>
+<h2>Syntax Highlighting Cython Code<a class="headerlink" href="#syntax-highlighting-cython-code" title="Permalink to this headline">¶</a></h2>
 <p>If you need to put <a class="reference internal" href="coding_in_cython.html#chapter-cython"><em>Cython</em></a> code in a ReST file,
 you can either precede the code block by <tt class="docutils literal"><span class="pre">..</span> <span class="pre">code-block::</span> <span class="pre">cython</span></tt> instead
 of the usual <tt class="docutils literal"><span class="pre">::</span></tt> if you want to highlight one block of code in Cython,
@@ -314,15 +320,15 @@ or you can use <tt class="docutils literal"><span class="pre">..</span> <span cl
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference internal" href="#">The Sage Manuals</a><ul>
-<li><a class="reference internal" href="#editing-the-manuals">Editing the manuals</a></li>
-<li><a class="reference internal" href="#linking-to-modules-classes-methods-trac-tickets-and-wikipedia">Linking to modules, classes, methods, ..., trac tickets and Wikipedia</a></li>
-<li><a class="reference internal" href="#adding-a-new-file">Adding a new file</a></li>
+<li><a class="reference internal" href="#editing-the-manuals">Editing the Manuals</a></li>
+<li><a class="reference internal" href="#hyperlinks">Hyperlinks</a></li>
+<li><a class="reference internal" href="#adding-a-new-file">Adding a New File</a></li>
 <li><a class="reference internal" href="#building-the-manuals">Building the manuals</a><ul>
 <li><a class="reference internal" href="#document-names">Document names</a></li>
-<li><a class="reference internal" href="#output-formats">Output formats</a></li>
+<li><a class="reference internal" href="#output-formats">Output Formats</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#syntax-highlighting-cython-code">Syntax highlighting Cython code</a></li>
+<li><a class="reference internal" href="#syntax-highlighting-cython-code">Syntax Highlighting Cython Code</a></li>
 </ul>
 </li>
 </ul>
@@ -331,8 +337,8 @@ or you can use <tt class="docutils literal"><span class="pre">..</span> <span cl
             <p class="topless"><a href="doctesting.html"
                                   title="previous chapter">Doctesting the Sage Library</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="disseminating_code_old.html"
-                                  title="next chapter">Disseminating Code for Sage</a></p>
+            <p class="topless"><a href="git_background.html"
+                                  title="next chapter">Git Background</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/sage_manuals.txt"
@@ -366,7 +372,7 @@ or you can use <tt class="docutils literal"><span class="pre">..</span> <span cl
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="disseminating_code_old.html" title="Disseminating Code for Sage"
+          <a href="git_background.html" title="Git Background"
              >next</a> |</li>
         <li class="right" >
           <a href="doctesting.html" title="Doctesting the Sage Library"
@@ -378,8 +384,7 @@ or you can use <tt class="docutils literal"><span class="pre">..</span> <span cl
   
   
         <li><a href="index.html">Developer&#39;s Guide v1.0</a> &raquo;</li>
-
-          <li><a href="writing_code_old.html" >Writing Code for Sage</a> &raquo;</li> 
+ 
       </ul>
     </div>
     
