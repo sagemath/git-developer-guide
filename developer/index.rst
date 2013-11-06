@@ -57,18 +57,6 @@ Sage Notebook Developer Guide
    sagenb/index
 
 
-To be deleted
-=============
-
-Old Developer Guide (Mercurial-based)
-
-.. toctree::
-   :maxdepth: 3
-
-   walk_through_old
-   writing_code_old
-   disseminating_code_old
-
 Indices and tables
 ==================
 
