@@ -69,6 +69,7 @@ need to provide trac with the public half of your own personal key. In recent
 versions of Sage, you can use Sage to generate an upload an SSH key
 
 .. skip   # do not doctest
+
 ::
 
     sage: dev.upload_ssh_key()
@@ -80,6 +81,7 @@ versions of Sage, you can use Sage to generate an upload an SSH key
 
 You can also manually generate an SSH key and upload it to trac. This is
 described in the following two sections.
+
 
 Manually Generating your SSH Keys
 ---------------------------------
@@ -453,7 +455,7 @@ code. Now ask yourself questions such as the following:
 - Do the code and documentation follow conventions documented in the
   following sections?
 
-  - :ref:`chapter-conventions`
+  - :ref:`chapter-code-basics`
   - :ref:`chapter-python`
   - :ref:`chapter-cython`
 

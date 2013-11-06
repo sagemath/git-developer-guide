@@ -87,6 +87,7 @@ support the command ``latex``.
 An example template for a ``_latex_`` method follows:
 
 .. skip
+
 ::
 
     class X:

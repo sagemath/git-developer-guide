@@ -454,6 +454,7 @@ determine where the coordinates of the points are placed in the string
 just that.
 
 .. skip
+
 ::
 
     def points_parser(string_points,F):
@@ -516,6 +517,7 @@ Singular and Sage unless `d=1`. So, for this reason, we restrict
 ourselves to points of degree one.
 
 .. skip
+
 ::
 
     def places_on_curve(f,F):
@@ -554,6 +556,7 @@ same as the ordering in the Singular variable ``POINTS``.
 One more example (in addition to the one in the docstring):
 
 .. skip
+
 ::
 
     sage: F = GF(2)
@@ -586,6 +589,7 @@ they compare differently than you would expect from their print
 representation:
 
 .. link
+
 ::
 
     sage: sorted([(L[i][1], L[i][2], L[i][3]) for i in range(1,7)])

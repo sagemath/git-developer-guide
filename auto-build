@@ -9,5 +9,6 @@ while true ; do
 	exit 1
     fi
     echo "Detected file save to $@"
+    rm -rf html
     ./build
 done
