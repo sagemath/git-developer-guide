@@ -109,15 +109,15 @@ The Trac Server
 ===============
 
 The Sage trac server also holds a copy of the Sage repository, it is
-served via ssh but at the non-standard port 2222. To add it as a
-remote repository to your local git repository, use the command::
+served via ssh. To add it as a remote repository to your local git
+repository, use the command::
 
-    [user@localhost sage]$ git remote add trac ssh://git@trac.sagemath.org:2222/sage.git -t master
+    [user@localhost sage]$ git remote add trac git@trac.sagemath.org:sage.git -t master
     [user@localhost sage]$ git remote -v
     origin	git://github.com/sagemath/sage.git (fetch)
     origin	git://github.com/sagemath/sage.git (push)
-    trac	ssh://git@trac.sagemath.org:2222/sage.git (fetch)
-    trac	ssh://git@trac.sagemath.org:2222/sage.git (push)
+    trac	git@trac.sagemath.org:sage.git (fetch)
+    trac	git@trac.sagemath.org:sage.git (push)
 
 Instead of ``trac`` you can use any local name you want, of course. It
 is perfectly fine to have multiple remote repositories for git, think
@@ -180,7 +180,7 @@ into your local repository. This is achieved by::
     remote: Compressing objects: 100% (48/48), done.
     remote: Total 48 (delta 42), reused 0 (delta 0)
     Unpacking objects: 100% (48/48), done.
-    From ssh://trac.sagemath.org:2222/sage
+    From trac.sagemath.org:sage
     * [new branch]      u/user/description -> FETCH_HEAD
 
 The ``u/user/description`` branch is now temporarily (until you fetch
@@ -257,7 +257,7 @@ your local branch as in :ref:`section-git-checkout`, you can just
 issue::
 
     [user@localhost sage]$ git pull trac u/user/description
-    From ssh://trac.sagemath.org:2222/sage
+    From trac.sagemath.org:sage
      * branch            u/user/description -> FETCH_HEAD
     Updating 8237337..07152d8
     Fast-forward
@@ -271,7 +271,7 @@ them into your local branch. If you haven't published your local
 commits yet then you can also rebase them via::
 
     [user@localhost sage]$ git pull -r trac u/user/description
-    From ssh://trac.sagemath.org:2222/sage
+    From trac.sagemath.org:sage
      * branch            u/user/description -> FETCH_HEAD
     First, rewinding head to replay your work on top of it...
     Applying: my local commit
@@ -308,7 +308,7 @@ If this pull fails, then something is wrong with the local copy of the
 master branch. To switch to the correct Sage master branch, use::
 
     [user@localhost sage]$ git checkout master
-    [user@localhost sage]$ git reset --hard trac master
+    [user@localhost sage]$ git reset --hard trac/master
 
 
 .. _section-git-merge:
@@ -449,7 +449,7 @@ and immediately uploads his change::
     Compressing objects: 100% (2/2), done.
     Writing objects: 100% (3/3), 320 bytes | 0 bytes/s, done.
     Total 3 (delta 1), reused 0 (delta 0)
-    To ssh://trac.sagemath.org:2222/sage
+    To trac.sagemath.org:sage
        14afe53..41675df  HEAD -> u/bob/fibonacci
 
 Eventually, Alice returns to civilization. In her mailbox, she finds a
@@ -458,7 +458,7 @@ joint project. Hence, she starts out by getting his changes into her
 own local branch::
 
     [alice@laptop]$ git pull trac u/bob/fibonacci
-    From ssh://trac.sagemath.org:2222/sage
+    From trac.sagemath.org:sage
      * branch            u/bob/fibonacci     -> FETCH_HEAD
     Auto-merging fibonacci.py
     CONFLICT (content): Merge conflict in fibonacci.py

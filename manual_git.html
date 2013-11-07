@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -14,7 +13,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -149,14 +148,14 @@ the branch that you created.</p>
 <div class="section" id="the-trac-server">
 <span id="section-git-trac"></span><h2>The Trac Server<a class="headerlink" href="#the-trac-server" title="Permalink to this headline">¶</a></h2>
 <p>The Sage trac server also holds a copy of the Sage repository, it is
-served via ssh but at the non-standard port 2222. To add it as a
-remote repository to your local git repository, use the command:</p>
-<div class="highlight-python"><pre>[user@localhost sage]$ git remote add trac ssh://git@trac.sagemath.org:2222/sage.git -t master
+served via ssh. To add it as a remote repository to your local git
+repository, use the command:</p>
+<div class="highlight-python"><pre>[user@localhost sage]$ git remote add trac git@trac.sagemath.org:sage.git -t master
 [user@localhost sage]$ git remote -v
 origin      git://github.com/sagemath/sage.git (fetch)
 origin      git://github.com/sagemath/sage.git (push)
-trac        ssh://git@trac.sagemath.org:2222/sage.git (fetch)
-trac        ssh://git@trac.sagemath.org:2222/sage.git (push)</pre>
+trac        git@trac.sagemath.org:sage.git (fetch)
+trac        git@trac.sagemath.org:sage.git (push)</pre>
 </div>
 <p>Instead of <tt class="docutils literal"><span class="pre">trac</span></tt> you can use any local name you want, of course. It
 is perfectly fine to have multiple remote repositories for git, think
@@ -207,7 +206,7 @@ remote: Counting objects: 62, done.
 remote: Compressing objects: 100% (48/48), done.
 remote: Total 48 (delta 42), reused 0 (delta 0)
 Unpacking objects: 100% (48/48), done.
-From ssh://trac.sagemath.org:2222/sage
+From trac.sagemath.org:sage
 * [new branch]      u/user/description -&gt; FETCH_HEAD</pre>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">u/user/description</span></tt> branch is now temporarily (until you fetch
@@ -271,7 +270,7 @@ changesets to complete your review. Assuming that you originally got
 your local branch as in <a class="reference internal" href="#section-git-checkout"><em>Checking Out Tickets</em></a>, you can just
 issue:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git pull trac u/user/description
-From ssh://trac.sagemath.org:2222/sage
+From trac.sagemath.org:sage
  * branch            u/user/description -&gt; FETCH_HEAD
 Updating 8237337..07152d8
 Fast-forward
@@ -284,7 +283,7 @@ download the changes from the originally-used remote branch and merge
 them into your local branch. If you haven&#8217;t published your local
 commits yet then you can also rebase them via:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git pull -r trac u/user/description
-From ssh://trac.sagemath.org:2222/sage
+From trac.sagemath.org:sage
  * branch            u/user/description -&gt; FETCH_HEAD
 First, rewinding head to replay your work on top of it...
 Applying: my local commit</pre>
@@ -314,7 +313,7 @@ would be required:</p>
 <p>If this pull fails, then something is wrong with the local copy of the
 master branch. To switch to the correct Sage master branch, use:</p>
 <div class="highlight-python"><pre>[user@localhost sage]$ git checkout master
-[user@localhost sage]$ git reset --hard trac master</pre>
+[user@localhost sage]$ git reset --hard trac/master</pre>
 </div>
 </div>
 </div>
@@ -440,7 +439,7 @@ Delta compression using up to 8 threads.
 Compressing objects: 100% (2/2), done.
 Writing objects: 100% (3/3), 320 bytes | 0 bytes/s, done.
 Total 3 (delta 1), reused 0 (delta 0)
-To ssh://trac.sagemath.org:2222/sage
+To trac.sagemath.org:sage
    14afe53..41675df  HEAD -&gt; u/bob/fibonacci</pre>
 </div>
 <p>Eventually, Alice returns to civilization. In her mailbox, she finds a
@@ -448,7 +447,7 @@ trac notification email that Bob has uploaded further changes to their
 joint project. Hence, she starts out by getting his changes into her
 own local branch:</p>
 <div class="highlight-python"><pre>[alice@laptop]$ git pull trac u/bob/fibonacci
-From ssh://trac.sagemath.org:2222/sage
+From trac.sagemath.org:sage
  * branch            u/bob/fibonacci     -&gt; FETCH_HEAD
 Auto-merging fibonacci.py
 CONFLICT (content): Merge conflict in fibonacci.py
@@ -617,7 +616,7 @@ pane.</p>
     
     <div class="footer">
         &copy; Copyright 2013, The Sage Development Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
     </div>
     <script type="text/javascript">
 /*global jQuery, window */
