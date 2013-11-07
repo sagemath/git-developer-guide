@@ -163,11 +163,11 @@ it is only used to authenticate you to the gitolite installation on
 trac. You can test that you are being authenticated correctly by
 issuing some basic gitolite commands, for example::
 
-    [user@localhost ~]$ ssh -p 2222 git@trac.sagemath.org info
+    [user@localhost ~]$ ssh git@trac.sagemath.org info
     hello user, this is git@trac running gitolite3 (unknown) on git 1.7.9.5
 
      R W      sage
-    [user@localhost ~]$ ssh -p 2222 git@trac.sagemath.org help
+    [user@localhost ~]$ ssh git@trac.sagemath.org help
     hello user, this is gitolite3 (unknown) on git 1.7.9.5
 
     list of remote commands available:

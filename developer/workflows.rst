@@ -132,8 +132,8 @@ course free to use a different one::
     $ git remote -v
     github	git@github.com:github_user_name/sage.git (fetch)
     github	git@github.com:github_user_name/sage.git (push)
-    trac	ssh://git@trac.sagemath.org:2222/sage.git (fetch)
-    trac	ssh://git@trac.sagemath.org:2222/sage.git (push)
+    trac	git@trac.sagemath.org:sage.git (fetch)
+    trac	git@trac.sagemath.org:sage.git (push)
     $ git fetch github
     remote: Counting objects: 107, done.
     remote: Compressing objects: 100% (63/63), done.
