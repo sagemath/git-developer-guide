@@ -308,7 +308,7 @@ If this pull fails, then something is wrong with the local copy of the
 master branch. To switch to the correct Sage master branch, use::
 
     [user@localhost sage]$ git checkout master
-    [user@localhost sage]$ git reset --hard trac master
+    [user@localhost sage]$ git reset --hard trac/master
 
 
 .. _section-git-merge:
