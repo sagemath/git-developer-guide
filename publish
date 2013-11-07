@@ -25,6 +25,6 @@ for src in os.listdir(HTML_DIR):
 os.chdir(GH_PAGES_DIR)
 subprocess.check_output(['git', 'add', '--all'])
 subprocess.check_output(['git', 'commit', '-m', '"Updated documentation"'])
-subprocess.check_output(['git', 'push', 'origin', 'gh-pages'])
+subprocess.check_output(['git', 'push', 'origin', 'HEAD:gh-pages'])
 
           
