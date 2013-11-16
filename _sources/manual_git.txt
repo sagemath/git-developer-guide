@@ -137,8 +137,8 @@ of them as bookmarks. You can then use ``git pull`` to get changes and
     :ref:`section-git-checkout` section for examples.
 
 The way we set up the remote here is via ssh authentication (the
-``ssh://`` part), this requires you to have a trac account and to set
-up your ssh public key as described in
+``git@`` part), this requires you to have a trac account and to set up
+your ssh public key as described in
 :ref:`section-trac-ssh-key`. Authentication is necessary if you want
 to upload anything to ensure that it really is from you. However, if
 you just want to download branches from the trac server then you can
