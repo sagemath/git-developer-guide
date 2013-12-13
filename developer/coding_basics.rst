@@ -5,38 +5,11 @@ General Conventions
 ===================
 
 
-If there is something you would like to implement and make available
-in Sage, you have a wide range of options:
-
-#. Implement it as Sage scripts, see :ref:`section-preparsing`.
-
-#. Implement it as Python scripts that use the Sage library, see
-   :ref:`chapter-python`.
-
-#. Implement it in C/C++ and make the result accessible to Sage using
-   Cython.
-
-#. Implement it using Cython.
-
-#. Implement it using one or more of the following: Flint, FpLLL, GAP,
-   GSL, IML, LinBox, M4RI, Matplotlib, Maxima, MWRank, ECLib,
-   NetworkX, NTL, Numpy, PARI/GP, PolyBoRi, R, Scipy, Singular, Sympy
-   or any of the other libraries included with Sage [1]_.
-
-#. Or any combination of the above.
-
-#. If you have Magma, Maple or Mathematica and do not mind restricting
-   who can use your code, you could also implement parts of your
-   program in one of these systems and make it available in Sage
-   through interfaces to these non-free systems.
-
-Flint, FpLLL, GAP, GSL, IML, LinBox, M4RI, Matplotlib, Maxima, MWRank,
-ECLib, NetworkX, NTL, Numpy, PARI/GP, PolyBoRi, R, Scipy, Singular,
-Sympy are all included with all distributions of Sage. GAP, Singular,
-and PARI are very mature, and each implements a great amount of
-functionality, though in different domains. GAP addresses group theory
-well, Singular attacks polynomial computation, and PARI contains
-sophisticated, optimized number theory algorithms.
+There are many ways to contribute to Sage including sharing scripts
+and Sage worksheets that implement new functionality using Sage,
+improving to the Sage library, or to working on the many underlying
+libraries distributed with Sage [1]_.
+This guide focuses on editing the Sage library itself.
 
 Sage is not just about gathering together functionality. It is about
 providing a clear, systematic and consistent way to access a large
@@ -135,8 +108,8 @@ of the directory containing the Sage sources::
             setup.py
             module_list.py
             ...
-            sage/     # sage library, i.e. devel/sage-main/sage
-            ext/      # sage_extcode, i.e. devel/ext-main
+            sage/     # sage library (formerly devel/sage-main/sage)
+            ext/      # extra sage resources (formerly devel/ext-main)
             mac-app/  # would no longer have to awkwardly be in extcode
             bin/      # the scripts in local/bin that are tracked
         upstream/     # tarballs of upstream sources
@@ -157,10 +130,13 @@ of several different types of polynomial rings.
 
 If you want to create a new directory in the Sage library
 ``SAGE_ROOT/src/sage`` (say, ``measure_theory``), that directory
-should contain an empty file ``__init__.py`` in addition to whatever
+should contain a file ``__init__.py`` that contains the single line 
+``import all`` in addition to whatever
 files you want to add (say, ``borel_measure.py`` and
 ``banach_tarski.py``), and also a file ``all.py`` listing imports from
-that directory.  The file ``all.py`` might look like this::
+that directory that are important enough to be in the Sage’s global
+namespace at startup.
+The file ``all.py`` might look like this::
 
     from borel_measure import BorelMeasure
     from banach_tarski import BanachTarskiParadox
@@ -223,7 +199,7 @@ The top of each Sage code file should follow this format::
 
 As an example, see ``SAGE_ROOT/src/sage/rings/integer.pyx`` which
 contains the implementation for `\ZZ`. The ``AUTHORS:`` section is
-redundant, the authorative log for who wrote what is always the git
+redundant, the authoritative log for who wrote what is always the git
 repository (see the output of ``git blame``). Nevertheless, it is
 sometimes useful to have a very rough overview over the history,
 especially if a lot of people have been working on that source file.
@@ -285,9 +261,10 @@ a guide.
          using the Blum-Goldwasser decryption algorithm.
 
 -  An EXAMPLES block for examples. This is not optional. These
-   examples are used for automatic testing before each release and new
-   functions without these doctests will not be accepted for inclusion
-   with Sage.
+   examples are used both for documentation and for automatic testing
+   before each release so should have good coverage of the functionality
+   in question. New functions without these doctests will not be accepted
+   for inclusion with Sage.
 
 -  A SEEALSO block (optional) with links to related things in Sage. A SEEALSO
    block should start with ``.. SEEALSO::``. It can also be the lower-case form
@@ -299,8 +276,8 @@ a guide.
 
            :ref:`chapter-sage_manuals_links`
 
--  An ALGORITHM block (optional) which indicates what software
-   and/or what algorithm is used. For example
+-  An ALGORITHM block (optional) which indicates what algorithm
+   and/or what software is used. For example
    ``ALGORITHM: Uses Pari``. Here's a longer example that describes an
    algorithm used. Note that it also cites the reference where this
    algorithm can be found::
@@ -421,6 +398,10 @@ a guide.
       .. [SC] Conventions for coding in sage.
          http://www.sagemath.org/doc/developer/conventions.html.
 
+- A TESTS block (optional), formatted just like EXAMPLES, for additional
+  tests which should be part of the regression suite but are not
+  illustrative enough to merit placement in EXAMPLES.
+
 Use the following template when documenting functions. Note the
 indentation
 
@@ -510,7 +491,7 @@ Functions whose names start with an underscore are considered
 private. Hence they do not appear in the reference manual, and their
 docstring should not contain any information that is crucial for Sage
 users. Having said that, you can explicitly enable their docstrings to
-be shown. For example::
+be shown as part of the documentation of another method. For example::
 
     class Foo(SageObject):
     
@@ -526,6 +507,8 @@ be shown. For example::
              """
              This would be hidden without the ``.. automethod::``
              """
+
+An EXAMPLES or TESTS block is still required for these private functions.
 
 A special case is the constructor ``__init__``, which clearly starts
 with an underscore. However, due to its special status the
@@ -721,7 +704,10 @@ framework. Here is a comprehensive list:
   this tag since the doctesting framework guarantees the state of the
   pseudorandom number generators (PRNGs) used in Sage for a given
   doctest. See :ref:`chapter-randomtesting` for details on this
-  framework.
+  framework.  It is preferable to write tests that do not expose this
+  non-determinism, for example rather than checking the value of the
+  hash in a dockets, one could illustrate successfully using it as a
+  key in a dict.
 
 - If a line contains the comment ``long time`` then that line is not
   tested unless the ``--long`` option is given, e.g.  ``sage -t --long
